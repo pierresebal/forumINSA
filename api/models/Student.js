@@ -11,11 +11,16 @@ module.exports = {
     login: {
       type:"string",
       required:true,
+      unique: true,
     },
     firstName:"string",
     lastName:"string",
     mailAddress:"string",
     personalWebsite:"string",
+    classLevel: {
+      type:'integer',
+      enum:[3,4,5]
+    }
   }
 };
 
