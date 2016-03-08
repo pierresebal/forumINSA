@@ -7,6 +7,7 @@
   "dependencies": {
     "babel-core": "5.8.25",
     "classnames": "2.1.5",
+    "ejs": "^2.4.1",
     "eventemitter3": "1.1.1",
     "express": "4.13.3",
     "fastclick": "1.0.6",
@@ -14,6 +15,7 @@
     "flux": "2.1.1",
     "front-matter": "1.0.0",
     "history": "1.11.1",
+    "include-all": "^0.1.6",
     "jade": "1.11.0",
     "normalize.css": "3.0.3",
     "react": "0.14.0-rc1",
