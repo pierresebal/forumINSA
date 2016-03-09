@@ -20,6 +20,10 @@ module.exports = {
     classLevel: {
       type:'integer',
       enum:[3,4,5]
+    },
+    gender: {
+      type: 'string',
+      enum:['f','m']
     }
   }
 };
