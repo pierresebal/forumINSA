@@ -1,0 +1,16 @@
+
+<!--Connection block-->
+
+<h1>Connexion</h1>
+
+<!--Errors to be precised-->
+<%if (typeof error !='undefined'){%>
+<p style="color:#ff2b23;"><%= error %></p>
+<%}%>
+
+<form method="post" action="/Company/AuthCompany">
+  <input type="email" placeholder="Email utilisateur" name="UserAuthEmail" required/>
+  <input type="password" placeholder="Mot de passe" name="UserAuthPasswd" required/>
+  <input type="hidden" name="NextUrl" value="<%if (typeof nexturl != 'undefined'){%><%=nexturl%><%}else{%>/<%}%>"/>
+  <input type="submit"/>
+</form>
