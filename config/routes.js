@@ -33,7 +33,7 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': {
-    view: '/homepage',
+    view: 'homepage',
     locals:{layout:'layout'}
   },
 
@@ -53,8 +53,8 @@ module.exports.routes = {
    ===========================================================================================================
    */
 
-  '/': {
-    view: '/Student/AuthGate',
+  '/Student/Connexion': {
+    view: 'Students/AuthGate',
     locals:{layout:'layout'}
   },
 
