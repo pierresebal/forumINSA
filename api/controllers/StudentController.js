@@ -20,33 +20,34 @@ module.exports = {
           Student.findOne({login: result.login}).exec(function (err, record) {
             if (err)
               return res.negotiate(err);
-
             if (!record) {
               console.log("A besoin d'être créé : " + result.login);
               Student.create(result).exec(function (err, created) {
                 console.log("A été créé");
                 req.session.login = created.login;
-                req.session.firstname = created.firstName;
+                req.session.firstName = created.firstName;
                 req.session.authenticated = true;
-                console.log("login : " + created.login + " " + req.session.login);
+                req.session.tried = true;
+                return res.redirect("/");
               });
-            }
-            else
+            } else {
               console.log("Il y est :)");
-            req.session.login = record.login;
-            req.session.firstname = record.firstName;
-            req.session.authenticated = true;
-            console.log("login : " + record.login + " " + req.session.login + " " + req.session.authenticated);
+              req.session.login = record.login;
+              req.session.firstName = record.firstName;
+              req.session.authenticated = true;
+              return res.redirect("/");
+            }
           });
-        } else {
+
+
+        } else { //If
           req.session.tried = true;
           req.session.authenticated = false;
-          console.log("authentication failed.")
+          console.log("authentication failed.");
         }
-        return res.redirect("/");
-      }
-      else
+      } else {
         console.log("erreur : " + err);
+      }
     });
 
   }

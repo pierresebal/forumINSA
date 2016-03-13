@@ -6,12 +6,11 @@
     </head>
 
     <body>
-
+    <p><%= req.session.test1%> <%= req.session.test2%></p>
     <% if (!req.session.authenticated) {
         if (req.session.tried == true) { %>
         <p>Authentication failed. Is your login or password incorrect ?</p>
       <% } %>
-    <%= typeof test == 'undefined' ? "non" : test %>
       <form method="post" action="/login">
         <input type="text" name="login" placeholder="Login"/>
         <input type="password" name="password" placeholder="Password"/>
