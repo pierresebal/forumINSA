@@ -1,10 +1,143 @@
-<h1>Création d'un compte utilisateur</h1>
+<!DOCTYPE html>
+
+<h1>Création d'un compte entreprise</h1>
 <form method="post" action="/Company/CreateCompany" >
-  <input type="text" name="UserFirstName" placeholder="First Name" required/>
-  <input type="text" name="UserLastName" placeholder="Last Name" required/>
-  <input type="password" name="UserPassword" placeholder="Password" required/>
-  <input type="password" name="ConfirmUserPassword" placeholder="Confirm Password" required/>
-  <input type="email" name="UserEmail" placeholder="Email" required/>
+
+  <label for="UserFirstName">Prénom: </label>
+  <input type="text" name="UserFirstName" id="UserFirstName" placeholder="Prénom" required/>
+  <p style="color:red;display:none" id="UserFirstNameErr" >Ce champ doit être complété et contenir moins de 20 caractères</p>
+
+  <label for="UserLastNameName">Nom: </label>
+  <input type="text" name="UserLastName" id="UserLastName" placeholder="Nom" required/>
+
+  <label for="UserPassword">Mot de passe: </label>
+  <input type="password" name="UserPassword" id="UserPassword" placeholder="Password" required/>
+
+  <label for="ConfirmUserPassword">Confirmez le mot de passe: </label>
+  <input type="password" name="ConfirmUserPassword" id="ConfirmUserPassword" placeholder="Confirm Password" required/>
+
+  <label for="ConfirmUserPassword">Adresse e-mail: </label>
+  <input type="email" name="UserEmail" id="UserEmail" placeholder="Email" required/>
+
   <input type="submit"/>
 </form>
+
+
+
+<script type="text/javascript">
+  <!--
+
+
+  // Objets de saisie
+  var UserFirstName = document.getElementById("UserFirstName");
+  var UserLastName = document.getElementById("UserLastName");
+  var UserPassword = document.getElementById("UserPassword");
+  var ConfirmUserPassword = document.getElementById("ConfirmUserPassword");
+  var UserEmail = document.getElementById("UserEmail");
+
+  //Objets de notifications erreurs
+  var UserFirstNameErr = document.getElementById("UserFirstNameErr");
+  var UserLastNameErr = document.getElementById("UserLastNameErr");
+  var UserPasswordErr = document.getElementById("UserPasswordErr");
+  var ConfirmUserPasswordErr = document.getElementById("ConfirmUserPasswordErr");
+  var UserEmailErr = document.getElementById("UserEmailErr");
+
+  // Fonctions utilisées pour verifier les erreurs
+
+  //Affiche erreur sur un champ
+  // ErrObj corespond a l'objet qui contient le messsage d'erreur (dont le css sera modifié par JS pour qu'il soit affiché)
+  function DispError(ErrObj){
+    ErrObj.style="display:inline;";
+  }
+
+  // Supprime erreur sur un champ
+  // ErrObj corespond a l'objet qui contient le messsage d'erreur (dont le css sera modifié par JS pour qu'il soit affiché)
+  function CleanError(ErrObj){
+    ErrObj.style="display:none;";
+  }
+
+  // Vérifie que les mots de passes Pass1 et Pass2 soient identiques
+  function PassCheck(Pass1,Pass2){
+    if(Pass1.value==Pass2.value)
+      return foo();
+  }
+
+  //Vérifie que la taille de la chaine de carac soit ok:
+  function StringLengthCheck(Str,Lmin,Lmax){
+    if(Str.length>=Lmin && Str.length<=Lmax)
+      return foo();
+  }
+
+  // Vérifie que l'entrée est bien un email
+  function CheckEmail(mailteste)
+  {
+    var reg = new RegExp('^[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$', 'i');
+    if(reg.test(mailteste))
+      return(true);
+    else
+      return(false);
+  }
+
+  // Vérification instantanée de la bonne complétion du formulaire
+
+  // Prénom
+  UserFirstName.addEventListener("change",function(e){
+    if(!StringLengthCheck(User.value,1,20)) DispError(UserFirstNameErr);
+    else {
+      e.target.style = "color:green";
+      CleanError(UserFirstNameErr);
+    }
+  })
+
+  // Nom
+  UserLastName.addEventListener("change",function(e){
+    if(!StringLengthCheck(e.target.value,1,20))
+      DispError(UserLastNameErr);
+    else {
+      CleanError(UserLastNameErr);
+      e.target.style = "color:green";
+    }
+  })
+
+  //Email
+  UserEmail.addEventListener("change",function(e){
+    if (CheckEmail(e.target.value)){
+      CleanError(UserEmailErr);
+      e.target.style = "color:green";
+    }
+    else DispError("UserEmailErr");
+  })
+
+
+  // Mot de passe
+  UserPassword.addEventListener('change',function(){
+    if(PassCheck(UserPassword,ConfirmUserPassword)){
+      UserPassword.style="background-color:green;";
+      ConfirmUserPassword.style="background-color:green;";
+    }
+    else {
+      UserPassword.style="background-color:red;";
+      ConfirmUserPassword.style="background-color:red;";
+    }
+  })
+
+  // Confirmation du mot de passe
+  ConfirmUserPassword.addEventListener('change',function(){
+    if(EqualPassCheck(UserPassword,ConfirmUserPassword)){
+      UserPassword.style="background-color:green;";
+      ConfirmUserPassword.style="background-color:green;";
+    }
+    else
+    {
+      UserPassword.style="background-color:red;";
+      ConfirmUserPassword.style="background-color:red;";
+    }
+  })
+
+
+
+
+  //-->
+</script>
+
 
