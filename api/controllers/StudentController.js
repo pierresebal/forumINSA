@@ -11,7 +11,7 @@ module.exports = {
   login: function(req, res) {
     var data = {login:req.param('login'), password:req.param('password')};
     var request = require('request');
-
+    req.session.test = "je suis là !";
     request.post({url:'https://etud.insa-toulouse.fr/~pnoel/fie/connection.php', form:data}, function(err, httpResponse, body) {
       if (!err && httpResponse.statusCode == 200) {
         if (body != '0') {
