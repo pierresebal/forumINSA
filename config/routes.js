@@ -117,6 +117,11 @@ module.exports.routes = {
   '/Company/ActivateCompany':{
     controller:'CompanyController',
     action:'ActivateCompany'
+  },
+
+  '/Company/ResetPass':{
+    controller:'CompanyController',
+    action:'InitPasswdCompany'
   }
 
 };

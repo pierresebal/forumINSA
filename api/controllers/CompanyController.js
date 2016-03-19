@@ -213,10 +213,7 @@ module.exports = {
   // TODO: This function still no works...
   InitPasswdCompany:function(req,res) {
     // Check if the user exists and we take his old password to create the new
-    Company.findOne({
-      Email: req.param('UserAuthEmail'),
-      Password: req.param('UserAuthPasswd')
-    }).exec(function (err, record) {
+    Company.findOne({Email: req.param('UserAuthEmail')}).exec(function (err, record) {
 
       if (!err) {
 
@@ -230,8 +227,45 @@ module.exports = {
           var new_pass = sha1('old_pass').substring(0,8);
 
           // We update the password of the user
-          Company.update({Email: req.param('email')}, {Password:new_pass}).exec(function afterwards(err, updated) {
+          Company.update({Email: req.param('UserAuthEmail')}, {Password:new_pass}).exec(function afterwards(err, updated) {
+            // Log: New password set for an user
             console.log("New password set: "+new_pass);
+
+            //Sending an email to the user with the new password
+            var nodemailer = require("nodemailer");
+
+            // create reusable transport method (opens pool of SMTP connections)
+            var smtpTransport = nodemailer.createTransport("SMTP",{
+              service: "Gmail",
+              auth: {
+                user: "club.montagne@amicale-insat.fr",
+                pass: "insamontagne1"
+              }
+            });
+
+            // setup e-mail data with unicode symbols
+            var mailOptions = {
+              from: "Pierre Hardy <pierre.hardy5@gmail.com>", // sender address
+              to: req.param('UserEmail'), // list of receivers
+              subject: "Message de confirmation de l'inscription", // Subject line
+              text: "Bonjour "+req.param('UserFirstName')+",\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n"+new_pass+"\nA très bientot !\nL'équipe de localhost.", // plaintext body
+              html: "" // html body
+            };
+
+            // send mail with defined transport object
+            smtpTransport.sendMail(mailOptions, function(error, response){
+              if(error){
+                console.log(error);
+              }else{
+                console.log("Message sent: " + response.message);
+              }
+
+              smtpTransport.close();
+            });
+
+            // We display the confirmation view if reset passwd worked successfully
+            return res.view('Company/ResetPassOK',{layout:'layout'})
+
           })
         }
 
@@ -250,7 +284,7 @@ module.exports = {
         return res.view('ErrorPage', {
           layout: 'layout',
           ErrorTitle: 'Erreur réinitialisation',
-          ErrorDesc: 'Aucun utilisateur enregistré avec cet email...'
+          ErrorDesc: 'Une erreur inconnue est survenue durant la réinitialisation du mot de passe...'
         });
       }
 
