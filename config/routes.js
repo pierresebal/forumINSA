@@ -87,6 +87,11 @@ module.exports.routes = {
     locals:{layout:'layout'}
   },
 
+  '/Company/ResetPassPage':{
+    view:'Company/ResetPassPage',
+    locals:{layout:'layout'}
+  },
+
 
   /*
    ===========================================================================================================

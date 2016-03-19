@@ -104,10 +104,8 @@ module.exports = {
             console.log('Authentification succeed: '+record.FirstName);
             req.session.authenticated=true;
             req.session.UserEmail=record.Email;
-            return res.redirect(req.param('NextUrl'));          console.log('Authentification succeed: '+record.FirstName);
-            req.session.authenticated=true;
-            req.session.UserEmail=record.Email;
             return res.redirect(req.param('NextUrl'));
+
           }
           else{
             console.log("Company not activated...");
@@ -217,19 +215,25 @@ module.exports = {
 
       if (!err) {
 
-        if (typeof record[0] != 'undefined') {
+        if (typeof record != 'undefined') {
 
           // A user with this email was found
-          var old_pass = record[0].Password;
+          var old_pass = record.Password;
+
+          console.log("Old pass: "+old_pass);
 
           // Creation of a new password from part of the old
           var sha1 = require('sha1');
-          var new_pass = sha1('old_pass').substring(0,8);
+          var new_pass = sha1(old_pass).substring(0,8);
 
           // We update the password of the user
-          Company.update({Email: req.param('UserAuthEmail')}, {Password:new_pass}).exec(function afterwards(err, updated) {
+          Company.update({Email: req.param('UserAuthEmail')}, {Password:sha1(new_pass)}).exec(function afterwards(err, updated) {
             // Log: New password set for an user
             console.log("New password set: "+new_pass);
+
+            Company.findOne({Email: req.param('UserAuthEmail')}).exec(function (err, record) {
+              console.log(record.Password)
+            });
 
             //Sending an email to the user with the new password
             var nodemailer = require("nodemailer");
@@ -246,9 +250,9 @@ module.exports = {
             // setup e-mail data with unicode symbols
             var mailOptions = {
               from: "Pierre Hardy <pierre.hardy5@gmail.com>", // sender address
-              to: req.param('UserEmail'), // list of receivers
-              subject: "Message de confirmation de l'inscription", // Subject line
-              text: "Bonjour "+req.param('UserFirstName')+",\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n"+new_pass+"\nA très bientot !\nL'équipe de localhost.", // plaintext body
+              to: req.param('UserAuthEmail'), // list of receivers
+              subject: "FIE: Réinitialisation du mot de passe", // Subject line
+              text: "Bonjour "+updated.FirstName+",\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n"+new_pass+"\nPour vous connecter, cliquez ici: http://localhost:1337/Company/Connexion\nA très bientot !\nL'équipe de localhost.", // plaintext body
               html: "" // html body
             };
 
