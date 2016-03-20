@@ -10,6 +10,9 @@ module.exports = {
   attributes: {
     attributes: {
 
+      // Person in charge of the affair
+
+
       FirstName:{
         type:'string',
         required:true
@@ -26,6 +29,8 @@ module.exports = {
         unique:true,
       },
 
+      // Company account information
+
       Password:{
         type:"string",
         required:true
@@ -39,7 +44,59 @@ module.exports = {
       ActivationUrl:{
         type:'string',
         required:true
+      },
+
+      // Company informations
+      CompanyName:{
+        type:'string',
+        required:true
+      },
+
+      CompanyGroup:{
+        type:'string',
+        required:true
+      },
+
+      CompanySIRET:{
+        type:'string',
+        required:true
+      },
+
+      // Contain the avenue; the number of post box...
+      CompanyAdressRoad:{
+        type:'string',
+        required:true
+      },
+
+      CompanyAdressCity:{
+        type:'string',
+        required:true
+      },
+
+      CompanyAdressPostalCode:{
+        type:'string',
+        required:true
+      },
+
+      CompanyAdressCountry:{
+        type:'string',
+        required:true
+      },
+
+      CompanyWebsiteUrl:{
+        type:'string',
+        required:true
+      },
+
+      CompanyCarreerUrl:{
+        type:'string',
+      },
+
+      CompanyDescription:{
+        type:'string',
       }
+
+
 
     }
   }
