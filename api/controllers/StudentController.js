@@ -28,6 +28,7 @@ module.exports = {
                 req.session.firstName = created.firstName;
                 req.session.authenticated = true;
                 req.session.tried = true;
+                req.session.sessionType = "student";
                 return res.redirect("/");
               });
             } else {
@@ -35,6 +36,7 @@ module.exports = {
               req.session.login = record.login;
               req.session.firstName = record.firstName;
               req.session.authenticated = true;
+              req.session.sessionType = "student";
               return res.redirect("/");
             }
           });
@@ -50,7 +52,22 @@ module.exports = {
       }
     });
 
-  }
+  },
+
+  // StudentLogout: set session var as an unauthentificated user
+  StudentLogout:function(req,res){
+    if(req.session.authenticated && req.session.sessionType == "student"){
+      console.log("User with email "+ req.session.mailAddress + " disconnected himself.");
+      req.session.login='undefined';
+      req.session.authenticated=false;
+      res.view('homepage',{layout:'layout'});
+    }
+    else
+    {
+      console.log("A unauthenticated user tried to disconnect himself");
+      res.view('500');
+    }
+  },
 
 };
 

@@ -8,40 +8,38 @@
 module.exports = {
 
   attributes: {
-    attributes: {
 
-      FirstName:{
-        type:'string',
-        required:true
-      },
+    firstName:{
+      type:'string',
+      required:true
+    },
 
-      LastName:{
-        type:'string',
-        required:'true'
-      },
+    lastName:{
+      type:'string',
+      required:'true'
+    },
 
-      Email:{
-        type:'email',
-        required:true,
-        unique:true,
-      },
+    mailAddress:{
+      type:'email',
+      required:true,
+      unique:true,
+    },
 
-      Password:{
-        type:"string",
-        required:true
-      },
+    password:{
+      type:"string",
+      required:true
+    },
 
-      Active:{
-        type:"integer",
-        required:true
-      },
+    active:{
+      type:"integer",
+      required:true
+    },
 
-      ActivationUrl:{
-        type:'string',
-        required:true
-      }
-
+    activationUrl:{
+      type:'string',
+      required:true
     }
+
   }
 };
 

@@ -8,19 +8,16 @@
 module.exports = {
 
 
-
-
-
   //CreateCompany: Function that create a new user into the DB and send him a confirmation email (with confirmation URL)
   CreateCompany:function(req,res) {
     // TODO: Add verification of the form on controller or view (important: password similars)
     // Checking for existing companies
-    Company.findOne({Email:req.param('UserEmail')}).exec(function(err,record){
+    Company.findOne({mailAddress:req.param('UserEmail')}).exec(function(err,record){
       if (!err) {
         if (typeof record !='undefined') {
-          console.log('A company with the same email was found ...User result:'+record.Email);
+          console.log('A company with the same mailAddress was found ...User result:'+record.mailAddress);
           console.log("Impossible to create a new user, the email is already used...");
-          return res.view('Company/CompanyNotCreated', {Email:req.param('UserEmail'),layout:'layout'});
+          return res.view('Company/CompanyNotCreated', {mailAddress:req.param('UserEmail'),layout:'layout'});
         }
         else {
           var sha1 = require('sha1');
@@ -29,15 +26,15 @@ module.exports = {
           var date = new Date();
           var ActivationUrl = sha1(date.getTime());
           Company.create({
-            FirstName: req.param('UserFirstName'),
-            LastName: req.param('UserLastName'),
-            Password: sha1(req.param('UserPassword')),
-            Email: req.param('UserEmail'),
-            Active:0,
-            ActivationUrl:ActivationUrl
+            firstName: req.param('UserFirstName'),
+            lastName: req.param('UserLastName'),
+            password: sha1(req.param('UserPassword')),
+            mailAddress: req.param('UserEmail'),
+            active:0,
+            activationUrl:ActivationUrl
           },function (err, created) {
             if (!err) {
-              console.log('[INFO] User created ;) : ' + created.FirstName + ' ' + created.LastName);
+              console.log('[INFO] User created ;) : ' + created.firstName + ' ' + created.lastName);
 
               //Sending an activation email to the new created user
               var nodemailer = require("nodemailer");
@@ -56,7 +53,7 @@ module.exports = {
                 from: "Pierre Hardy <pierre.hardy5@gmail.com>", // sender address
                 to: req.param('UserEmail'), // list of receivers
                 subject: "Message de confirmation de l'inscription", // Subject line
-                text: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte a l'adresse suivante:\n"+"http://localhost:1337/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe de localhost.", // plaintext body
+                text: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+"http://localhost:1337/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe de localhost.", // plaintext body
                 html: "" // html body
               };
 
@@ -72,7 +69,7 @@ module.exports = {
               });
 
               // We show a positive result to the Company created
-              return res.view('Company/UserCreated', {FirstName: created.FirstName,layout:'layout'});
+              return res.view('Company/UserCreated', {firstName: created.firstName,layout:'layout'});
 
             }
             else {
@@ -95,18 +92,16 @@ module.exports = {
   AuthentificateCompany:function(req,res){
     console.log('User try to authentificate... Email: '+req.param('UserAuthEmail')+' Password: '+req.param('UserAuthPasswd'));
     var sha1 = require('sha1');
-    Company.findOne({Email:req.param('UserAuthEmail'),Password:sha1(req.param('UserAuthPasswd'))}).exec(function(err,record){
+    Company.findOne({mailAddress:req.param('UserAuthEmail'),password:sha1(req.param('UserAuthPasswd'))}).exec(function(err,record){
       if(!err) {
 
         if(typeof record !='undefined'){
           // Cas ou on a authentifié un utilisateur
-          if(record.Active==1){
-            console.log('Authentification succeed: '+record.FirstName);
+          if(record.active==1){
+            console.log('Authentification succeed: '+record.firstName);
             req.session.authenticated=true;
-            req.session.UserEmail=record.Email;
-            return res.redirect(req.param('NextUrl'));          console.log('Authentification succeed: '+record.FirstName);
-            req.session.authenticated=true;
-            req.session.UserEmail=record.Email;
+            req.session.mailAddress=record.mailAddress;
+            req.session.sessionType = "company";
             return res.redirect(req.param('NextUrl'));
           }
           else{
@@ -144,8 +139,8 @@ module.exports = {
   // CompanyLogout: set session var as UnAuthentificated user
   CompanyLogout:function(req,res){
     if(req.session.authenticated){
-      console.log("User with email "+ req.session.UserEmail + " disconnected himself.");
-      req.session.UserEmail='undefined';
+      console.log("User with email "+ req.session.mailAddress + " disconnected himself.");
+      req.session.mailAddress='undefined';
       req.session.authenticated=false;
       res.view('homepage',{layout:'layout'});
     }
@@ -173,7 +168,7 @@ module.exports = {
       if(typeof req.param('url') != 'undefined' && req.param('email') != 'undefined' ){
         // We try to update an existing user to set him Active:1
         console.log("Trying to activate a new user");
-        Company.update({Email:req.param('email'),ActivationUrl:req.param('url'), Active:0},{Active:1}).exec(function afterwards(err, updated){
+        Company.update({mailAddress:req.param('email'),activationUrl:req.param('url'), active:0},{active:1}).exec(function afterwards(err, updated){
           if (err) { // If we hit an error during update
             console.log("Unable to activate user...");
             return res.view('ErrorPage',{layout:'layout',ErrorTitle:'Echec de l\'activation',ErrorDesc:'Erreur lors de la tentative d\'activation: Erreur interne au serveur'})
@@ -181,7 +176,7 @@ module.exports = {
           else { // We had no error
             if(typeof updated[0] != 'undefined') {
               // If we updated the user with succes
-              console.log('A company has been activated: ' + updated[0].Email);
+              console.log('A company has been activated: ' + updated[0].mailAddress);
               return res.view('Company/UserActivated', {layout: 'layout'});
             }
             else{
@@ -214,7 +209,7 @@ module.exports = {
   InitPasswdCompany:function(req,res) {
     // Check if the user exists and we take his old password to create the new
     Company.findOne({
-      Email: req.param('UserAuthEmail'),
+      mailAddress: req.param('UserAuthEmail'),
       Password: req.param('UserAuthPasswd')
     }).exec(function (err, record) {
 
@@ -223,14 +218,14 @@ module.exports = {
         if (typeof record[0] != 'undefined') {
 
           // A user with this email was found
-          var old_pass = record[0].Password;
+          var old_pass = record[0].password;
 
           // Creation of a new password from part of the old
           var sha1 = require('sha1');
           var new_pass = sha1('old_pass').substring(0,8);
 
           // We update the password of the user
-          Company.update({Email: req.param('email')}, {Password:new_pass}).exec(function afterwards(err, updated) {
+          Company.update({mailAddress: req.param('mailAddress')}, {password:new_pass}).exec(function afterwards(err, updated) {
             console.log("New password set: "+new_pass);
           })
         }

@@ -70,6 +70,11 @@ module.exports.routes = {
     action: 'login'
   },
 
+  '/Student/StudentLogout':{
+    controller:'StudentController',
+    action:'StudentLogout'
+  },
+
   /*
    ===========================================================================================================
    ============================================== COMPANY'S VIEWS ============================================
