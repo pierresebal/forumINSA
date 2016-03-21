@@ -9,6 +9,45 @@ module.exports = {
 
   attributes: {
 
+    /* COMPANY */
+    siret:{
+      type:'string',
+      //required:true,
+      unique:true,
+      size: 14,
+    },
+
+    companyName:{ //Possibilité de mettre filiale ? groupe ?
+      type: 'string',
+      //required: true,
+    },
+/*
+    postAddress:{
+      //On peut faire des attributs d'attributs ?
+    },
+*/
+
+    password:{
+      type:"string",
+      required:true
+    },
+
+    active:{
+      type:"integer",
+      required:true
+    },
+
+    activationUrl:{
+      type:'string',
+      required:true
+    },
+/*
+    logoURL:{
+
+    },
+*/
+    /* CONTACT */
+
     firstName:{
       type:'string',
       required:true
@@ -25,20 +64,6 @@ module.exports = {
       unique:true,
     },
 
-    password:{
-      type:"string",
-      required:true
-    },
-
-    active:{
-      type:"integer",
-      required:true
-    },
-
-    activationUrl:{
-      type:'string',
-      required:true
-    }
 
   }
 };
