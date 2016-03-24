@@ -9,45 +9,6 @@ module.exports = {
 
   attributes: {
 
-    /* COMPANY */
-    siret:{
-      type:'string',
-      //required:true,
-      unique:true,
-      size: 14,
-    },
-
-    companyName:{ //Possibilité de mettre filiale ? groupe ?
-      type: 'string',
-      //required: true,
-    },
-/*
-    postAddress:{
-      //On peut faire des attributs d'attributs ?
-    },
-*/
-
-    password:{
-      type:"string",
-      required:true
-    },
-
-    active:{
-      type:"integer",
-      required:true
-    },
-
-    activationUrl:{
-      type:'string',
-      required:true
-    },
-/*
-    logoURL:{
-
-    },
-*/
-    /* CONTACT */
-
     firstName:{
       type:'string',
       required:true
@@ -63,6 +24,72 @@ module.exports = {
       required:true,
       unique:true,
     },
+
+    password:{
+      type:"string",
+      required:true
+    },
+
+    active:{
+      type:"integer",
+      required:true
+    },
+
+    activationUrl:{
+      type:'string',
+      required:true
+    },
+
+      // Company informations
+      companyName:{
+        type:'string',
+        required:true
+      },
+
+      groupCompany:{
+        type:'string',
+        required:true
+      },
+
+      siret:{
+        type:'string',
+        required:true
+      },
+
+      // Contain the avenue; the number of post box...
+      road:{
+        type:'string',
+        required:true
+      },
+
+      cityCompany:{
+        type:'string',
+        required:true
+      },
+
+      companyAdressPostalCode:{
+        type:'string',
+        required:true
+      },
+
+      companyAdressCountry:{
+        type:'string',
+        required:true
+      },
+
+      companyWebsiteUrl:{
+        type:'string',
+        required:true
+      },
+
+      companyCarreerUrl:{
+        type:'string',
+      },
+
+      companyDescription:{
+        type:'string',
+      }
+
 
 
   }

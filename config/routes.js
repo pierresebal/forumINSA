@@ -92,6 +92,11 @@ module.exports.routes = {
     locals:{layout:'layout'}
   },
 
+  '/Company/ResetPassPage':{
+    view:'Company/ResetPassPage',
+    locals:{layout:'layout'}
+  },
+
 
   /*
    ===========================================================================================================
@@ -122,6 +127,11 @@ module.exports.routes = {
   '/Company/ActivateCompany':{
     controller:'CompanyController',
     action:'ActivateCompany'
+  },
+
+  '/Company/ResetPass':{
+    controller:'CompanyController',
+    action:'InitPasswdCompany'
   }
 
 };
