@@ -8,97 +8,90 @@
 module.exports = {
 
   attributes: {
-    attributes: {
 
-      // Person in charge of the affair
+    firstName:{
+      type:'string',
+      required:true
+    },
 
+    lastName:{
+      type:'string',
+      required:'true'
+    },
 
-      FirstName:{
-        type:'string',
-        required:true
-      },
+    mailAddress:{
+      type:'email',
+      required:true,
+      unique:true,
+    },
 
-      LastName:{
-        type:'string',
-        required:'true'
-      },
+    password:{
+      type:"string",
+      required:true
+    },
 
-      Email:{
-        type:'email',
-        required:true,
-        unique:true,
-      },
+    active:{
+      type:"integer",
+      required:true
+    },
 
-      // Company account information
-
-      Password:{
-        type:"string",
-        required:true
-      },
-
-      Active:{
-        type:"integer",
-        required:true
-      },
-
-      ActivationUrl:{
-        type:'string',
-        required:true
-      },
+    activationUrl:{
+      type:'string',
+      required:true
+    },
 
       // Company informations
-      CompanyName:{
+      companyName:{
         type:'string',
         required:true
       },
 
-      CompanyGroup:{
+      groupCompany:{
         type:'string',
         required:true
       },
 
-      CompanySIRET:{
+      siret:{
         type:'string',
         required:true
       },
 
       // Contain the avenue; the number of post box...
-      CompanyAdressRoad:{
+      road:{
         type:'string',
         required:true
       },
 
-      CompanyAdressCity:{
+      cityCompany:{
         type:'string',
         required:true
       },
 
-      CompanyAdressPostalCode:{
+      companyAdressPostalCode:{
         type:'string',
         required:true
       },
 
-      CompanyAdressCountry:{
+      companyAdressCountry:{
         type:'string',
         required:true
       },
 
-      CompanyWebsiteUrl:{
+      companyWebsiteUrl:{
         type:'string',
         required:true
       },
 
-      CompanyCarreerUrl:{
+      companyCarreerUrl:{
         type:'string',
       },
 
-      CompanyDescription:{
+      companyDescription:{
         type:'string',
       }
 
 
 
-    }
   }
 };
 

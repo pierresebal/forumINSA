@@ -11,13 +11,13 @@ module.exports = {
   login: function(req, res) {
     var data = {login:req.param('login'), password:req.param('password')};
     var request = require('request');
-
     req.session.test = "je suis là !";
     request.post({url:'https://etud.insa-toulouse.fr/~pnoel/fie/connection.php', form:data}, function(err, httpResponse, body) {
       if (!err && httpResponse.statusCode == 200) {
-        var result = JSON.parse(body);
+        if (body != '0') {
+          var result = JSON.parse(body);
 
-         Student.findOne({login: result.login}).exec(function (err, record) {
+          Student.findOne({login: result.login}).exec(function (err, record) {
             if (err)
               return res.negotiate(err);
             if (!record) {
@@ -40,32 +40,6 @@ module.exports = {
               return res.redirect("/");
             }
           });
-        Student.findOne({login:result.login}).exec(function(err, record) {
-          if (err)
-            return res.negotiate(err);
-        Student.findOne({login:result.login}).exec(function(err, record) {
-          if (err)
-            return res.negotiate(err);
-
-          if (!record) {
-            console.log("A besoin d'être créé : " + result.login);
-            Student.create(result).exec(function(err, created) {
-              console.log("A été créé");
-            });
-          }
-          else
-            console.log("Il y est :)");
-        });
-
-          if (!record) {
-            console.log("A besoin d'être créé : " + result.login);
-            Student.create(result).exec(function(err, created) {
-              console.log("A été créé");
-            });
-          }
-          else
-            console.log("Il y est :)");
-        });
 
 
         } else { //If
@@ -74,8 +48,6 @@ module.exports = {
           console.log("authentication failed.");
         }
       } else {
-      }
-      else
         console.log("erreur : " + err);
       }
     });
@@ -96,7 +68,6 @@ module.exports = {
       res.view('500');
     }
   },
-  }
 
 };
 
