@@ -73,5 +73,33 @@ module.exports = {
     }
   },
 
+  profile:function(req, res) {
+
+    Student.findOne({login: req.session.login}).exec(function (err, record) {
+      if (err)
+        return res.negotiate(err);
+      if (!record) {
+        console.log("Profil non trouvé ! :O");
+        return res.view('errorPage', {layout:'layout', ErrorTitle:"Login failed", ErrorDesc:"Etes-vous bien connecté ? Contacter le webmaster si le problème persiste"});
+      } else {
+
+        return res.view('StudentSpace/Profile', {
+          layout: 'layout',
+          login: record.login,
+          firstName: record.firstName,
+          lastName: record.lastName,
+          mailAddress: record.mailAddress,
+          year: record.year,
+          speciality: record.speciality,
+          frCVPath: record.frCVPath,
+          enCVPath: record.enCVPath,
+          personalWebsite: record.personalWebsite,
+          linkedin: record.linkedin,
+          viadeo: record.viadeo,
+          github: record.github
+        });
+      }
+    });
+  }
 };
 
