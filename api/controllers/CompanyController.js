@@ -17,7 +17,7 @@ module.exports = {
         if (typeof record !='undefined') {
           console.log('A company with the same mailAddress was found ...User result:'+record.mailAddress);
           console.log("Impossible to create a new user, the email is already used...");
-          return res.view('Company/CompanyNotCreated', {mailAddress:req.param('UserEmail'),layout:'layout'});
+          return res.view('Inscription/CompanyNotCreated', {mailAddress:req.param('UserEmail'),layout:'layout'});
         }
         else {
           var sha1 = require('sha1');
@@ -53,7 +53,7 @@ module.exports = {
                 from: "Pierre Hardy <pierre.hardy5@gmail.com>", // sender address
                 to: req.param('UserEmail'), // list of receivers
                 subject: "Message de confirmation de l'inscription", // Subject line
-                text: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+"http://localhost:1337/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe de localhost.", // plaintext body
+                text: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+"http://localhost:1337/CompanySpace/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe de localhost.", // plaintext body
                 html: "" // html body
               };
 
@@ -68,12 +68,12 @@ module.exports = {
                 smtpTransport.close();
               });
 
-              // We show a positive result to the Company created
-              return res.view('Company/UserCreated', {firstName: created.firstName,layout:'layout'});
+              // We show a positive result to the CompanySpace created
+              return res.view('Inscription/UserCreated', {firstName: created.firstName,layout:'layout'});
 
             }
             else {
-              console.log('Error while creating a new Company. Error: ' + err);
+              console.log('Error while creating a new CompanySpace. Error: ' + err);
               return res.view('404', {error: err});
             }
           });
@@ -102,17 +102,18 @@ module.exports = {
             req.session.authenticated=true;
             req.session.mailAddress=record.mailAddress;
             req.session.sessionType = "company";
+            req.session.companyConnectionTried = true;
             return res.redirect(req.param('NextUrl'));
           }
           else{
-            console.log("Company not activated...");
-            return res.view('Company/AuthGate',{error:'Votre compte n\'est pas activé veuillez vous réfférer au mail d\'activation reçu à l\'inscription...',layout:'layout'});
+            console.log("CompanySpace not activated...");
+            return res.view('Connection_Password/Connection',{error:'Votre compte n\'est pas activé veuillez vous réfférer au mail d\'activation reçu à l\'inscription...',layout:'layout'});
           }
         }
         else
         {
           console.log("Wrong password/email, auth aborted...");
-          return res.view('Company/AuthGate',{error:'Mauvaise combinaison mot de passe - email',layout:'layout'});
+          return res.view('Connection_Password/Connection',{error:'Mauvaise combinaison mot de passe - email',layout:'layout'});
         }
       }
       else
@@ -129,7 +130,7 @@ module.exports = {
   // Show space reserved to members (test page for authentification)
   MemberHomeShow:function(req,res){
     console.log('Showing member space...');
-    res.view('Company/MemberSpace',{layout:'layout'});
+    res.view('CompanySpace/MemberSpace',{layout:'layout'});
   },
 
 
@@ -142,7 +143,7 @@ module.exports = {
       console.log("User with email "+ req.session.mailAddress + " disconnected himself.");
       req.session.mailAddress='undefined';
       req.session.authenticated=false;
-      res.view('homepage',{layout:'layout'});
+      res.redirect('/');
     }
     else
     {
@@ -177,7 +178,7 @@ module.exports = {
             if(typeof updated[0] != 'undefined') {
               // If we updated the user with succes
               console.log('A company has been activated: ' + updated[0].mailAddress);
-              return res.view('Company/UserActivated', {layout: 'layout'});
+              return res.view('Inscription/UserActivated', {layout: 'layout'});
             }
             else{
               // If the right user wasn't encountered
@@ -249,7 +250,7 @@ module.exports = {
               from: "Pierre Hardy <pierre.hardy5@gmail.com>", // sender address
               to: req.param('UserAuthEmail'), // list of receivers
               subject: "FIE: Réinitialisation du mot de passe", // Subject line
-              text: "Bonjour "+updated.firstName+",\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n"+new_pass+"\nPour vous connecter, cliquez ici: http://localhost:1337/Company/Connexion\nA très bientot !\nL'équipe de localhost.", // plaintext body
+              text: "Bonjour "+updated.firstName+",\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n"+new_pass+"\nPour vous connecter, cliquez ici: http://localhost:1337/CompanySpace/Connexion\nA très bientot !\nL'équipe de localhost.", // plaintext body
               html: "" // html body
             };
 
@@ -265,7 +266,7 @@ module.exports = {
             });
 
             // We display the confirmation view if reset passwd worked successfully
-            return res.view('Company/ResetPassOK',{layout:'layout'})
+            return res.view('Inscription/ResetPassOK',{layout:'layout'})
 
           })
         }

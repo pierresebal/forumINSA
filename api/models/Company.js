@@ -40,7 +40,7 @@ module.exports = {
       required:true
     },
 
-      // Company informations
+      // CompanySpace informations
       companyName:{
         type:'string',
         required:true

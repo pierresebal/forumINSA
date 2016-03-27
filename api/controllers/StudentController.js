@@ -26,8 +26,9 @@ module.exports = {
                 console.log("A été créé");
                 req.session.login = created.login;
                 req.session.firstName = created.firstName;
+                req.session.mailAddress = created.mailAddress;
                 req.session.authenticated = true;
-                req.session.tried = true;
+                req.session.studentConnectionTried = true;
                 req.session.sessionType = "student";
                 return res.redirect("/");
               });
@@ -35,17 +36,20 @@ module.exports = {
               console.log("Il y est :)");
               req.session.login = record.login;
               req.session.firstName = record.firstName;
+              req.session.mailAddress = record.mailAddress;
               req.session.authenticated = true;
               req.session.sessionType = "student";
+              req.session.studentConnectionTried = true;
               return res.redirect("/");
             }
           });
 
 
         } else { //If
-          req.session.tried = true;
+          req.session.studentConnectionTried = true;
           req.session.authenticated = false;
           console.log("authentication failed.");
+          return res.redirect("Student/Connection");
         }
       } else {
         console.log("erreur : " + err);
@@ -60,7 +64,7 @@ module.exports = {
       console.log("User with email "+ req.session.mailAddress + " disconnected himself.");
       req.session.login='undefined';
       req.session.authenticated=false;
-      res.view('homepage',{layout:'layout'});
+      res.redirect('/');
     }
     else
     {

@@ -33,7 +33,7 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': {
-    view: 'homepage',
+    view: 'Homepage/Homepage',
     locals:{layout:'layout'}
   },
 
@@ -47,14 +47,42 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  '/Connection':{
+    view:'Connection_Password/Connection',
+    locals:{layout:'layout'}
+  },
+
+  '/INSA':{
+    view:'Insa/InsaDescription',
+    locals:{layout:'layout'}
+  },
+
+  '/Forum':{
+    view:'Forum/forumDescription',
+    locals:{layout:'layout'}
+  },
+
+  '/SJD':{
+    view:'SpeedJobDating/SJDDescription',
+    locals:{layout:'layout'}
+  },
+
+  '/about':{
+    view:'About/tmp',
+    locals:{layout:'layout'}
+  },
+
+
+
+
   /*
    ===========================================================================================================
    ============================================== STUDENT'S VIEWS=============================================
    ===========================================================================================================
    */
 
-  '/Student/Connexion': {
-    view: 'Students/AuthGate',
+  '/Student/StudentSpace':{
+    view:'StudentSpace/StudentSpace',
     locals:{layout:'layout'}
   },
 
@@ -65,7 +93,7 @@ module.exports.routes = {
    */
 
 
-  '/Student/login': {
+  '/Student/Login': {
     controller: 'StudentController',
     action: 'login'
   },
@@ -82,21 +110,20 @@ module.exports.routes = {
    */
 
   '/Company/Inscription':{
-    view:'Company/Inscription',
+    view:'Inscription/Inscription',
     locals:{layout:'layout'}
   },
 
-
-  '/Company/Connexion':{
-    view:'Company/AuthGate',
-    locals:{layout:'layout'}
-  },
 
   '/Company/ResetPassPage':{
-    view:'Company/ResetPassPage',
+    view:'Connection_Password/ResetPassPage',
     locals:{layout:'layout'}
   },
 
+  '/Company/CompanySpace':{
+    view:'CompanySpace/CompanySpace',
+    locals:{layout:'layout'}
+  },
 
   /*
    ===========================================================================================================
