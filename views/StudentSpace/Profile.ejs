@@ -5,31 +5,52 @@
     <td>Login</td>
     <td><%=login%></td>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Prénom</td>
     <td><%=firstName%></td>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Nom</td>
     <td><%=lastName%></td>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Adresse mail</td>
     <td><%=mailAddress%></td>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Année</td>
-    <td><%=year%></td>
+    <% if (typeof (year) != 'undefined' && year != "") { %>
+      <td><%=year%></td>
+    <% } else { %>
+      <td>
+        <form id="yearForm" method="post" action="/Student/setYear">
+          <select name="year">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <input type="submit" value="Sauvegarder"/>
+        </form>
+      </td>
+    <% } %>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Spécialité</td>
     <td><%=speciality%></td>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>CV francophone</td>
     <% if (typeof (frCVPath) != 'undefined' && frCVPath != "") { %>
       <td>
-        <form id="downloadFormFr" action="/file/download">
+        <form id="downloadFormFr" method="post" action="/file/download">
           <input type="hidden" name="dl" value="fr" />
           <input type="submit" value="Télécharger" />
         </form></td>
@@ -46,11 +67,12 @@
       </td>
     <% } %>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>CV anglophone</td>
     <% if (typeof (enCVPath) != 'undefined' && enCVPath != "") { %>
     <td>
-      <form id="downloadFormEn" action="/file/download">
+      <form id="downloadFormEn" method="post" action="/file/download">
         <input type="hidden" name="dl" value="en" />
         <input type="submit" value="Télécharger" />
       </form>
@@ -69,25 +91,61 @@
     </td>
     <% } %>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Site internet personnel</td>
-    <% if( typeof (personalWebsite) != 'undefined') { %>
+    <% if (typeof (personalWebsite) != 'undefined' && personalWebsite != "") { %>
       <td><a href="<%=personalWebsite%>"><%=personalWebsite%></a></td>
     <% } else { %>
-      <td>Faut mettre votre site ...</td>
+    <td>
+      <form id="personalWebsite" method="post" action="/Student/setPersonalWebsite">
+        <input type="text" name="personalWebsite"/>
+        <input type="submit" value="Sauvegarder"/>
+      </form>
+    </td>
     <% } %>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Profil Linkedin</td>
-    <td><a href="<%=linkedin%>"><%=linkedin%></a></td>
+    <% if (typeof (linkedin) != 'undefined' && linkedin != "") { %>
+      <td><a href="<%=linkedin%>">Voir le profil</a></td>
+    <% } else { %>
+      <td>
+        <form id="linkedinForm" method="post" action="/Student/setLinkedin">
+          <input type="text" name="linkedin"/>
+          <input type="submit" value="Sauvegarder"/>
+        </form>
+      </td>
+    <% } %>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Profil Viadeo</td>
-    <td><a href="<%=viadeo%>"><%=viadeo%></a></td>
+    <% if (typeof (viadeo) != 'undefined' && linkedin != "") { %>
+      <td><a href="<%=viadeo%>">Voir le profil</a></td>
+    <% } else { %>
+      <td>
+        <form id="viadeoForm" method="post" action="/Student/setViadeo">
+          <input type="text" name="viadeo"/>
+          <input type="submit" value="Sauvegarder"/>
+        </form>
+      </td>
+    <% } %>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Profil GitHub</td>
-    <td><a href="<%=github%>"><%=github%></a></td>
+    <% if (typeof (github) != 'undefined' && linkedin != "") { %>
+      <td><a href="<%=github%>">Voir le profil</a></td>
+    <% } else { %>
+      <td>
+        <form id="githubForm" method="post" action="/Student/setGithub">
+          <input type="text" name="github"/>
+          <input type="submit" value="Sauvegarder"/>
+        </form>
+      </td>
+    <% } %>
   </tr>
 
 </table>

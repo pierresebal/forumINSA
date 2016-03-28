@@ -26,11 +26,8 @@ module.exports = {
       return res.view('ErrorPage', {layout:'layout', ErrorTitle:"Erreur lors de l'upload", ErrorDesc:"Votre CV n'est ni uploadé en anglais ni en français"});
     }
 
-    var randomNumber  = Math.random() * 1000000 + 1; //Entre 1 et 1000000
-    randomNumber = Math.floor(randomNumber);
-
     var uploadFile = req.file(file);
-    var fileName = prefix + req.session.login + "-" + randomNumber + ".pdf";
+    var fileName = prefix + req.session.login + ".pdf";
 
     uploadFile.upload({dirname: '../../files/'+file, saveAs: fileName},function onUploadComplete (err, files) {
       //	Files will be uploaded to .tmp/uploads

@@ -100,6 +100,71 @@ module.exports = {
         });
       }
     });
+  },
+
+  setYear:function(req, res) {
+
+    var github = req.param('year');
+    //Todo: Verification de year;
+
+    Student.update({login:req.session.login}, {year:year}).exec(function(err, record) {
+      if (err)
+        return res.view('ErrorPage', {layout:'layout', ErrorTitle:"prb update year."});
+
+      return res.redirect('/Student/Profile');
+    });
+  },
+
+  setGithub:function(req, res) {
+
+    var github = req.param('github');
+    //Todo: Verification de year;
+
+    Student.update({login:req.session.login}, {github:github}).exec(function(err, record) {
+      if (err)
+        return res.view('ErrorPage', {layout:'layout', ErrorTitle:"prb update github."});
+
+      return res.redirect('/Student/Profile');
+    });
+  },
+
+  setViadeo:function(req, res) {
+
+    var viadeo = req.param('viadeo');
+    //Todo: Verification de year;
+
+    Student.update({login:req.session.login}, {viadeo:viadeo}).exec(function(err, record) {
+      if (err)
+        return res.view('ErrorPage', {layout:'layout', ErrorTitle:"prb update Viadeo."});
+
+      return res.redirect('/Student/Profile');
+    });
+  },
+
+  setLinkedin:function(req, res) {
+
+    var linkedin = req.param('linkedin');
+    //Todo: Verification de year;
+
+    Student.update({login:req.session.login}, {linkedin:linkedin}).exec(function(err, record) {
+      if (err)
+        return res.view('ErrorPage', {layout:'layout', ErrorTitle:"prb update Linkedin."});
+
+      return res.redirect('/Student/Profile');
+    });
+  },
+
+  setPersonalWebsite:function(req, res) {
+
+    var personalWebsite = req.param('personalWebsite');
+    //Todo: Verification de year;
+
+    Student.update({login:req.session.login}, {personalWebsite:personalWebsite}).exec(function(err, record) {
+      if (err)
+        return res.view('ErrorPage', {layout:'layout', ErrorTitle:"prb update personalWebsite."});
+
+      return res.redirect('/Student/Profile');
+    });
   }
 };
 

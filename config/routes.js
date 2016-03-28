@@ -117,6 +117,43 @@ module.exports.routes = {
     action: 'profile'
   },
 
+  // Modification profile
+
+  '/Student/setYear':{
+    controller: 'StudentController',
+    action: 'setYear'
+  },
+
+  '/Student/setSpeciality':{
+    controller: 'StudentController',
+    action: 'profile'
+  },
+
+  '/Student/setPersonalWebsite':{
+    controller: 'StudentController',
+    action: 'profile'
+  },
+
+  '/Student/setLinkedin':{
+    controller: 'StudentController',
+    action: 'setLinkedin'
+  },
+
+  '/Student/setViadeo':{
+    controller: 'StudentController',
+    action: 'setViadeo'
+  },
+
+  '/Student/setGithub':{
+    controller: 'StudentController',
+    action: 'setGithub'
+  },
+
+  '/Student/setPersonalWebsite':{
+    controller: 'StudentController',
+    action: 'setPersonalWebsite'
+  },
+
   /*
    ===========================================================================================================
    ============================================== COMPANY'S VIEWS ============================================
