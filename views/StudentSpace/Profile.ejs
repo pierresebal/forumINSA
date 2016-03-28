@@ -27,11 +27,15 @@
   </tr>
   <tr>
     <td>CV francophone</td>
-    <% if (typeof (frCVPath) != 'undefined') { %>
-      <td><a href="<%=frCVPath%>"><%=frCVPath%></a></td>
+    <% if (typeof (frCVPath) != 'undefined' && frCVPath != "") { %>
+      <td>
+        <form id="downloadFormFr" action="/file/download">
+          <input type="hidden" name="dl" value="fr" />
+          <input type="submit" value="Télécharger" />
+        </form></td>
     <% } else { %>
       <td>
-        <form id="uploadForm"
+        <form id="uploadFormFr"
                 enctype="multipart/form-data"
                 action="/file/upload"
                 method="post">
@@ -44,11 +48,17 @@
   </tr>
   <tr>
     <td>CV anglophone</td>
-    <% if (typeof (enCVPath) != 'undefined') { %>
-    <td><a href="<%=enCVPath%>"><%=enCVPath%></a></td>
+    <% if (typeof (enCVPath) != 'undefined' && enCVPath != "") { %>
+    <td>
+      <form id="downloadFormEn" action="/file/download">
+        <input type="hidden" name="dl" value="en" />
+        <input type="submit" value="Télécharger" />
+      </form>
+
+    </td>
     <% } else { %>
     <td>
-      <form id="uploadForm"
+      <form id="uploadFormEn"
             enctype="multipart/form-data"
             action="/file/upload"
             method="post">

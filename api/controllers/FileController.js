@@ -4,6 +4,8 @@
  * @description :: Server-side logic for managing files
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+var fs = require('fs');
+var path = require('path');
 
 module.exports = {
 
@@ -24,28 +26,74 @@ module.exports = {
       return res.view('ErrorPage', {layout:'layout', ErrorTitle:"Erreur lors de l'upload", ErrorDesc:"Votre CV n'est ni uploadé en anglais ni en français"});
     }
 
+    var randomNumber  = Math.random() * 1000000 + 1; //Entre 1 et 1000000
+    randomNumber = Math.floor(randomNumber);
 
     var uploadFile = req.file(file);
-    console.log(uploadFile);
+    var fileName = prefix + req.session.login + "-" + randomNumber + ".pdf";
 
-    uploadFile.upload({dirname: '../../files/'+file, saveAs: prefix + req.session.login + ".pdf"},function onUploadComplete (err, files) {
+    uploadFile.upload({dirname: '../../files/'+file, saveAs: fileName},function onUploadComplete (err, files) {
       //	Files will be uploaded to .tmp/uploads
 
       if (err) return res.serverError(err);
       //	IF ERROR Return and send 500 error with error
 
       //Ajout de l'url dans la database
-      /* if (file=="fr-cv") {
-        Student.update({login: req.session.login}, {frCVPath:});
+      if (file=="fr-cv") {
+        Student.update({login: req.session.login}, {frCVPath:fileName}).exec(function afterwards(err,updated) {
+          if (err) {
+            return;
+          }
+
+          console.log("Probleme pour update le fr-cv")
+        });
 
       } else if (file=="en-cv") {
+        Student.update({login: req.session.login}, {enCVPath:fileName}).exec(function afterwards(err,updated) {
+          if (err) {
+            console.log("Probleme pour update le en-cv")
+            return;
+          }
 
-      } */
+
+        });
+      }
 
       console.log("c'est bon, redirection");
-      return res.redirect('/Student/Profile');
+
+      setTimeout(function() { //Attends 1 seconde le temps que la bdd s'actualise
+        return res.redirect('/Student/Profile');
+      }, 1000);
     });
   },
 
+  download: function(req, res) {
+
+    var fileFr ="", fileEn="";
+    // Get the URL of the file to download
+    Student.findOne({login:req.session.login}, function (err, record) {
+      if (err)
+        return res.view("ErrorPage", {layout:'layout', ErrorTitle:"Erreur téléchargement", ErrorDesc:"Nous n'avons pas trouvé votre profil."});
+      fileFr = record.frCVPath;
+      fileEn = record.enCVPath;
+      console.log("Trouvé cv-fr : " + fileFr + " cv-en :" + fileEn);
+
+      var filePath;
+      if (req.param('dl') == "fr") {
+        filePath = path.resolve("files/fr-cv", fileFr.toString());
+      } else if (req.param('dl') == "en") {
+        filePath = path.resolve("files/en-cv", fileEn.toString());
+      }
+
+      console.log("filePath : " + filePath);
+
+      // Should check that it exists here, but for demo purposes, assume it does
+      // and just pipe a read stream to the response.
+      //fs.createReadStream(filePath).pipe(res);
+      res.download(filePath);
+
+    });
+
+  }
 };
 

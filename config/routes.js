@@ -77,6 +77,11 @@ module.exports.routes = {
     action: 'upload'
   },
 
+  '/file/download':{
+    controller: 'FileController',
+    action: 'download'
+  },
+
 
 
   /*
