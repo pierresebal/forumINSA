@@ -27,15 +27,45 @@
   </tr>
   <tr>
     <td>CV francophone</td>
-    <td><a href="<%=frCVPath%>"><%=frCVPath%></a></td>
+    <% if (typeof (frCVPath) != 'undefined') { %>
+      <td><a href="<%=frCVPath%>"><%=frCVPath%></a></td>
+    <% } else { %>
+      <td>
+        <form id="uploadForm"
+                enctype="multipart/form-data"
+                action="/file/upload"
+                method="post">
+          <input type="hidden" name="language" value="fr"/>
+          <input type="file" name="fr-cv" />
+          <input type="submit" value="submit"/>
+        </form>
+      </td>
+    <% } %>
   </tr>
   <tr>
     <td>CV anglophone</td>
+    <% if (typeof (enCVPath) != 'undefined') { %>
     <td><a href="<%=enCVPath%>"><%=enCVPath%></a></td>
+    <% } else { %>
+    <td>
+      <form id="uploadForm"
+            enctype="multipart/form-data"
+            action="/file/upload"
+            method="post">
+        <input type="hidden" name="language" value="en"/>
+        <input type="file" name="en-cv" />
+        <input type="submit" value="submit"/>
+      </form>
+    </td>
+    <% } %>
   </tr>
   <tr>
     <td>Site internet personnel</td>
-    <td><a href="<%=personalWebsite%>"><%=personalWebsite%></a></td>
+    <% if( typeof (personalWebsite) != 'undefined') { %>
+      <td><a href="<%=personalWebsite%>"><%=personalWebsite%></a></td>
+    <% } else { %>
+      <td>Faut mettre votre site ...</td>
+    <% } %>
   </tr>
   <tr>
     <td>Profil Linkedin</td>

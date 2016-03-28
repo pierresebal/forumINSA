@@ -72,6 +72,10 @@ module.exports.routes = {
     locals:{layout:'layout'}
   },
 
+  '/file/upload':{
+    controller: 'FileController',
+    action: 'upload'
+  },
 
 
 
