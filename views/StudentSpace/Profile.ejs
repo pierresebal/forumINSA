@@ -27,7 +27,8 @@
       <td><%=year%></td>
     <% } else { %>
       <td>
-        <form id="yearForm" method="post" action="/Student/setYear">
+        <form id="yearForm" method="post" action="/Student/setUserInfo">
+          <input type="hidden" name="data" value="y"/>
           <select name="year">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -43,7 +44,22 @@
   <!-- ------------------------------------------- -->
   <tr>
     <td>Spécialité</td>
+    <% if (typeof (speciality) != 'undefined' && speciality != "") { %>
     <td><%=speciality%></td>
+    <% } else { %>
+      <td>
+        <form id="specialityForm" method="post" action="/Student/setUserInfo">
+          <input type="hidden" name="data" value="s"/>
+          <select name="speciality">
+            <% specialities.forEach(function(aSpeciality) { %>
+              <option value="<%= aSpeciality %>"><%= aSpeciality%></option>
+            <% }); %>
+
+          </select>
+          <input type="submit" value="Sauvegarder"/>
+        </form>
+      </td>
+    <% } %>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
@@ -98,7 +114,8 @@
       <td><a href="<%=personalWebsite%>"><%=personalWebsite%></a></td>
     <% } else { %>
     <td>
-      <form id="personalWebsite" method="post" action="/Student/setPersonalWebsite">
+      <form id="personalWebsite" method="post" action="/Student/setUserInfo">
+        <input type="hidden" name="data" value="w"/>
         <input type="text" name="personalWebsite"/>
         <input type="submit" value="Sauvegarder"/>
       </form>
@@ -112,7 +129,8 @@
       <td><a href="<%=linkedin%>">Voir le profil</a></td>
     <% } else { %>
       <td>
-        <form id="linkedinForm" method="post" action="/Student/setLinkedin">
+        <form id="linkedinForm" method="post" action="/Student/setUserInfo">
+          <input type="hidden" name="data" value="l"/>
           <input type="text" name="linkedin"/>
           <input type="submit" value="Sauvegarder"/>
         </form>
@@ -126,7 +144,8 @@
       <td><a href="<%=viadeo%>">Voir le profil</a></td>
     <% } else { %>
       <td>
-        <form id="viadeoForm" method="post" action="/Student/setViadeo">
+        <form id="viadeoForm" method="post" action="/Student/setUserInfo">
+          <input type="hidden" name="data" value="v"/>
           <input type="text" name="viadeo"/>
           <input type="submit" value="Sauvegarder"/>
         </form>
@@ -140,7 +159,8 @@
       <td><a href="<%=github%>">Voir le profil</a></td>
     <% } else { %>
       <td>
-        <form id="githubForm" method="post" action="/Student/setGithub">
+        <form id="githubForm" method="post" action="/Student/setUserInfo">
+          <input type="hidden" name="data" value="g"/>
           <input type="text" name="github"/>
           <input type="submit" value="Sauvegarder"/>
         </form>

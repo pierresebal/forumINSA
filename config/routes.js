@@ -119,40 +119,11 @@ module.exports.routes = {
 
   // Modification profile
 
-  '/Student/setYear':{
+  '/Student/setUserInfo':{
     controller: 'StudentController',
-    action: 'setYear'
+    action: 'setUserInfo'
   },
 
-  '/Student/setSpeciality':{
-    controller: 'StudentController',
-    action: 'profile'
-  },
-
-  '/Student/setPersonalWebsite':{
-    controller: 'StudentController',
-    action: 'profile'
-  },
-
-  '/Student/setLinkedin':{
-    controller: 'StudentController',
-    action: 'setLinkedin'
-  },
-
-  '/Student/setViadeo':{
-    controller: 'StudentController',
-    action: 'setViadeo'
-  },
-
-  '/Student/setGithub':{
-    controller: 'StudentController',
-    action: 'setGithub'
-  },
-
-  '/Student/setPersonalWebsite':{
-    controller: 'StudentController',
-    action: 'setPersonalWebsite'
-  },
 
   /*
    ===========================================================================================================
