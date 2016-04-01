@@ -11,11 +11,11 @@ module.exports = {
   login: function(req, res) {
     var data = {login:req.param('login'), password:req.param('password')};
     var request = require('request');
-    req.session.test = "je suis là !";
+
     request.post({url:'https://etud.insa-toulouse.fr/~pnoel/fie/connection.php', form:data}, function(err, httpResponse, body) {
       if (!err && httpResponse.statusCode == 200) {
         if (body != '0') {
-          var result = JSON.parse(body);
+          var result = JSON.parse(body); //Renvoyé par le script php
 
           Student.findOne({login: result.login}).exec(function (err, record) {
             if (err)
@@ -28,7 +28,6 @@ module.exports = {
                 req.session.firstName = created.firstName;
                 req.session.mailAddress = created.mailAddress;
                 req.session.authenticated = true;
-                req.session.studentConnectionTried = true;
                 req.session.sessionType = "student";
                 return res.redirect("/");
               });
@@ -39,17 +38,16 @@ module.exports = {
               req.session.mailAddress = record.mailAddress;
               req.session.authenticated = true;
               req.session.sessionType = "student";
-              req.session.studentConnectionTried = true;
               return res.redirect("/");
             }
           });
 
 
         } else { //If
-          req.session.studentConnectionTried = true;
+          req.session.connectionFailed = true;
           req.session.authenticated = false;
           console.log("authentication failed.");
-          return res.redirect("Student/Connection");
+          return res.view("Connection_Password/Connection", {layout:'layout', studentConnectionFailed:true});
         }
       } else {
         console.log("erreur : " + err);
@@ -58,6 +56,7 @@ module.exports = {
 
   },
 
+  /* ---------------------------------------------------------------------------------------------- */
   // StudentLogout: set session var as an unauthentificated user
   StudentLogout:function(req,res){
     if(req.session.authenticated && req.session.sessionType == "student"){
@@ -105,7 +104,7 @@ module.exports = {
     });
   },
 
-
+  /* ---------------------------------------------------------------------------------------------- */
   setUserInfo:function(req, res) {
 
     var data = req.param('data').charAt(0);

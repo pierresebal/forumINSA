@@ -102,7 +102,7 @@ module.exports = {
             req.session.authenticated=true;
             req.session.mailAddress=record.mailAddress;
             req.session.sessionType = "company";
-            req.session.companyConnectionTried = true;
+            req.session.connectionFailed = false;
             return res.redirect(req.param('NextUrl'));
           }
           else{
@@ -113,7 +113,8 @@ module.exports = {
         else
         {
           console.log("Wrong password/email, auth aborted...");
-          return res.view('Connection_Password/Connection',{error:'Mauvaise combinaison mot de passe - email',layout:'layout'});
+          //return res.view('Connection_Password/Connection',{error:'Mauvaise combinaison mot de passe - email',layout:'layout'});
+          return res.view("Connection_Password/Connection", {layout:'layout', companyConnectionFailed:true});
         }
       }
       else

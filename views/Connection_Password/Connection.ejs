@@ -13,7 +13,7 @@
 <!-- COMPANY-->
 <h2>Entreprises</h2>
 
-<%if (req.session.studentConnectionTried == true) { %>
+<%if (typeof companyConnectionFailed != 'undefined' && companyConnectionFailed == true) { %>
 <p>Authentication failed. Is your login or password incorrect ?</p>
 <% } %>
 
@@ -31,7 +31,7 @@
 <!-- STUDENT -->
 <h2>Etudiants INSA</h2>
 
-<%if (req.session.studentConnectionTried == true) { %>
+<%if (typeof studentConnectionFailed != 'undefined' && studentConnectionFailed == true) { %>
 <p>Authentication failed. Is your login or password incorrect ?</p>
 <% } %>
 
