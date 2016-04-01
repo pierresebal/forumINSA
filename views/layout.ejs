@@ -1,140 +1,73 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="fr">
 <head>
+  <meta charset="utf-8">
   <title><%=typeof title == 'undefined' ? 'New Sails App' : title%></title>
+
 
   <!-- Viewport mobile tag for sensible mobile support -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  <!-- Latest compiled and minified jquery core -->
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
 
-  <!--
-      Stylesheets and Preprocessors
-      ==============================
+  <!-- Bootstrap - Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-      You can always bring in CSS files manually with `<link>` tags, or asynchronously
-      using a solution like AMD (RequireJS).  Or, if you like, you can take advantage
-      of Sails' conventional asset pipeline (boilerplate Gruntfile).
+  <!-- Bootstrap - Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
-      By default, stylesheets from your `assets/styles` folder are included
-      here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
-      are supported. In production, your styles will be minified and concatenated into
-      a single file.
+  <!-- Bootstrap - Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
-      To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
-      For example, here are a few things you could do:
 
-          + Change the order of your CSS files
-          + Import stylesheets from other directories
-          + Use a different or additional preprocessor, like SASS, SCSS or Stylus
-  -->
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+  <!-- pure css -->
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 
   <!--STYLES-->
+  <link rel="stylesheet" href="/styles/custom.css">
   <link rel="stylesheet" href="/styles/importer.css">
   <!--STYLES END-->
+
+
 </head>
+<body class="custom-body">
+  <div class="pure-g">
+    <div class="pure-u-3-5 body-content" style="margin: auto">
+      <header>
+        <img src='/images/Logo_FIE_blanc.png' width="600" alt="logo"/>
+        <p>test</p>
+        <% if(req.session.authenticated){ %>
+            <p>Connecté en tant que:<br/>
+          <% if (req.session.sessionType == "company") {%>
+              <%=req.session.UserEmail%></p>
+        <%  } else if (req.session.sessionType == "student") { %>
+              <%=req.session.firstName%></p>
+        <%  } else { %>
+              Type inconnu</p>
+        <%  }
+          } %>
 
-<!--User Bar-->
-<h1>Utilisateur</h1>
-<% if(req.session.authenticated){
-    if (req.session.sessionType == "company") {%>
-    <p>Utilisateur connecté: <%=req.session.UserEmail%></p>
-<%  } else if (req.session.sessionType == "student") { %>
-    <p>Utilisateur connecté: <%=req.session.firstName%></p>
-<%  } else { %>
-    <p>Utilisateur connecté: Type inconnu</p>
-<%  }
-  } else{ %>
-<p>Utilisateur non connecté</p>
-<% } %>
+      </header>
 
-<!--Nav bar-->
-<nav>
-  <h1>Barre de navigation</h1>
-  <ul>
-    <li><a href="/">Accueil</a></li>
-    <li><a href="/INSA">INSA Toulouse</a></li>
-    <li><a href="/Forum">Forum</a></li>
-    <li><a href="/SJD">Speed Job Dating</a></li>
+      <!-- Content inserted here -->
+      <%- include nav %>
+      <%- body %>
+    </div>
+  </div>
 
-    <% if (req.session.authenticated) { %>
-      <% if(req.session.sessionType=="company"){%>
-        <li><a href="/Company/CompanySpace">Espace perso</a></li>
-        <li><a href="/Company/CompanyLogout">Déconnexion</a></li>
+  <footer>
+    <div class="pure-g">
+      <div class="pure-u-3-5 footer">
+        <%- include footer %>
+      </div>
+    </div>
+  </footer>
 
-      <% } else if (req.session.sessionType=="student") { %>
-        <li><a href="/Student/StudentSpace">Espace perso</a></li>
-        <li><a href="/Student/StudentLogout">Déconnexion</a></li>
-      <% } %>
-
-    <% } else { %>
-      <li><a href="/Company/Inscription">Inscription entreprise</a></li>
-      <li><a href="/Connection">Connexion</a></li>
-    <% } %>
-    <li><a href="/about">A propos</a></li>
-
-
-
-
-  </ul>
-</nav>
-
-
-<body>
-<%- body %>
-
-
-
-<!--
-    Client-side Templates
-    ========================
-
-    HTML templates are important prerequisites of modern, rich client applications.
-    To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
-    that you load these templates client-side.
-
-    By default, your Gruntfile is configured to automatically load and precompile
-    client-side JST templates in your `assets/templates` folder, then
-    include them here automatically (between TEMPLATES and TEMPLATES END).
-
-    To customize this behavior to fit your needs, just edit `tasks/pipeline.js`.
-    For example, here are a few things you could do:
-
-        + Import templates from other directories
-        + Use a different template engine (handlebars, jade, dust, etc.)
-        + Internationalize your client-side templates using a server-side
-          stringfile before they're served.
--->
-
-<!--TEMPLATES-->
-
-<!--TEMPLATES END-->
-
-
-<!--
-
-  Client-side Javascript
-  ========================
-
-  You can always bring in JS files manually with `script` tags, or asynchronously
-  on the client using a solution like AMD (RequireJS).  Or, if you like, you can
-  take advantage of Sails' conventional asset pipeline (boilerplate Gruntfile).
-
-  By default, files in your `assets/js` folder are included here
-  automatically (between SCRIPTS and SCRIPTS END).  Both JavaScript (.js) and
-  CoffeeScript (.coffee) are supported. In production, your scripts will be minified
-  and concatenated into a single file.
-
-  To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
-  For example, here are a few things you could do:
-
-      + Change the order of your scripts
-      + Import scripts from other directories
-      + Use a different preprocessor, like TypeScript
-
--->
-
-<!--SCRIPTS-->
-<script src="/js/dependencies/sails.io.js"></script>
-<!--SCRIPTS END-->
 </body>
 </html>
