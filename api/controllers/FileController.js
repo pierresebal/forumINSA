@@ -30,7 +30,6 @@ module.exports = {
     var fileName = prefix + req.session.login + ".pdf";
 
     uploadFile.upload({dirname: '../../files/'+file, saveAs: fileName},function onUploadComplete (err, files) {
-      //	Files will be uploaded to .tmp/uploads
 
       if (err) return res.serverError(err);
       //	IF ERROR Return and send 500 error with error
@@ -39,27 +38,32 @@ module.exports = {
       if (file=="fr-cv") {
         Student.update({login: req.session.login}, {frCVPath:fileName}).exec(function afterwards(err,updated) {
           if (err) {
+            console.log("Probleme pour update le fr-cv");
             return;
           }
-
-          console.log("Probleme pour update le fr-cv")
         });
 
       } else if (file=="en-cv") {
         Student.update({login: req.session.login}, {enCVPath:fileName}).exec(function afterwards(err,updated) {
           if (err) {
-            console.log("Probleme pour update le en-cv")
+            console.log("Probleme pour update le en-cv");
             return;
           }
-
-
         });
       }
 
       console.log("c'est bon, redirection");
 
       setTimeout(function() { //Attends 1 seconde le temps que la bdd s'actualise
-        return res.redirect('/Student/Profile');
+
+        if (req.param('redirect') == "first" && req.param('language')=="fr")
+          return res.view('StudentSpace/FirstConnection_2', {layout:'layout', frCVPath:fileName});
+        else if (req.param('redirect') == "first" && req.param('language')=="en")
+          return res.view('StudentSpace/FirstConnection_2', {layout:'layout', enCVPath:fileName});
+        else if (req.param('redirect') == "profile")
+          return res.redirect('/Student/Profile');
+
+
       }, 1000);
     });
   },

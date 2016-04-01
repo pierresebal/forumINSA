@@ -8,45 +8,42 @@
 module.exports = {
 
 
+  /* */
   login: function(req, res) {
+
     var data = {login:req.param('login'), password:req.param('password')};
     var request = require('request');
 
-    request.post({url:'https://etud.insa-toulouse.fr/~pnoel/fie/connection.php', form:data}, function(err, httpResponse, body) {
+    request.post({url:'https://etud.insa-toulouse.fr/~pnoel/fie/connection.php', form:data}, function(err, httpResponse, body) { //Demande de connection au ldap via le script php qui renvoie '0' si la connexion echoue
       if (!err && httpResponse.statusCode == 200) {
-        if (body != '0') {
-          var result = JSON.parse(body); //Renvoyé par le script php
+        if (body != '0') { // si la personne a pu se connecter au ldap
+          var result = JSON.parse(body);
 
-          Student.findOne({login: result.login}).exec(function (err, record) {
+          Student.findOne({login: result.login}).exec(function find(err, record) {
             if (err)
               return res.negotiate(err);
             if (!record) {
-              console.log("A besoin d'être créé : " + result.login);
-              Student.create(result).exec(function (err, created) {
-                console.log("A été créé");
-                req.session.login = created.login;
-                req.session.firstName = created.firstName;
-                req.session.mailAddress = created.mailAddress;
-                req.session.authenticated = true;
-                req.session.sessionType = "student";
-                return res.redirect("/");
+              Student.create(result).exec(function setSessionVariables(err, created) {
+                StudentSession.setStudentSessionVariables(req, created.login, created.firstName, created.mailAddress, true, "student");
+
+                return res.view('StudentSpace/FirstConnection_1', {
+                  layout: 'layout',
+                  login: created.login,
+                  firstName: created.firstName,
+                  lastName: created.lastName,
+                  mailAddress: created.mailAddress,
+                  specialities: Student.definition.speciality.enum
+                });
               });
+
             } else {
-              console.log("Il y est :)");
-              req.session.login = record.login;
-              req.session.firstName = record.firstName;
-              req.session.mailAddress = record.mailAddress;
-              req.session.authenticated = true;
-              req.session.sessionType = "student";
+              StudentSession.setStudentSessionVariables (req, record.login, record.firstName, record.mailAddress, true, "student");
               return res.redirect("/");
             }
           });
 
-
-        } else { //If
-          req.session.connectionFailed = true;
-          req.session.authenticated = false;
-          console.log("authentication failed.");
+        } else { //Personne non reconnu par le ldap
+          StudentSession.setStudentSessionVariables (req, "", "", "", false, "");
           return res.view("Connection_Password/Connection", {layout:'layout', studentConnectionFailed:true});
         }
       } else {
@@ -60,9 +57,7 @@ module.exports = {
   // StudentLogout: set session var as an unauthentificated user
   StudentLogout:function(req,res){
     if(req.session.authenticated && req.session.sessionType == "student"){
-      console.log("User with email "+ req.session.mailAddress + " disconnected himself.");
-      req.session.login='undefined';
-      req.session.authenticated=false;
+      StudentSession.setStudentSessionVariables (req, "", "", "", false, "");
       res.redirect('/');
     }
     else
@@ -72,17 +67,17 @@ module.exports = {
     }
   },
 
+  /* ----------------------------------------------------------------------------------------------- */
+
+  //Affiche les informations du profil
   profile:function(req, res) {
 
     Student.findOne({login: req.session.login}).exec(function (err, record) {
       if (err)
         return res.negotiate(err);
       if (!record) {
-        console.log("Profil non trouvé ! :O");
         return res.view('errorPage', {layout:'layout', ErrorTitle:"Login failed", ErrorDesc:"Etes-vous bien connecté ? Contacter le webmaster si le problème persiste"});
       } else {
-
-        console.log("Specialities : " + Student.definition.speciality.enum);
 
         return res.view('StudentSpace/Profile', {
           layout: 'layout',
@@ -105,9 +100,11 @@ module.exports = {
   },
 
   /* ---------------------------------------------------------------------------------------------- */
-  setUserInfo:function(req, res) {
 
-    var data = req.param('data').charAt(0);
+  //Modifie une information de l'utilisateur
+  setAUserInfo:function(req, res) {
+
+    var data = req.param('data').charAt(0); //Type d'info à modifier
 
     switch (data) {
       case 'y' :
@@ -176,10 +173,48 @@ module.exports = {
         });
         break;
 
+      case 'm' :
+        var mailAddress = req.param('mailAddress');
+        //Todo: Verification de year;
+        Student.update({login:req.session.login}, {mailAddress:mailAddress}).exec(function(err, record) {
+          if (err)
+            return res.view('ErrorPage', {layout:'layout', ErrorTitle:"prb update mailAddress."});
+
+          return res.redirect('/Student/Profile');
+        });
+        break;
+
       default :
         console.log("Type de data inconnu");
     }
 
+  },
+
+
+  //Mofifie toutes les info que l'utilisateur veut modifier.
+  setAllInfo: function(req,res) {
+    var mailAddress = req.session.mailAddress;
+
+    if (req.param('maillAddress') != "")
+      mailAddress= req.param('mailAddress');
+
+
+
+    Student.update({login:req.session.login}, {
+      mailAddress: mailAddress,
+      year: req.param('year'),
+      speciality: req.param('speciality'),
+      personalWebsite: req.param('personalWebsite'),
+      linkedin: req.param('linkedin'),
+      viadeo: req.param('viadeo'),
+      github: req.param('github')
+    }).exec(function update(err, updatedUser){
+      if (err)
+        return res.view("ErrorPage", {layout:'layout', ErrorTitle:"Update failed"});
+
+      console.log("Yo");
+      return res.view('StudentSpace/FirstConnection_2', {layout:'layout'});
+    });
   },
 
 };

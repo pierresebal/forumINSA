@@ -1,0 +1,57 @@
+<h2>Première connexion</h2>
+
+<p>
+  Maintenant tu peux donner ton CV.
+</p>
+
+<table>
+  <tr>
+    <td>CV francophone</td>
+    <% if (typeof (frCVPath) != 'undefined' && frCVPath != "") { %>
+    <td>
+      <form id="downloadFormFr" method="post" action="/file/download">
+        <input type="hidden" name="dl" value="fr" />
+        <input type="submit" value="Télécharger" />
+      </form></td>
+    <% } else { %>
+    <td>
+      <form id="uploadFormFr"
+            enctype="multipart/form-data"
+            action="/file/upload"
+            method="post">
+        <input type="hidden" name="language" value="fr"/>
+        <input type="hidden" name="redirect" value="first"/>
+        <input type="file" name="fr-cv" />
+        <input type="submit" value="Envoyer"/>
+      </form>
+    </td>
+    <% } %>
+  </tr>
+  <!-- ------------------------------------------- -->
+  <tr>
+    <td>CV anglophone</td>
+    <% if (typeof (enCVPath) != 'undefined' && enCVPath != "") { %>
+    <td>
+      <form id="downloadFormEn" method="post" action="/file/download">
+        <input type="hidden" name="dl" value="en" />
+        <input type="submit" value="Télécharger" />
+      </form>
+
+    </td>
+    <% } else { %>
+    <td>
+      <form id="uploadFormEn"
+            enctype="multipart/form-data"
+            action="/file/upload"
+            method="post">
+        <input type="hidden" name="language" value="en"/>
+        <input type="hidden" name="redirect" value="first"/>
+        <input type="file" name="en-cv" />
+        <input type="submit" value="Envoyer"/>
+      </form>
+    </td>
+    <% } %>
+  </tr>
+</table>
+
+<a href="/Student/StudentSpace" >Terminer</a>

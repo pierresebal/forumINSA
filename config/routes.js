@@ -119,9 +119,14 @@ module.exports.routes = {
 
   // Modification profile
 
-  '/Student/setUserInfo':{
+  '/Student/setAUserInfo':{
     controller: 'StudentController',
-    action: 'setUserInfo'
+    action: 'setAUserInfo'
+  },
+
+  '/Student/setAllInfo':{
+    controller: 'StudentController',
+    action: 'setAllInfo'
   },
 
 

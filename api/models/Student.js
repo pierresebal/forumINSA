@@ -34,6 +34,7 @@ module.exports = {
         'Génie Mécanique',
         'Génie Physique',
         'Informatique et Réseaux',
+        'Aucune spécialité'
       ]
     },
     enCVPath: {

@@ -1,0 +1,54 @@
+<h2>Première connexion</h2>
+
+<p>
+  Bienvenue sur le site Forum INSA Entreprise.
+  Blabla bla.
+
+  Afin que les entreprises puissent exploiter au mieux votre profil, nous vous invitons à le compléter dès maintenant. Vous pourrez le modifier plus tard si vous le souhaitez.
+</p>
+
+<form id="setAllInfo" method="POST" action ="/Student/setAllInfo">
+  <p>
+    <label>Login</label> : <%=login%><br />
+    <label>Prénom</label> : <%=firstName%><br />
+    <label>Nom</label> : <%=lastName%><br />
+    <label>Adresse mail </label> : <input type="text" name="mailAddress" placeholder="Adresse mail"/>
+    <br />
+    Votre addresse mail actuelle est <%=mailAddress%>. Mettez en une nouvelle si vous souhaitez la modifier. Sinon laissez la case vide.
+    <br />
+
+    <label>Année</label> :
+    <select name="year">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <br />
+
+    <label>Spécialité</label> :
+    <select name="speciality">
+      <% specialities.forEach(function(aSpeciality) { %>
+      <option value="<%= aSpeciality %>"><%= aSpeciality%></option>
+      <% }); %>
+    </select>
+    <br />
+
+    <label>Site web personnel</label> : http://<input type="text" name="personalWebsite"/>
+    <br />
+
+    <label>Profil linkedin</label> : http://<input type="text" name="linkedin"/>
+    <br />
+
+    <label>Profil Viadeo</label> : http://<input type="text" name="viadeo"/>
+    <br />
+
+    <label>Profil Github</label> : http://<input type="text" name="github"/>
+    <br />
+
+    <input type="submit" value="Envoyer"/>
+
+  </p>
+
+</form>
