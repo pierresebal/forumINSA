@@ -45,13 +45,14 @@
         <% if(req.session.authenticated){ %>
             <p>Connecté en tant que:<br/>
           <% if (req.session.sessionType == "company") {%>
-              <%=req.session.UserEmail%></p>
+              <%=req.session.UserEmail%>
         <%  } else if (req.session.sessionType == "student") { %>
-              <%=req.session.firstName%></p>
+              <%=req.session.firstName%>
         <%  } else { %>
-              Type inconnu</p>
+              Type inconnu
         <%  }
           } %>
+        </p>
 
       </header>
 
