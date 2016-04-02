@@ -22,7 +22,7 @@ header p {
 
 .body-content {
   background-color: white;
-  height: 600px;
+  height: auto;
 }
 
 .custom-nav {
