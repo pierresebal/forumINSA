@@ -115,9 +115,9 @@ module.exports = {
 
   //AuthentificateCompany: Check the email/password request sent by user and allow or not to set an Authentified User
   AuthentificateCompany:function(req,res){
-    console.log('User try to authentificate... Email: '+req.param('UserAuthEmail')+' Password: '+req.param('UserAuthPasswd'));
+    console.log('User try to authentificate... Email: '+req.param('login')+' Password: '+req.param('password'));
     var sha1 = require('sha1');
-    Company.findOne({mailAddress:req.param('UserAuthEmail'),password:sha1(req.param('UserAuthPasswd'))}).exec(function(err,record){
+    Company.findOne({mailAddress:req.param('login'),password:sha1(req.param('password'))}).exec(function(err,record){
       if(!err) {
 
         if(typeof record !='undefined'){
@@ -130,7 +130,7 @@ module.exports = {
             req.session.connectionFailed = false;
             req.session.siret= record.siret;
 
-            return res.redirect(req.param('/'));
+            return res.redirect('/');
           }
           else{
             console.log("CompanySpace not activated...");
