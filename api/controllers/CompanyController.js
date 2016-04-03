@@ -4,6 +4,8 @@
  * @description :: Server-side logic for managing Companies
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+var fs = require('fs');
+var path = require('path');
 
 module.exports = {
 
@@ -20,89 +22,85 @@ module.exports = {
           return res.view('Inscription/CompanyNotCreated', {mailAddress:req.param('UserEmail'),layout:'layout'});
         }
         else {
-          var sha1 = require('sha1');
-          console.log('No companies with the same email were found...');
-          console.log("Attempting to create a new user inside the database...");
-          var date = new Date();
-          var ActivationUrl = sha1(date.getTime());
-          Company.create({
-            firstName: req.param('UserFirstName'),
-            lastName: req.param('UserLastName'),
-            position: req.param('Position'),
-            phoneNumber: req.param('PhoneNumber'),
-            mailAddress: req.param('UserEmail'),
-            password: sha1(req.param('UserPassword')),
-            siret:req.param('Siret'),
-            companyName:req.param('CompanyName'),
-            companyGroup:req.param('CompanyGroup'),
-            description:req.param('CompanyDescription'),
-            websiteUrl:req.param('CompanyWebsiteUrl'),
-            careerUrl:req.param('CompanyCareerUrl'),
-            road:req.param('CompanyAddressRoad'),
-            city:req.param('CompanyAddressCity'),
-            postCode:req.param('CompanyPostCode'),
-            country:req.param('CompanyCountry'),
-            bFirstName: req.param('BUserFirstName'),
-            bLastName: req.param('BUserLastName'),
-            bPosition: req.param('BPosition'),
-            bPhoneNumber: req.param('BPhoneNumber'),
-            bMailAddress: req.param('BUserEmail'),
-            active:0,
-            activationUrl:ActivationUrl,
-            companyName:req.param('CompanyName'),
-            companyGroup:req.param('CompanyGroup'),
-            description:req.param('CompanyDescription'),
-            siret:req.param('Siret'),
-            road:req.param('CompanyAddressRoad'),
-            city:req.param('CompanyAddressCity'),
-            postCode:req.param('CompanyPostCode'),
-            country:req.param('CompanyCountry'),
-            websiteUrl:req.param('CompanyWebsiteUrl'),
-            careerUrl:req.param('CompanyCareerUrl')
-          },function (err, created) {
-            if (!err) {
-              console.log('[INFO] User created ;) : ' + created.firstName + ' ' + created.lastName);
 
-              //Sending an activation email to the new created user
-              var nodemailer = require("nodemailer");
+          var uploadFile = req.file('logo');
+          uploadFile.upload({dirname: '../../assets/images/logos', saveAs: req.param('Siret') + ".png"},function onUploadComplete (err, files) { //Upload du logo, si ca se passe bien on passe au reste
 
-              // create reusable transport method (opens pool of SMTP connections)
-              var smtpTransport = nodemailer.createTransport("SMTP",{
-                service: "Gmail",
-                auth: {
-                  user: "club.montagne@amicale-insat.fr",
-                  pass: "insamontagne1"
-                }
-              });
+            if (err) return res.serverError(err);
+            //	IF ERROR Return and send 500 error with error
 
-              // setup e-mail data with unicode symbols
-              var mailOptions = {
-                from: "Pierre Hardy <pierre.hardy5@gmail.com>", // sender address
-                to: req.param('UserEmail'), // list of receivers
-                subject: "Message de confirmation de l'inscription", // Subject line
-                text: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+"http://localhost:1337/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe de localhost.", // plaintext body
-                html: "" // html body
-              };
+            var sha1 = require('sha1');
+            console.log('No companies with the same email were found...');
+            console.log("Attempting to create a new user inside the database...");
+            var date = new Date();
+            var ActivationUrl = sha1(date.getTime());
+            Company.create({
+              firstName: req.param('UserFirstName'),
+              lastName: req.param('UserLastName'),
+              position: req.param('Position'),
+              phoneNumber: req.param('PhoneNumber'),
+              mailAddress: req.param('UserEmail'),
+              password: sha1(req.param('UserPassword')),
+              siret:req.param('Siret'),
+              companyName:req.param('CompanyName'),
+              companyGroup:req.param('CompanyGroup'),
+              description:req.param('CompanyDescription'),
+              websiteUrl:req.param('CompanyWebsiteUrl'),
+              careerUrl:req.param('CompanyCareerUrl'),
+              road:req.param('CompanyAddressRoad'),
+              city:req.param('CompanyAddressCity'),
+              postCode:req.param('CompanyPostCode'),
+              country:req.param('CompanyCountry'),
+              logoPath:req.param('Siret') + ".png",
+              /* bFirstName: req.param('BUserFirstName'), Il ne faut pas le mettre là mais dans le bon de commande
+               bLastName: req.param('BUserLastName'),
+               bPosition: req.param('BPosition'),
+               bPhoneNumber: req.param('BPhoneNumber'),s
+               bMailAddress: req.param('BUserEmail'), */
+              active:0,
+              activationUrl:ActivationUrl
+            },function (err, created) {
+              if (!err) {
+                console.log('[INFO] User created ;) : ' + created.firstName + ' ' + created.lastName);
 
-              // send mail with defined transport object
-              smtpTransport.sendMail(mailOptions, function(error, response){
-                if(error){
-                  console.log(error);
-                }else{
-                  console.log("Message sent: " + response.message);
-                }
+                //Sending an activation email to the new created user
+                var nodemailer = require("nodemailer");
 
-                smtpTransport.close();
-              });
+                // create reusable transport method (opens pool of SMTP connections)
+                var smtpTransport = nodemailer.createTransport("SMTP",{
+                  service: "Gmail",
+                  auth: {
+                    user: "club.montagne@amicale-insat.fr",
+                    pass: "insamontagne1"
+                  }
+                });
 
-              // We show a positive result to the CompanySpace created
-              return res.view('Inscription/UserCreated', {firstName: created.firstName,layout:'layout'});
+                // setup e-mail data with unicode symbols
+                var mailOptions = {
+                  from: "Pierre Hardy <pierre.hardy5@gmail.com>", // sender address
+                  to: req.param('UserEmail'), // list of receivers
+                  subject: "Message de confirmation de l'inscription", // Subject line
+                  text: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+"http://localhost:1337/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe de localhost.", // plaintext body
+                  html: "" // html body
+                };
 
-            }
-            else {
-              console.log('Error while creating a new CompanySpace. Error: ' + err);
-              return res.view('404', {error: err});
-            }
+                // send mail with defined transport object
+                smtpTransport.sendMail(mailOptions, function(error, response){
+                  if(error)
+                    console.log(error);
+                  else
+                    console.log("Message sent: " + response.message);
+                  smtpTransport.close();
+                });
+
+                // We show a positive result to the CompanySpace created
+                return res.view('Inscription/UserCreated', {firstName: created.firstName,layout:'layout'});
+              }
+              else {
+                console.log('Error while creating a new CompanySpace. Error: ' + err);
+                return res.view('404', {error: err});
+              }
+            });
           });
         }
       }
@@ -132,12 +130,7 @@ module.exports = {
             req.session.connectionFailed = false;
             req.session.siret= record.siret;
 
-            if (record.firstConnectionDid)
-              return res.redirect(req.param('NextUrl'));
-            else {
-              Company.update({mailAddress:req.session.mailAddress}, {firstConnectionDid:true}).exec(function(err) { if (err) {console.log("erreur update firstConnection");}});
-              return res.view('CompanySpace/FirstConnection', {layout: 'layout'});
-            }
+            return res.redirect(req.param('/'));
           }
           else{
             console.log("CompanySpace not activated...");
@@ -335,6 +328,7 @@ module.exports = {
           siret: found.siret,
           companyName: found.companyName,
           companyGroup: found.companyGroup,
+          logoPath: found.logoPath,
           description: found.description,
           websiteUrl: found.websiteUrl,
           careerUrl: found.careerUrl,
@@ -351,9 +345,9 @@ module.exports = {
     return res.view("CompanySpace/CvTheque", {layout:'layout'});
   },
 
-   Command: function(req, res) {
-     return res.view("CompanySpace/Command", {layout:'layout'});
-   }
+  Command: function(req, res) {
+    return res.view("CompanySpace/Command", {layout:'layout'});
+  }
 
 
 

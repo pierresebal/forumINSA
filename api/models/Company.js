@@ -42,12 +42,10 @@ module.exports = {
     /* Contact Facturation */
     bFirstName:{
       type:'string',
-      required:true
     },
 
     bLastName:{
       type:'string',
-      required:'true'
     },
 
     bPosition:{
@@ -56,7 +54,6 @@ module.exports = {
 
     bMailAddress:{
       type:'email',
-      required:true,
       unique:true,
     },
 
@@ -135,10 +132,5 @@ module.exports = {
       type:'string',
       required:true
     },
-
-    firstConnectionDid:{
-      type:'boolean',
-      defaultsTo:false
-    }
   }
 };

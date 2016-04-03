@@ -102,7 +102,6 @@ module.exports = {
     //	Call to /upload via GET is error
 
     var uploadFile = req.file('logo');
-
     uploadFile.upload({dirname: '../../assets/images/logos', saveAs: req.session.siret+".png"},function onUploadComplete (err, files) {
 
       if (err) return res.serverError(err);
@@ -115,15 +114,6 @@ module.exports = {
             return;
           }
         });
-
-      console.log("c'est bon, redirection");
-
-      setTimeout(function() { //Attends 1 seconde le temps que la bdd s'actualise
-
-          return res.redirect('/Company/CompanySpace');
-
-
-      }, 1000);
     });
   },
 };
