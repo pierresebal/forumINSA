@@ -72,9 +72,14 @@ module.exports.routes = {
     locals:{layout:'layout'}
   },
 
-  '/file/upload':{
+  '/file/uploadCV':{
     controller: 'FileController',
-    action: 'upload'
+    action: 'uploadCV'
+  },
+
+  '/file/uploadLogo':{
+    controller: 'FileController',
+    action: 'uploadLogo'
   },
 
   '/file/download':{
@@ -198,6 +203,21 @@ module.exports.routes = {
   '/Company/ResetPass':{
     controller:'CompanyController',
     action:'InitPasswdCompany'
+  },
+
+  '/Company/Profile':{
+    controller:'CompanyController',
+    action:'Profile'
+  },
+
+  '/Company/CvTheque':{
+    controller:'CompanyController',
+    action:'CvTheque'
+  },
+
+  '/Company/Command':{
+    controller:'CompanyController',
+    action:'Command'
   }
 
 };

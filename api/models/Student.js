@@ -19,7 +19,9 @@ module.exports = {
       type: 'string',
       enum:['f','m']
     },
-    mailAddress:'string',
+    mailAddress:{
+      type:'email'
+    },
     year: { //Voir si on peut le déterminer depuis le ldap
       type:'integer',
       enum:[1,2,3,4,5]

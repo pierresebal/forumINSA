@@ -9,7 +9,7 @@ var path = require('path');
 
 module.exports = {
 
-  upload: function  (req, res) {
+  uploadCV: function  (req, res) {
     if(req.method === 'GET')
       return res.view('ErrorPage', {layout:'layout', ErrorTitle:"Access denied", ErrorDesc:"Vous ne pouvez pas accéder à cette page de cette façon"});
     //	Call to /upload via GET is error
@@ -94,7 +94,37 @@ module.exports = {
       res.download(filePath);
 
     });
+  },
 
-  }
+  uploadLogo: function  (req, res) {
+    if(req.method === 'GET')
+      return res.view('ErrorPage', {layout:'layout', ErrorTitle:"Access denied", ErrorDesc:"Vous ne pouvez pas accéder à cette page de cette façon"});
+    //	Call to /upload via GET is error
+
+    var uploadFile = req.file('logo');
+
+    uploadFile.upload({dirname: '../../assets/images/logos', saveAs: req.session.siret+".png"},function onUploadComplete (err, files) {
+
+      if (err) return res.serverError(err);
+      //	IF ERROR Return and send 500 error with error
+
+      //Ajout de l'url dans la database
+        Company.update({mailAddress: req.session.mailAddress}, {logoPath:req.session.siret+".png"}).exec(function afterwards(err,updated) {
+          if (err) {
+            console.log("Probleme pour update le logoPath");
+            return;
+          }
+        });
+
+      console.log("c'est bon, redirection");
+
+      setTimeout(function() { //Attends 1 seconde le temps que la bdd s'actualise
+
+          return res.redirect('/Company/CompanySpace');
+
+
+      }, 1000);
+    });
+  },
 };
 
