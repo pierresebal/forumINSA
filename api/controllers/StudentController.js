@@ -217,5 +217,14 @@ module.exports = {
     });
   },
 
+  companies: function(req, res) {
+    return res.view('StudentSpace/Companies', {layout:'layout'});
+  },
+
+  sjd: function(req, res) {
+    return res.view('StudentSpace/Sjd', {layout:'layout'});
+  },
+
 };
+
 

@@ -129,6 +129,18 @@ module.exports.routes = {
     action: 'setAllInfo'
   },
 
+  '/Student/Companies':{
+    controller: 'StudentController',
+    action: 'companies'
+  },
+
+  '/Student/SJD':{
+    controller: 'StudentController',
+    action: 'sjd'
+  },
+
+
+
 
   /*
    ===========================================================================================================

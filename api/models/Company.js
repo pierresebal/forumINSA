@@ -40,55 +40,56 @@ module.exports = {
       required:true
     },
 
-      // CompanySpace informations
-      companyName:{
-        type:'string',
-        required:true
-      },
+    // CompanySpace informations
+    companyName:{
+      type:'string',
+      required:true
+    },
 
-      groupCompany:{
-        type:'string',
-        required:true
-      },
+    companyGroup:{
+      type:'string',
+      required:true
+    },
 
-      siret:{
-        type:'string',
-        required:true
-      },
+    siret:{
+      type:'string',
+      required:true
+    },
 
-      // Contain the avenue; the number of post box...
-      road:{
-        type:'string',
-        required:true
-      },
+    // Contain the avenue; the number of post box...
 
-      cityCompany:{
-        type:'string',
-        required:true
-      },
+    road: {
+      type: 'string',
+      required: true
+    },
 
-      companyAdressPostalCode:{
-        type:'string',
-        required:true
-      },
+    city: {
+      type: 'string',
+      required: true
+    },
 
-      companyAdressCountry:{
-        type:'string',
-        required:true
-      },
+    postCode: {
+      type: 'string',
+      required: true
+    },
 
-      companyWebsiteUrl:{
-        type:'string',
-        required:true
-      },
+    country: {
+      type: 'string',
+      required: true
+    },
 
-      companyCarreerUrl:{
-        type:'string',
-      },
+    websiteUrl:{
+      type:'string',
+      required:true
+    },
 
-      companyDescription:{
-        type:'string',
-      }
+    careerUrl:{
+      type:'string',
+    },
+
+    description:{
+      type:'string',
+    }
 
 
 

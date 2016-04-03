@@ -31,7 +31,17 @@ module.exports = {
             password: sha1(req.param('UserPassword')),
             mailAddress: req.param('UserEmail'),
             active:0,
-            activationUrl:ActivationUrl
+            activationUrl:ActivationUrl,
+            companyName:req.param('CompanyName'),
+            companyGroup:req.param('CompanyGroup'),
+            description:req.param('CompanyDescription'),
+            siret:req.param('Siret'),
+            road:req.param('CompanyAddressRoad'),
+            city:req.param('CompanyAddressCity'),
+            postCode:req.param('CompanyPostCode'),
+            country:req.param('CompanyCountry'),
+            websiteUrl:req.param('CompanyWebsiteUrl'),
+            careerUrl:req.param('CompanyCareerUrl')
           },function (err, created) {
             if (!err) {
               console.log('[INFO] User created ;) : ' + created.firstName + ' ' + created.lastName);
@@ -53,7 +63,7 @@ module.exports = {
                 from: "Pierre Hardy <pierre.hardy5@gmail.com>", // sender address
                 to: req.param('UserEmail'), // list of receivers
                 subject: "Message de confirmation de l'inscription", // Subject line
-                text: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+"http://localhost:1337/CompanySpace/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe de localhost.", // plaintext body
+                text: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+"http://localhost:1337/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe de localhost.", // plaintext body
                 html: "" // html body
               };
 
