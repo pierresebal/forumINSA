@@ -76,7 +76,7 @@ module.exports = {
       if (err)
         return res.negotiate(err);
       if (!record) {
-        return res.view('errorPage', {layout:'layout', ErrorTitle:"Login failed", ErrorDesc:"Etes-vous bien connecté ? Contacter le webmaster si le problème persiste"});
+        return res.view('errorPage', {layout:'layout', ErrorTitle:"Recherche du profil failed", ErrorDesc:"Etes-vous bien connecté ? Contacter le webmaster si le problème persiste"});
       } else {
 
         return res.view('StudentSpace/Profile', {

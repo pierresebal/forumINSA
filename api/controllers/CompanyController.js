@@ -303,7 +303,38 @@ module.exports = {
   },
 
   Profile: function(req,res) {
-    return res.view("CompanySpace/Profile", {layout:'layout'});
+
+    Company.findOne({mailAddress:req.session.mailAddress}).exec(function(err,found) {
+      if (err)
+        return res.negotiate(err);
+      if (!found)
+        return res.view('errorPage', {layout:'layout', ErrorTitle:"Recherche du profil failed", ErrorDesc:"Etes-vous bien connecté ? Contacter le webmaster si le problème persiste"});
+      else {
+        return res.view("CompanySpace/Profile", {
+          layout:'layout',
+          firstName: found.firstName,
+          lastName: found.lastName,
+          position: found.position,
+          phoneNumber: found.phoneNumber,
+          mailAddress: found.mailAddress,
+          bFirstName: found.bFirstName,
+          bLastName: found.bLastName,
+          bPosition: found.bPosition,
+          bPhoneNumber: found.bPhoneNumber,
+          bMailAddress: found.bMailAddress,
+          siret: found.siret,
+          companyName: found.companyName,
+          companyGroup: found.companyGroup,
+          description: found.description,
+          websiteUrl: found.websiteUrl,
+          careerUrl: found.careerUrl,
+          road: found.road,
+          postCode: found.postCode,
+          city: found.city,
+          country: found.country
+        });
+      }
+    });
   },
 
   CvTheque: function(req, res) {
