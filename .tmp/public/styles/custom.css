@@ -1,28 +1,32 @@
 header {
   text-align: left;
-  background-color: #3b3b3b;
+  position: relative;
+  background-color: #4f4d50;
 }
 
 header img {
-  display: inline-block;
+
   margin-left: 10px;
   margin-top: 10px;
 }
 
 header p {
-  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  right: 10px;
   color: white;
 }
 
 .custom-body {
   text-align: center;
   margin: auto;
-  background-color:  #D3D3D3;
+  background-color:  white;
 }
 
 .body-content {
   background-color: white;
-  height: 600px;
+  min-height: 600px;
+  text-align: left;
 }
 
 .custom-nav {
@@ -45,7 +49,7 @@ header p {
 }
 
 .footer{
-  background-color: #3b3b3b;
+  background-color: #4f4d50;
   color: white;
   display: block;
   height: 100px;
