@@ -38,10 +38,15 @@
 </head>
 <body class="custom-body">
   <div class="pure-g">
-    <div class="pure-u-3-5 body-content" style="margin: auto">
+    <div class="pure-u-3-5 center-part" style="margin: auto">
       <header>
-        <img src='/images/Logo_FIE_blanc.png' width="600" alt="logo"/>
-        <p>test</p>
+        <img src='/images/Logo_FIE_blanc.png' width="400" alt="logo"/>
+        <div id="networks">
+          <a href="https://www.facebook.com/ForumInsaEntreprises" class="icon-button facebook"><i class="fa fa-facebook icon-facebook"></i><span></span></a>
+          <a href="https://twitter.com/INSAToulouse" class="icon-button twitter"><i class="fa fa-twitter icon-twitter"></i><span></span></a>
+          <a href="https://fr.linkedin.com/in/forum-insa-entreprises-49377699" class="icon-button linkedin"><i class="fa fa-linkedin icon-linkedin"></i><span></span></a>
+        </div>
+        <div id="connect-infos">
         <% if(req.session.authenticated){ %>
             <p>Connecté en tant que:<br/>
           <% if (req.session.sessionType == "company") {%>
@@ -51,14 +56,20 @@
         <%  } else { %>
               Type inconnu
         <%  }
-          } %>
-        </p>
+          } else { %>
+            <p>CONNEXION: </p>
+            <button type="button" class="btn"><i class="fa fa-graduation-cap"></i> Etudiant</button>
+            <button type="button" class="btn"><i class="fa fa-briefcase"></i> Entreprise</button>
+        <% } %>
+      </div>
 
       </header>
 
       <!-- Content inserted here -->
       <%- include nav %>
-      <%- body %>
+      <div class="content-part">
+        <%- body %>
+      </div>
     </div>
   </div>
 
