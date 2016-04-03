@@ -9,7 +9,6 @@ module.exports = {
 
   attributes: {
 
-    /* Contact Forum */
     firstName:{
       type:'string',
       required:true
@@ -20,18 +19,10 @@ module.exports = {
       required:'true'
     },
 
-    position:{ //Poste dans l'entreprise
-      type:'string'
-    },
-
     mailAddress:{
       type:'email',
       required:true,
       unique:true,
-    },
-
-    phoneNumber:{
-      type:'string'
     },
 
     password:{
@@ -39,38 +30,17 @@ module.exports = {
       required:true
     },
 
-    /* Contact Facturation */
-    bFirstName:{
+    active:{
+      type:"integer",
+      required:true
+    },
+
+    activationUrl:{
       type:'string',
       required:true
     },
 
-    bLastName:{
-      type:'string',
-      required:'true'
-    },
-
-    bPosition:{
-      type:'string'
-    },
-
-    bMailAddress:{
-      type:'email',
-      required:true,
-      unique:true,
-    },
-
-    bPhoneNumber:{
-      type:'string'
-    },
-
-
-    /* Company information */
-    siret:{
-      type:'string',
-      required:true
-    },
-
+    // CompanySpace informations
     companyName:{
       type:'string',
       required:true
@@ -81,25 +51,14 @@ module.exports = {
       required:true
     },
 
-    description:{
-      type:'string',
-    },
-
-    websiteUrl:{
+    siret:{
       type:'string',
       required:true
     },
 
-    careerUrl:{
-      type:'string',
-    },
+    // Contain the avenue; the number of post box...
 
-    logoPath:{
-      type:'string',
-      defaultsTo:""
-    },
-
-    road: { //Both number and road
+    road: {
       type: 'string',
       required: true
     },
@@ -119,26 +78,21 @@ module.exports = {
       required: true
     },
 
-    /* Other Information */
-
-    blacklist:{
-      type:'boolean',
-      defaultsTo:false
-    },
-
-    active:{
-      type:"integer",
-      required:true
-    },
-
-    activationUrl:{
+    websiteUrl:{
       type:'string',
       required:true
     },
 
-    firstConnectionDid:{
-      type:'boolean',
-      defaultsTo:false
+    careerUrl:{
+      type:'string',
+    },
+
+    description:{
+      type:'string',
     }
+
+
+
   }
 };
+

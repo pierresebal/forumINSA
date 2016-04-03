@@ -76,20 +76,39 @@ module.exports = {
       required:true
     },
 
+<<<<<<< HEAD
+    // CompanySpace informations
+    companyName:{
+=======
+    companyGroup:{
+>>>>>>> e293c69c13cced34b4caae09c6453fb42d14955d
+      type:'string',
+      required:true
+    },
+
+<<<<<<< HEAD
     companyGroup:{
       type:'string',
       required:true
     },
 
+    siret:{
+=======
     description:{
       type:'string',
     },
 
     websiteUrl:{
+>>>>>>> e293c69c13cced34b4caae09c6453fb42d14955d
       type:'string',
       required:true
     },
 
+<<<<<<< HEAD
+    // Contain the avenue; the number of post box...
+
+    road: {
+=======
     careerUrl:{
       type:'string',
     },
@@ -100,6 +119,7 @@ module.exports = {
     },
 
     road: { //Both number and road
+>>>>>>> e293c69c13cced34b4caae09c6453fb42d14955d
       type: 'string',
       required: true
     },
@@ -119,12 +139,27 @@ module.exports = {
       required: true
     },
 
+<<<<<<< HEAD
+    websiteUrl:{
+      type:'string',
+      required:true
+    },
+
+    careerUrl:{
+      type:'string',
+    },
+
+    description:{
+      type:'string',
+    }
+=======
     /* Other Information */
 
     blacklist:{
       type:'boolean',
       defaultsTo:false
     },
+>>>>>>> e293c69c13cced34b4caae09c6453fb42d14955d
 
     active:{
       type:"integer",
@@ -142,3 +177,4 @@ module.exports = {
     }
   }
 };
+

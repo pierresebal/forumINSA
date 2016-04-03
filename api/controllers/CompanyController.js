@@ -48,7 +48,17 @@ module.exports = {
             bPhoneNumber: req.param('BPhoneNumber'),
             bMailAddress: req.param('BUserEmail'),
             active:0,
-            activationUrl:ActivationUrl
+            activationUrl:ActivationUrl,
+            companyName:req.param('CompanyName'),
+            companyGroup:req.param('CompanyGroup'),
+            description:req.param('CompanyDescription'),
+            siret:req.param('Siret'),
+            road:req.param('CompanyAddressRoad'),
+            city:req.param('CompanyAddressCity'),
+            postCode:req.param('CompanyPostCode'),
+            country:req.param('CompanyCountry'),
+            websiteUrl:req.param('CompanyWebsiteUrl'),
+            careerUrl:req.param('CompanyCareerUrl')
           },function (err, created) {
             if (!err) {
               console.log('[INFO] User created ;) : ' + created.firstName + ' ' + created.lastName);
