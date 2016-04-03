@@ -6,36 +6,41 @@
   <h2>Responponsable du dossier - Coordonnées</h2>
   <p>Ces informations doivent être remplies par la personne qui sera en charge du dossier. Elles seront utilisées par l'équipe du forum pour contacter l'entreprise.</p>
 
-    <label for="UserFirstName">Prénom: </label>
+    <label for="UserFirstName">Prénom : </label>
     <input type="text" name="UserFirstName" id="UserFirstName" placeholder="Prénom" required/>
     <p style="color:red;display:none" id="UserFirstNameErr" >Ce champ doit être complété et contenir moins de 20 caractères</p><br>
 
-    <label for="UserLastNameName">Nom: </label>
+    <label for="UserLastName">Nom : </label>
     <input type="text" name="UserLastName" id="UserLastName" placeholder="Nom" required/><br>
 
-  <h2>Paramètres du compte entreprises</h2>
-  <p>Ces informations serviront à vous identifier pour acceder à l'espace entreprises du site.</p>
+    <label for="Position">Fonction : </label>
+    <input type="text" name="Position" id="Position" placeholder="Fonction" required/><br  >
 
-    <label for="UserPassword">Mot de passe: </label>
+    <label for="phoneNumber">Numéro de téléphone : </label>
+    <input type="text" name="PhoneNumber" id="PhoneNumber" placeholder="Numéro de téléphone" required/><br>
+
+    <label for="UserMail">Addresse e-mail : </label>
+    <input type="email" name="UserEmail" id="UserEmail" placeholder="Email" required/><br>
+
+    <label for="UserPassword">Mot de passe : </label>
     <input type="password" name="UserPassword" id="UserPassword" placeholder="Password" required/><br>
 
-    <label for="ConfirmUserPassword">Confirmez le mot de passe: </label>
+    <label for="ConfirmUserPassword">Confirmez le mot de passe : </label>
     <input type="password" name="ConfirmUserPassword" id="ConfirmUserPassword" placeholder="Confirm Password" required/><br>
 
-    <label for="ConfirmUserPassword">Addresse e-mail: </label>
-    <input type="email" name="UserEmail" id="UserEmail" placeholder="Email" required/><br>
 
   <h2>Informations générales sur l'entreprise</h2>
   <p>Ces informations permettront aux étudiants d'avoir plus d'informations sur votre entreprise lorsqu'ils consulteront le catalogue des entreprises sur le site et dans la plaquette du forum.</p>
+
+
+    <label for="siret">Numéro de siret: </label>
+    <input type="text" name="Siret" id="Siret" placeholder="Siret" required/><br>
 
     <label for="CompanyName">Nom de l'entreprise: </label>
     <input type="text" name="CompanyName" id="CompanyName" placeholder="Nom de l'entreprise" required/><br>
 
     <label for="CompanyGroup">Groupe de l'entreprise: </label>
     <input type="text" name="CompanyGroup" id="CompanyGroup" placeholder="Nom du groupe"/><br>
-
-    <label for="siret">Numéro de siret: </label>
-    <input type="text" name="Siret" id="Siret" placeholder="Siret" required/><br>
 
     <label for="CompanyDescription">Description de l'entreprise: </label>
     <textarea name="CompanyDescription" id="CompanyDescription" placeholder="Tapez ici la description de l'entreprise qui apparaitra dans la plaquette du forum et sur le catalogue en ligne."></textarea><br>
@@ -45,10 +50,6 @@
 
     <label for="CompanyCareerUrl">Site de recrutement: </label>
     <input type="url" name="CompanyCareerUrl" id="CompanyCareerUrl" placeholder="URL vers le site de recrutement" required/><br>
-
-
-  <h2>Informations détaillées</h2>
-  <p>Informations qui permettront à l'equipe du forum de contacter le service en charge du dossier par courier et d'identifier clairement l'entreprise.</p>
 
     <label for="CompanyAddressRoad">Addresse: </label>
     <input type="text" name="CompanyAddressRoad" id="CompanyAddressRoad" placeholder="Addresse" required/><br>
@@ -306,6 +307,24 @@
       <option value="Zambia">Zambia</option>
       <option value="Zimbabwe">Zimbabwe</option>
     </select><br>
+
+  <h2>Coordonnées de facturation</h2>
+
+    <label for="BUserFirstName">Prénom : </label>
+    <input type="text" name="BUserFirstName" id="BUserFirstName" placeholder="Prénom" required/>
+    <p style="color:red;display:none" id="UserFirstNameErr" >Ce champ doit être complété et contenir moins de 20 caractères</p><br>
+
+    <label for="BUserLastName">Nom : </label>
+    <input type="text" name="BUserLastName" id="BUserLastName" placeholder="Nom" required/><br>
+
+    <label for="BPosition">Fonction : </label>
+    <input type="text" name="BPosition" id="BPosition" placeholder="Fonction" required/><br  >
+
+    <label for="BPhoneNumber">Numéro de téléphone : </label>
+    <input type="text" name="BPhoneNumber" id="BPhoneNumber" placeholder="Numérode téléphone" required/><br>
+
+    <label for="BUserMail">Addresse e-mail : </label>
+    <input type="email" name="BUserEmail" id="BUserEmail" placeholder="Email" required/><br>
 
   <input type="submit"/>
 </form>

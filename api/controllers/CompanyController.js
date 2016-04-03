@@ -28,20 +28,27 @@ module.exports = {
           Company.create({
             firstName: req.param('UserFirstName'),
             lastName: req.param('UserLastName'),
-            password: sha1(req.param('UserPassword')),
+            position: req.param('Position'),
+            phoneNumber: req.param('PhoneNumber'),
             mailAddress: req.param('UserEmail'),
-            active:0,
-            activationUrl:ActivationUrl,
+            password: sha1(req.param('UserPassword')),
+            siret:req.param('Siret'),
             companyName:req.param('CompanyName'),
             companyGroup:req.param('CompanyGroup'),
             description:req.param('CompanyDescription'),
-            siret:req.param('Siret'),
+            websiteUrl:req.param('CompanyWebsiteUrl'),
+            careerUrl:req.param('CompanyCareerUrl'),
             road:req.param('CompanyAddressRoad'),
             city:req.param('CompanyAddressCity'),
             postCode:req.param('CompanyPostCode'),
             country:req.param('CompanyCountry'),
-            websiteUrl:req.param('CompanyWebsiteUrl'),
-            careerUrl:req.param('CompanyCareerUrl')
+            bFirstName: req.param('BUserFirstName'),
+            bLastName: req.param('BUserLastName'),
+            bPosition: req.param('BPosition'),
+            bPhoneNumber: req.param('BPhoneNumber'),
+            bMailAddress: req.param('BUserEmail'),
+            active:0,
+            activationUrl:ActivationUrl
           },function (err, created) {
             if (!err) {
               console.log('[INFO] User created ;) : ' + created.firstName + ' ' + created.lastName);
@@ -113,7 +120,14 @@ module.exports = {
             req.session.mailAddress=record.mailAddress;
             req.session.sessionType = "company";
             req.session.connectionFailed = false;
-            return res.redirect(req.param('NextUrl'));
+            req.session.siret= record.siret;
+
+            if (record.firstConnectionDid)
+              return res.redirect(req.param('NextUrl'));
+            else {
+              Company.update({mailAddress:req.session.mailAddress}, {firstConnectionDid:true}).exec(function(err) { if (err) {console.log("erreur update firstConnection");}});
+              return res.view('CompanySpace/FirstConnection', {layout: 'layout'});
+            }
           }
           else{
             console.log("CompanySpace not activated...");
@@ -136,17 +150,11 @@ module.exports = {
   },
 
 
-
-
   // Show space reserved to members (test page for authentification)
   MemberHomeShow:function(req,res){
     console.log('Showing member space...');
     res.view('CompanySpace/MemberSpace',{layout:'layout'});
   },
-
-
-
-
 
   // CompanyLogout: set session var as UnAuthentificated user
   CompanyLogout:function(req,res){
@@ -162,10 +170,6 @@ module.exports = {
       res.view('500');
     }
   },
-
-
-
-
 
   // ActivateCompany: check URL request from email confirmation sent after User inscription in order to set Active:1 the Account
   // (this allow the user to connect)
@@ -208,12 +212,6 @@ module.exports = {
     }
 
   },
-
-
-
-
-
-
 
   // InitPasswd; We call this function when the user needs to receive a new password by email (because he losts it)
   // This function need POST arg named "email" wich corespond to the attribute Email of the user who need to reset password
@@ -302,8 +300,21 @@ module.exports = {
       }
 
     })
+  },
 
-  }
+  Profile: function(req,res) {
+    return res.view("CompanySpace/Profile", {layout:'layout'});
+  },
+
+  CvTheque: function(req, res) {
+    return res.view("CompanySpace/CvTheque", {layout:'layout'});
+  },
+
+   Command: function(req, res) {
+     return res.view("CompanySpace/Command", {layout:'layout'});
+   }
+
+
 
 };
 

@@ -9,6 +9,7 @@ module.exports = {
 
   attributes: {
 
+    /* Contact Forum */
     firstName:{
       type:'string',
       required:true
@@ -19,10 +20,18 @@ module.exports = {
       required:'true'
     },
 
+    position:{ //Poste dans l'entreprise
+      type:'string'
+    },
+
     mailAddress:{
       type:'email',
       required:true,
       unique:true,
+    },
+
+    phoneNumber:{
+      type:'string'
     },
 
     password:{
@@ -30,17 +39,38 @@ module.exports = {
       required:true
     },
 
-    active:{
-      type:"integer",
-      required:true
-    },
-
-    activationUrl:{
+    /* Contact Facturation */
+    bFirstName:{
       type:'string',
       required:true
     },
 
-    // CompanySpace informations
+    bLastName:{
+      type:'string',
+      required:'true'
+    },
+
+    bPosition:{
+      type:'string'
+    },
+
+    bMailAddress:{
+      type:'email',
+      required:true,
+      unique:true,
+    },
+
+    bPhoneNumber:{
+      type:'string'
+    },
+
+
+    /* Company information */
+    siret:{
+      type:'string',
+      required:true
+    },
+
     companyName:{
       type:'string',
       required:true
@@ -51,14 +81,25 @@ module.exports = {
       required:true
     },
 
-    siret:{
+    description:{
+      type:'string',
+    },
+
+    websiteUrl:{
       type:'string',
       required:true
     },
 
-    // Contain the avenue; the number of post box...
+    careerUrl:{
+      type:'string',
+    },
 
-    road: {
+    logoPath:{
+      type:'string',
+      defaultsTo:""
+    },
+
+    road: { //Both number and road
       type: 'string',
       required: true
     },
@@ -78,21 +119,27 @@ module.exports = {
       required: true
     },
 
-    websiteUrl:{
+    /* Other Information */
+
+    blacklist:{
+      type:'boolean',
+      defaultsTo:false
+    },
+
+    active:{
+      type:"integer",
+      required:true
+    },
+
+    activationUrl:{
       type:'string',
       required:true
     },
 
-    careerUrl:{
-      type:'string',
-    },
-
-    description:{
-      type:'string',
+    firstConnectionDid:{
+      type:'boolean',
+      defaultsTo:false
     }
-
-
-
   }
 };
 
