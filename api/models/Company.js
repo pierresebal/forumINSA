@@ -101,6 +101,11 @@ module.exports = {
       required: true
     },
 
+    complementaryInformation : {
+      type: 'string',
+      defaultsTo:""
+    },
+
     city: {
       type: 'string',
       required: true

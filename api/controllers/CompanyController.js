@@ -48,6 +48,7 @@ module.exports = {
               websiteUrl:req.param('CompanyWebsiteUrl'),
               careerUrl:req.param('CompanyCareerUrl'),
               road:req.param('CompanyAddressRoad'),
+              complementaryInformation:req.param('complementaryInformation'),
               city:req.param('CompanyAddressCity'),
               postCode:req.param('CompanyPostCode'),
               country:req.param('CompanyCountry'),
@@ -333,6 +334,7 @@ module.exports = {
           websiteUrl: found.websiteUrl,
           careerUrl: found.careerUrl,
           road: found.road,
+          complementaryInformation: found.complementaryInformation,
           postCode: found.postCode,
           city: found.city,
           country: found.country
@@ -347,9 +349,192 @@ module.exports = {
 
   Command: function(req, res) {
     return res.view("CompanySpace/Command", {layout:'layout'});
-  }
+  },
 
+  //Modifie une information de l'utilisateur
+  setAUserInfo:function(req, res) {
 
+    var data = req.param('data').charAt(0); //Type d'info à modifier
+
+    switch (data) {
+      case 'a' :
+        var firstName = req.param('firstName');
+        var lastName = req.param('lastName');
+        var position = req.param('position');
+        var phoneNumber = req.param('phoneNumber');
+        var mailAddress = req.param('mailAddress');
+        //Todo: Verification de firstName;
+        Company.update({mailAddress:req.session.mailAddress}, {
+          firstName:firstName,
+          lastName:lastName,
+          position:position,
+          phoneNumber:phoneNumber,
+          mailAddress:mailAddress
+        }).exec(function(err, record) {
+          if (err)
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update firstName."});
+
+          var mailAddress = req.param('mailAddress');
+          //Todo: Verification de mailAddress;
+          //Différent d'une adresse mail qui existe déjà !
+          Company.findOne({mailAddress:mailAddress}).exec(function(err,found){
+            if (err)
+              return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb trouver si adresse déjà existante."});
+
+            if (!found || found.mailAddress == req.session.mailAddress) {
+              Company.update({mailAddress:req.session.mailAddress}, {mailAddress:mailAddress}).exec(function(err, record) {
+                if (err)
+                  return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update firstName."});
+
+                return res.redirect('/Company/Profile');
+              });
+            } else {
+              return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Cette adresse existe déjà"});
+            }
+          });
+        });
+        break;
+
+      case 'f' :
+        var bFirstName = req.param('bFirstName');
+        var bLastName = req.param('bLastName');
+        var bPosition = req.param('bPosition');
+        var bPhoneNumber = req.param('bPhoneNumber');
+        var bMailAddress = req.param('bMailAddress');
+
+        //Todo: Verification de firstName;
+        Company.update({mailAddress:req.session.mailAddress}, {
+          bFirstName:bFirstName,
+          bLastName:bLastName,
+          bPosition:bPosition,
+          bPhoneNumber:bPhoneNumber,
+          bMailAddress:bMailAddress
+        }).exec(function(err, record) {
+          if (err)
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update bFirstName."});
+
+          return res.redirect('/Company/Profile');
+        });
+        break;
+
+      case 'k' :
+        var siret = req.param('siret');
+        Company.findOne({siret:siret}).exec(function(err,found){
+          if (err)
+            return res.negociate(err);
+
+          if (!found) { //C'est bon, c'est pas le siret d'un autre.
+            Company.findOne({mailAddress: req.session.mailAddress}).exec(function (err, found) {
+              var oldLogoPath = found.logoPath;
+
+              //Todo: Verification de siret;
+              Company.update({mailAddress: req.session.mailAddress}, {
+                siret: siret,
+                logoPath: siret + ".png"
+              }).exec(function (err, record) {
+                if (err)
+                  return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update siret."});
+                fs = require('fs');
+                oldPath = path.resolve("assets/images/logos", oldLogoPath);
+                newPath = path.resolve("assets/images/logos", siret + ".png");
+                fs.renameSync(oldPath, newPath);
+
+                setTimeout(function () {
+                  return res.redirect('/Company/Profile');
+                }, 2000);
+              });
+            });
+          } else {
+            return res.redirect('/Company/profile');
+          }
+        });
+        break;
+
+      case 'l' :
+        var companyName = req.param('companyName');
+
+        //Todo: Verification de companyName;
+        Company.update({mailAddress:req.session.mailAddress}, {companyName:companyName}).exec(function(err, record) {
+          if (err)
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update companyName."});
+
+          return res.redirect('/Company/Profile');
+        });
+        break;
+
+      case 'm' :
+        var companyGroup = req.param('companyGroup');
+
+        //Todo: Verification de companyGroup;
+        Company.update({mailAddress:req.session.mailAddress}, {companyGroup:companyGroup}).exec(function(err, record) {
+          if (err)
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update companyGroup."});
+
+          return res.redirect('/Company/Profile');
+        });
+        break;
+
+      case 'n' :
+        var description = req.param('description');
+        //Todo: Verification de description;
+        Company.update({mailAddress:req.session.mailAddress}, {description:description}).exec(function(err, record) {
+          if (err)
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update description."});
+
+          return res.redirect('/Company/Profile');
+        });
+        break;
+
+      case 'o' :
+        var websiteUrl = req.param('websiteUrl');
+        //Todo: Verification de websiteUrl;
+        Company.update({mailAddress:req.session.mailAddress}, {websiteUrl:websiteUrl}).exec(function(err, record) {
+          if (err)
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update websiteUrl."});
+
+          return res.redirect('/Company/Profile');
+        });
+        break;
+
+      case 'p' :
+        var careerUrl = req.param('careerUrl');
+        //Todo: Verification de careerUrl;
+        Company.update({mailAddress:req.session.mailAddress}, {careerUrl:careerUrl}).exec(function(err, record) {
+          if (err)
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update careerUrl."});
+
+          return res.redirect('/Company/Profile');
+        });
+        break;
+
+      case 'q' :
+        var road = req.param('road');
+        var complementaryInformation = req.param('complementaryInformation');
+        var postCode = req.param('postCode');
+        var city = req.param('city');
+        var country = req.param('country');
+        //Todo: Verification de firstName;
+        Company.update({mailAddress:req.session.mailAddress}, {
+          road:road,
+          complementaryInformation:complementaryInformation,
+          postCode:postCode,
+          city:city,
+          country:country
+        }).exec(function(err, record) {
+          if (err) {
+            console.log(err);
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update postaddress."});
+          }
+
+          return res.redirect('/Company/Profile');
+        });
+        break;
+
+      default :
+        console.log("Type de data inconnu");
+    }
+
+  },
 
 };
 

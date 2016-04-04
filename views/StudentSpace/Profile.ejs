@@ -20,7 +20,7 @@
     <td>Adresse mail</td>
     <% if (typeof (mailAddress) != 'undefined' && mailAddress != "") { %>
     <td><%=mailAddress%></td>
-    <% } else { %>
+    <% } %>
     <td>
       <form id="mailAddress" method="post" action="/Student/setAUserInfo">
         <input type="hidden" name="data" value="m"/>
@@ -28,14 +28,13 @@
         <input type="submit" value="Sauvegarder"/>
       </form>
     </td>
-    <% } %>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td>Année</td>
     <% if (typeof (year) != 'undefined' && year != "") { %>
       <td><%=year%></td>
-    <% } else { %>
+    <% } %>
       <td>
         <form id="yearForm" method="post" action="/Student/setAUserInfo">
           <input type="hidden" name="data" value="y"/>
@@ -49,14 +48,13 @@
           <input type="submit" value="Sauvegarder"/>
         </form>
       </td>
-    <% } %>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td>Spécialité</td>
     <% if (typeof (speciality) != 'undefined' && speciality != "") { %>
     <td><%=speciality%></td>
-    <% } else { %>
+    <% } %>
       <td>
         <form id="specialityForm" method="post" action="/Student/setAUserInfo">
           <input type="hidden" name="data" value="s"/>
@@ -68,7 +66,6 @@
           <input type="submit" value="Sauvegarder"/>
         </form>
       </td>
-    <% } %>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
@@ -79,7 +76,7 @@
           <input type="hidden" name="dl" value="fr" />
           <input type="submit" value="Télécharger" />
         </form></td>
-    <% } else { %>
+    <% } %>
       <td>
         <form id="uploadFormFr"
                 enctype="multipart/form-data"
@@ -91,7 +88,6 @@
           <input type="submit" value="Envoyer"/>
         </form>
       </td>
-    <% } %>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
@@ -104,7 +100,7 @@
       </form>
 
     </td>
-    <% } else { %>
+    <% } %>
     <td>
       <form id="uploadFormEn"
             enctype="multipart/form-data"
@@ -116,14 +112,13 @@
         <input type="submit" value="Envoyer"/>
       </form>
     </td>
-    <% } %>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td>Site internet personnel</td>
     <% if (typeof (personalWebsite) != 'undefined' && personalWebsite != "") { %>
       <td><a href="http://<%=personalWebsite%>"  target="_blank"><%=personalWebsite%></a></td>
-    <% } else { %>
+    <% } %>
     <td>
       <form id="personalWebsite" method="post" action="/Student/setAUserInfo">
         <input type="hidden" name="data" value="w"/>
@@ -131,14 +126,13 @@
         <input type="submit" value="Sauvegarder"/>
       </form>
     </td>
-    <% } %>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td>Profil Linkedin</td>
     <% if (typeof (linkedin) != 'undefined' && linkedin != "") { %>
       <td><a href="http://<%=linkedin%>"  target="_blank">Voir le profil</a></td>
-    <% } else { %>
+    <% } %>
       <td>
         <form id="linkedinForm" method="post" action="/Student/setAUserInfo">
           <input type="hidden" name="data" value="l"/>
@@ -146,14 +140,13 @@
           <input type="submit" value="Sauvegarder"/>
         </form>
       </td>
-    <% } %>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td>Profil Viadeo</td>
-    <% if (typeof (viadeo) != 'undefined' && linkedin != "") { %>
+    <% if (typeof (viadeo) != 'undefined' && viadeo != "") { %>
       <td><a href="http://<%=viadeo%>"  target="_blank">Voir le profil</a></td>
-    <% } else { %>
+    <% } %>
       <td>
         <form id="viadeoForm" method="post" action="/Student/setAUserInfo">
           <input type="hidden" name="data" value="v"/>
@@ -161,14 +154,13 @@
           <input type="submit" value="Sauvegarder"/>
         </form>
       </td>
-    <% } %>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td>Profil GitHub</td>
-    <% if (typeof (github) != 'undefined' && linkedin != "") { %>
+    <% if (typeof (github) != 'undefined' && github != "") { %>
       <td><a href="http://<%=github%>" target="_blank">Voir le profil</a></td>
-    <% } else { %>
+    <% } %>
       <td>
         <form id="githubForm" method="post" action="/Student/setAUserInfo">
           <input type="hidden" name="data" value="g"/>
@@ -176,7 +168,6 @@
           <input type="submit" value="Sauvegarder"/>
         </form>
       </td>
-    <% } %>
   </tr>
 
 </table>
