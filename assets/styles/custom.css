@@ -21,6 +21,10 @@ header img {
   display: inline;
 }
 
+.navbar {
+  margin-bottom: 0px;
+}
+
 .red-button{
   background-image: linear-gradient(to bottom,#e4564c 0,#e42618 100%);
   color: white;
@@ -39,8 +43,6 @@ header img {
 }
 
 .content-part {
-  margin-top: 10px;
-  margin-bottom: 10px;
   padding: 20px;
 }
 

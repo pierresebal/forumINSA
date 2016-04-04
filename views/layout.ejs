@@ -32,6 +32,8 @@
   <!--STYLES-->
   <link rel="stylesheet" href="/styles/custom.css">
   <link rel="stylesheet" href="/styles/importer.css">
+  <link rel="stylesheet" href="/styles/unslider-dots.css">
+  <link rel="stylesheet" href="/styles/unslider.css">
   <!--STYLES END-->
 
 
@@ -80,6 +82,16 @@
       </div>
     </div>
   </footer>
-
+<script src="/js/unslider-min.js"></script>
+<script>
+		jQuery(document).ready(function($) {
+			$('.my-slider').unslider({
+        autoplay: true,
+        delay: 6000
+      });
+		});
+	</script>
 </body>
+
+
 </html>

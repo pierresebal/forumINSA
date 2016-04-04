@@ -1,2 +1,123 @@
+<style>
+	.slider{
+		text-align: center;
+	}
+
+	.slider .wrapper{
+		width: 980px;
+		height: 380px;
+		overflow: hidden;
+		margin: auto;
+		position: relative;
+	}
+
+	.slider .content{
+		position: absolute;
+		white-space: nowrap;
+		left: 0px;
+	}
+
+	.slider li{
+		width: 10px;
+		height: 10px;
+		border-radius: 5px;
+		border: 2px solid grey;
+		background-color: white;
+		display: inline-block;
+		cursor: pointer;
+		font-size: 0;
+	}
+
+	.slider ul {
+		padding: 0px;
+	}
+
+	.slider nav{
+		margin: auto;
+		text-align: center;
+	}
+
+	.position-1 {
+		left: 0px;
+		transition: left 1s;
+	}
+
+	.position-2 {
+		left: -980px;
+		transition: left 1s;
+	}
+
+	.position-3 {
+		left: -1960px;
+		transition: left 1s;
+	}
+
+</style>
+
+<div class="slider">
+	<div class="wrapper">
+		<div class="content position-1">
+			<img id="img1" src="images/img1.jpg" class="img"/>
+			<img id="img2" src="images/img2.png" class="img"/>
+			<img id="img2" src="images/troll.png" class="img"/>
+		</div>
+	</div>
+	<nav>
+		<ul>
+			<li id="bt1" class="bt" style="background-color: grey">img1</li>
+			<li id="bt2" class="bt" >img2</li>
+			<li id="bt3" class="bt" >img3</li>
+		</ul>
+	</nav>
+
+	<script>
+		var prev = 1;
+		$( '.bt' ).click(function(){
+			// Create image id
+			var img = "#" + $( this ).text();
+			// Extract the clicked button number
+			var btNb = $( this ).attr("id").substring(2,3);
+
+			// Change button color
+			$( '.bt' ).css('background-color', 'white');
+			$( this ).css('background-color','grey');
+
+			move(btNb);
+		});
+
+		function move(position){
+			// Change position
+			switch (parseInt(position)) {
+				case 1:
+						$( '.content' ).css("transition","left 1s ease 0s");
+						$( '.content' ).css("left","0px");
+						$( '.bt' ).css('background-color', 'white');
+						$( "#bt1" ).css('background-color','grey');
+					break;
+				case 2:
+						$( '.content' ).css("transition","left 1s ease 0s");
+						$( '.content' ).css("left","-982px");
+						$( '.bt' ).css('background-color', 'white');
+						$( "#bt2" ).css('background-color','grey');
+					break;
+				case 3:
+						$( '.content' ).css("transition","left 1s ease 0s");
+						$( '.content' ).css("left","-1964px");
+						$( '.bt' ).css('background-color', 'white');
+						$( "#bt3" ).css('background-color','grey');
+					break;
+			}
+			prev = position;
+		}
+
+		function autoplay(){
+			prev = prev % 3 + 1;
+			move(prev);
+		}
+
+		setInterval(autoplay, 8000);
+	</script>
+</div>
+
 <h1>Accueil</h1>
 <p>Page d'accueil du site internet</p>
