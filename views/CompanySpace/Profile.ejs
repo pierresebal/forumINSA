@@ -3,49 +3,95 @@
 
 <h3>Contact Forum</h3>
 <table>
+  <form id="firstName" method="post" action="/Company/setAUserInfo">
   <tr>
     <td>Prénom</td>
     <td><%=firstName%></td>
+    <td>
+        <input type="hidden" name="data" value="a"/>
+        <input type="text" name="firstName" value="<%=firstName%>"/>
+    </td>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Nom</td>
     <td><%=lastName%></td>
+   <td>
+        <input type="text" name="lastName" value="<%=lastName%>"/>
+    </td>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Fonction</td>
     <td><%=position%></td>
+    <td>
+        <input type="text" name="position" value="<%=position%>"/>
+    </td>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Téléphone</td>
     <td><%=phoneNumber%></td>
+      <td>
+        <input type="text" name="phoneNumber" value="<%=phoneNumber%>"/>
+    </td>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Adresse mail</td>
     <td><%=mailAddress%></td>
+    <td>
+        <input type="text" name="mailAddress" value="<%=mailAddress%>"/>
+        <input type="submit" value="Sauvegarder"/>
+    </td>
   </tr>
+  </form>
 </table>
 
 <h3>Contact Facturation</h3>
 <table>
+  <form id="bFirstName" method="post" action="/Company/setAUserInfo">
+    <input type="hidden" name="data" value="f"/>
   <tr>
     <td>Prénom</td>
     <td><%=bFirstName%></td>
+    <td>
+        <input type="text" name="bFirstName" value="<%=bFirstName%>"/>
+    </td>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Nom</td>
     <td><%=bLastName%></td>
+    <td>
+        <input type="text" name="bLastName" value="<%=bLastName%>"/>
+    </td>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Fonction</td>
     <td><%=bPosition%></td>
+    <td>
+        <input type="text" name="bPosition" value="<%=bPosition%>"/>
+    </td>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Téléphone</td>
     <td><%=bPhoneNumber%></td>
+    <td>
+        <input type="text" name="bPhoneNumber" value="<%=bPhoneNumber%>"/>
+    </td>
   </tr>
+  <!-- ------------------------------------------- -->
   <tr>
     <td>Adresse mail</td>
     <td><%=bMailAddress%></td>
+    <td>
+        <input type="text" name="bMailAddress" value="<%=bMailAddress%>"/>
+        <input type="submit" value="Sauvegarder"/>
+      </form>
+    </td>
   </tr>
 </table>
 
@@ -54,14 +100,35 @@
   <tr>
     <td>Siret</td>
     <td><%=siret%></td>
+    <td>
+      <form id="siret" method="post" action="/Company/setAUserInfo">
+        <input type="hidden" name="data" value="k"/>
+        <input type="text" name="siret" value="<%=siret%>"/>
+        <input type="submit" value="Sauvegarder"/>
+      </form>
+    </td>
   </tr>
   <tr>
     <td>Nom</td>
     <td><%=companyName%></td>
+    <td>
+      <form id="companyName" method="post" action="/Company/setAUserInfo">
+        <input type="hidden" name="data" value="l"/>
+        <input type="text" name="companyName" value="<%=companyName%>"/>
+        <input type="submit" value="Sauvegarder"/>
+      </form>
+    </td>
   </tr>
   <tr>
     <td>Group</td>
     <td><%=companyGroup%></td>
+    <td>
+      <form id="companyGroup" method="post" action="/Company/setAUserInfo">
+        <input type="hidden" name="data" value="m"/>
+        <input type="text" name="companyGroup" value="<%=companyGroup%>"/>
+        <input type="submit" value="Sauvegarder"/>
+      </form>
+    </td>
   </tr>
   <tr>
     <td>Logo</td>
@@ -70,21 +137,56 @@
   <tr>
     <td>Description</td>
     <td><%=description%></td>
+    <td>
+      <form id="description" method="post" action="/Company/setAUserInfo">
+        <input type="hidden" name="data" value="n"/>
+        <textarea type="text" name="description"><%=description%></textarea>
+        <input type="submit" value="Sauvegarder"/>
+      </form>
+    </td>
   </tr>
   <tr>
     <td>Site internet</td>
-    <td><%=websiteUrl%></td>
+    <td><a href="<%=websiteUrl%>" target="_blank"><%=websiteUrl%></a></td>
+    <td>
+      <form id="websiteUrl" method="post" action="/Company/setAUserInfo">
+        <input type="hidden" name="data" value="o"/>
+        <input type="text" name="websiteUrl" value="<%=websiteUrl%>"/>
+        <input type="submit" value="Sauvegarder"/>
+      </form>
+    </td>
   </tr>
   <tr>
     <td>Site de recrutement</td>
-    <td><%=careerUrl%></td>
+    <td><a href="<%=careerUrl%>" target="_blank"><%=careerUrl%></a></td>
+    <td>
+      <form id="careerUrl" method="post" action="/Company/setAUserInfo">
+        <input type="hidden" name="data" value="p"/>
+        <input type="text" name="careerUrl" value="<%=careerUrl%>"/>
+        <input type="submit" value="Sauvegarder"/>
+      </form>
+    </td>
   </tr>
   <tr>
     <td>Adresse postale</td>
     <td>
       <%=road%><br />
+      <% if (typeof complementaryInformation != 'undefined' && complementaryInformation != "") { %>
+        <%=complementaryInformation%><br />
+      <% } %>
       <%=postCode%> <%=city%><br />
       <%=country%>
+    </td>
+    <td>
+      <form id="postAddress" method="post" action="/Company/setAUserInfo">
+        <input type="hidden" name="data" value="q"/>
+        <label>N° et rue</label><input type="text" name="road" value="<%=road%>"/><br />
+        <label>Complément</label><input type="text" name="complementaryInformation"  <%if (typeof complementaryInformation != 'undefined') { %>value="<%=complementaryInformation%>" <% } %>/><br>
+        <label>Code postal</label><input type="text" name="postCode" value="<%=postCode%>"/><br />
+        <label>Ville</label><input type="text" name="city" value="<%=city%>"/><br />
+        <label>Pays</label><input type="text" name="country" value="<%=country%>"/><br />
+        <input type="submit" value="Sauvegarder"/>
+      </form>
     </td>
   </tr>
 </table>

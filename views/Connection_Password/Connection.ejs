@@ -18,9 +18,8 @@
 <% } %>
 
 <form method="post" action="/Company/AuthCompany">
-  <input type="email" placeholder="Email utilisateur" name="UserAuthEmail" required/>
-  <input type="password" placeholder="Mot de passe" name="UserAuthPasswd" required/>
-  <input type="hidden" name="NextUrl" value="<%if (typeof nexturl != 'undefined'){%><%=nexturl%><%}else{%>/<%}%>"/>
+  <input type="email" placeholder="Email utilisateur" name="login" required/>
+  <input type="password" placeholder="Mot de passe" name="password" required/>
   <input type="submit"/>
 </form>
 
