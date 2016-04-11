@@ -36,13 +36,20 @@
   <link rel="stylesheet" href="/styles/unslider.css">
   <!--STYLES END-->
 
+  <!-- React -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.8/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.8/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+
 
 </head>
 <body class="custom-body">
   <div class="pure-g">
     <div class="pure-u-3-5 center-part" style="margin: auto">
       <header>
-        <img src='/images/Logo_FIE_blanc.png' width="400" alt="logo"/>
+        <a href="/" ><img src='/images/Logo_FIE_blanc.png' width="400" alt="logo"/></a>
         <div id="networks">
           <a href="https://www.facebook.com/ForumInsaEntreprises" class="icon-button facebook" target="_blank"><i class="fa fa-facebook icon-facebook"></i><span></span></a>
           <a href="https://twitter.com/INSAToulouse" class="icon-button twitter" target="_blank"><i class="fa fa-twitter icon-twitter"></i><span></span></a>
@@ -70,6 +77,7 @@
       <!-- Content inserted here -->
       <%- include nav %>
       <div class="content-part">
+        <div id="subBody"></div>
         <%- body %>
       </div>
     </div>
