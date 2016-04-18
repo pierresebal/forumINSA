@@ -172,8 +172,9 @@ var CVDownloadForm = React.createClass({
 //---------------------------------------------------
 
 var CvList = React.createClass({
-  render : function () {
 
+
+  render : function () {
     var cvListDisplay = this.props.cvList.map(function(cv) {
       var frCV, enCV, personalWebsite, linkedin, viadeo, github;
 
@@ -229,10 +230,10 @@ var CvList = React.createClass({
         <table>
           <tbody>
           <tr>
-              <td>Année</td>
-              <td>Spécialité</td>
-              <td>Nom</td>
-              <td>Prénom</td>
+              <td onClick={this.props.onSortByYear}>Année</td>
+              <td onClick={this.props.onSortBySpeciality}>Spécialité</td>
+              <td onClick={this.props.onSortByLastName}>Nom</td>
+              <td onClick={this.props.onSortByFirstName}>Prénom</td>
               <td>CV français</td>
               <td>CV anglais</td>
               <td>Site personnel</td>
@@ -254,7 +255,7 @@ var CvList = React.createClass({
 var CvBox = React.createClass({
 
   getInitialState : function() {
-    return {cvList : [], cvListFound :[], specialities:[]}
+    return {cvList : [], cvListFound :[], yearDown:true, specialityDown:true, lastNameDown:true, firstNameDown:true}
   },
 
   componentDidMount: function() {
@@ -263,7 +264,7 @@ var CvBox = React.createClass({
       dataType: 'json',
       cache: false,
       success : function(list) {
-        this.setState({cvList: list, cvListFound:list});
+        this.setState({cvList: list});
       }.bind(this),
       error : function(xhr, status, err) {
         console.error('/Student/Students', status, err.toString());
@@ -271,66 +272,84 @@ var CvBox = React.createClass({
     });
   },
 
+  sortByLastName:function() {
+    var newList = this.state.cvListFound;
+    if (this.state.lastNameDown)
+      newList.sort(function (a, b) {return a.lastName.localeCompare(b.lastName);});
+    else
+      newList.sort(function (a, b) {return b.lastName.localeCompare(a.lastName);});
+
+    this.setState({cvListFound:newList, lastNameDown:!this.state.lastNameDown});
+  },
+
+  sortByFirstName:function() {
+    var newList = this.state.cvListFound;
+    if (this.state.firstNameDown)
+      newList.sort(function (a, b) {return a.firstName.localeCompare(b.firstName);});
+    else
+      newList.sort(function (a, b) {return b.firstName.localeCompare(a.firstName);});
+
+    this.setState({cvListFound:newList, firstNameDown:!this.state.firstNameDown});
+  },
+
+  sortByYear:function() {
+    var newList = this.state.cvListFound;
+    if (this.state.yearDown)
+      newList.sort(function (a, b) {return a -b;});
+    else
+      newList.sort(function (a, b) {return b -a;});
+
+    this.setState({cvListFound:newList, yearDown:!this.state.yearDown});
+  },
+
+  sortBySpeciality:function() {
+    var newList = this.state.cvListFound;
+    if (this.state.specialityDown)
+      newList.sort(function (a, b) {return a.speciality.localeCompare(b.speciality);});
+    else
+      newList.sort(function (a, b) {return b.speciality.localeCompare(a.speciality);});
+
+    this.setState({cvListFound:newList, specialityDown:!this.state.specialityDown});
+  },
+
   search: function(specialitiesSearch,yearsSearch,All,frCV,enCV) {
-    console.log("specialitiesSearch : " + specialitiesSearch);
-    console.log("yearSearch : " + yearsSearch);
     var newList=[];
     this.state.cvList.forEach(function(person){
-      console.log("Coucou1");
-      var goodSpeciality = false;
-      var goodYear = false;
+      var goodSpeciality = false, goodYear = false;
 
-      console.log("cvFr : " + frCV + " -" + person.frCVPath + "-, cvEn : " + enCV + " -" + person.enCVPath +"-");
       //Si cvfr demandé et person n'a pas de cvfr, alors person suivante
-      if (frCV && person.frCVPath=="") {
-        console.log("!!!!!!FR");
+      if (frCV && person.frCVPath=="")
         return;
-      }
 
-      console.log("Coucou2");
-      if (enCV && person.enCVPath=="") {
-        console.log("!!!!!!EN");
+      if (enCV && person.enCVPath=="")
         return;
-      }
 
-      console.log("Coucou3");
       //Is the person among the search specialities ?
       specialitiesSearch.some(function(speciality){
-        console.log("Coucou4");
         if (speciality == person.speciality) {
           goodSpeciality = true;
-          console.log("Coucou5");
           return true;//break the loop
         }
         return false;
       });
-      console.log("Coucou6");
 
       if (!goodSpeciality) //On passe à la personne suivante
         return;
-      console.log("Coucou7");
       if (!All) {
-        console.log("Coucou8");
         //Is the person among the search years ?
         yearsSearch.some(function(year){
-          console.log("Coucou9");
           if (year == person.year) {
             goodYear = true;
-            console.log("Coucou10");
             return true; //break the loop
           }
           return false;
         });
-      } else {
+      } else
         goodYear = true;
-      }
 
-      console.log("goodSpeciality :" + goodSpeciality);
-      console.log("goodYear :" + goodYear);
       if (goodYear) //Tout est respecté
         newList.push(person);
     });
-    console.log("Avant setState : " + newList);
     this.setState({cvListFound: newList});
   },
 
@@ -339,7 +358,13 @@ var CvBox = React.createClass({
       <div className="CvBox">
         <h1>CVThèque</h1>
         <CriteriaBox  onSearch={this.search}/>
-        <CvList cvList={this.state.cvListFound}/>
+        <CvList
+          cvList={this.state.cvListFound}
+          onSortByLastName={this.sortByLastName}
+          onSortByFirstName={this.sortByFirstName}
+          onSortByYear={this.sortompany/CvThequeByYear}
+          onSortBySpeciality={this.sortBySpeciality}
+        />
       </div>
     );
   }
