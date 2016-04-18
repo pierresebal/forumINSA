@@ -100,6 +100,16 @@ module.exports.routes = {
     locals:{layout:'layout'}
   },
 
+  '/Student/Specialities':{
+    controller: 'StudentController',
+    action: 'getSpecialities'
+  },
+
+  '/Student/Students':{
+    controller: 'StudentController',
+    action : 'getStudents'
+  },
+
   /*
    ===========================================================================================================
    ============================================== STUDENT'S CONTROLLERS=======================================

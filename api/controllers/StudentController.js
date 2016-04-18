@@ -22,7 +22,7 @@ module.exports = {
           Student.findOne({login: result.login}).exec(function find(err, record) {
             if (err)
               return res.negotiate(err);
-            if (!record) {
+            if (!record) { //Première connexion
               Student.create(result).exec(function setSessionVariables(err, created) {
                 StudentSession.setStudentSessionVariables(req, created.login, created.firstName, created.mailAddress, true, "student");
 
@@ -195,7 +195,7 @@ module.exports = {
   setAllInfo: function(req,res) {
     var mailAddress = req.session.mailAddress;
 
-    if (req.param('maillAddress') != "")
+    if (req.param('maillAddress') == "")
       mailAddress= req.param('mailAddress');
 
 
@@ -209,8 +209,10 @@ module.exports = {
       viadeo: req.param('viadeo'),
       github: req.param('github')
     }).exec(function update(err, updatedUser){
-      if (err)
-        return res.view("ErrorPage", {layout:'layout', ErrorTitle:"Update failed"});
+      if (err) {
+        console.log(err);
+        return res.view("ErrorPage", {layout: 'layout', ErrorTitle: "Update failed"});
+      }
 
       console.log("Yo");
       return res.view('StudentSpace/FirstConnection_2', {layout:'layout'});
@@ -225,6 +227,36 @@ module.exports = {
     return res.view('StudentSpace/Sjd', {layout:'layout'});
   },
 
+  getSpecialities : function(req,res) {
+    return res.json(Student.definition.speciality.enum);
+  },
+
+  getStudents : function(req, res) {
+    Student.find().exec(function(err, records) {
+      if (err) {
+        console.log("Erreur renvoi students");
+        return;
+      }
+
+      var lightRecords = records.map(function (found) {
+        return {
+          "login" : found.login,
+          "lastName" : found.lastName,
+          "firstName" : found.firstName,
+          "year" : found.year,
+          "speciality" : found.speciality,
+          "personalWebsite" : found.personalWebsite,
+          "linkedin" : found.linkedin,
+          "viadeo" : found.viadeo,
+          "github" : found.github,
+          "frCVPath" : found.frCVPath,
+          "enCVPath" : found.enCVPath
+        };
+      });
+
+      return res.json(lightRecords);
+    });
+  }
 };
 
 

@@ -71,9 +71,16 @@ module.exports = {
   download: function(req, res) {
 
     var fileFr ="", fileEn="";
+    var cvLogin;
+
+    if (req.session.sessionType == 'student')
+      cvLogin = req.session.login;
+    else if (req.session.sessionType == 'company')
+      cvLogin = req.param('cvLogin');
+
     // Get the URL of the file to download
-    Student.findOne({login:req.session.login}, function (err, record) {
-      if (err)
+    Student.findOne({login:cvLogin}, function (err, record) {
+      if (err || !record)
         return res.view("ErrorPage", {layout:'layout', ErrorTitle:"Erreur téléchargement", ErrorDesc:"Nous n'avons pas trouvé votre profil."});
       fileFr = record.frCVPath;
       fileEn = record.enCVPath;

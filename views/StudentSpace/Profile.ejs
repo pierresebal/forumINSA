@@ -131,7 +131,7 @@
   <tr>
     <td>Profil Linkedin</td>
     <% if (typeof (linkedin) != 'undefined' && linkedin != "") { %>
-      <td><a href="http://<%=linkedin%>"  target="_blank">Voir le profil</a></td>
+      <td><a href="<%=linkedin%>"  target="_blank">Voir le profil</a></td>
     <% } %>
       <td>
         <form id="linkedinForm" method="post" action="/Student/setAUserInfo">
@@ -145,7 +145,7 @@
   <tr>
     <td>Profil Viadeo</td>
     <% if (typeof (viadeo) != 'undefined' && viadeo != "") { %>
-      <td><a href="http://<%=viadeo%>"  target="_blank">Voir le profil</a></td>
+      <td><a href="<%=viadeo%>"  target="_blank">Voir le profil</a></td>
     <% } %>
       <td>
         <form id="viadeoForm" method="post" action="/Student/setAUserInfo">
@@ -159,7 +159,7 @@
   <tr>
     <td>Profil GitHub</td>
     <% if (typeof (github) != 'undefined' && github != "") { %>
-      <td><a href="http://<%=github%>" target="_blank">Voir le profil</a></td>
+      <td><a href="<%=github%>" target="_blank">Voir le profil</a></td>
     <% } %>
       <td>
         <form id="githubForm" method="post" action="/Student/setAUserInfo">

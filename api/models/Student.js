@@ -11,16 +11,23 @@ module.exports = {
     login: {
       type:"string",
       required:true,
-      unique: true,
+      unique: true
     },
-    firstName:'string',
-    lastName:'string',
+    firstName:{
+      type:'string',
+      required: true
+    },
+    lastName: {
+      type: 'string',
+      required: true
+    },
     gender: {
       type: 'string',
       enum:['f','m']
     },
     mailAddress:{
-      type:'email'
+      type:'email',
+      required:true
     },
     year: { //Voir si on peut le déterminer depuis le ldap
       type:'integer',
@@ -41,14 +48,28 @@ module.exports = {
     },
     enCVPath: {
       type:'string',
+      defaultsTo:""
     },
     frCVPath: {
       type:'string',
+      defaultsTo:""
     },
-    personalWebsite:'string',
-    linkedin:'string',
-    viadeo:'string',
-    github:'string',
+    personalWebsite:{
+      type:'string',
+      defaultsTo:""
+    },
+    linkedin:{
+      type : 'string',
+      defaultsTo:""
+    },
+    viadeo:{
+      type: 'string',
+      defaultsTo:""
+    },
+    github:{
+      type:'string',
+      defaultsTo:""
+    },
 
 
 
