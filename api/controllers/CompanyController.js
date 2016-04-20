@@ -11,7 +11,7 @@ module.exports = {
 
 
   //CreateCompany: Function that create a new user Company into the DB and send him a confirmation email (with confirmation URL)
-  CreateCompany:function(req,res) {
+  CreateCompany:function(req,res){
     // TODO: Add verification of the form on controller or view (important: password similars)
     // On regarde qu'il n'y a pas d'entrerpise avec le même email déja enregistrées
     Company.findOne({mailAddress:req.param('UserEmail')}).exec(function(err,record){
@@ -144,6 +144,7 @@ module.exports = {
             req.session.sessionType = "company";
             req.session.connectionFailed = false;
             req.session.siret= record.siret;
+            req.session.CieName=record.companyName;
             return res.redirect('/Company/MemberSpace');
           }
           else{
