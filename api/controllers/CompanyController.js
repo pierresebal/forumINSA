@@ -127,31 +127,38 @@ module.exports = {
     });
   },
 
-
   //AuthentificateCompany: Check the email/password request sent by user and allow or not to set an Authentified User
   AuthentificateCompany:function(req,res){
     console.log('User try to authentificate... Email: '+req.param('login')+' Password: '+req.param('password'));
     var sha1 = require('sha1');
+    // Looking for IDs in the database
     Company.findOne({mailAddress:req.param('login'),password:sha1(req.param('password'))}).exec(function(err,record){
+      // Good IDs for authentication
       if(!err) {
-
         if(typeof record !='undefined'){
-          // Cas ou on a authentifié un utilisateur
+
+          // User authenticated and active
           if(record.active==1){
-            console.log('Authentification succeed: '+record.firstName);
+            // We set up session variables
             req.session.authenticated=true;
             req.session.mailAddress=record.mailAddress;
             req.session.sessionType = "company";
             req.session.connectionFailed = false;
             req.session.siret= record.siret;
             req.session.CieName=record.companyName;
+
+            // We confirm the authentication
+            console.log('Authentification succeed: '+record.firstName);
             return res.redirect('/Company/MemberSpace');
           }
+
+          // User authenticated but not active
           else{
             console.log("CompanySpace not activated...");
             return res.view('Connection_Password/Connection',{error:'Votre compte n\'est pas activé veuillez vous réfférer au mail d\'activation reçu à l\'inscription...',layout:'layout'});
           }
         }
+        // Bad IDs for authentication
         else
         {
           console.log("Wrong password/email, auth aborted...");
@@ -159,6 +166,7 @@ module.exports = {
           return res.view("Connection_Password/Connection", {layout:'layout', companyConnectionFailed:true});
         }
       }
+      // Bad IDs for authentication
       else
       {
         console.log('Error during authentification...');
@@ -166,7 +174,6 @@ module.exports = {
       }
     })
   },
-
 
   // Show space reserved to members (test page for authentification)
   MemberHomeShow:function(req,res){
@@ -189,7 +196,6 @@ module.exports = {
     }
   },
 
-
   // ActivateCompany: check URL request from email confirmation sent after User inscription in order to set Active:1 the Account
   // (this allow the user to connect)
   ActivateCompany:function(req,res){
@@ -199,10 +205,9 @@ module.exports = {
     }
     else
     {
-      // Check for valid GET method args in url request: email and url wich are the IDs for confirmation in DB
+      // Check for valid GET args in url request: email and url wich are the IDs for confirmation in DB
       if(typeof req.param('url') != 'undefined' && req.param('email') != 'undefined' ){
         // We try to update an existing user to set him Active:1
-        console.log("Trying to activate a new user");
         Company.update({mailAddress:req.param('email'),activationUrl:req.param('url'), active:0},{active:1}).exec(function afterwards(err, updated){
           if (err) { // If we hit an error during update
             console.log("Unable to activate user...");
@@ -235,79 +240,67 @@ module.exports = {
 
   // InitPasswd; We call this function when the user needs to receive a new password by email (because he losts it)
   // This function need POST arg named "email" wich corespond to the attribute Email of the user who need to reset password
-  // TODO: This function still no works...
   InitPasswdCompany:function(req,res) {
     // Check if the user exists and we take his old password to create the new
     Company.findOne({mailAddress: req.param('UserAuthEmail')}).exec(function (err, record) {
 
       if (!err) {
-
+        // An user has been found in the DB
         if (typeof record != 'undefined') {
 
-          // A user with this email was found
+          // We take the old pass to make a new one
           var old_pass = record.password;
-
-          console.log("Old pass: "+old_pass);
-
-          // Creation of a new password from part of the old
           var sha1 = require('sha1');
           var new_pass = sha1(old_pass).substring(0,8);
 
-          // We update the password of the user
+          // We update the password in the DB
           Company.update({mailAddress: req.param('UserAuthEmail')}, {password:sha1(new_pass)}).exec(function afterwards(err, updated) {
-            // Log: New password set for an user
-            console.log("New password set: "+new_pass);
 
-            Company.findOne({mailAddress: req.param('UserAuthEmail')}).exec(function (err, record) {
-              console.log(record.password)
-            });
+            if(!err) {
+              //Sending an email to the user with the new password
+              var nodemailer = require("nodemailer");
 
-            //Sending an email to the user with the new password
-            var nodemailer = require("nodemailer");
+              // create reusable transport method (opens pool of SMTP connections)
+              var smtpTransport = nodemailer.createTransport("SMTP", {
+                service: "Gmail",
+                auth: {
+                  user: "club.montagne@amicale-insat.fr",
+                  pass: "insamontagne1"
+                }
+              });
 
-            // create reusable transport method (opens pool of SMTP connections)
-            var smtpTransport = nodemailer.createTransport("SMTP",{
-              service: "Gmail",
-              auth: {
-                user: "club.montagne@amicale-insat.fr",
-                pass: "insamontagne1"
-              }
-            });
+              // setup e-mail data with unicode symbols
+              var mailOptions = {
+                from: "Pierre Hardy <pierre.hardy5@gmail.com>", // sender address
+                to: req.param('UserAuthEmail'), // list of receivers
+                subject: "FIE: Réinitialisation du mot de passe", // Subject line
+                text: "Bonjour " + updated.firstName + ",\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + new_pass + "\nPour vous connecter, cliquez ici: http://localhost:1337/CompanySpace/Connexion\nA très bientot !\nL'équipe de localhost.", // plaintext body
+                html: "" // html body
+              };
 
-            // setup e-mail data with unicode symbols
-            var mailOptions = {
-              from: "Pierre Hardy <pierre.hardy5@gmail.com>", // sender address
-              to: req.param('UserAuthEmail'), // list of receivers
-              subject: "FIE: Réinitialisation du mot de passe", // Subject line
-              text: "Bonjour "+updated.firstName+",\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n"+new_pass+"\nPour vous connecter, cliquez ici: http://localhost:1337/CompanySpace/Connexion\nA très bientot !\nL'équipe de localhost.", // plaintext body
-              html: "" // html body
-            };
+              // send mail with defined transport object
+              smtpTransport.sendMail(mailOptions, function (error, response) {
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log("Message sent: " + response.message);
+                }
 
-            // send mail with defined transport object
-            smtpTransport.sendMail(mailOptions, function(error, response){
-              if(error){
-                console.log(error);
-              }else{
-                console.log("Message sent: " + response.message);
-              }
+                smtpTransport.close();
+              });
 
-              smtpTransport.close();
-            });
-
-            // We display the confirmation view if reset passwd worked successfully
-            return res.view('Connection_Password/ResetPassOK',{layout:'layout'})
-
+              // We display the confirmation view if reset passwd worked successfully
+              return res.view('Connection_Password/ResetPassOK', {layout: 'layout'})
+            }
           })
         }
-
+        // No user was found in DB, we send an error message
         else {
-          // No user was found
           return res.view('ErrorPage', {
             layout: 'layout',
             ErrorTitle: 'Erreur réinitialisation',
             ErrorDesc: 'Aucun utilisateur enregistré avec cet email...'
           });
-
         }
       }
       else {
