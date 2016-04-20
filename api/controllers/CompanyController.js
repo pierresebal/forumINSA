@@ -144,8 +144,7 @@ module.exports = {
             req.session.sessionType = "company";
             req.session.connectionFailed = false;
             req.session.siret= record.siret;
-
-            return res.redirect('/');
+            return res.redirect('/Company/MemberSpace');
           }
           else{
             console.log("CompanySpace not activated...");
@@ -171,7 +170,7 @@ module.exports = {
   // Show space reserved to members (test page for authentification)
   MemberHomeShow:function(req,res){
     console.log('Showing member space...');
-    res.view('CompanySpace/MemberSpace',{layout:'layout'});
+    res.view('CompanySpace/CompanySpace',{layout:'layout'});
   },
 
   // CompanyLogout: set session var as UnAuthentificated user
