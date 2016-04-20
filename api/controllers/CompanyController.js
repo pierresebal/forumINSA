@@ -10,17 +10,22 @@ var path = require('path');
 module.exports = {
 
 
-  //CreateCompany: Function that create a new user into the DB and send him a confirmation email (with confirmation URL)
+  //CreateCompany: Function that create a new user Company into the DB and send him a confirmation email (with confirmation URL)
   CreateCompany:function(req,res) {
     // TODO: Add verification of the form on controller or view (important: password similars)
-    // Checking for existing companies
+    // On regarde qu'il n'y a pas d'entrerpise avec le même email déja enregistrées
     Company.findOne({mailAddress:req.param('UserEmail')}).exec(function(err,record){
+      // La recherche n'a pas posé de problèmes
       if (!err) {
+
+        // Entreprise trouvée => On retourne une erreur à l'inscription
         if (typeof record !='undefined') {
           console.log('A company with the same mailAddress was found ...User result:'+record.mailAddress);
           console.log("Impossible to create a new user, the email is already used...");
           return res.view('Inscription/CompanyNotCreated', {mailAddress:req.param('UserEmail'),layout:'layout'});
         }
+
+        // Pas d'entrerpise trouvée => 1) Vérification 2)Ajout ds la BDD
         else {
 
           var uploadFile = req.file('logo');
@@ -29,18 +34,25 @@ module.exports = {
             if (err) return res.serverError(err);
             //	IF ERROR Return and send 500 error with error
 
+            // On fait apparaitre l'info de la création de l'entreprise dans le log de la console
+            console.log('No companies with the same email were found. Attempting to create a new Cie inside the database...');
+
+            // Création du lien d'activation (sha1 sur chrono courrant du serveur)
             var sha1 = require('sha1');
-            console.log('No companies with the same email were found...');
-            console.log("Attempting to create a new user inside the database...");
             var date = new Date();
             var ActivationUrl = sha1(date.getTime());
+
+            // Vérification des informations coté serveur
+            // TODO: Ajouter => verif pswd, verif email, verif longueur des champs
+
+            // Ajout de l'entreprise dans la BDD
             Company.create({
               firstName: req.param('UserFirstName'),
               lastName: req.param('UserLastName'),
               position: req.param('Position'),
               phoneNumber: req.param('PhoneNumber'),
               mailAddress: req.param('UserEmail'),
-              password: sha1(req.param('UserPassword')),
+              password: req.param('UserPassword'),
               siret:req.param('Siret'),
               companyName:req.param('CompanyName'),
               companyGroup:req.param('CompanyGroup'),
@@ -51,8 +63,9 @@ module.exports = {
               complementaryInformation:req.param('complementaryInformation'),
               city:req.param('CompanyAddressCity'),
               postCode:req.param('CompanyPostCode'),
-              country:req.param('CompanyCountry'),
+              country:req.param('CompanyAddressCountry'),
               logoPath:req.param('Siret') + ".png",
+              isPME:req.param('isPME'),
               /* bFirstName: req.param('BUserFirstName'), Il ne faut pas le mettre là mais dans le bon de commande
                bLastName: req.param('BUserLastName'),
                bPosition: req.param('BPosition'),
@@ -87,15 +100,16 @@ module.exports = {
 
                 // send mail with defined transport object
                 smtpTransport.sendMail(mailOptions, function(error, response){
-                  if(error)
+                  if(error) {
                     console.log(error);
-                  else
-                    console.log("Message sent: " + response.message);
+                  }
                   smtpTransport.close();
                 });
 
                 // We show a positive result to the CompanySpace created
                 return res.view('Inscription/UserCreated', {firstName: created.firstName,layout:'layout'});
+                console.log("Company created: "+req.param("UserEmail"));
+
               }
               else {
                 console.log('Error while creating a new CompanySpace. Error: ' + err);
@@ -105,13 +119,13 @@ module.exports = {
           });
         }
       }
+
+      // La recherche d'une Cie a posé un problème
       else {
         console.log('A problem occured during search for existing companies. Error: '+err);
       }
     });
   },
-
-
 
 
   //AuthentificateCompany: Check the email/password request sent by user and allow or not to set an Authentified User
@@ -175,6 +189,7 @@ module.exports = {
     }
   },
 
+
   // ActivateCompany: check URL request from email confirmation sent after User inscription in order to set Active:1 the Account
   // (this allow the user to connect)
   ActivateCompany:function(req,res){
@@ -216,6 +231,7 @@ module.exports = {
     }
 
   },
+
 
   // InitPasswd; We call this function when the user needs to receive a new password by email (because he losts it)
   // This function need POST arg named "email" wich corespond to the attribute Email of the user who need to reset password
@@ -306,6 +322,7 @@ module.exports = {
     })
   },
 
+
   Profile: function(req,res) {
 
     Company.findOne({mailAddress:req.session.mailAddress}).exec(function(err,found) {
@@ -343,9 +360,11 @@ module.exports = {
     });
   },
 
+
   CvTheque: function(req, res) {
     return res.view("CompanySpace/CvTheque", {layout:'layout'});
   },
+
 
   Command: function(req, res) {
     return res.view("CompanySpace/Command", {layout:'layout'});
@@ -535,6 +554,7 @@ module.exports = {
     }
 
   },
+
 
 };
 

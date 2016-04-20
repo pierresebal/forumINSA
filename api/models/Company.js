@@ -84,7 +84,7 @@ module.exports = {
 
     websiteUrl:{
       type:'string',
-      required:true
+      required:false
     },
 
     careerUrl:{
@@ -135,6 +135,11 @@ module.exports = {
 
     activationUrl:{
       type:'string',
+      required:true
+    },
+
+    isPME:{
+      type:'boolean',
       required:true
     },
   }
