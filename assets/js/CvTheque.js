@@ -362,7 +362,7 @@ var CvBox = React.createClass({
           cvList={this.state.cvListFound}
           onSortByLastName={this.sortByLastName}
           onSortByFirstName={this.sortByFirstName}
-          onSortByYear={this.sortompany/CvThequeByYear}
+          onSortByYear={this.sortByYear}
           onSortBySpeciality={this.sortBySpeciality}
         />
       </div>

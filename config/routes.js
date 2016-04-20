@@ -37,6 +37,26 @@ module.exports.routes = {
     locals:{layout:'layout'}
   },
 
+  '/Admin': {
+    view: 'Admin/Admin',
+    locals:{layout:'layout'}
+  },
+
+  '/Admin/Login': {
+    controller: 'AdminController',
+    action: 'adminLogin'
+  },
+
+  '/Admin/GeneralSettings' :{
+    controller: 'AdminController',
+    action: 'displayGeneralSettings'
+  },
+
+  '/Admin/SetPrices' :{
+    controller:'AdminController',
+    action: 'setPrices'
+  },
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

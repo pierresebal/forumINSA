@@ -56,7 +56,7 @@ module.exports = {
               /* bFirstName: req.param('BUserFirstName'), Il ne faut pas le mettre là mais dans le bon de commande
                bLastName: req.param('BUserLastName'),
                bPosition: req.param('BPosition'),
-               bPhoneNumber: req.param('BPhoneNumber'),s
+               bPhoneNumber: req.param('BPhoneNumber'),
                bMailAddress: req.param('BUserEmail'), */
               active:0,
               activationUrl:ActivationUrl
@@ -348,7 +348,17 @@ module.exports = {
   },
 
   Command: function(req, res) {
-    return res.view("CompanySpace/Command", {layout:'layout'});
+    var year = new Date().getFullYear();
+    GeneralSettings.findOne({year:year}).exec(function giveInfo(err, record){
+      return res.view("CompanySpace/Command", {
+        layout:'layout',
+        year:year,
+        forumPrice:record.forumPrice,
+        sjdPrice:record.sjdPrice,
+        sjdSessionPrice:record.sjdSessionPrice,
+        premiumPrice:record.premiumPrice
+      });
+    });
   },
 
   //Modifie une information de l'utilisateur
