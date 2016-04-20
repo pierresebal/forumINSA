@@ -27,7 +27,7 @@ module.exports = {
     mailAddress:{
       type:'email',
       required:true,
-      unique:true,
+      unique:true
     },
 
     phoneNumber:{
@@ -41,11 +41,11 @@ module.exports = {
 
     /* Contact Facturation */
     bFirstName:{
-      type:'string',
+      type:'string'
     },
 
     bLastName:{
-      type:'string',
+      type:'string'
     },
 
     bPosition:{
@@ -54,7 +54,7 @@ module.exports = {
 
     bMailAddress:{
       type:'email',
-      unique:true,
+      unique:true
     },
 
     bPhoneNumber:{
@@ -79,16 +79,16 @@ module.exports = {
     },
 
     description:{
-      type:'string',
+      type:'string'
     },
 
     websiteUrl:{
       type:'string',
-      required:true
+      required:false
     },
 
     careerUrl:{
-      type:'string',
+      type:'string'
     },
 
     logoPath:{
@@ -135,6 +135,11 @@ module.exports = {
 
     activationUrl:{
       type:'string',
+      required:true
+    },
+
+    isPME:{
+      type:'boolean',
       required:true
     },
   }
