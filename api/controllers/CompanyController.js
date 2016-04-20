@@ -238,7 +238,7 @@ module.exports = {
   // TODO: This function still no works...
   InitPasswdCompany:function(req,res) {
     // Check if the user exists and we take his old password to create the new
-    Company.findOne({mailAdress: req.param('UserAuthEmail')}).exec(function (err, record) {
+    Company.findOne({mailAddress: req.param('UserAuthEmail')}).exec(function (err, record) {
 
       if (!err) {
 
@@ -254,11 +254,11 @@ module.exports = {
           var new_pass = sha1(old_pass).substring(0,8);
 
           // We update the password of the user
-          Company.update({mailAdress: req.param('UserAuthEmail')}, {password:sha1(new_pass)}).exec(function afterwards(err, updated) {
+          Company.update({mailAddress: req.param('UserAuthEmail')}, {password:sha1(new_pass)}).exec(function afterwards(err, updated) {
             // Log: New password set for an user
             console.log("New password set: "+new_pass);
 
-            Company.findOne({mailAdress: req.param('UserAuthEmail')}).exec(function (err, record) {
+            Company.findOne({mailAddress: req.param('UserAuthEmail')}).exec(function (err, record) {
               console.log(record.password)
             });
 
@@ -295,7 +295,7 @@ module.exports = {
             });
 
             // We display the confirmation view if reset passwd worked successfully
-            return res.view('Inscription/ResetPassOK',{layout:'layout'})
+            return res.view('Connection_Password/ResetPassOK',{layout:'layout'})
 
           })
         }
