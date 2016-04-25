@@ -12,7 +12,155 @@ module.exports = {
 
   //CreateCompany: Function that create a new user Company into the DB and send him a confirmation email (with confirmation URL)
   CreateCompany:function(req,res){
-    // TODO: Add verification of the form on controller or view (important: password similars)
+    // TODO: finish information check
+
+    // var for redirecting decision
+    var POSTerror = false;
+    // var which contains text for the user
+    var ErrorText;
+
+    // Check for mandatory fields completion
+    // Mandatory fields exists
+    if( typeof req.param("isPME")!= 'undefined' || typeof req.param("siret")!= 'undefined' || typeof req.param("CompanyName")!= 'undefined' || typeof req.param("CompanyAddressRoad")!= 'undefined' || typeof req.param("CompanyAddressPostalCode")!= 'undefined' || typeof req.param("CompanyAddressCity") || typeof req.param("CompanyAdressCountry") || typeof req.param("UserFirstName") != "undefined" || typeof req.param("UserLastName") != "undefined" || typeof req.param("Position")!="undefined" || typeof req.param("phoneNumber") != "undefined" || typeof req.param("UserPassword")!="undefined")
+    {
+      // Check for the length and content of fields
+
+      // Creation of a table with all fields form POST form
+      var data_tab = [
+        req.param('isPME'),
+        req.param('siret'),
+        req.param('CompanyName'),
+        req.param('CompanyGroup'),
+        req.param('CompanyDescription'),
+        req.param('CompanyWebsiteUrl'),
+        req.param('CompanyCareerUrl'),
+        req.param('CompanyAddressRoad'),
+        req.param('complementaryInformation'),
+        req.param('CompanyAddressPostalCode'),
+        req.param('CompanyAddressCity'),
+        req.param('CompanyAddressCountry'),
+        req.param('UserFirstName'),
+        req.param('UserLastName'),
+        req.param('Position'),
+        req.param('phoneNumber'),
+        req.param('UserEmail'),
+        req.param('UserPassword'),
+      ];
+
+      // Table with regex objects used to check the data_tab
+      var Regex = require("regex");
+      var regex_tab = [
+        new Regex("(true)|(false)"), // isPME
+        new Regex("[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{5}"), // Siret
+        new Regex("[\S\s]{0,50}"), // company Name
+        new Regex("^[\w\s\-\'@0-9]{0,50}"), // Company Group
+        new Regex("^[\w\s\-\'@0-9]{0,50}"), // Company Description
+        new Regex("(((ht|f)tp(s?))\:\/\/)?(([a-zA-Z0-9]+([@\-\.]?[a-zA-Z0-9]+)<sup>*</sup>)(\:[a-zA-Z0-9\-\.]+)?@)?(www.|ftp.|[a-zA-Z]+.)?[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,})(\:[0-9]+)"), // Url
+        new Regex("(((ht|f)tp(s?))\:\/\/)?(([a-zA-Z0-9]+([@\-\.]?[a-zA-Z0-9]+)<sup>*</sup>)(\:[a-zA-Z0-9\-\.]+)?@)?(www.|ftp.|[a-zA-Z]+.)?[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,})(\:[0-9]+)"), // Url
+        new Regex("#[a-z]#"), // Adresse (route)
+        new Regex("^[\w\s\-\'@0-9]{0,50}"), // Adresse (complement)
+        new Regex("([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}"), // Postal Code
+        new Regex("^[\w\s\-\'@0-9]{0,50}"), // City
+        new Regex("^[\w\s\-\'@0-9]{0,50}"), // Country
+        new Regex("^[\w\s\-\'@0-9]{0,50}"), // User name
+        new Regex("^[\w\s\-\'@0-9]{0,50}"), // User name
+        new Regex("^[\w\s\-\'@0-9]{0,50}"), // POsition
+        new Regex("^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"), // Phone number
+        new Regex("^\S+@(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6})$"), // Mail
+        new Regex("^[\S\s]{0,50}"), // Password
+      ];
+
+      /*
+      // Table with min length
+      var minlength_tab = [
+        ,//isPME
+        ,//siret
+        ,//CompanyName'
+        ,//CompanyGroup
+        ,//CompanyDescription
+        ,//CompanyWebsiteUrl
+        ,//CompanyCareerUrl
+        ,//CompanyAddressRoad
+        ,//complementaryInformation
+        ,//CompanyAddressPostalCode
+        ,//CompanyAddressCity
+        ,//CompanyAddressCountry
+        ,//UserFirstName
+        ,//UserLastName
+        ,//Position
+        ,//phoneNumber
+        ,//UserMail
+        ,//UserPassword
+      ];
+
+      // Table with max length
+      var maxlength_tab = [
+        ,//isPME
+        ,//siret
+        ,//CompanyName'
+        ,//CompanyGroup
+        ,//CompanyDescription
+        ,//CompanyWebsiteUrl
+        ,//CompanyCareerUrl
+        ,//CompanyAddressRoad
+        ,//complementaryInformation
+        ,//CompanyAddressPostalCode
+        ,//CompanyAddressCity
+        ,//CompanyAddressCountry
+        ,//UserFirstName
+        ,//UserLastName
+        ,//Position
+        ,//phoneNumber
+        ,//UserMail
+        ,//UserPassword
+      ];*/
+
+      var posterr = [
+        "false",
+        "false",
+        "false",
+        "false",
+        "false",
+        "false",
+        "false",
+        "false",
+        "false",
+        "false",
+        "false",
+        "false",
+        "false",
+        "false",
+        "false",
+        "false",
+        "false",
+        "false",
+      ];
+
+      for ( var i=0; i<=17; i++){
+        // We check if the field should be verified
+        if (typeof data_tab[i] != "undefined")
+        {
+          // Validation by regular expressions
+          if(!regex_tab[i]. test(data_tab[i])){
+            // Field not validated
+            POSTerror = true;
+            posterr[i]="true";
+          }
+        }
+        // We skip to the next field
+      }
+    }
+    // Mandatory fields seems to not exist
+    else
+    {
+      POSTerror = true;
+    }
+
+    // En cas d'erreur rencontrée, on affiche une page d'erreur
+    if(POSTerror){
+      return res.view('ErrorPage',{layout:'layout',ErrorTitle:"Erreur lors de l'inscription",ErrorDesc:posterr+data_tab})
+    }
+
     // On regarde qu'il n'y a pas d'entrerpise avec le même email déja enregistrées
     Company.findOne({mailAddress:req.param('UserEmail')}).exec(function(err,record){
       // La recherche n'a pas posé de problèmes
@@ -22,10 +170,10 @@ module.exports = {
         if (typeof record !='undefined') {
           console.log('A company with the same mailAddress was found ...User result:'+record.mailAddress);
           console.log("Impossible to create a new user, the email is already used...");
-          return res.view('Inscription/CompanyNotCreated', {mailAddress:req.param('UserEmail'),layout:'layout'});
+          return res.view('Inscription/CompanyNotCreated', {layout:'layout',Email:record.mailAddress});
         }
 
-        // Pas d'entrerpise trouvée => 1) Vérification 2)Ajout ds la BDD
+        // Pas d'entrepise trouvée => 1) Vérification 2)Ajout ds la BDD
         else {
 
           var uploadFile = req.file('logo');
@@ -34,16 +182,10 @@ module.exports = {
             if (err) return res.serverError(err);
             //	IF ERROR Return and send 500 error with error
 
-            // On fait apparaitre l'info de la création de l'entreprise dans le log de la console
-            console.log('No companies with the same email were found. Attempting to create a new Cie inside the database...');
-
             // Création du lien d'activation (sha1 sur chrono courrant du serveur)
             var sha1 = require('sha1');
             var date = new Date();
             var ActivationUrl = sha1(date.getTime());
-
-            // Vérification des informations coté serveur
-            // TODO: Ajouter => verif pswd, verif email, verif longueur des champs
 
             // Ajout de l'entreprise dans la BDD
             Company.create({
