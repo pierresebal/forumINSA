@@ -17,62 +17,74 @@
 
     <div class="pure-control-group">
       <label for="siret">Numéro de siret<sup>*</sup> </label>
-      <input type="text" name="Siret" id="Siret" placeholder="Siret" required  pattern="[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{5}"/><br>
+      <input type="text" name="Siret" id="Siret" placeholder="Siret" required  pattern="[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{5}"/>
+      <p style="color:red;display:inline-block" id="siretErr" >Un N° de Siret comporte 14 chiffres (obligatoire)</p>
     </div>
 
     <div class="pure-control-group">
       <label for="CompanyName">Nom de l'entreprise<sup>*</sup> </label>
-      <input type="text" name="CompanyName" id="CompanyName" placeholder="Nom de l'entreprise" required/><br>
+      <input type="text" name="CompanyName" id="CompanyName" placeholder="Nom de l'entreprise" required/>
+      <p style="color:red;display:inline-block" id="CompanyNameErr" >0&lt;Nb de caractères &lt;50 (obligatoire)</p>
     </div>
 
     <div class="pure-control-group">
       <label for="CompanyGroup">Groupe de l'entreprise </label>
-      <input type="text" name="CompanyGroup" id="CompanyGroup" placeholder="Nom du groupe"/><br>
+      <input type="text" name="CompanyGroup" id="CompanyGroup" placeholder="Nom du groupe"/>
+      <p style="color:red;display:inline-block" id="CompanyGroupErr" >0&lt;Nb de caractères &lt;50 (obligatoire)</p>
     </div>
 
     <div class="pure-control-group">
-      <label for="CompanyGroup">Logo de l'entreprise</label>
-      <input type="file" name="logo" />
+      <label for="logo">Logo de l'entreprise</label>
+      <input id="logo" type="file" name="logo" />
+      <p style="color:red;display:inline-block" id="CompanyLogoErr" >Veuillez uploader un logo représentant votre entreprise</p>
     </div>
 
     <div class="pure-control-group">
       <label for="CompanyDescription">Description de l'entreprise</label>
-      <textarea name="CompanyDescription" id="CompanyDescription" placeholder="Tapez ici la description de l'entreprise qui apparaitra dans la plaquette du forum et sur le catalogue en ligne."></textarea><br>
+      <textarea name="CompanyDescription" id="CompanyDescription" placeholder="Tapez ici la description de l'entreprise qui apparaitra dans la plaquette du forum et sur le catalogue en ligne."></textarea>
+      <p style="color:red;display:inline-block" id="CompanyDescriptionErr" >0&lt;Nb de caractères &lt;500 (facultatif pour l'inscription)</p>
     </div>
 
     <div class="pure-control-group">
       <label for="CompanyWebsiteUrl">Site internet</label>
-      <input type="url" name="CompanyWebsiteUrl" id="CompanyWebsiteUrl" placeholder="URL vers le site de l'entreprise" pattern="(((ht|f)tp(s?))\:\/\/)?(([a-zA-Z0-9]+([@\-\.]?[a-zA-Z0-9]+)<sup>*</sup>)(\:[a-zA-Z0-9\-\.]+)?@)?(www.|ftp.|[a-zA-Z]+.)?[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,})(\:[0-9]+)"/><br>
+      <input type="url" name="CompanyWebsiteUrl" id="CompanyWebsiteUrl" placeholder="URL vers le site de l'entreprise" pattern="(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})"/>
+      <p style="color:red;display:inline-block" id="CompanyWebsiteUrlErr" >Maximum 200 caractères(facultatif)</p>
     </div>
 
     <div class="pure-control-group">
       <label for="CompanyCareerUrl">Site de recrutement</label>
-      <input type="url" name="CompanyCareerUrl" id="CompanyCareerUrl" placeholder="URL vers le site de recrutement" pattern="(((ht|f)tp(s?))\:\/\/)?(([a-zA-Z0-9]+([@\-\.]?[a-zA-Z0-9]+)<sup>*</sup>)(\:[a-zA-Z0-9\-\.]+)?@)?(www.|ftp.|[a-zA-Z]+.)?[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,})(\:[0-9]+)"/><br>
+      <input type="url" name="CompanyCareerUrl" id="CompanyCareerUrl" placeholder="URL vers le site de recrutement" pattern="(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})"/>
+      <p style="color:red;display:inline-block" id="CompanyCareerUrlErr" >Maximum 200 caractères</p>
     </div>
 
     <div class="pure-control-group">
       <label for="CompanyAddressRoad">Adresse<sup>*</sup></label>
-      <input type="text" name="CompanyAddressRoad" id="CompanyAddressRoad" placeholder="Adresse" required/><br>
+      <input type="text" name="CompanyAddressRoad" id="CompanyAddressRoad" placeholder="Adresse" required/>
+      <p style="color:red;display:inline-block" id="CompanyAddressRoadErr" >Maximum 50 caractères</p>
     </div>
 
     <div class="pure-control-group">
       <label for="complementaryInformation">Complément</label>
-      <input type="text" name="complementaryInformation" id="complementaryInformation" placeholder="Information complémentaire"/><br>
+      <input type="text" name="complementaryInformation" id="complementaryInformation" placeholder="Information complementaire"/>
+      <p style="color:red;display:inline-block" id="complementaryInformationErr" >Maximum 50 caractères</p>
     </div>
 
     <div class="pure-control-group">
       <label for="CompanyAddressPostalCode">Code Postal<sup>*</sup></label>
-      <input type="text" name="CompanyPostCode" id="CompanyPostCode" placeholder="Code Postal" required pattern="([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}"/><br>
+      <input type="text" name="CompanyPostCode" id="CompanyPostCode" placeholder="Code Postal" required pattern="([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}"/>
+      <p style="color:red;display:inline-block" id="CompanyPostCodeErr" >Maximum 6 caractères</p>
     </div>
+
+    <!-- TODO: terminer d'ajouter les <p> pour les erreurs et refondre JScript de sécu client -->
 
     <div class="pure-control-group">
       <label for="CompanyAddressCity">Ville<sup>*</sup></label>
-      <input type="text" name="CompanyAddressCity" id="CompanyAddressCity" placeholder="Ville" required/><br>
+      <input type="text" name="CompanyAddressCity" id="CompanyAddressCity" placeholder="Ville" required/>
     </div>
 
     <div class="pure-control-group">
       <label for="CompanyAddressCountry">Pays<sup>*</sup></label>
-      <input type="text" name="CompanyAddressCountry" id="CompanyAddressCountry" placeholder="Pays" required/><br>
+      <input type="text" name="CompanyAddressCountry" id="CompanyAddressCountry" placeholder="Pays" required/>
     </div>
 
   <h2>Contact Forum</h2>
@@ -81,13 +93,13 @@
   <div class="pure-control-group">
     <label for="UserFirstName">Prénom<sup>*</sup></label>
     <input type="text" name="UserFirstName" id="UserFirstName" placeholder="Prénom" required/>
+    <p style="color:red;display:inline-block" id="UserFirstNameErr" >Ce champ doit être complété et contenir moins de 20 caractères</p>
   </div>
 
-  <p style="color:red;display:none" id="UserFirstNameErr" >Ce champ doit être complété et contenir moins de 20 caractères</p><br>
 
   <div class="pure-control-group">
     <label for="UserLastName">Nom<sup>*</sup></label>
-    <input type="text" name="UserLastName" id="UserLastName" placeholder="Nom" required/><br>
+    <input type="text" name="UserLastName" id="UserLastName" placeholder="Nom" required/>
   </div>
 
   <div class="pure-control-group">
@@ -97,23 +109,23 @@
 
   <div class="pure-control-group">
     <label for="phoneNumber">Numéro de téléphone<sup>*</sup></label>
-    <input type="tel" name="PhoneNumber" id="PhoneNumber" placeholder="Numéro de téléphone" required pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"/><br>
+    <input type="tel" name="PhoneNumber" id="PhoneNumber" placeholder="Numéro de téléphone" required pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"/>
   </div>
 
   <div class="pure-control-group">
     <label for="UserMail">Addresse e-mail<sup>*</sup></label>
-    <input type="email" name="UserEmail" id="UserEmail" placeholder="Email" required pattern="^\S+@(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6})$"/><br>
+    <input type="email" name="UserEmail" id="UserEmail" placeholder="Email" required pattern="^\S+@(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6})$"/>
   </div>
 
   <div class="pure-control-group">
     <label for="UserPassword">Mot de passe<sup>*</sup></label>
-    <input type="password"  id="UserPassword" placeholder="Password" required/><br>
+    <input type="password"  id="UserPassword" placeholder="Password" required/>
   </div>
 
   <div class="pure-control-group">
     <label for="ConfirmUserPassword">Confirmez le mot de passe<sup>*</sup></label>
-    <input type="password" id="ConfirmUserPassword" placeholder="Confirm Password" required/><br>
-    <p for="ConfirmUserPassword" id="UserPasswordErr" style="display:none;">Les mots de passe doivent être identiques</p>
+    <input type="password" id="ConfirmUserPassword" placeholder="Confirm Password" required/>
+    <p id="UserPasswordErr" style="display:none;">Les mots de passe doivent être identiques</p>
   </div>
 
   <!--Champ caché contenant le mot de passe haché qui sera envoyé via POST-->
@@ -125,19 +137,19 @@
 
         <label for="BUserFirstName">Prénom : </label>
         <input type="text" name="BUserFirstName" id="BUserFirstName" placeholder="Prénom" required/>
-        <p style="color:red;display:none" id="UserFirstNameErr" >Ce champ doit être complété et contenir moins de 20 caractères</p><br>
+        <p style="color:red;display:none" id="UserFirstNameErr" >Ce champ doit être complété et contenir moins de 20 caractères</p>
 
         <label for="BUserLastName">Nom : </label>
-        <input type="text" name="BUserLastName" id="BUserLastName" placeholder="Nom" required/><br>
+        <input type="text" name="BUserLastName" id="BUserLastName" placeholder="Nom" required/>
 
         <label for="BPosition">Fonction : </label>
         <input type="text" name="BPosition" id="BPosition" placeholder="Fonction" required/><br  >
 
         <label for="BPhoneNumber">Numéro de téléphone : </label>
-        <input type="text" name="BPhoneNumber" id="BPhoneNumber" placeholder="Numérode téléphone" required/><br>
+        <input type="text" name="BPhoneNumber" id="BPhoneNumber" placeholder="Numérode téléphone" required/>
 
         <label for="BUserMail">Addresse e-mail : </label>
-        <input type="email" name="BUserEmail" id="BUserEmail" placeholder="Email" required/><br>
+        <input type="email" name="BUserEmail" id="BUserEmail" placeholder="Email" required/>
     -->
 
   <div class="pure-controls">
@@ -170,7 +182,7 @@
   //Affiche erreur sur un champ
   // ErrObj corespond a l'objet qui contient le message d'erreur (dont le css sera modifié par JS pour qu'il soit affiché)
   function DispError(ErrObj){
-    ErrObj.style="display:block;font-size: small; color:red;";
+    ErrObj.style="display:inline-block;font-size:small; color:red;";
   }
 
   // Supprime erreur sur un champ
@@ -192,7 +204,7 @@
       ConfirmUserPassword.style="background-color:#66ff66;";
       CleanError(UserPasswordErr);
       POSTUserPass.value=sha1(UserPassword.value);
-      ButtonSubmit.href="javascript: submitform()";
+      ButtonSubmit.href="javascript:submitform()";
       ButtonSubmit.disabled=false;
     }
     else
