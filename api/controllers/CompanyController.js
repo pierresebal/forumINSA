@@ -102,7 +102,7 @@ module.exports = {
       // Table with max length
       // Set here the max length of each fields
       var maxlength_tab = [
-        50,//isPME
+        5,//isPME
         17,//siret
         50,//CompanyName'
         50,//CompanyGroup
@@ -120,7 +120,7 @@ module.exports = {
         50,//Position
         13,//phoneNumber
         150,//UserMail
-        50,//UserPassword
+        500,//UserPassword
       ];
 
       var posterr = [
@@ -143,12 +143,9 @@ module.exports = {
         "false",
         "false",
       ];
-
-      console.log(data_tab[18]);
-
+      
       for ( var i=0; i<=18; i++){
         // We check the field i
-        console.log(minlength_tab[i] + " < " + data_tab[i].length + " < " + maxlength_tab[i]);
         if (typeof data_tab[i] != "undefined") {
           // Validation of length
           if (data_tab[i].length >= minlength_tab[i] && data_tab[i].length <= maxlength_tab[i]) {
@@ -179,7 +176,7 @@ module.exports = {
 
     // En cas d'erreur rencontrée, on affiche une page d'erreur
     if(POSTerror){
-      return res.view('ErrorPage',{layout:'layout',ErrorTitle:"Erreur lors de l'inscription",ErrorDesc:posterr+data_tab})
+      return res.view('Inscription/Inscription',{layout:'layout',posterr, data_tab})
     }
 
     // On regarde qu'il n'y a pas d'entrerpise avec le même email déja enregistrées

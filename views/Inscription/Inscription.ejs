@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 
+<%
+  // We check if posterror tab exists (in case of previous submit)
+  var MainMessageStyleShow = "none";
+  var ErrInitStyleShow = ["none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none"];
+  if(typeof posterr != "undefined"){
+    for (var i=0;i<=18;i++){
+      console.log("test:"+posterr[i]);
+      if(posterr[i]=="true"){
+        MainMessageStyleShow="inline-block";
+        ErrInitStyleShow[i]="inline-block";
+
+      }
+    }
+  }
+
+%>
+
 <h1>Création d'un compte entreprise</h1>
 <form id="FormInscription" enctype="multipart/form-data" method="post" action="/Company/CreateCompany" class="pure-form pure-form-aligned" >
 
   <fieldset>
   <h2>Profil Entreprise</h2>
   <p>Ces informations permettront aux étudiants d'avoir plus d'informations sur votre entreprise lorsqu'ils consulteront le catalogue des entreprises sur le site et dans la plaquette du forum.</p>
+
+    <p style="color:red;font-size:12px;display:<%=MainMessageStyleShow%>" >Veuillez corriger les erreurs dans les champs ci-dessous</p>
+    <p style="color:red;font-size:12px;display:<%=MainMessageStyleShow%>" >Les champs marqués d'une étoile sons obligatoires</p>
 
     <div class="pure-control-group">
       <label for="isPME">Etes-vous une PME?<sup>*</sup> </label>
@@ -17,74 +37,76 @@
 
     <div class="pure-control-group">
       <label for="siret">Numéro de siret<sup>*</sup> </label>
-      <input type="text" name="Siret" id="Siret" placeholder="Siret" required  pattern="[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{5}"/>
-      <p style="color:red;display:inline-block" id="siretErr" >Un N° de Siret comporte 14 chiffres (obligatoire)</p>
+      <input maxlength="17" value="<%=data_tab[1]%>" type="text" name="Siret" id="Siret" placeholder="Siret" required  pattern="[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{5}"/>
+      <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[1]%>" id="siretErr" >Un N° de Siret comporte 14 chiffres (obligatoire)</p>
     </div>
 
     <div class="pure-control-group">
       <label for="CompanyName">Nom de l'entreprise<sup>*</sup> </label>
-      <input type="text" name="CompanyName" id="CompanyName" placeholder="Nom de l'entreprise" required/>
-      <p style="color:red;display:inline-block" id="CompanyNameErr" >0&lt;Nb de caractères &lt;50 (obligatoire)</p>
+      <input maxlength="50" value="<%=data_tab[2]%>" type="text" name="CompanyName" id="CompanyName" placeholder="Nom de l'entreprise" required/>
+      <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[2]%>" id="CompanyNameErr" >0&lt;Nb de caractères &lt;50 (obligatoire)</p>
     </div>
 
     <div class="pure-control-group">
       <label for="CompanyGroup">Groupe de l'entreprise </label>
-      <input type="text" name="CompanyGroup" id="CompanyGroup" placeholder="Nom du groupe"/>
-      <p style="color:red;display:inline-block" id="CompanyGroupErr" >0&lt;Nb de caractères &lt;50 (obligatoire)</p>
+      <input maxlength="50" value="<%=data_tab[3]%>" type="text" name="CompanyGroup" id="CompanyGroup" placeholder="Nom du groupe"/>
+      <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[3]%>" id="CompanyGroupErr" >0&lt;Nb de caractères &lt;50 (obligatoire)</p>
     </div>
 
     <div class="pure-control-group">
       <label for="logo">Logo de l'entreprise</label>
-      <input id="logo" type="file" name="logo" />
-      <p style="color:red;display:inline-block" id="CompanyLogoErr" >Veuillez uploader un logo représentant votre entreprise</p>
+      <input maxlength="50" value="<%=data_tab[4]%>" id="logo" type="file" name="logo" />
+      <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[4]%>" id="CompanyLogoErr" >Veuillez uploader un logo représentant votre entreprise</p>
     </div>
 
     <div class="pure-control-group">
       <label for="CompanyDescription">Description de l'entreprise</label>
-      <textarea name="CompanyDescription" id="CompanyDescription" placeholder="Tapez ici la description de l'entreprise qui apparaitra dans la plaquette du forum et sur le catalogue en ligne."></textarea>
-      <p style="color:red;display:inline-block" id="CompanyDescriptionErr" >0&lt;Nb de caractères &lt;500 (facultatif pour l'inscription)</p>
+      <textarea maxlength="500" value="<%=data_tab[5]%>" name="CompanyDescription" id="CompanyDescription" placeholder="Tapez ici la description de l'entreprise qui apparaitra dans la plaquette du forum et sur le catalogue en ligne."></textarea>
+      <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[5]%>" id="CompanyDescriptionErr" >0&lt;Nb de caractères &lt;500 (facultatif pour l'inscription)</p>
     </div>
 
     <div class="pure-control-group">
-      <label for="CompanyWebsiteUrl">Site internet</label>
-      <input type="url" name="CompanyWebsiteUrl" id="CompanyWebsiteUrl" placeholder="URL vers le site de l'entreprise" pattern="(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})"/>
-      <p style="color:red;display:inline-block" id="CompanyWebsiteUrlErr" >Maximum 200 caractères(facultatif)</p>
+      <label for="CompanyWebsiteUrl">Site internet officiel (avec http://)</label>
+      <input maxlength="200" value="<%=data_tab[6]%>" type="url" name="CompanyWebsiteUrl" id="CompanyWebsiteUrl" placeholder="URL vers le site de l'entreprise (avec http://)" pattern="(http(s)?(:\/\/))?(www\.)?[a-zA-Z0-9-_\.]+"/>
+      <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[6]%>" id="CompanyWebsiteUrlErr" >Maximum 200 caractères(facultatif)</p>
     </div>
 
     <div class="pure-control-group">
-      <label for="CompanyCareerUrl">Site de recrutement</label>
-      <input type="url" name="CompanyCareerUrl" id="CompanyCareerUrl" placeholder="URL vers le site de recrutement" pattern="(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})"/>
-      <p style="color:red;display:inline-block" id="CompanyCareerUrlErr" >Maximum 200 caractères</p>
+      <label for="CompanyCareerUrl">Site de recrutement (avec http://)</label>
+      <input maxlength="200" value="<%=data_tab[7]%>" type="url" name="CompanyCareerUrl" id="CompanyCareerUrl" placeholder="URL vers le site de recrutement (avec http://)" pattern="(http(s)?(:\/\/))?(www\.)?[a-zA-Z0-9-_\.]+"/>
+      <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[7]%>" id="CompanyCareerUrlErr" >Maximum 200 caractères</p>
     </div>
 
     <div class="pure-control-group">
       <label for="CompanyAddressRoad">Adresse<sup>*</sup></label>
-      <input type="text" name="CompanyAddressRoad" id="CompanyAddressRoad" placeholder="Adresse" required/>
-      <p style="color:red;display:inline-block" id="CompanyAddressRoadErr" >Maximum 50 caractères</p>
+      <input maxlength="50" value="<%=data_tab[8]%>" type="text" name="CompanyAddressRoad" id="CompanyAddressRoad" placeholder="Adresse" required/>
+      <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[8]%>" id="CompanyAddressRoadErr" >Maximum 50 caractères</p>
     </div>
 
     <div class="pure-control-group">
       <label for="complementaryInformation">Complément</label>
-      <input type="text" name="complementaryInformation" id="complementaryInformation" placeholder="Information complementaire"/>
-      <p style="color:red;display:inline-block" id="complementaryInformationErr" >Maximum 50 caractères</p>
+      <input maxlength="50" value="<%=data_tab[9]%>" type="text" name="complementaryInformation" id="complementaryInformation" placeholder="Information complementaire"/>
+      <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[9]%>" id="complementaryInformationErr" >Maximum 50 caractères</p>
     </div>
 
     <div class="pure-control-group">
       <label for="CompanyAddressPostalCode">Code Postal<sup>*</sup></label>
-      <input type="text" name="CompanyPostCode" id="CompanyPostCode" placeholder="Code Postal" required pattern="([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}"/>
-      <p style="color:red;display:inline-block" id="CompanyPostCodeErr" >Maximum 6 caractères</p>
+      <input maxlength="6" value="<%=data_tab[10]%>" type="text" name="CompanyPostCode" id="CompanyPostCode" placeholder="Code Postal" required pattern="([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}"/>
+      <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[1]%>" id="CompanyPostCodeErr" >Maximum 6 caractères</p>
     </div>
 
     <!-- TODO: terminer d'ajouter les <p> pour les erreurs et refondre JScript de sécu client -->
 
     <div class="pure-control-group">
       <label for="CompanyAddressCity">Ville<sup>*</sup></label>
-      <input type="text" name="CompanyAddressCity" id="CompanyAddressCity" placeholder="Ville" required/>
+      <input maxlength="200" value="<%=data_tab[11]%>" type="text" name="CompanyAddressCity" id="CompanyAddressCity" placeholder="Ville" required/>
+      <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[11]%>" id="CompanyAddressCityErr" >Ce champ doit être rempli et contient au maximum 50 caractères</p>
     </div>
 
     <div class="pure-control-group">
       <label for="CompanyAddressCountry">Pays<sup>*</sup></label>
-      <input type="text" name="CompanyAddressCountry" id="CompanyAddressCountry" placeholder="Pays" required/>
+      <input maxlength="50" value="<%=data_tab[12]%>" type="text" name="CompanyAddressCountry" id="CompanyAddressCountry" placeholder="Pays" required/>
+      <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[12]%>" id="CompanyAddressCountryErr" > Ce champ doit être rempli et contient au maximum 50 caractères</p>
     </div>
 
   <h2>Contact Forum</h2>
@@ -92,40 +114,44 @@
 
   <div class="pure-control-group">
     <label for="UserFirstName">Prénom<sup>*</sup></label>
-    <input type="text" name="UserFirstName" id="UserFirstName" placeholder="Prénom" required/>
-    <p style="color:red;display:inline-block" id="UserFirstNameErr" >Ce champ doit être complété et contenir moins de 20 caractères</p>
+    <input maxlength="50" value="<%=data_tab[13]%>" type="text" name="UserFirstName" id="UserFirstName" placeholder="Prénom" required/>
+    <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[13]%>" id="UserFirstNameErr" >Ce champ doit être complété et contenir moins de 20 caractères</p>
   </div>
 
 
   <div class="pure-control-group">
     <label for="UserLastName">Nom<sup>*</sup></label>
-    <input type="text" name="UserLastName" id="UserLastName" placeholder="Nom" required/>
+    <input maxlength="50" value="<%=data_tab[14]%>" type="text" name="UserLastName" id="UserLastName" placeholder="Nom" required/>
+    <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[14]%>" id="UserLastNameErr" >Ce champ doit être complété et contenir moins de 20 caractères</p>
   </div>
 
   <div class="pure-control-group">
     <label for="Position">Fonction<sup>*</sup></label>
-    <input type="text" name="Position" id="Position" placeholder="Fonction" required/><br  >
+    <input maxlength="50" value="<%=data_tab[15]%>" type="text" name="Position" id="Position" placeholder="Fonction" required/>
+    <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[15]%>" id="PositionErr" >Ce champ doit être rempli avec au maximum 50 caractères</p>
   </div>
 
   <div class="pure-control-group">
     <label for="phoneNumber">Numéro de téléphone<sup>*</sup></label>
-    <input type="tel" name="PhoneNumber" id="PhoneNumber" placeholder="Numéro de téléphone" required pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"/>
+    <input maxlength="13" value="<%=data_tab[16]%>" type="tel" name="PhoneNumber" id="PhoneNumber" placeholder="Numéro de téléphone" required pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"/>
+    <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[16]%>" id="PhoneNumberErr" > Ce champ doit être rempli par un numéro de téléphone et contient au maximum 13 caractères</p>
   </div>
 
   <div class="pure-control-group">
     <label for="UserMail">Addresse e-mail<sup>*</sup></label>
-    <input type="email" name="UserEmail" id="UserEmail" placeholder="Email" required pattern="^\S+@(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6})$"/>
+    <input maxlength="150" value="<%=data_tab[17]%>" type="email" name="UserEmail" id="UserEmail" placeholder="Email" required pattern="^\S+@(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6})$"/>
+    <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[17]%>" id="UserEmailErr" > Ce champ doit être rempli et contient au maximum 50 caractères</p>
   </div>
 
   <div class="pure-control-group">
     <label for="UserPassword">Mot de passe<sup>*</sup></label>
-    <input type="password"  id="UserPassword" placeholder="Password" required/>
+    <input minlength="6" maxlength="50" type="password"  id="UserPassword" placeholder="Password" required/>
   </div>
 
   <div class="pure-control-group">
     <label for="ConfirmUserPassword">Confirmez le mot de passe<sup>*</sup></label>
-    <input type="password" id="ConfirmUserPassword" placeholder="Confirm Password" required/>
-    <p id="UserPasswordErr" style="display:none;">Les mots de passe doivent être identiques</p>
+    <input minlength="6" maxlength="50" type="password" id="ConfirmUserPassword" placeholder="Confirm Password" required/>
+    <p id="UserPasswordErr" style="color:red;font-size:10px;display:<%=ErrInitStyleShow[18]%>;">Les mots de passe doivent être identiques et contenir entre 6 et 50 carac.</p>
   </div>
 
   <!--Champ caché contenant le mot de passe haché qui sera envoyé via POST-->
@@ -137,7 +163,7 @@
 
         <label for="BUserFirstName">Prénom : </label>
         <input type="text" name="BUserFirstName" id="BUserFirstName" placeholder="Prénom" required/>
-        <p style="color:red;display:none" id="UserFirstNameErr" >Ce champ doit être complété et contenir moins de 20 caractères</p>
+        <p style="color:red;font-size:10px;display:none" id="UserFirstNameErr" >Ce champ doit être complété et contenir moins de 20 caractères</p>
 
         <label for="BUserLastName">Nom : </label>
         <input type="text" name="BUserLastName" id="BUserLastName" placeholder="Nom" required/>
@@ -177,12 +203,15 @@
   //Objets de notifications erreurs
   var UserPasswordErr = document.getElementById("UserPasswordErr");
 
+  // On désactive l'envoi du form par défaut
+  ButtonSubmit.disabled=true;
+
   // Fonctions utilisées pour verifier les erreurs
 
   //Affiche erreur sur un champ
   // ErrObj corespond a l'objet qui contient le message d'erreur (dont le css sera modifié par JS pour qu'il soit affiché)
   function DispError(ErrObj){
-    ErrObj.style="display:inline-block;font-size:small; color:red;";
+    ErrObj.style="display:inline-block;font-size:10px;color:red;";
   }
 
   // Supprime erreur sur un champ
@@ -193,11 +222,11 @@
 
   // Vérifie que les mots de passes Pass1 et Pass2 soient identiques
   function PassCheck(Pass1,Pass2){
-    if(Pass1.value==Pass2.value)
+    if(Pass1.value==Pass2.value && Pass1.value.length >= 6 && Pass1.value.length <= 50)
       return true;
   }
 
-  // Verification du mot de passe
+  // Verification des mots de passe
   ConfirmUserPassword.addEventListener('input',function(){
     if(PassCheck(UserPassword,ConfirmUserPassword)){
       UserPassword.style="background-color:#66ff66;";
@@ -217,7 +246,6 @@
       ButtonSubmit.disabled=true;
     }
   })
-
   UserPassword.addEventListener('input',function(){
     if(PassCheck(UserPassword,ConfirmUserPassword)){
       UserPassword.style="background-color:#66ff66;";
@@ -228,7 +256,7 @@
     }
     else
     {
-      UserPassword.style="background-color:#ff6666;";
+      this.style="background-color:#ff6666;";
       ConfirmUserPassword.style="background-color:#ff6666;";
       DispError(UserPasswordErr);
       POSTUserPass.value=undefined;
@@ -243,7 +271,7 @@
     FormInscription.submit();
   }
 
-  // Fonction qui permet de faire un hashage en sha1, prise sur le web
+  // Fonction qui permet de faire un hachage en sha1, prise sur le web
   function sha1 (str) {
     //  discuss at: http://phpjs.org/functions/sha1/
     // original by: Webtoolkit.info (http://www.webtoolkit.info/)
