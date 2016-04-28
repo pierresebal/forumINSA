@@ -305,7 +305,7 @@ module.exports = {
             req.session.sessionType = "company";
             req.session.connectionFailed = false;
             req.session.siret= record.siret;
-            req.session.CieName=record.companyName;
+            req.session.companyName=record.companyName;
 
             // We confirm the authentication
             console.log('Authentification succeed: '+record.firstName);
