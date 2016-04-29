@@ -9,11 +9,14 @@
     data_tab=["","","","","","","","","","","","","","","","","",""];
   }
 
+  if(POSTerror){
+    MainMessageStyleShow="inline-block";
+  }
+
   if(typeof posterr != "undefined"){
     for (var i=0;i<=18;i++){
       console.log("test:"+posterr[i]);
       if(posterr[i]=="true"){
-        MainMessageStyleShow="inline-block";
         ErrInitStyleShow[i]="inline-block";
 
       }

@@ -16,41 +16,60 @@ module.exports = {
 
     // var for redirecting decision
     var POSTerror = false;
-    // var which contains text for the user
-    var ErrorText;
+
+    // Creation of a table with all fields form POST form
+    // The fields are in the same order as in the file Inscription.ejs
+    var data_tab = [
+      req.param('isPME'),
+      req.param('Siret'),
+      req.param('CompanyName'),
+      req.param('CompanyGroup'),
+      "none", // Field for the logo of the company, we don't harvest any data from this
+      req.param('CompanyDescription'),
+      req.param('CompanyWebsiteUrl'),
+      req.param('CompanyCareerUrl'),
+      req.param('CompanyAddressRoad'),
+      req.param('complementaryInformation'),
+      req.param('CompanyPostCode'),
+      req.param('CompanyAddressCity'),
+      req.param('CompanyAddressCountry'),
+      req.param('UserFirstName'),
+      req.param('UserLastName'),
+      req.param('Position'),
+      req.param('PhoneNumber'),
+      req.param('UserEmail'),
+      req.param('UserPassword'),
+    ];
+
+    // Chack for errors.
+    var posterr = [
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false"
+    ];
 
     // Check for mandatory fields completion
     // Mandatory fields exists
-    if( typeof req.param("isPME")!= 'undefined' && typeof req.param("siret")!= 'undefined' && typeof req.param("CompanyName")!= 'undefined' && typeof req.param("CompanyAddressRoad")!= 'undefined' && typeof req.param("CompanyAddressPostalCode")!= 'undefined' && typeof req.param("CompanyAddressCity") && typeof req.param("CompanyAdressCountry") && typeof req.param("UserFirstName") != "undefined" && typeof req.param("UserLastName") != "undefined" && typeof req.param("Position")!="undefined" && typeof req.param("phoneNumber") != "undefined" && typeof req.param("UserPassword")!="undefined")
+    if( typeof req.param("isPME")!= 'undefined' && typeof req.param("Siret")!= 'undefined' && typeof req.param("CompanyName")!= 'undefined' && typeof req.param ("CompanyAddressRoad")!= 'undefined' && typeof req.param("CompanyPostCode")!= 'undefined' && typeof req.param("CompanyAddressCity")!="undefined" && typeof req.param("CompanyAddressCountry") !="undefined" && typeof req.param("UserFirstName") != "undefined" && typeof req.param("UserLastName") != "undefined" && typeof req.param("Position")!="undefined" && typeof req.param("PhoneNumber") != "undefined" && typeof req.param("UserEmail")!="undefined" && typeof req.param("UserPassword")!="undefined")
     {
       // Check for the length and content of fields
 
-      // Creation of a table with all fields form POST form
-      // The fields are in the same order as in the file Inscription.ejs
-      var data_tab = [
-        req.param('isPME'),
-        req.param('Siret'),
-        req.param('CompanyName'),
-        req.param('CompanyGroup'),
-        "none", // Field for the logo of the company, we don't harvest any data from this
-        req.param('CompanyDescription'),
-        req.param('CompanyWebsiteUrl'),
-        req.param('CompanyCareerUrl'),
-        req.param('CompanyAddressRoad'),
-        req.param('complementaryInformation'),
-        req.param('CompanyPostCode'),
-        req.param('CompanyAddressCity'),
-        req.param('CompanyAddressCountry'),
-        req.param('UserFirstName'),
-        req.param('UserLastName'),
-        req.param('Position'),
-        req.param('PhoneNumber'),
-        req.param('UserEmail'),
-        req.param('UserPassword'),
-      ];
-      
-      console.log(data_tab);
-      
       // Table with regex objects used to check the data_tab
       // "none" means that no rules are applied
       var Regex = require("regex");
@@ -125,27 +144,8 @@ module.exports = {
         500,//UserPassword
       ];
 
-      var posterr = [
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-      ];
-      
+
+
       for ( var i=0; i<=18; i++){
         // We check the field i
         if (typeof data_tab[i] != "undefined") {
@@ -173,12 +173,13 @@ module.exports = {
     // Mandatory fields seems to not exist
     else
     {
+      console.log("il manque des champ obligatoires: " + posterr + " || " + data_tab)
       POSTerror = true;
     }
 
     // En cas d'erreur rencontrée, on affiche une page d'erreur
     if(POSTerror){
-      return res.view('Inscription/Inscription',{layout:'layout',posterr, data_tab})
+      return res.view('Inscription/Inscription',{layout:'layout',POSTerror,posterr, data_tab})
     }
 
     // On regarde qu'il n'y a pas d'entrerpise avec le même email déja enregistrées
