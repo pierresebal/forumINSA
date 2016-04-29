@@ -4,6 +4,11 @@
   // We check if posterror tab exists (in case of previous submit)
   var MainMessageStyleShow = "none";
   var ErrInitStyleShow = ["none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none"];
+
+  if(typeof data_tab == "undefined"){
+    data_tab=["","","","","","","","","","","","","","","","","",""];
+  }
+
   if(typeof posterr != "undefined"){
     for (var i=0;i<=18;i++){
       console.log("test:"+posterr[i]);
