@@ -21,7 +21,7 @@ module.exports = {
 
     // Check for mandatory fields completion
     // Mandatory fields exists
-    if( typeof req.param("isPME")!= 'undefined' || typeof req.param("siret")!= 'undefined' || typeof req.param("CompanyName")!= 'undefined' || typeof req.param("CompanyAddressRoad")!= 'undefined' || typeof req.param("CompanyAddressPostalCode")!= 'undefined' || typeof req.param("CompanyAddressCity") || typeof req.param("CompanyAdressCountry") || typeof req.param("UserFirstName") != "undefined" || typeof req.param("UserLastName") != "undefined" || typeof req.param("Position")!="undefined" || typeof req.param("phoneNumber") != "undefined" || typeof req.param("UserPassword")!="undefined")
+    if( typeof req.param("isPME")!= 'undefined' && typeof req.param("siret")!= 'undefined' && typeof req.param("CompanyName")!= 'undefined' && typeof req.param("CompanyAddressRoad")!= 'undefined' && typeof req.param("CompanyAddressPostalCode")!= 'undefined' && typeof req.param("CompanyAddressCity") && typeof req.param("CompanyAdressCountry") && typeof req.param("UserFirstName") != "undefined" && typeof req.param("UserLastName") != "undefined" && typeof req.param("Position")!="undefined" && typeof req.param("phoneNumber") != "undefined" && typeof req.param("UserPassword")!="undefined")
     {
       // Check for the length and content of fields
 
@@ -48,6 +48,8 @@ module.exports = {
         req.param('UserEmail'),
         req.param('UserPassword'),
       ];
+      
+      console.log(data_tab);
       
       // Table with regex objects used to check the data_tab
       // "none" means that no rules are applied
