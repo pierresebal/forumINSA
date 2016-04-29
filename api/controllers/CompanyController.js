@@ -141,7 +141,7 @@ module.exports = {
         if (typeof data_tab[i] != "undefined")
         {
           // Validation by regular expressions
-          if(!regex_tab[i]. test(data_tab[i])){
+          if(!regex_tab[i].test(data_tab[i])){
             // Field not validated
             POSTerror = true;
             posterr[i]="true";
@@ -156,10 +156,12 @@ module.exports = {
       POSTerror = true;
     }
 
+    console.log("111111111111");
     // En cas d'erreur rencontrée, on affiche une page d'erreur
-    if(POSTerror){
+   /* if(POSTerror){
       return res.view('ErrorPage',{layout:'layout',ErrorTitle:"Erreur lors de l'inscription",ErrorDesc:posterr+data_tab})
-    }
+    }*/
+    console.log("2222222222222");
 
     // On regarde qu'il n'y a pas d'entrerpise avec le même email déja enregistrées
     Company.findOne({mailAddress:req.param('UserEmail')}).exec(function(err,record){
