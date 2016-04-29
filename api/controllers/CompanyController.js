@@ -26,94 +26,102 @@ module.exports = {
       // Check for the length and content of fields
 
       // Creation of a table with all fields form POST form
+      // The fields are in the same order as in the file Inscription.ejs
       var data_tab = [
         req.param('isPME'),
-        req.param('siret'),
+        req.param('Siret'),
         req.param('CompanyName'),
         req.param('CompanyGroup'),
+        "none", // Field for the logo of the company, we don't harvest any data from this
         req.param('CompanyDescription'),
         req.param('CompanyWebsiteUrl'),
         req.param('CompanyCareerUrl'),
         req.param('CompanyAddressRoad'),
         req.param('complementaryInformation'),
-        req.param('CompanyAddressPostalCode'),
+        req.param('CompanyPostCode'),
         req.param('CompanyAddressCity'),
         req.param('CompanyAddressCountry'),
         req.param('UserFirstName'),
         req.param('UserLastName'),
         req.param('Position'),
-        req.param('phoneNumber'),
+        req.param('PhoneNumber'),
         req.param('UserEmail'),
         req.param('UserPassword'),
       ];
-
+      
       // Table with regex objects used to check the data_tab
+      // "none" means that no rules are applied
       var Regex = require("regex");
       var regex_tab = [
         new Regex("(true)|(false)"), // isPME
         new Regex("[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{5}"), // Siret
-        new Regex("[\S\s]{0,50}"), // company Name
-        new Regex("^[\w\s\-\'@0-9]{0,50}"), // Company Group
-        new Regex("^[\w\s\-\'@0-9]{0,50}"), // Company Description
-        new Regex("(((ht|f)tp(s?))\:\/\/)?(([a-zA-Z0-9]+([@\-\.]?[a-zA-Z0-9]+)<sup>*</sup>)(\:[a-zA-Z0-9\-\.]+)?@)?(www.|ftp.|[a-zA-Z]+.)?[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,})(\:[0-9]+)"), // Url
-        new Regex("(((ht|f)tp(s?))\:\/\/)?(([a-zA-Z0-9]+([@\-\.]?[a-zA-Z0-9]+)<sup>*</sup>)(\:[a-zA-Z0-9\-\.]+)?@)?(www.|ftp.|[a-zA-Z]+.)?[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,})(\:[0-9]+)"), // Url
+        "none", // company Name
+        "none", // Company Group
+        "none", // Company logo
+        "none", // Company Description
+        new Regex("(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})"), // Url
+        new Regex("(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})"), // Url
         new Regex("#[a-z]#"), // Adresse (route)
-        new Regex("^[\w\s\-\'@0-9]{0,50}"), // Adresse (complement)
+        "none", // Adresse (complement)
         new Regex("([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}"), // Postal Code
-        new Regex("^[\w\s\-\'@0-9]{0,50}"), // City
-        new Regex("^[\w\s\-\'@0-9]{0,50}"), // Country
-        new Regex("^[\w\s\-\'@0-9]{0,50}"), // User name
-        new Regex("^[\w\s\-\'@0-9]{0,50}"), // User name
-        new Regex("^[\w\s\-\'@0-9]{0,50}"), // POsition
+        "none", // City
+        "none", // Country
+        "none", // User name
+        "none", // User name
+        "none", // POsition
         new Regex("^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"), // Phone number
         new Regex("^\S+@(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6})$"), // Mail
         new Regex("^[\S\s]{0,50}"), // Password
       ];
 
-      /*
+
       // Table with min length
+      // Set here the maximum length of each fields
       var minlength_tab = [
-        ,//isPME
-        ,//siret
-        ,//CompanyName'
-        ,//CompanyGroup
-        ,//CompanyDescription
-        ,//CompanyWebsiteUrl
-        ,//CompanyCareerUrl
-        ,//CompanyAddressRoad
-        ,//complementaryInformation
-        ,//CompanyAddressPostalCode
-        ,//CompanyAddressCity
-        ,//CompanyAddressCountry
-        ,//UserFirstName
-        ,//UserLastName
-        ,//Position
-        ,//phoneNumber
-        ,//UserMail
-        ,//UserPassword
+        0,//isPME
+        0,//siret
+        1,//CompanyName'
+        0,//CompanyGroup
+        0,// CompanyLogo
+        0,//CompanyDescription
+        0,//CompanyWebsiteUrl
+        0,//CompanyCareerUrl
+        0,//CompanyAddressRoad
+        0,//complementaryInformation
+        0,//CompanyAddressPostalCode
+        0,//CompanyAddressCity
+        0,//CompanyAddressCountry
+        0,//UserFirstName
+        0,//UserLastName
+        1,//Position
+        0,//phoneNumber
+        0,//UserMail
+        6,//UserPassword
       ];
 
       // Table with max length
+      // Set here the max length of each fields
       var maxlength_tab = [
-        ,//isPME
-        ,//siret
-        ,//CompanyName'
-        ,//CompanyGroup
-        ,//CompanyDescription
-        ,//CompanyWebsiteUrl
-        ,//CompanyCareerUrl
-        ,//CompanyAddressRoad
-        ,//complementaryInformation
-        ,//CompanyAddressPostalCode
-        ,//CompanyAddressCity
-        ,//CompanyAddressCountry
-        ,//UserFirstName
-        ,//UserLastName
-        ,//Position
-        ,//phoneNumber
-        ,//UserMail
-        ,//UserPassword
-      ];*/
+        5,//isPME
+        17,//siret
+        50,//CompanyName'
+        50,//CompanyGroup
+        50,// CompanyLogo
+        500,//CompanyDescription
+        200,//CompanyWebsiteUrl
+        200,//CompanyCareerUrl
+        50,//CompanyAddressRoad
+        50,//complementaryInformation
+        6,//CompanyAddressPostalCode
+        200,//CompanyAddressCity
+        50,//CompanyAddressCountry
+        50,//UserFirstName
+        50,//UserLastName
+        50,//Position
+        13,//phoneNumber
+        150,//UserMail
+        500,//UserPassword
+      ];
 
       var posterr = [
         "false",
@@ -135,16 +143,26 @@ module.exports = {
         "false",
         "false",
       ];
-
-      for ( var i=0; i<=17; i++){
-        // We check if the field should be verified
-        if (typeof data_tab[i] != "undefined")
-        {
-          // Validation by regular expressions
-          if(!regex_tab[i].test(data_tab[i])){
-            // Field not validated
+      
+      for ( var i=0; i<=18; i++){
+        // We check the field i
+        if (typeof data_tab[i] != "undefined") {
+          // Validation of length
+          if (data_tab[i].length >= minlength_tab[i] && data_tab[i].length <= maxlength_tab[i]) {
+            if (typeof data_tab[i] != 'string') {
+              // Validation of entry by regular expressions
+              if (!regex_tab[i].test(data_tab[i])) {
+                // Field not validated
+                POSTerror = true;
+                posterr[i] = "true";
+              }
+            }
+          }
+          else
+          {
             POSTerror = true;
-            posterr[i]="true";
+            posterr[i] = "true";
+            console.log("error");
           }
         }
         // We skip to the next field
@@ -156,12 +174,10 @@ module.exports = {
       POSTerror = true;
     }
 
-    console.log("111111111111");
     // En cas d'erreur rencontrée, on affiche une page d'erreur
-   /* if(POSTerror){
-      return res.view('ErrorPage',{layout:'layout',ErrorTitle:"Erreur lors de l'inscription",ErrorDesc:posterr+data_tab})
-    }*/
-    console.log("2222222222222");
+    if(POSTerror){
+      return res.view('Inscription/Inscription',{layout:'layout',posterr, data_tab})
+    }
 
     // On regarde qu'il n'y a pas d'entrerpise avec le même email déja enregistrées
     Company.findOne({mailAddress:req.param('UserEmail')}).exec(function(err,record){
@@ -175,7 +191,7 @@ module.exports = {
           return res.view('Inscription/CompanyNotCreated', {layout:'layout',Email:record.mailAddress});
         }
 
-        // Pas d'entrepise trouvée => 1) Vérification 2)Ajout ds la BDD
+        // Pas d'entrepise trouvée => Ajout ds la BDD
         else {
 
           var uploadFile = req.file('logo');
