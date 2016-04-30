@@ -243,8 +243,8 @@ module.exports = {
                 SendMail.sendEmail({
                   destAddress: req.param('UserEmail'),
                   objectS: "Message de confirmation de l'inscription",
-                  messageS: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+"http://localhost:1337/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe de localhost.", // plaintext body
-                  messageHTML: ""
+                  messageS: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe du forum INSA Entreprises.", // plaintext body
+                  messageHTML: "<h1>Bonjour "+req.param('UserFirstName')+",</h1><p>Vous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:</p><a href="+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+">Cliquez ICI</a><p>A très bientot !<p></p>L'équipe du forum INSA Entreprises.</p>"
                 });
 
                 // We show a positive result to the CompanySpace created
@@ -287,6 +287,7 @@ module.exports = {
             req.session.connectionFailed = false;
             req.session.siret= record.siret;
             req.session.companyName=record.companyName;
+            req.session.firstName=record.firstName;
 
             // We confirm the authentication
             console.log('Authentification succeed: '+record.firstName);
@@ -406,14 +407,14 @@ module.exports = {
 
           // We update the password in the DB
           Company.update({mailAddress: req.param('UserAuthEmail')}, {password:sha1(new_pass)}).exec(function afterwards(err, updated) {
-
+            
             if(!err) {
               // We an email with the new password to the user
               SendMail.sendEmail({
                 destAddress: req.param('UserAuthEmail'),
                 objectS: "FIE: Réinitialisation du mot de passe",
-                messageS: "Bonjour " + updated.firstName + ",\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + new_pass + "\nPour vous connecter, cliquez ici: http://localhost:1337/CompanySpace/Connexion\nA très bientot !\nL'équipe de localhost.",
-                messageHTML: ""
+                messageS: "Bonjour,\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + new_pass + "\nPour vous connecter, cliquez ici: "+sails.config.configFIE.FIEdomainName+"/CompanySpace/Connexion\nA très bientot !\nL'équipe du Forum INSA Entreprises.",
+                messageHTML: "<p>Bonjour,</p><p>Vous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:" + new_pass + "</p><p>Pour vous connecter:<a href='"+sails.config.configFIE.FIEdomainName+"'/CompanySpace/Connexion'>Cliquez ICI</a>.</p><p>A très bientot !</p><p>L'équipe du Forum INSA Entreprises.</p>"
               });
 
 
