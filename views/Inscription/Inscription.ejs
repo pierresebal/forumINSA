@@ -9,9 +9,14 @@
     data_tab=["","","","","","","","","","","","","","","","","",""];
   }
 
-  if(POSTerror){
-    MainMessageStyleShow="inline-block";
+  if (typeof POSTerror != "undefined")
+  {
+    if(POSTerror){
+      MainMessageStyleShow="inline-block";
+    }
   }
+
+
 
   if(typeof posterr != "undefined"){
     for (var i=0;i<=18;i++){

@@ -179,7 +179,7 @@ module.exports = {
 
     // En cas d'erreur rencontrée, on affiche une page d'erreur
     if(POSTerror){
-      return res.view('Inscription/Inscription',{layout:'layout',POSTerror,posterr, data_tab})
+      return res.view('Inscription/Inscription',{layout:'layout',POSTerror:POSTerror,posterr:posterr, data_tab:data_tab})
     }
 
     // On regarde qu'il n'y a pas d'entrerpise avec le même email déja enregistrées
