@@ -12,7 +12,6 @@ module.exports = {
 
   //CreateCompany: Function that create a new user Company into the DB and send him a confirmation email (with confirmation URL)
   CreateCompany:function(req,res){
-    // TODO: finish information check
 
     // var for redirecting decision
     var POSTerror = false;
@@ -240,33 +239,12 @@ module.exports = {
               if (!err) {
                 console.log('[INFO] User created ;) : ' + created.firstName + ' ' + created.lastName);
 
-                //Sending an activation email to the new created user
-                var nodemailer = require("nodemailer");
-
-                // create reusable transport method (opens pool of SMTP connections)
-                var smtpTransport = nodemailer.createTransport("SMTP",{
-                  service: "Gmail",
-                  auth: {
-                    user: "club.montagne@amicale-insat.fr",
-                    pass: "insamontagne1"
-                  }
-                });
-
-                // setup e-mail data with unicode symbols
-                var mailOptions = {
-                  from: "Pierre Hardy <pierre.hardy5@gmail.com>", // sender address
-                  to: req.param('UserEmail'), // list of receivers
-                  subject: "Message de confirmation de l'inscription", // Subject line
-                  text: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+"http://localhost:1337/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe de localhost.", // plaintext body
-                  html: "" // html body
-                };
-
-                // send mail with defined transport object
-                smtpTransport.sendMail(mailOptions, function(error, response){
-                  if(error) {
-                    console.log(error);
-                  }
-                  smtpTransport.close();
+                // We send an email with the function send email contained inside services/SendMail.js
+                SendMail.sendEmail({
+                  destAddress: req.param('UserEmail'),
+                  objectS: "Message de confirmation de l'inscription",
+                  messageS: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+"http://localhost:1337/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe de localhost.", // plaintext body
+                  messageHTML: ""
                 });
 
                 // We show a positive result to the CompanySpace created
@@ -420,37 +398,14 @@ module.exports = {
           Company.update({mailAddress: req.param('UserAuthEmail')}, {password:sha1(new_pass)}).exec(function afterwards(err, updated) {
 
             if(!err) {
-              //Sending an email to the user with the new password
-              var nodemailer = require("nodemailer");
-
-              // create reusable transport method (opens pool of SMTP connections)
-              var smtpTransport = nodemailer.createTransport("SMTP", {
-                service: "Gmail",
-                auth: {
-                  user: "club.montagne@amicale-insat.fr",
-                  pass: "insamontagne1"
-                }
+              // We an email with the new password to the user
+              SendMail.sendEmail({
+                destAddress: req.param('UserAuthEmail'),
+                objectS: "FIE: Réinitialisation du mot de passe",
+                messageS: "Bonjour " + updated.firstName + ",\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + new_pass + "\nPour vous connecter, cliquez ici: http://localhost:1337/CompanySpace/Connexion\nA très bientot !\nL'équipe de localhost.",
+                messageHTML: ""
               });
 
-              // setup e-mail data with unicode symbols
-              var mailOptions = {
-                from: "Pierre Hardy <pierre.hardy5@gmail.com>", // sender address
-                to: req.param('UserAuthEmail'), // list of receivers
-                subject: "FIE: Réinitialisation du mot de passe", // Subject line
-                text: "Bonjour " + updated.firstName + ",\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + new_pass + "\nPour vous connecter, cliquez ici: http://localhost:1337/CompanySpace/Connexion\nA très bientot !\nL'équipe de localhost.", // plaintext body
-                html: "" // html body
-              };
-
-              // send mail with defined transport object
-              smtpTransport.sendMail(mailOptions, function (error, response) {
-                if (error) {
-                  console.log(error);
-                } else {
-                  console.log("Message sent: " + response.message);
-                }
-
-                smtpTransport.close();
-              });
 
               // We display the confirmation view if reset passwd worked successfully
               return res.view('Connection_Password/ResetPassOK', {layout: 'layout'})
