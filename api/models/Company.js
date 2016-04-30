@@ -17,11 +17,12 @@ module.exports = {
 
     lastName:{
       type:'string',
-      required:'true'
+      required:true
     },
 
     position:{ //Poste dans l'entreprise
-      type:'string'
+      type:'string',
+      defaultsTo:''
     },
 
     mailAddress:{
@@ -31,7 +32,8 @@ module.exports = {
     },
 
     phoneNumber:{
-      type:'string'
+      type:'string',
+      defaultsTo:''
     },
 
     password:{
@@ -41,24 +43,28 @@ module.exports = {
 
     /* Contact Facturation */
     bFirstName:{
-      type:'string'
+      type:'string',
+      defaultsTo:''
     },
 
     bLastName:{
-      type:'string'
+      type:'string',
+      defaultsTo:''
     },
 
     bPosition:{
-      type:'string'
+      type:'string',
+      defaultsTo:''
     },
 
     bMailAddress:{
       type:'email',
-      unique:true
+      defaultsTo:''
     },
 
     bPhoneNumber:{
-      type:'string'
+      type:'string',
+      defaultsTo:''
     },
 
 
@@ -75,19 +81,22 @@ module.exports = {
 
     companyGroup:{
       type:'string',
+      defaultsTo:''
     },
 
     description:{
-      type:'string'
+      type:'string',
+      defaultsTo:''
     },
 
     websiteUrl:{
       type:'string',
-      required:false
+      defaultsTo:''
     },
 
     careerUrl:{
-      type:'string'
+      type:'string',
+      defaultsTo:''
     },
 
     logoPath:{
@@ -129,7 +138,8 @@ module.exports = {
 
     active:{
       type:"integer",
-      required:true
+      required:true,
+      defaultsTo:false
     },
 
     activationUrl:{
@@ -139,7 +149,13 @@ module.exports = {
 
     isPME:{
       type:'boolean',
-      required:true
+      required:true,
+      defaultsTo:true
     },
+
+    firstConnectionDone:{
+      type:'boolean',
+      defaultsTo:false
+    }
   }
 };

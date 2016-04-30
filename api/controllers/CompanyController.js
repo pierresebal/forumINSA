@@ -290,7 +290,17 @@ module.exports = {
 
             // We confirm the authentication
             console.log('Authentification succeed: '+record.firstName);
-            return res.redirect('/Company/MemberSpace');
+
+            if (!record.firstConnectionDone) {
+
+              Company.update({mailAddress:req.session.mailAddress}, {firstConnectionDone:true}).exec(function afterwards(err) {
+                if (err)
+                  return err;
+                return res.view('CompanySpace/FirstConnection', {layout: 'layout'});
+              });
+            } else {
+              return res.redirect('/Company/MemberSpace');
+            }
           }
 
           // User authenticated but not active
