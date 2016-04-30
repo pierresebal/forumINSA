@@ -59,7 +59,7 @@
         <% if(req.session.authenticated){ %>
             <p>Connecté en tant que:<br/>
           <% if (req.session.sessionType == "company") {%>
-              <%=req.session.CieName%>
+              <%=req.session.companyName%>
         <%  } else if (req.session.sessionType == "student") { %>
               <%=req.session.firstName%>
         <%  } else { %>
