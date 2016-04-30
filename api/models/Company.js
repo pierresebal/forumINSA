@@ -75,7 +75,6 @@ module.exports = {
 
     companyGroup:{
       type:'string',
-      required:true
     },
 
     description:{
