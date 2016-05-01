@@ -22,6 +22,8 @@ module.exports.policies = {
   // Control for member acces
   CompanyController:{
     MemberHomeShow:"CompanyAuth",
+    Profile:"CompanyAuth",
+    CvTheque:"CompanyAuth"
   }
 
 };
