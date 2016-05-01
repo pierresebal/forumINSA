@@ -300,7 +300,13 @@ module.exports = {
                 return res.view('CompanySpace/FirstConnection', {layout: 'layout'});
               });
             } else {
-              return res.redirect('/Company/MemberSpace');
+              if (typeof req.param("nexturl")=="undefined") {
+                return res.redirect('/Company/MemberSpace');
+              }
+              else {
+                return res.redirect(req.param("nexturl"));
+              }
+              
             }
           }
 
@@ -407,7 +413,7 @@ module.exports = {
 
           // We update the password in the DB
           Company.update({mailAddress: req.param('UserAuthEmail')}, {password:sha1(new_pass)}).exec(function afterwards(err, updated) {
-            
+
             if(!err) {
               // We an email with the new password to the user
               SendMail.sendEmail({
@@ -447,38 +453,32 @@ module.exports = {
 
   Profile: function(req,res) {
 
-    Company.findOne({mailAddress:req.session.mailAddress}).exec(function(err,found) {
-      if (err)
-        return res.negotiate(err);
-      if (!found)
-        return res.view('errorPage', {layout:'layout', ErrorTitle:"Recherche du profil failed", ErrorDesc:"Etes-vous bien connecté ? Contacter le webmaster si le problème persiste"});
-      else {
-        return res.view("CompanySpace/Profile", {
-          layout:'layout',
-          firstName: found.firstName,
-          lastName: found.lastName,
-          position: found.position,
-          phoneNumber: found.phoneNumber,
-          mailAddress: found.mailAddress,
-          bFirstName: found.bFirstName,
-          bLastName: found.bLastName,
-          bPosition: found.bPosition,
-          bPhoneNumber: found.bPhoneNumber,
-          bMailAddress: found.bMailAddress,
-          siret: found.siret,
-          companyName: found.companyName,
-          companyGroup: found.companyGroup,
-          logoPath: found.logoPath,
-          description: found.description,
-          websiteUrl: found.websiteUrl,
-          careerUrl: found.careerUrl,
-          road: found.road,
-          complementaryInformation: found.complementaryInformation,
-          postCode: found.postCode,
-          city: found.city,
-          country: found.country
-        });
-      }
+    Company.findOne({mailAddress: req.session.mailAddress}).exec(function (err, found) {
+      return res.view("CompanySpace/Profile", {
+        layout: 'layout',
+        firstName: found.firstName,
+        lastName: found.lastName,
+        position: found.position,
+        phoneNumber: found.phoneNumber,
+        mailAddress: found.mailAddress,
+        bFirstName: found.bFirstName,
+        bLastName: found.bLastName,
+        bPosition: found.bPosition,
+        bPhoneNumber: found.bPhoneNumber,
+        bMailAddress: found.bMailAddress,
+        siret: found.siret,
+        companyName: found.companyName,
+        companyGroup: found.companyGroup,
+        logoPath: found.logoPath,
+        description: found.description,
+        websiteUrl: found.websiteUrl,
+        careerUrl: found.careerUrl,
+        road: found.road,
+        complementaryInformation: found.complementaryInformation,
+        postCode: found.postCode,
+        city: found.city,
+        country: found.country
+      });
     });
   },
 

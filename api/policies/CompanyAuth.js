@@ -16,6 +16,6 @@ module.exports = function(req, res, next) {
     return next();
   }
   else {
-    return res.view('CompanySpace/AuthGate', {nexturl:'CompanySpace/MemberSpace',error: "Vous devez être connecté pour acceder a cette page", layout: 'layout'});
+    return res.view('Connection_Password/Connection', {nexturl:req.originalUrl,error: "Vous devez être connecté pour acceder a cette page", layout: 'layout'});
   }
 };
