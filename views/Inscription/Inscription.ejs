@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <%
   // We check if posterror tab exists (in case of previous submit)
   var MainMessageStyleShow = "none";
@@ -23,11 +21,9 @@
       console.log("test:"+posterr[i]);
       if(posterr[i]=="true"){
         ErrInitStyleShow[i]="inline-block";
-
       }
     }
   }
-
 %>
 
 <h1>Création d'un compte entreprise</h1>
@@ -64,12 +60,6 @@
       <label for="CompanyGroup">Groupe de l'entreprise </label>
       <input maxlength="50" value="<%=data_tab[3]%>" type="text" name="CompanyGroup" id="CompanyGroup" placeholder="Nom du groupe"/>
       <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[3]%>" id="CompanyGroupErr" >0&lt;Nb de caractères &lt;50 (obligatoire)</p>
-    </div>
-
-    <div class="pure-control-group">
-      <label for="logo">Logo de l'entreprise</label>
-      <input maxlength="50" value="<%=data_tab[4]%>" id="logo" type="file" name="logo" />
-      <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[4]%>" id="CompanyLogoErr" >Veuillez uploader un logo représentant votre entreprise</p>
     </div>
 
     <div class="pure-control-group">

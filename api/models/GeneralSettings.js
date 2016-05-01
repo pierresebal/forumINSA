@@ -9,54 +9,18 @@ module.exports = {
 
   attributes: {
 
-    forumPrice:{
-      type:'Integer',
-      required:true,
-      defaultsTo:400
+    id : {
+      type:'integer',
+      unique:true,
+      defaultsTo:1
     },
 
-    sjdPrice:{
-      type:'Integer',
-      required:true,
-      defaultsTo:200
-    },
-
-    sjdSessionPrice:{
-      type:'Integer',
-      required:true,
-      defaultsTo:50
-    },
-
-    premiumPrice:{
-      type:'Integer',
-      required:true,
-      defaultsTo:500
-    },
-
-    //PME
-    forumPricePME:{
-      type:'Integer',
-      required:true,
-      defaultsTo:280
-    },
-
-    sjdPricePME:{
-      type:'Integer',
-      required:true,
-      defaultsTo:140
-    },
-
-    sjdSessionPricePME:{
-      type:'Integer',
-      required:true,
-      defaultsTo:50
-    },
-
-    premiumPricePME:{
-      type:'Integer',
-      required:true,
-      defaultsTo:350
+    areInscriptionsOpened : {
+      type:'boolean',
+      defaultsTo:false,
+      required:true
     }
+
   }
 };
 

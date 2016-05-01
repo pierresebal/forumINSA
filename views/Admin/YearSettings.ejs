@@ -1,5 +1,14 @@
 <h1>Partie admin</h1>
 
+<%
+  var inscriptionOpen;
+  if (inscriptionsAreOpen)
+    inscriptionOpen = 'ouvertes';
+  else
+    inscriptionOpen = 'fermées';
+
+%>
+
 <% if (req.session.isAdmin != true) { %>
 
 <form method="POST" action="/Admin/Login">
@@ -26,6 +35,15 @@
   <label>Nouveau prix d'une session supplémentaire au SJD</label> <input type="number" name="sjdSessionPricePME"/><br />
   <label>Nouveau prix du pack premium</label> <input type="number" name="premiumPricePME"/><br />
   <input type="submit" value="Envoyer"/>
+</form>
+
+<h3> Ouvrir les inscriptions pour l'année <%=year%></h3>
+<form method="post" action="/Admin/setInscriptionOpen">
+  <p>Actuellement, les inscriptions sont <b><%=inscriptionOpen%></b>.<br />
+    Définir les inscriptions comme :</p>
+  <input type="radio" value="1" name="inscriptions"/><label>ouvertes</label><br />
+  <input type="radio" value="0" name="inscriptions" checked/><label>fermées</label><br />
+  <input type="submit" value="Enregistrer"/>
 </form>
 
 <% } %>

@@ -17,21 +17,27 @@ module.exports = {
     return res.redirect("/Admin");
   },
 
-  displayGeneralSettings : function(req, res) {
-    var year = new Date().getFullYear();
-    return res.view('Admin/GeneralSettings', {layout:'layout', year:year});
+  displayYearSettings : function(req, res) {
+
+    GeneralSettings.findOrCreate({id:1}).exec(function afterwards(err, found){
+      if (err)
+        return err;
+
+      var year = new Date().getFullYear();
+      return res.view('Admin/YearSettings', {layout:'layout', year:year, inscriptionsAreOpen:found.areInscriptionsOpened});
+    });
   },
 
   setPrices : function(req, res) {
     var year = new Date();
 
-    GeneralSettings.findOrCreate({year: year.getFullYear()}).exec(function addPrices(err, records) {
+    YearSettings.findOrCreate({year: year.getFullYear()}).exec(function addPrices(err, records) {
       if (err) {
         console.log("year not found and not created")
         return;
       }
 
-      GeneralSettings.update({year: records.year}, {
+      YearSettings.update({year: records.year}, {
         forumPrice: req.param('forumPrice'),
         sjdPrice: req.param('sjdPrice'),
         premiumPrice: req.param('premiumPrice'),
@@ -47,7 +53,27 @@ module.exports = {
         }
 
         console.log("Modifications faites pour l'année " + records.year + " ajouté !");
-        return res.redirect('/Admin/GeneralSettings');
+        return res.redirect('/Admin/YearSettings');
+      });
+    });
+  },
+
+  setInscriptionOpen : function(req,res) {
+    GeneralSettings.findOrCreate({id:1}).exec(function afterwards(err,found){
+      if (err)
+        return err;
+
+      var areOpened;
+      if (req.param('inscriptions') == 1)
+        areOpened = true;
+      else
+        areOpened = false;
+
+      GeneralSettings.update({id:1}, {areInscriptionsOpened:areOpened}).exec(function afterwards(err){
+        if (err)
+          return err;
+
+        return res.redirect('/Admin/YearSettings')
       });
     });
   }
