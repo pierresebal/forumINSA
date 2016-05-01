@@ -12,43 +12,63 @@ module.exports = {
 
   //CreateCompany: Function that create a new user Company into the DB and send him a confirmation email (with confirmation URL)
   CreateCompany:function(req,res){
-    // TODO: finish information check
 
     // var for redirecting decision
     var POSTerror = false;
-    // var which contains text for the user
-    var ErrorText;
+
+    // Creation of a table with all fields form POST form
+    // The fields are in the same order as in the file Inscription.ejs
+    var data_tab = [
+      req.param('isPME'),
+      req.param('Siret'),
+      req.param('CompanyName'),
+      req.param('CompanyGroup'),
+      "none", // Field for the logo of the company, we don't harvest any data from this
+      req.param('CompanyDescription'),
+      req.param('CompanyWebsiteUrl'),
+      req.param('CompanyCareerUrl'),
+      req.param('CompanyAddressRoad'),
+      req.param('complementaryInformation'),
+      req.param('CompanyPostCode'),
+      req.param('CompanyAddressCity'),
+      req.param('CompanyAddressCountry'),
+      req.param('UserFirstName'),
+      req.param('UserLastName'),
+      req.param('Position'),
+      req.param('PhoneNumber'),
+      req.param('UserEmail'),
+      req.param('UserPassword'),
+    ];
+
+    // Chack for errors.
+    var posterr = [
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false",
+      "false"
+    ];
 
     // Check for mandatory fields completion
     // Mandatory fields exists
-    if( typeof req.param("isPME")!= 'undefined' || typeof req.param("siret")!= 'undefined' || typeof req.param("CompanyName")!= 'undefined' || typeof req.param("CompanyAddressRoad")!= 'undefined' || typeof req.param("CompanyAddressPostalCode")!= 'undefined' || typeof req.param("CompanyAddressCity") || typeof req.param("CompanyAdressCountry") || typeof req.param("UserFirstName") != "undefined" || typeof req.param("UserLastName") != "undefined" || typeof req.param("Position")!="undefined" || typeof req.param("phoneNumber") != "undefined" || typeof req.param("UserPassword")!="undefined")
+    if( typeof req.param("isPME")!= 'undefined' && typeof req.param("Siret")!= 'undefined' && typeof req.param("CompanyName")!= 'undefined' && typeof req.param ("CompanyAddressRoad")!= 'undefined' && typeof req.param("CompanyPostCode")!= 'undefined' && typeof req.param("CompanyAddressCity")!="undefined" && typeof req.param("CompanyAddressCountry") !="undefined" && typeof req.param("UserFirstName") != "undefined" && typeof req.param("UserLastName") != "undefined" && typeof req.param("Position")!="undefined" && typeof req.param("PhoneNumber") != "undefined" && typeof req.param("UserEmail")!="undefined" && typeof req.param("UserPassword")!="undefined")
     {
       // Check for the length and content of fields
 
-      // Creation of a table with all fields form POST form
-      // The fields are in the same order as in the file Inscription.ejs
-      var data_tab = [
-        req.param('isPME'),
-        req.param('Siret'),
-        req.param('CompanyName'),
-        req.param('CompanyGroup'),
-        "none", // Field for the logo of the company, we don't harvest any data from this
-        req.param('CompanyDescription'),
-        req.param('CompanyWebsiteUrl'),
-        req.param('CompanyCareerUrl'),
-        req.param('CompanyAddressRoad'),
-        req.param('complementaryInformation'),
-        req.param('CompanyPostCode'),
-        req.param('CompanyAddressCity'),
-        req.param('CompanyAddressCountry'),
-        req.param('UserFirstName'),
-        req.param('UserLastName'),
-        req.param('Position'),
-        req.param('PhoneNumber'),
-        req.param('UserEmail'),
-        req.param('UserPassword'),
-      ];
-      
       // Table with regex objects used to check the data_tab
       // "none" means that no rules are applied
       var Regex = require("regex");
@@ -123,27 +143,8 @@ module.exports = {
         500,//UserPassword
       ];
 
-      var posterr = [
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-        "false",
-      ];
-      
+
+
       for ( var i=0; i<=18; i++){
         // We check the field i
         if (typeof data_tab[i] != "undefined") {
@@ -171,12 +172,13 @@ module.exports = {
     // Mandatory fields seems to not exist
     else
     {
+      console.log("il manque des champ obligatoires: " + posterr + " || " + data_tab)
       POSTerror = true;
     }
 
     // En cas d'erreur rencontrée, on affiche une page d'erreur
     if(POSTerror){
-      return res.view('Inscription/Inscription',{layout:'layout',posterr, data_tab})
+      return res.view('Inscription/Inscription',{layout:'layout',POSTerror:POSTerror,posterr:posterr, data_tab:data_tab})
     }
 
     // On regarde qu'il n'y a pas d'entrerpise avec le même email déja enregistrées
@@ -237,33 +239,12 @@ module.exports = {
               if (!err) {
                 console.log('[INFO] User created ;) : ' + created.firstName + ' ' + created.lastName);
 
-                //Sending an activation email to the new created user
-                var nodemailer = require("nodemailer");
-
-                // create reusable transport method (opens pool of SMTP connections)
-                var smtpTransport = nodemailer.createTransport("SMTP",{
-                  service: "Gmail",
-                  auth: {
-                    user: "club.montagne@amicale-insat.fr",
-                    pass: "insamontagne1"
-                  }
-                });
-
-                // setup e-mail data with unicode symbols
-                var mailOptions = {
-                  from: "Pierre Hardy <pierre.hardy5@gmail.com>", // sender address
-                  to: req.param('UserEmail'), // list of receivers
-                  subject: "Message de confirmation de l'inscription", // Subject line
-                  text: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+"http://localhost:1337/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe de localhost.", // plaintext body
-                  html: "" // html body
-                };
-
-                // send mail with defined transport object
-                smtpTransport.sendMail(mailOptions, function(error, response){
-                  if(error) {
-                    console.log(error);
-                  }
-                  smtpTransport.close();
+                // We send an email with the function send email contained inside services/SendMail.js
+                SendMail.sendEmail({
+                  destAddress: req.param('UserEmail'),
+                  objectS: "Message de confirmation de l'inscription",
+                  messageS: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe du forum INSA Entreprises.", // plaintext body
+                  messageHTML: "<h1>Bonjour "+req.param('UserFirstName')+",</h1><p>Vous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:</p><a href="+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+">Cliquez ICI</a><p>A très bientot !<p></p>L'équipe du forum INSA Entreprises.</p>"
                 });
 
                 // We show a positive result to the CompanySpace created
@@ -306,10 +287,21 @@ module.exports = {
             req.session.connectionFailed = false;
             req.session.siret= record.siret;
             req.session.companyName=record.companyName;
+            req.session.firstName=record.firstName;
 
             // We confirm the authentication
             console.log('Authentification succeed: '+record.firstName);
-            return res.redirect('/Company/MemberSpace');
+
+            if (!record.firstConnectionDone) {
+
+              Company.update({mailAddress:req.session.mailAddress}, {firstConnectionDone:true}).exec(function afterwards(err) {
+                if (err)
+                  return err;
+                return res.view('CompanySpace/FirstConnection', {layout: 'layout'});
+              });
+            } else {
+              return res.redirect('/Company/MemberSpace');
+            }
           }
 
           // User authenticated but not active
@@ -415,39 +407,16 @@ module.exports = {
 
           // We update the password in the DB
           Company.update({mailAddress: req.param('UserAuthEmail')}, {password:sha1(new_pass)}).exec(function afterwards(err, updated) {
-
+            
             if(!err) {
-              //Sending an email to the user with the new password
-              var nodemailer = require("nodemailer");
-
-              // create reusable transport method (opens pool of SMTP connections)
-              var smtpTransport = nodemailer.createTransport("SMTP", {
-                service: "Gmail",
-                auth: {
-                  user: "club.montagne@amicale-insat.fr",
-                  pass: "insamontagne1"
-                }
+              // We an email with the new password to the user
+              SendMail.sendEmail({
+                destAddress: req.param('UserAuthEmail'),
+                objectS: "FIE: Réinitialisation du mot de passe",
+                messageS: "Bonjour,\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + new_pass + "\nPour vous connecter, cliquez ici: "+sails.config.configFIE.FIEdomainName+"/CompanySpace/Connexion\nA très bientot !\nL'équipe du Forum INSA Entreprises.",
+                messageHTML: "<p>Bonjour,</p><p>Vous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:" + new_pass + "</p><p>Pour vous connecter:<a href='"+sails.config.configFIE.FIEdomainName+"'/CompanySpace/Connexion'>Cliquez ICI</a>.</p><p>A très bientot !</p><p>L'équipe du Forum INSA Entreprises.</p>"
               });
 
-              // setup e-mail data with unicode symbols
-              var mailOptions = {
-                from: "Pierre Hardy <pierre.hardy5@gmail.com>", // sender address
-                to: req.param('UserAuthEmail'), // list of receivers
-                subject: "FIE: Réinitialisation du mot de passe", // Subject line
-                text: "Bonjour " + updated.firstName + ",\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + new_pass + "\nPour vous connecter, cliquez ici: http://localhost:1337/CompanySpace/Connexion\nA très bientot !\nL'équipe de localhost.", // plaintext body
-                html: "" // html body
-              };
-
-              // send mail with defined transport object
-              smtpTransport.sendMail(mailOptions, function (error, response) {
-                if (error) {
-                  console.log(error);
-                } else {
-                  console.log("Message sent: " + response.message);
-                }
-
-                smtpTransport.close();
-              });
 
               // We display the confirmation view if reset passwd worked successfully
               return res.view('Connection_Password/ResetPassOK', {layout: 'layout'})

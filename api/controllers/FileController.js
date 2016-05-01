@@ -120,6 +120,10 @@ module.exports = {
             console.log("Probleme pour update le logoPath");
             return;
           }
+
+          setTimeout(function() {
+            return res.redirect('/Company/Profile');
+          },2000);
         });
     });
   },
