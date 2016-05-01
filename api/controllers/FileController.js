@@ -56,14 +56,16 @@ module.exports = {
 
       setTimeout(function() { //Attends 1 seconde le temps que la bdd s'actualise
 
-        if (req.param('redirect') == "first" && req.param('language')=="fr")
-          return res.view('StudentSpace/FirstConnection_2', {layout:'layout', frCVPath:fileName});
-        else if (req.param('redirect') == "first" && req.param('language')=="en")
-          return res.view('StudentSpace/FirstConnection_2', {layout:'layout', enCVPath:fileName});
-        else if (req.param('redirect') == "profile")
-          return res.redirect('/Student/Profile');
+        Student.findOne({login:req.session.login}).exec(function afterwards(err, found) {
+          if (err)
+            return err;
 
+          if (req.param('redirect') == "first")
+            return res.view('StudentSpace/FirstConnection_2', {layout:'layout', frCVPath:found.frCVPath, enCVPath:found.enCVPath});
+          else if (req.param('redirect') == "profile")
+            return res.redirect('/Student/Profile');
 
+        });
       }, 1000);
     });
   },

@@ -1,3 +1,12 @@
+<%
+if (typeof bMailAddress == 'undefined')
+  bMailAddress = '';
+
+if (typeof complementaryInformation == 'undefined')
+  complementaryInformation = '';
+%>
+
+
 <h1>Profil Entreprise</h1>
 <p>Je suis le formulaire de modification de l'entreprise !</p>
 
@@ -190,11 +199,11 @@
     <td>
       <form id="postAddress" method="post" action="/Company/setAUserInfo">
         <input type="hidden" name="data" value="q"/>
-        <label>N° et rue</label><input type="text" name="road" value="<%=road%>"/><br />
-        <label>Complément</label><input type="text" name="complementaryInformation"  <%if (typeof complementaryInformation != 'undefined') { %>value="<%=complementaryInformation%>" <% } %>/><br>
-        <label>Code postal</label><input type="text" name="postCode" value="<%=postCode%>"/><br />
-        <label>Ville</label><input type="text" name="city" value="<%=city%>"/><br />
-        <label>Pays</label><input type="text" name="country" value="<%=country%>"/><br />
+        <input type="text" name="road" value="<%=road%>" placeholder="N° et rue"/><br />
+        <input type="text" name="complementaryInformation" placeholder="Complément"/><br>
+        <input type="text" name="postCode" value="<%=postCode%>" placeholder="Code postal"/><br />
+        <input type="text" name="city" value="<%=city%>" placeholder="Ville"/><br />
+        <input type="text" name="country" value="<%=country%>" placeholder="Pays"/><br />
         <input type="submit" value="Sauvegarder"/>
       </form>
     </td>

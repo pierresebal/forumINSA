@@ -7,7 +7,12 @@
 <!--Errors to be precised-->
 <%if (typeof error !='undefined'){%>
 <p style="color:#ff2b23;"><%= error %></p>
-<%}%>
+<%
+  }
+  if (typeof nexturl == 'undefined' || nexturl == '' || nexturl == null) {
+    nexturl = '/';
+  }
+%>
 
 <% if (!req.session.authenticated) { %>
 <!-- COMPANY-->

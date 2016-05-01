@@ -47,14 +47,19 @@ module.exports.routes = {
     action: 'adminLogin'
   },
 
-  '/Admin/GeneralSettings' :{
+  '/Admin/YearSettings' :{
     controller: 'AdminController',
-    action: 'displayGeneralSettings'
+    action: 'displayYearSettings'
   },
 
   '/Admin/SetPrices' :{
     controller:'AdminController',
     action: 'setPrices'
+  },
+
+  '/Admin/setInscriptionOpen':{
+    controller:'AdminController',
+    action:'setInscriptionOpen'
   },
 
   /***************************************************************************
