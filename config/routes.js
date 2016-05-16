@@ -258,6 +258,12 @@ module.exports.routes = {
   '/Company/setAUserInfo':{
     controller:'CompanyController',
     action:'setAUserInfo'
+  },
+
+  /* COMMANDES */
+  '/Command/NewCommand':{
+    controller:'SellsController',
+    action:'addASell'
   }
 
 };

@@ -33,10 +33,10 @@ module.exports = {
 
     YearSettings.findOrCreate({year: year.getFullYear()}).exec(function addPrices(err, records) {
       if (err) {
-        console.log("year not found and not created")
+        console.log("year not found and not created");
         return;
       }
-
+      
       YearSettings.update({year: records.year}, {
         forumPrice: req.param('forumPrice'),
         sjdPrice: req.param('sjdPrice'),
@@ -73,7 +73,7 @@ module.exports = {
         if (err)
           return err;
 
-        return res.redirect('/Admin/YearSettings')
+        return res.redirect('/Admin/YearSettings');
       });
     });
   }

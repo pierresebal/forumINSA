@@ -288,6 +288,7 @@ module.exports = {
             req.session.siret= record.siret;
             req.session.companyName=record.companyName;
             req.session.firstName=record.firstName;
+            req.session.isPME = record.isPME;
 
             // We confirm the authentication
             console.log('Authentification succeed: '+record.firstName);
@@ -306,7 +307,7 @@ module.exports = {
               else {
                 return res.redirect(req.param("nexturl"));
               }
-              
+
             }
           }
 
@@ -489,16 +490,41 @@ module.exports = {
 
 
   Command: function(req, res) {
-    var year = new Date().getFullYear();
-    GeneralSettings.findOne({year:year}).exec(function giveInfo(err, record){
-      return res.view("CompanySpace/Command", {
-        layout:'layout',
-        year:year,
-        forumPrice:record.forumPrice,
-        sjdPrice:record.sjdPrice,
-        sjdSessionPrice:record.sjdSessionPrice,
-        premiumPrice:record.premiumPrice
-      });
+
+    //Inscription ouverte ?
+    GeneralSettings.findOrCreate({id:1}).exec(function areInscriptionsOpen(err, found) {
+      if (err)
+        return err;
+
+      if (found.areInscriptionsOpened) {
+        var year = new Date().getFullYear();
+
+        if (req.session.isPME) {
+          YearSettings.findOne({year:year}).exec(function giveInfo(err, record){
+            return res.view("CompanySpace/Command", {
+              layout:'layout',
+              year:year,
+              forumPrice:record.forumPricePME,
+              sjdPrice:record.sjdPricePME,
+              sjdSessionPrice:record.sjdSessionPricePME,
+              premiumPrice:record.premiumPricePME
+            });
+          });
+        } else {
+          YearSettings.findOne({year:year}).exec(function giveInfo(err, record){
+            return res.view("CompanySpace/Command", {
+              layout:'layout',
+              year:year,
+              forumPrice:record.forumPrice,
+              sjdPrice:record.sjdPrice,
+              sjdSessionPrice:record.sjdSessionPrice,
+              premiumPrice:record.premiumPrice
+            });
+          });
+        }
+      } else {
+        return res.view("CompanySpace/NoInscriptions", {layout:"layout"});
+      }
     });
   },
 
