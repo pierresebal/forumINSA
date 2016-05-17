@@ -15,6 +15,7 @@
     "flux": "2.1.1",
     "front-matter": "1.0.0",
     "history": "1.11.1",
+    "html-pdf": "^2.0.1",
     "include-all": "^0.1.6",
     "jade": "1.11.0",
     "nodemailer": "^0.7.1",
