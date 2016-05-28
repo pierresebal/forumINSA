@@ -24,19 +24,37 @@ module.exports = {
         return err;
 
       var year = new Date().getFullYear();
-      return res.view('Admin/YearSettings', {layout:'layout', year:year, inscriptionsAreOpen:found.areInscriptionsOpened});
+      YearSettings.findOrCreate({year:year}).exec(function afterwards(err, record){
+        if (err)
+          return err;
+
+        return res.view('Admin/YearSettings', {
+          layout:'layout',
+          year:year,
+          inscriptionsAreOpen:found.areInscriptionsOpened,
+          inscriptionDeadline:found.inscriptionDeadline,
+          forumPrice:record.forumPrice,
+          sjdPrice:record.sjdPrice,
+          sjdSessionPrice:record.sjdSessionPrice,
+          premiumPrice:record.premiumPrice,
+          forumPricePME:record.forumPricePME,
+          sjdPricePME:record.sjdPricePME,
+          sjdSessionPricePME:record.sjdSessionPricePME,
+          premiumPricePME:record.premiumPricePME
+        });
+      });
     });
   },
 
   setPrices : function(req, res) {
-    var year = new Date();
+    var year = new Date().getFullYear;
 
-    YearSettings.findOrCreate({year: year.getFullYear()}).exec(function addPrices(err, records) {
+    YearSettings.findOrCreate({year: year}).exec(function addPrices(err, records) {
       if (err) {
         console.log("year not found and not created");
         return;
       }
-      
+
       YearSettings.update({year: records.year}, {
         forumPrice: req.param('forumPrice'),
         sjdPrice: req.param('sjdPrice'),
@@ -75,6 +93,22 @@ module.exports = {
 
         return res.redirect('/Admin/YearSettings');
       });
+    });
+  },
+
+  setInscriptionDeadline : function(req, res) {
+
+
+    var deadline = new Date(req.param("inscriptionDeadline"));
+
+    console.log("1/ " + req.param("inscriptionDeadline"));
+    console.log("2/ " + deadline);
+
+    GeneralSettings.update({id:1}, {inscriptionDeadline:deadline}).exec(function afterwards(err){
+      if (err)
+        return err;
+
+      return res.redirect('/Admin/YearSettings');
     });
   }
 };

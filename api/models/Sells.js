@@ -56,6 +56,10 @@ module.exports = {
     moreSjdPrice : {
       type:'integer',
       required:true
+    },
+    billNumber : {
+      type:'integer',
+      required:true
     }
   }
 };
