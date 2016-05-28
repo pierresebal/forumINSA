@@ -228,11 +228,6 @@ module.exports = {
               country:req.param('CompanyAddressCountry'),
               logoPath:req.param('Siret') + ".png",
               isPME:req.param('isPME'),
-              /* bFirstName: req.param('BUserFirstName'), Il ne faut pas le mettre là mais dans le bon de commande
-               bLastName: req.param('BUserLastName'),
-               bPosition: req.param('BPosition'),
-               bPhoneNumber: req.param('BPhoneNumber'),
-               bMailAddress: req.param('BUserEmail'), */
               active:0,
               activationUrl:ActivationUrl
             },function (err, created) {
@@ -248,8 +243,8 @@ module.exports = {
                 });
 
                 // We show a positive result to the CompanySpace created
-                return res.view('Inscription/UserCreated', {firstName: created.firstName,layout:'layout'});
                 console.log("Company created: "+req.param("UserEmail"));
+                return res.view('Inscription/UserCreated', {firstName: created.firstName,layout:'layout'});
 
               }
               else {
@@ -421,7 +416,8 @@ module.exports = {
                 destAddress: req.param('UserAuthEmail'),
                 objectS: "FIE: Réinitialisation du mot de passe",
                 messageS: "Bonjour,\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + new_pass + "\nPour vous connecter, cliquez ici: "+sails.config.configFIE.FIEdomainName+"/CompanySpace/Connexion\nA très bientot !\nL'équipe du Forum INSA Entreprises.",
-                messageHTML: "<p>Bonjour,</p><p>Vous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:" + new_pass + "</p><p>Pour vous connecter:<a href='"+sails.config.configFIE.FIEdomainName+"'/CompanySpace/Connexion'>Cliquez ICI</a>.</p><p>A très bientot !</p><p>L'équipe du Forum INSA Entreprises.</p>"
+                messageHTML: "<p>Bonjour,</p><p>Vous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:" + new_pass + "</p><p>Pour vous connecter:<a href='"+sails.config.configFIE.FIEdomainName+"'/CompanySpace/Connexion'>Cliquez ICI</a>.</p><p>A très bientot !</p><p>L'équipe du Forum INSA Entreprises.</p>",
+                attachments: null
               });
 
 
@@ -713,6 +709,13 @@ module.exports = {
 
   },
 
+  displayBills : function(req, res) {
+
+    Sells.find({companySiret:req.session.siret}).exec(function afterwards(err, founds){
+
+      return res.view('CompanySpace/Bills', {layout:'layout', bills:founds});
+    });
+  }
 
 };
 

@@ -129,5 +129,19 @@ module.exports = {
         });
     });
   },
+
+  downloadBill: function(req, res) {
+
+    var yearRequired = req.param('dl');
+    var filePath = path.resolve("files/factures/" + yearRequired, req.session.siret + ".pdf");
+
+    console.log("filePath : " + filePath);
+
+    // Should check that it exists here, but for demo purposes, assume it does
+    // and just pipe a read stream to the response.
+    //fs.createReadStream(filePath).pipe(res);
+    res.download(filePath);
+
+  },
 };
 

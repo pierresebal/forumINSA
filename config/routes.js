@@ -112,7 +112,10 @@ module.exports.routes = {
     action: 'download'
   },
 
-
+  '/file/bills/download':{
+    controller: 'FileController',
+    action: 'downloadBill'
+  },
 
   /*
    ===========================================================================================================
@@ -264,6 +267,11 @@ module.exports.routes = {
   '/Command/NewCommand':{
     controller:'SellsController',
     action:'addASell'
+  },
+
+  '/Company/Bills':{
+    controller:'CompanyController',
+    action: 'displayBills'
   }
 
 };
