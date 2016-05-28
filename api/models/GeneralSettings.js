@@ -19,6 +19,17 @@ module.exports = {
       type:'boolean',
       defaultsTo:false,
       required:true
+    },
+
+    billNumberMonth : {
+      type: 'integer',
+      defaultsTo:1,
+      required:true
+    },
+
+    inscriptionDeadline : {
+      type: 'datetime',
+      defaultsTo: function() {return new Date();}
     }
 
   }

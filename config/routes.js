@@ -272,6 +272,11 @@ module.exports.routes = {
   '/Company/Bills':{
     controller:'CompanyController',
     action: 'displayBills'
+  },
+
+  '/Admin/setInscriptionDeadline':{
+    controller:'AdminController',
+    action : 'setInscriptionDeadline'
   }
 
 };

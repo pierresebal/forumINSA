@@ -492,6 +492,10 @@ module.exports = {
       if (err)
         return err;
 
+      var now = new Date();
+      if (found.inscriptionDeadline < now)
+        return res.view("CompanySpace/DeadlinePassed", {layout:'layout', deadline:found.inscriptionDeadline.toDateString()});
+
       if (found.areInscriptionsOpened) {
         var year = new Date().getFullYear();
 
@@ -503,7 +507,8 @@ module.exports = {
               forumPrice:record.forumPricePME,
               sjdPrice:record.sjdPricePME,
               sjdSessionPrice:record.sjdSessionPricePME,
-              premiumPrice:record.premiumPricePME
+              premiumPrice:record.premiumPricePME,
+              deadline:found.inscriptionDeadline.toDateString()
             });
           });
         } else {
@@ -514,7 +519,8 @@ module.exports = {
               forumPrice:record.forumPrice,
               sjdPrice:record.sjdPrice,
               sjdSessionPrice:record.sjdSessionPrice,
-              premiumPrice:record.premiumPrice
+              premiumPrice:record.premiumPrice,
+              deadline:found.inscriptionDeadline.toDateString()
             });
           });
         }
@@ -552,17 +558,18 @@ module.exports = {
           //Différent d'une adresse mail qui existe déjà !
           Company.findOne({mailAddress:mailAddress}).exec(function(err,found){
             if (err)
-              return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb trouver si adresse déjà existante."});
+              return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb pour trouver si adresse déjà existante."});
 
             if (!found || found.mailAddress == req.session.mailAddress) {
               Company.update({mailAddress:req.session.mailAddress}, {mailAddress:mailAddress}).exec(function(err, record) {
                 if (err)
                   return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update firstName."});
 
+                req.session.mailAddress = record.mailAddress;
                 return res.redirect('/Company/Profile');
               });
             } else {
-              return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Cette adresse existe déjà"});
+              return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Cette adresse existe déjà."});
             }
           });
         });
@@ -590,6 +597,8 @@ module.exports = {
         });
         break;
 
+      //On ne met pas a jour le siret car il faut changer les noms des factures aussi et la flemme...
+      /*
       case 'k' :
         var siret = req.param('siret');
         Company.findOne({siret:siret}).exec(function(err,found){
@@ -622,6 +631,7 @@ module.exports = {
           }
         });
         break;
+        */
 
       case 'l' :
         var companyName = req.param('companyName');
