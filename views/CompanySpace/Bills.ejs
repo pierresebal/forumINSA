@@ -1,0 +1,23 @@
+<h1>Vos factures</h1>
+<p>Vous trouverez ici vos factures pour chaque année où vous avez participé au forum</p>
+
+<% if (typeof bills == 'undefined' || bills == '') { %>
+
+  <p>Vous n'avez actuellement pas de factures.</p>
+
+<% } else { %>
+
+  <table>
+    <% bills.forEach( function(bill) { %>
+      <tr>
+        <td><%=bill.year%></td>
+        <td>
+          <form id="downloadBill" method="post" action="/file/bills/download">
+            <input type="hidden" name="dl" value="<%= bill.year%>" />
+            <input type="submit" value="Télécharger" />
+          </form>
+        </td>
+      </tr>
+    <% }); %>
+  </table>
+<% } %>

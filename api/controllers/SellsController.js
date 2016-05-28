@@ -108,7 +108,7 @@ module.exports = {
                 productPrice = forumPrice;
               }
 
-
+              // Création de la facture en format HTML
               contenu = contenu.replace("@year", date.getFullYear());
               contenu = contenu.replace("@billNumber", (date.getMonth()+1).toString() + date.getFullYear().toString());
               contenu = contenu.replace("@date", date.getDate() +"/" + (date.getMonth()+1).toString() + "/" + date.getFullYear());
@@ -123,9 +123,20 @@ module.exports = {
               contenu = contenu.replace("@totalTTC", productPrice + moreSjd * moreSjdPrice);
 
               var options = {format:'A4', orientation: "portrait", border:"1cm"};
-              pdf.create(contenu, options).toFile('files/facture_template/test.pdf', function afterwards (err) {
+
+              pdf.create(contenu, options).toFile('files/factures/' + year + '/' + req.session.siret + '.pdf', function afterwards (err) {
                 if (err)
                   console.log("Erreur :'(");
+
+
+                //Envoi du mail de facture
+                SendMail.sendEmail({
+                  destAddress: req.session.mailAddress,
+                  objectS: "Confirmation de commande",
+                  messageS: "Bonjour,\n\nVous venez de passer une commade sur le site foruminsaentreprises.fr et nous vous en remercions.\n\nVous trouverez ci-joint la facture correspondante dont il vous faudra vous acquiter le plus tôt possible.", // plaintext body
+                  messageHTML: "<p>Bonjour,<br />Vous venez de passer une commade sur le site foruminsaentreprises.fr et nous vous en remercions.\n\nVous trouverez ci-joint la facture correspondante dont il vous faudra vous acquiter le plus tôt possible.</p>", // plaintext body
+                  attachments : [{filename:'facture.pdf', filePath:'files/factures/' + year + '/' + req.session.siret + '.pdf'}]
+                });
 
                 return res.view("CompanySpace/CommandSent", {layout:"layout"});
               });
