@@ -1,0 +1,29 @@
+body
+{
+  background-color: #3b3b3b;
+  width: 100%;
+  margin-top: 100px;
+}
+
+h1
+{
+  color: white;
+}
+
+p
+{
+  color:white;
+}
+
+img
+{
+  width: 300px;
+  height: auto;
+}
+
+#all
+{
+  margin: auto;
+  width: 100%;
+  text-align:center;
+}
