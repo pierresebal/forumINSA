@@ -28,10 +28,12 @@
 
   <!-- pure css -->
   <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
 
   <!--STYLES-->
   <link rel="stylesheet" href="/styles/custom.css">
   <link rel="stylesheet" href="/styles/importer.css">
+  <link rel="stylesheet" href="/styles/styleConstruction.css">
   <link rel="stylesheet" href="/styles/unslider-dots.css">
   <link rel="stylesheet" href="/styles/unslider.css">
   <!--STYLES END-->
@@ -46,57 +48,106 @@
 
 </head>
 <body class="custom-body">
-  <div class="pure-g">
-    <div class="pure-u-3-5 center-part" style="margin: auto">
       <header>
-        <a href="/" ><img src='/images/Logo_FIE_blanc.png' width="400" alt="logo"/></a>
-        <div id="networks">
-          <a href="https://www.facebook.com/ForumInsaEntreprises" class="icon-button facebook" target="_blank"><i class="fa fa-facebook icon-facebook"></i><span></span></a>
-          <a href="https://twitter.com/INSAToulouse" class="icon-button twitter" target="_blank"><i class="fa fa-twitter icon-twitter"></i><span></span></a>
-          <a href="https://fr.linkedin.com/in/forum-insa-entreprises-49377699" class="icon-button linkedin" target="_blank"><i class="fa fa-linkedin icon-linkedin"></i><span></span></a>
-        </div>
-        <div id="connect-infos">
-        <% if(req.session.authenticated){ %>
-            <p>Connecté en tant que:<br/>
-          <% if (req.session.sessionType == "company") {%>
-              <%=req.session.companyName%>
-        <%  } else if (req.session.sessionType == "student") { %>
-              <%=req.session.firstName%>
-        <%  } else { %>
-              Type inconnu
-        <%  }
-          } else { %>
-            <p>CONNEXION: </p>
-            <button id="connectStudent"  type="button" class="btn red-button student"><i class="fa fa-graduation-cap"></i> Etudiant</button>
-            <button id="connectCompany"  type="button" class="btn red-button company"><i class="fa fa-briefcase"></i> Entreprise</button>
-        <% } %>
-      </div>
+          <div class="center-column">
 
+            <div id="networks">
+                <a href="https://www.facebook.com/ForumInsaEntreprises" class="icon-button facebook" target="_blank"><i class="fa fa-facebook icon-facebook"></i><span></span></a>
+                <a href="https://twitter.com/INSAToulouse" class="icon-button twitter" target="_blank"><i class="fa fa-twitter icon-twitter"></i><span></span></a>
+                <a href="https://fr.linkedin.com/in/forum-insa-entreprises-49377699" class="icon-button linkedin" target="_blank"><i class="fa fa-linkedin icon-linkedin"></i><span></span></a>
+            </div>
+
+            <div class="pure-g">
+                <div id="logo" class="pure-u-1">
+                    <a href="/" ><img id="logo-img" src='/images/Logo_FIE_rouge.png' width="400" alt="logo"/></a>
+                </div>
+
+                <div class="pure-u" id="connect-infos">
+                    <% if(req.session.authenticated){ %>
+                        <p>Connecté en tant que:<br/>
+                      <% if (req.session.sessionType == "company") {%>
+                          <%=req.session.companyName%>
+                    <%  } else if (req.session.sessionType == "student") { %>
+                          <%=req.session.firstName%>
+                    <%  } else { %>
+                          Type inconnu
+                    <%  }
+                      } else { %>
+                            <p>CONNEXION </p>
+                            <button id="connectStudent"  type="button" class="btn red-button student"><i class="fa fa-graduation-cap"></i> Etudiant</button>
+                            <button id="connectCompany"  type="button" class="btn red-button company"><i class="fa fa-briefcase"></i> Entreprise</button>
+                    <% } %>
+                </div>
+            </div>
+
+        </div>
       </header>
 
       <!-- Content inserted here -->
       <%- include nav %>
-      <div class="content-part">
-        <div id="subBody"></div>
+      <div class="center-column">
         <%- body %>
       </div>
-    </div>
-  </div>
 
   <footer>
-    <div class="pure-g">
-      <div class="pure-u-3-5 footer">
+    <div id="footer-content" class="pure-g">
+        <div class="pure-u-1 pure-u-md-1 footer">
         <%- include footer %>
-      </div>
+        </div>
     </div>
   </footer>
 <script src="/js/unslider-min.js"></script>
 <script>
 		jQuery(document).ready(function($) {
-			$('.my-slider').unslider({
-        autoplay: true,
-        delay: 6000
-      });
+
+            var margin_left;
+            var logo_width;
+            var fill_size;
+            var page_size;
+            var page_width;
+
+            update_size();
+
+
+
+            $( window ).resize(function(){
+                update_size();
+            });
+
+            function update_size(){
+
+                // Position connect info
+                //margin_left = (($(".center-column").width() - $("#connect-infos").width() - $("#logo").width()) - 10);
+                //margin_left = (margin_left < 10) ? 10 : margin_left;
+                //$("#connect-infos").css("margin-left", margin_left);
+
+                // Resize content
+                //$(".center-column").width(($(window).width() > 1200) ? 1200 : $(window).outerWidth());
+
+
+                // Resize the logo
+                logo_width = $(".center-column").outerWidth() - $("#networks").width() + 56;
+                $("#logo-img").width(logo_width > 400 ? 400 : $(".center-column").width() - $("#networks").width() + 56);
+
+                // Stick the footer to the bottom
+                page_size = $("header").outerHeight() + $(".nav").outerHeight() + $(".content-part").outerHeight() + $("footer").outerHeight();
+                fill_size = $(window).height() - page_size - 2;
+                $(".content-part").height(page_size > $(window).height() ? $(".content-part").height() : $(".content-part").height()+fill_size);
+
+                // footer
+                page_middle = $(window).width()/2;
+                $("#footer-content").html(
+                    '<svg height="220" width="'+ $(window).width() + '">'
+                        +'<polygon points="0,50 0,150 ' + parseInt(page_middle + 50) + ',150 ' + parseInt(page_middle + 100) + ',50" style="fill:#e42618;" />'
+                        +'<polygon points="'+ parseInt(page_middle - 50) + ',0 '+ parseInt(page_middle - 100)+',100 '+$(window).width()+',100 '+$(window).width()+',0" style="fill:#353336;" />'
+                        +'Sorry, your browser does not support inline SVG.'
+                    +'</svg>'
+                );
+
+            }
+
+            $("#connect-infos").css("margin-left", margin_left);
+
 		});
 	</script>
 </body>

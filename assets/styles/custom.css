@@ -1,24 +1,39 @@
 header {
   text-align: left;
-  position: relative;
-  background-color: #4f4d50;
+  background-color: #353336;
+  width: 100%;
 }
 
 header img {
-
   margin-left: 10px;
   margin-top: 10px;
 }
 
-#connect-infos {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  color: white;
+body{
+    color: #7E7E7E;
 }
 
-#connect-infos p {
-  display: inline;
+h1, h2, h3 {
+    color: #e42618;
+}
+
+@media (max-width: 700px){
+    #connect-infos {
+      white-space: nowrap;
+      color: white;
+      margin: auto;
+    }
+}
+
+@media (min-width: 701px) {
+    #connect-infos {
+
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      white-space: nowrap;
+      color: white;
+    }
 }
 
 .navbar {
@@ -33,17 +48,24 @@ header img {
 .custom-body {
   text-align: center;
   margin: auto;
-  background-color:  #f2f2f2;
+  background-color:  #fff;
 }
 
-.center-part {
-  background-color: white;
-  min-height: 600px;
-  text-align: left;
+.center-column{
+    margin: auto;
+    min-width: 320px;
+    max-width: 1200px;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: left;
+    position: relative;
 }
 
-.content-part {
-  padding: 20px;
+
+.content {
+      padding-left: 50px;
+      padding-right: 50px;
 }
 
 .custom-nav {
@@ -66,11 +88,12 @@ header img {
 }
 
 .footer{
-  background-color: #4f4d50;
+  background-color: #353336;
   color: white;
   display: block;
   height: 100px;
   margin: auto;
+  margin-top: 20px;
 }
 
 .custom {
@@ -85,7 +108,6 @@ header img {
   position: absolute;
   top: 10px;
   right: 10px;
-
 }
 /* Wrapper */
 .icon-button {
