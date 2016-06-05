@@ -6,8 +6,10 @@
   <label for="sjdCommand">SJD : <%=sjdPrice%> € </label> <input id="sjd" value="sjd" type="radio" name="Command"/><br />
   <label for="premiumCommand">Forum + SJD : <%=premiumPrice%> € </label> <input id="premium" value="premium" type="radio" name="Command"/><br />
   <label for="sjdSessionCommand">Session SJD supplémentaire : <%=sjdSessionPrice%> € </label> <input id="sjdSessionCommand" type="number" name="numberSjdSession"/><br />
+  (Disponible uniquement pour la formule "SJD" et "Forum + SJD")
+  <label for="moreMeal">Nombre de repas supplémentaires : <%=mealPrice%> € </label> <input id="moreMeal" type="number" name="moreMeal"/><br />
 
-  <label for="cgu">Je reconnais que je dois payer la somme de truc par cheque ou espece ou or si jamais je réserve ma place </label><input id="cgu" type="checkbox"/><br />
+  <label for="cgu">Je reconnais que je dois payer la somme de truc par cheque ou espece ou or si jamais je réserve ma place </label><input id="cgu" name="cgu" type="checkbox"/><br />
 
   <input type="submit" value="Réserver"/>
 

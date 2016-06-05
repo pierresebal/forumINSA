@@ -40,7 +40,8 @@ module.exports = {
           forumPricePME:record.forumPricePME,
           sjdPricePME:record.sjdPricePME,
           sjdSessionPricePME:record.sjdSessionPricePME,
-          premiumPricePME:record.premiumPricePME
+          premiumPricePME:record.premiumPricePME,
+          mealPrice:record.mealPrice
         });
       });
     });
@@ -63,11 +64,12 @@ module.exports = {
         forumPricePME: req.param('forumPricePME'),//PME
         sjdPricePME: req.param('sjdPricePME'),
         premiumPricePME: req.param('premiumPricePME'),
-        sjdSessionPricePME: req.param('sjdSessionPricePME')
+        sjdSessionPricePME: req.param('sjdSessionPricePME'),
+        mealPrice: req.param('mealPrice')
       }).exec(function updatePrices(err, updated) {
         if (err) {
           console.log("Price not updated :" + err);
-          return;
+          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Error, avez-vous bien rempli tous les champs ?"});
         }
 
         console.log("Modifications faites pour l'année " + records.year + " ajouté !");
