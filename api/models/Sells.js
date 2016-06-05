@@ -57,6 +57,15 @@ module.exports = {
       type:'integer',
       required:true
     },
+    moreMeal:{
+      type:'integer',
+      defaultsTo:0,
+      required:true
+    },
+    mealPrice:{
+      type:'Integer',
+      required:true
+    },
     billNumber : {
       type:'integer',
       required:true

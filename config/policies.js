@@ -19,11 +19,28 @@
 
 module.exports.policies = {
 
-  // Control for member acces
+  // Control for member access
   CompanyController:{
     MemberHomeShow:"CompanyAuth",
     Profile:"CompanyAuth",
-    CvTheque:"CompanyAuth"
+    CvTheque:"CompanyAuth",
+    Command: "CompanyAuth",
+    CompanyLogout:"CompanyAuth",
+    setAUserInfo:"CompanyAuth",
+    displayBills:"CompanyAuth"
+  },
+
+  StudentController:{
+    StudentLogout:"StudentAuth",
+    profile:"StudentAuth",
+    setAUserInfo:"StudentAuth",
+    setAllInfo:"StudentAuth",
+    Companies:"StudentAuth",
+    sjd:"StudentAuth"
+  },
+
+  SellsController:{
+    addASell:"CompanyAuth"
   }
 
 };

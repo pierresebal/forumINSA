@@ -498,6 +498,9 @@ module.exports = {
 
         if (req.session.isPME) {
           YearSettings.findOne({year:year}).exec(function giveInfo(err, record){
+            if (!record)
+              return res.view("CompanySpace/NoInscriptions", {layout:"layout"});
+
             return res.view("CompanySpace/Command", {
               layout:'layout',
               year:year,
@@ -505,11 +508,16 @@ module.exports = {
               sjdPrice:record.sjdPricePME,
               sjdSessionPrice:record.sjdSessionPricePME,
               premiumPrice:record.premiumPricePME,
+              mealPrice:record.mealPrice,
               deadline:found.inscriptionDeadline.toDateString()
             });
           });
         } else {
           YearSettings.findOne({year:year}).exec(function giveInfo(err, record){
+            if (!record)
+              return res.view("CompanySpace/NoInscriptions", {layout:"layout"});
+
+
             return res.view("CompanySpace/Command", {
               layout:'layout',
               year:year,
@@ -517,6 +525,7 @@ module.exports = {
               sjdPrice:record.sjdPrice,
               sjdSessionPrice:record.sjdSessionPrice,
               premiumPrice:record.premiumPrice,
+              mealPrice:record.mealPrice,
               deadline:found.inscriptionDeadline.toDateString()
             });
           });
