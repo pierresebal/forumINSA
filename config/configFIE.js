@@ -3,12 +3,12 @@
 module.exports.configFIE = {
 
   // Domain parameter
-  FIEdomainName:"http://localhost:1337",
+  FIEdomainName:"http://foruminsaentreprises.fr",
 
   // Email parameters
   FIEmailService : "Gmail",
-  FIEmailAddress : "pierre.hardy5@gmail.com",
-  FIEmailPassword : "Ycg684-Z",
+  FIEmailAddress : "forum.insa.entreprise@gmail.com",
+  FIEmailPassword : "FIEstaff2015",
   FIEmailSenderName : "Forum INSA Entreprises",
 
 }

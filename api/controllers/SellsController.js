@@ -14,11 +14,15 @@ module.exports = {
     var month = new Date().getMonth();
     month++;
 
+    console.log("CGU : " + req.param("cgu"));
+    if (req.param('cgu') != 'on')
+      return res.view("ErrorPage", {layout:"layout", ErrorTitle:"Les conditions de ventes n'ont pas été validées."});
+
     Sells.findOne({companySiret:req.session.siret, year:year}).exec(function afterwards(err,found1){
       if (err)
         return err;
       if (found1)
-        return res.view("ErrorPage", {layout:"layout", ErrorTitle:"Commande déjà passée. Contacter le webmaster en cas de problème"});
+        return res.view("ErrorPage", {layout:"layout", ErrorTitle:"Commande déjà passée.", ErrorDesc:"Vous pouvez consulter votre facture dans votre espace personnel. Contacter le webmaster en cas de problème."});
 
       if (!found1) {
         YearSettings.findOne({year:year}).exec(function afterwards(err,found2) {
@@ -64,6 +68,12 @@ module.exports = {
             moreSjdPrice = found2.sjdSessionPrice;
           }
 
+          if (typeof req.param('moreMeal') == 'undefined' || req.param('moreMeal') == "")
+            var moreMeal = 0;
+          else
+            var moreMeal = req.param("moreMealmoreMeal");
+          var mealPrice = found2.mealPrice;
+
           GeneralSettings.findOne({id:1}).exec(function getBillNumber(err, found){
             if (err)
               return err;
@@ -84,6 +94,8 @@ module.exports = {
               premiumPackPrice:premiumPackPrice,
               moreSjd:moreSjd,
               moreSjdPrice:moreSjdPrice,
+              moreMeal:moreMeal,
+              mealPrice:mealPrice,
               billNumber:fullBillNumber
             }).exec(function afterwards(err,created){
               if (err)
@@ -134,7 +146,10 @@ module.exports = {
                   contenu = contenu.replace("@sjdQuantity", moreSjd);
                   contenu = contenu.replace("@sjdPrice", moreSjdPrice);
                   contenu = contenu.replace("@totalSjdPrice", moreSjd * moreSjdPrice);
-                  contenu = contenu.replace("@totalTTC", productPrice + moreSjd * moreSjdPrice);
+                  contenu = contenu.replace("@moreMeal", moreMeal);
+                  contenu = contenu.replace("@mealPrice", mealPrice);
+                  contenu = contenu.replace("@totalMealPrice", moreMeal * mealPrice);
+                  contenu = contenu.replace("@totalTTC", productPrice + moreSjd * moreSjdPrice + moreMeal * mealPrice);
 
                   var options = {format:'A4', orientation: "portrait", border:"1cm"};
 
