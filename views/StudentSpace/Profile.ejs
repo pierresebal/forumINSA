@@ -1,37 +1,50 @@
-<h2>Votre profil</h2>
+<style>
+    td h3 {
+        font-size: 1em;
+        font-weight: bold;
+        margin: 5px;
+        margin-right: 10px;
+    }
+</style>
 
-<table>
+<div class="content">
+<h1>Mon profil</h1>
+
+<table style="margin: auto;">
   <tr>
-    <td>Login</td>
+    <td><h3>Login</h3></td>
     <td><%=login%></td>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
-    <td>Prénom</td>
+    <td><h3>Prénom</h3></td>
     <td><%=firstName%></td>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
-    <td>Nom</td>
+    <td><h3>Nom</h3></td>
     <td><%=lastName%></td>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
-    <td>Adresse mail</td>
+    <td><h3>Adresse mail</h3></td>
     <% if (typeof (mailAddress) != 'undefined' && mailAddress != "") { %>
     <td><%=mailAddress%></td>
     <% } %>
+</tr>
+<tr>
+    <td></td>
     <td>
       <form id="mailAddress" method="post" action="/Student/setAUserInfo">
         <input type="hidden" name="data" value="m"/>
-        <input type="text" name="mailAddress"/>
+        <input type="text" placeholder="Modifier" name="mailAddress"/>
         <input type="submit" value="Sauvegarder"/>
       </form>
     </td>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
-    <td>Année</td>
+    <td><h3>Année</h3></td>
     <% if (typeof (year) != 'undefined' && year != "") { %>
       <td><%=year%></td>
     <% } %>
@@ -51,7 +64,7 @@
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
-    <td>Spécialité</td>
+    <td><h3>Spécialité</h3></td>
     <% if (typeof (speciality) != 'undefined' && speciality != "") { %>
     <td><%=speciality%></td>
     <% } %>
@@ -69,7 +82,7 @@
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
-    <td>CV francophone</td>
+    <td><h3>CV francophone</h3></td>
     <% if (typeof (frCVPath) != 'undefined' && frCVPath != "") { %>
       <td>
         <form id="downloadFormFr" method="post" action="/file/download">
@@ -91,7 +104,7 @@
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
-    <td>CV anglophone</td>
+    <td><h3>CV anglophone</h3></td>
     <% if (typeof (enCVPath) != 'undefined' && enCVPath != "") { %>
     <td>
       <form id="downloadFormEn" method="post" action="/file/download">
@@ -115,7 +128,7 @@
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
-    <td>Site internet personnel</td>
+    <td><h3>Site internet personnel</h3></td>
     <% if (typeof (personalWebsite) != 'undefined' && personalWebsite != "") { %>
       <td><a href="http://<%=personalWebsite%>"  target="_blank"><%=personalWebsite%></a></td>
     <% } %>
@@ -129,7 +142,7 @@
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
-    <td>Profil Linkedin</td>
+    <td><h3>Profil Linkedin</h3></td>
     <% if (typeof (linkedin) != 'undefined' && linkedin != "") { %>
       <td><a href="<%=linkedin%>"  target="_blank">Voir le profil</a></td>
     <% } %>
@@ -143,7 +156,7 @@
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
-    <td>Profil Viadeo</td>
+    <td><h3>Profil Viadeo</h3></td>
     <% if (typeof (viadeo) != 'undefined' && viadeo != "") { %>
       <td><a href="<%=viadeo%>"  target="_blank">Voir le profil</a></td>
     <% } %>
@@ -157,7 +170,7 @@
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
-    <td>Profil GitHub</td>
+    <td><h3>Profil GitHub</h3></td>
     <% if (typeof (github) != 'undefined' && github != "") { %>
       <td><a href="<%=github%>" target="_blank">Voir le profil</a></td>
     <% } %>
@@ -171,3 +184,6 @@
   </tr>
 
 </table>
+<br/>
+<br/>
+</div>
