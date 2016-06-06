@@ -172,7 +172,7 @@ module.exports = {
     // Mandatory fields seems to not exist
     else
     {
-      console.log("il manque des champ obligatoires: " + posterr + " || " + data_tab)
+      console.log("il manque des champs obligatoires: " + posterr + " || " + data_tab)
       POSTerror = true;
     }
 
@@ -196,62 +196,59 @@ module.exports = {
         // Pas d'entrepise trouvée => Ajout ds la BDD
         else {
 
-          var uploadFile = req.file('logo');
-          uploadFile.upload({dirname: '../../assets/images/logos', saveAs: req.param('Siret') + ".png"},function onUploadComplete (err, files) { //Upload du logo, si ca se passe bien on passe au reste
 
-            if (err) return res.serverError(err);
-            //	IF ERROR Return and send 500 error with error
+          if (err) return res.serverError(err);
+          //	IF ERROR Return and send 500 error with error
 
-            // Création du lien d'activation (sha1 sur chrono courrant du serveur)
-            var sha1 = require('sha1');
-            var date = new Date();
-            var ActivationUrl = sha1(date.getTime());
+          // Création du lien d'activation (sha1 sur chrono courrant du serveur)
+          var sha1 = require('sha1');
+          var date = new Date();
+          var ActivationUrl = sha1(date.getTime());
 
-            // Ajout de l'entreprise dans la BDD
-            Company.create({
-              firstName: req.param('UserFirstName'),
-              lastName: req.param('UserLastName'),
-              position: req.param('Position'),
-              phoneNumber: req.param('PhoneNumber'),
-              mailAddress: req.param('UserEmail'),
-              password: req.param('UserPassword'),
-              siret:req.param('Siret'),
-              companyName:req.param('CompanyName'),
-              companyGroup:req.param('CompanyGroup'),
-              description:req.param('CompanyDescription'),
-              websiteUrl:req.param('CompanyWebsiteUrl'),
-              careerUrl:req.param('CompanyCareerUrl'),
-              road:req.param('CompanyAddressRoad'),
-              complementaryInformation:req.param('complementaryInformation'),
-              city:req.param('CompanyAddressCity'),
-              postCode:req.param('CompanyPostCode'),
-              country:req.param('CompanyAddressCountry'),
-              logoPath:req.param('Siret') + ".png",
-              isPME:req.param('isPME'),
-              active:0,
-              activationUrl:ActivationUrl
-            },function (err, created) {
-              if (!err) {
-                console.log('[INFO] User created ;) : ' + created.firstName + ' ' + created.lastName);
+          // Ajout de l'entreprise dans la BDD
+          Company.create({
+            firstName: req.param('UserFirstName'),
+            lastName: req.param('UserLastName'),
+            position: req.param('Position'),
+            phoneNumber: req.param('PhoneNumber'),
+            mailAddress: req.param('UserEmail'),
+            password: req.param('UserPassword'),
+            siret:req.param('Siret'),
+            companyName:req.param('CompanyName'),
+            companyGroup:req.param('CompanyGroup'),
+            description:req.param('CompanyDescription'),
+            websiteUrl:req.param('CompanyWebsiteUrl'),
+            careerUrl:req.param('CompanyCareerUrl'),
+            road:req.param('CompanyAddressRoad'),
+            complementaryInformation:req.param('complementaryInformation'),
+            city:req.param('CompanyAddressCity'),
+            postCode:req.param('CompanyPostCode'),
+            country:req.param('CompanyAddressCountry'),
+            logoPath:req.param('Siret') + ".png",
+            isPME:req.param('isPME'),
+            active:0,
+            activationUrl:ActivationUrl
+          },function (err, created) {
+            if (!err) {
+              console.log('[INFO] User created ;) : ' + created.firstName + ' ' + created.lastName);
 
-                // We send an email with the function send email contained inside services/SendMail.js
-                SendMail.sendEmail({
-                  destAddress: req.param('UserEmail'),
-                  objectS: "Message de confirmation de l'inscription",
-                  messageS: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe du forum INSA Entreprises.", // plaintext body
-                  messageHTML: "<h1>Bonjour "+req.param('UserFirstName')+",</h1><p>Vous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:</p><a href="+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+">Cliquez ICI</a><p>A très bientot !<p></p>L'équipe du forum INSA Entreprises.</p>"
-                });
+              // We send an email with the function send email contained inside services/SendMail.js
+              SendMail.sendEmail({
+                destAddress: req.param('UserEmail'),
+                objectS: "Message de confirmation de l'inscription",
+                messageS: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe du forum INSA Entreprises.", // plaintext body
+                messageHTML: "<h1>Bonjour "+req.param('UserFirstName')+",</h1><p>Vous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:</p><a href="+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+">Cliquez ICI</a><p>A très bientot !<p></p>L'équipe du forum INSA Entreprises.</p>"
+              });
 
-                // We show a positive result to the CompanySpace created
-                console.log("Company created: "+req.param("UserEmail"));
-                return res.view('Inscription/UserCreated', {firstName: created.firstName,layout:'layout'});
+              // We show a positive result to the CompanySpace created
+              console.log("Company created: "+req.param("UserEmail"));
+              return res.view('Inscription/UserCreated', {firstName: created.firstName,layout:'layout'});
 
-              }
-              else {
-                console.log('Error while creating a new CompanySpace. Error: ' + err);
-                return res.view('404', {error: err});
-              }
-            });
+            }
+            else {
+              console.log('Error while creating a new CompanySpace. Error: ' + err);
+              return res.view('404', {error: err});
+            }
           });
         }
       }
@@ -501,6 +498,9 @@ module.exports = {
 
         if (req.session.isPME) {
           YearSettings.findOne({year:year}).exec(function giveInfo(err, record){
+            if (!record)
+              return res.view("CompanySpace/NoInscriptions", {layout:"layout"});
+
             return res.view("CompanySpace/Command", {
               layout:'layout',
               year:year,
@@ -508,11 +508,16 @@ module.exports = {
               sjdPrice:record.sjdPricePME,
               sjdSessionPrice:record.sjdSessionPricePME,
               premiumPrice:record.premiumPricePME,
+              mealPrice:record.mealPrice,
               deadline:found.inscriptionDeadline.toDateString()
             });
           });
         } else {
           YearSettings.findOne({year:year}).exec(function giveInfo(err, record){
+            if (!record)
+              return res.view("CompanySpace/NoInscriptions", {layout:"layout"});
+
+
             return res.view("CompanySpace/Command", {
               layout:'layout',
               year:year,
@@ -520,6 +525,7 @@ module.exports = {
               sjdPrice:record.sjdPrice,
               sjdSessionPrice:record.sjdSessionPrice,
               premiumPrice:record.premiumPrice,
+              mealPrice:record.mealPrice,
               deadline:found.inscriptionDeadline.toDateString()
             });
           });

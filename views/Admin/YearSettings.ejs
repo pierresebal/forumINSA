@@ -26,6 +26,7 @@
 
 <h3>Changement pour l'année <%=year%></h3>
 <form method="post" action="/Admin/SetPrices">
+  <label>Nouveau prix pour un repas supplémentaire (actuel : <%=mealPrice%>€)</label> <input type="number" name="mealPrice"/><br />
   <h3>Pour les grandes entreprises</h3>
   <label>Nouveau prix du forum (actuel : <%=forumPrice%>€)</label> <input type="number" name="forumPrice"/><br />
   <label>Nouveau prix du SJD (actuel : <%=sjdPrice%>€)</label> <input type="number" name="sjdPrice"/><br />

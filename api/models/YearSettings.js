@@ -14,6 +14,12 @@ module.exports = {
       unique:true
     },
 
+    mealPrice:{
+      type:'Integer',
+      required:true,
+      defaultsTo:15
+    },
+
     forumPrice:{
       type:'Integer',
       required:true,

@@ -12,10 +12,10 @@ module.exports = function(req, res, next) {
   // User is allowed, proceed to the next policy,
   // or if this is the last policy, the controller
   console.log("Session authenticated (policy): "+req.session.authenticated);
-  if (req.session.authenticated && req.session.sessionType == "company") {
+  if (req.session.authenticated && req.session.sessionType == "student") {
     return next();
   }
   else {
-    return res.view('Connection_Password/Connection', {nexturl:req.originalUrl,error: "Vous devez être connecté comme entreprise pour acceder à cette page", layout: 'layout'});
+    return res.view('Connection_Password/Connection', {nexturl:req.originalUrl,error: "Vous devez être connecté comme étudiant pour acceder a cette page", layout: 'layout'});
   }
 };
