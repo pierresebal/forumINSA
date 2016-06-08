@@ -29,9 +29,10 @@ module.exports = {
     var uploadFile = req.file(file);
     var fileName = prefix + req.session.login + ".pdf";
 
-    uploadFile.upload({dirname: '../../files/'+file, saveAs: fileName},function onUploadComplete (err, files) {
+    uploadFile.upload({dirname: '../../files/'+file, saveAs: fileName, maxBytes: 10000000},function onUploadComplete (err, files) {
 
-      if (err) return res.serverError(err);
+      if (err)
+        return res.view('ErrorPage', {layout:'layout', ErrorTitle:"Erreur lors de l'upload", ErrorDesc:"Fichier supérieur à 10 Mo ?"});
       //	IF ERROR Return and send 500 error with error
 
       //Ajout de l'url dans la database
@@ -111,9 +112,10 @@ module.exports = {
     //	Call to /upload via GET is error
 
     var uploadFile = req.file('logo');
-    uploadFile.upload({dirname: '../../assets/images/logos', saveAs: req.session.siret+".png"},function onUploadComplete (err, files) {
+    uploadFile.upload({dirname: '../../assets/images/logos', saveAs: req.session.siret+".png", maxBytes:10000000},function onUploadComplete (err, files) {
 
-      if (err) return res.serverError(err);
+      if (err)
+        return res.view('ErrorPage', {layout:'layout', ErrorTitle:"Erreur lors de l'upload", ErrorDesc:"Fichier supérieur à 10 Mo ?"});
       //	IF ERROR Return and send 500 error with error
 
       //Ajout de l'url dans la database
