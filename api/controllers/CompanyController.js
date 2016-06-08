@@ -226,6 +226,14 @@ module.exports = {
             country:req.param('CompanyAddressCountry'),
             logoPath:req.param('Siret') + ".png",
             isPME:req.param('isPME'),
+            AE:('on' == req.param('AE')),
+            IR:('on' == req.param('IR')),
+            GB:('on' == req.param('GB')),
+            GP:('on' == req.param('GP')),
+            GPE:('on' == req.param('GPE')),
+            GC:('on' == req.param('GC')),
+            GM:('on' == req.param('GM')),
+            GMM:('on' == req.param('GMM')),
             active:0,
             activationUrl:ActivationUrl
           },function (err, created) {
@@ -448,6 +456,11 @@ module.exports = {
   Profile: function(req,res) {
 
     Company.findOne({mailAddress: req.session.mailAddress}).exec(function (err, found) {
+      if (err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Erreur Affichage',  ErrorDesc: 'Une erreur inconnue est survenue lors de l\'affichage de votre profil'});
+
+
+
       return res.view("CompanySpace/Profile", {
         layout: 'layout',
         firstName: found.firstName,
@@ -471,7 +484,15 @@ module.exports = {
         complementaryInformation: found.complementaryInformation,
         postCode: found.postCode,
         city: found.city,
-        country: found.country
+        country: found.country,
+        AE:(found.AE ? "checked" :""),
+        IR:(found.IR ? "checked" :""),
+        GB:(found.GB ? "checked" :""),
+        GP:(found.GP ? "checked" :""),
+        GPE:(found.GPE ? "checked" :""),
+        GC:(found.GC ? "checked" :""),
+        GM:(found.GM ? "checked" :""),
+        GMM:(found.GMM ? "checked" :"")
       });
     });
   },
@@ -718,7 +739,25 @@ module.exports = {
           return res.redirect('/Company/Profile');
         });
         break;
+      case 'z':
+        Company.update({mailAddress:req.session.mailAddress}, {
+          AE:('on' == req.param('AE')).toString(),
+          IR:('on' == req.param('IR')).toString(),
+          GB:('on' == req.param('GB')).toString(),
+          GP:('on' == req.param('GP')).toString(),
+          GPE:('on' == req.param('GPE')).toString(),
+          GC:('on' == req.param('GC')).toString(),
+          GM:('on' == req.param('GM')).toString(),
+          GMM:('on' == req.param('GMM')).toString(),
+        }).exec(function(err, record) {
+          if (err) {
+            console.log(err);
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update postaddress."});
+          }
 
+          return res.redirect('/Company/Profile');
+        });
+        break;
       default :
         console.log("Type de data inconnu");
     }

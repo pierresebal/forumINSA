@@ -159,7 +159,31 @@
     <p id="UserPasswordErr" style="color:red;font-size:10px;display:<%=ErrInitStyleShow[18]%>;">Les mots de passe doivent être identiques et contenir entre 6 et 50 carac.</p>
   </div>
 
-  <!--Champ caché contenant le mot de passe haché qui sera envoyé via POST-->
+</fieldset>
+
+
+  <h2>Intérêts</h2>
+  <p>Quels sont les profils d'étudiants qui vous intéressent ?</p>
+  <fieldset style="text-align: center;">
+
+    <table>
+      <tr>
+        <th><label for="IR">Informatique et Réseaux</label><input type="checkbox" name="IR" id="IR"/></th>
+        <th><label for="AE">Génie Automatique et Électronique</label><input type="checkbox" name="AE" id="AE"/></th>
+        <th><label for="GP">Génie Physique</label><input type="checkbox" name="GP" id="GP"/></th>
+        <th><label for="GB">Génie Biochimique</label><input type="checkbox" name="GB" id="GB"/></th>
+      </tr>
+      <tr>
+        <th><label for="GPE">Génie des Procédés</label><input type="checkbox" name="GPE" id="GPE"/></th>
+        <th><label for="GC">Génie Civil</label><input type="checkbox" name="GC" id="GC"/></th>
+        <th><label for="GM">Génie Mécanique</label><input type="checkbox" name="GM" id="GM"/></th>
+        <th><label for="GMM">Génie Mathématiques et Modélisation</label><input type="checkbox" name="GMM" id="GMM"/></th>
+      </tr>
+    </table>
+
+
+
+    <!--Champ caché contenant le mot de passe haché qui sera envoyé via POST-->
   <input type="hidden" id="POSTUserPass" name="UserPassword">
 
 

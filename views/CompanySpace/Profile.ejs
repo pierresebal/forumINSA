@@ -143,7 +143,7 @@ if (typeof complementaryInformation == 'undefined')
     <td>
       <form class="pure-form" id="description" method="post" action="/Company/setAUserInfo">
           <fieldset>
-        <input type="hidden" name="data" value="n"/>
+        <input type="hidden" name="data" value="n"/><span>Taille max : 10 Mo</span>
         <textarea class="pure-input-1-2" type="text" name="description"><%=description%></textarea>
         <button class="pure-button pure-button-primary" type="submit">Sauvegarder</button>
     </fieldset>
@@ -200,3 +200,26 @@ if (typeof complementaryInformation == 'undefined')
     </td>
   </tr>
 </table>
+
+<h2>Intérêts</h2>
+<p>Quels sont les profils d'étudiants qui vous intéressent ?</p>
+<fieldset style="text-align: center;">
+
+  <form id="interests" method="post" action="/Company/setAUserInfo">
+    <table>
+    <input type="hidden" name="data" value="z"/>
+      <tr>
+        <th><label for="IR">Informatique et Réseaux</label><input type="checkbox" name="IR" id="IR" <%=IR%>/></th>
+        <th><label for="AE">Génie Automatique et Électronique</label><input type="checkbox" name="AE" id="AE" <%=AE%>/></th>
+        <th><label for="GP">Génie Physique</label><input type="checkbox" name="GP" id="GP" <%=GP%>/></th>
+        <th><label for="GB">Génie Biochimique</label><input type="checkbox" name="GB" id="GB" <%=GB%>/></th>
+      </tr>
+      <tr>
+        <th><label for="GPE">Génie des Procédés</label><input type="checkbox" name="GPE" id="GPE" <%=GPE%>/></th>
+        <th><label for="GC">Génie Civil</label><input type="checkbox" name="GC" id="GC" <%=GC%>/></th>
+        <th><label for="GM">Génie Mécanique</label><input type="checkbox" name="GM" id="GM" <%=GM%>/></th>
+        <th><label for="GMM">Génie Mathématiques et Modélisation</label><input type="checkbox" name="GMM" id="GMM" <%=GMM%>/></th>
+      </tr>
+    </table>
+    <input type="submit" value="Sauvegarder"/>
+   </form>
