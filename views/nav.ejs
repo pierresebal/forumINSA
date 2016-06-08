@@ -24,7 +24,15 @@
     <li><a href="/INSA">INSA TOULOUSE</a></li>
     <% if (req.session.authenticated) { %>
       <% if(req.session.sessionType=="company"){%>
-        <li><a href="/Company/CompanySpace">ESPACE PERSO</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ESPACE PERSO <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/Company/Profile">Mon Profil</a></li>
+              <li><a href="/Company/CvTheque">CVThèque</a></li>
+              <li><a href="/Company/Command">Réserver sa place</a></li>
+              <li><a href="/Company/Bills">Factures</a></li>
+            </ul>
+          </li>
         <li><a href="/Company/CompanyLogout">DECONNEXION <i class="fa fa-sign-out"></i></a></li>
 
       <% } else if (req.session.sessionType=="student") { %>
