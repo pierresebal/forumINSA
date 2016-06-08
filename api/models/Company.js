@@ -155,6 +155,49 @@ module.exports = {
     firstConnectionDone:{
       type:'boolean',
       defaultsTo:false
+    },
+
+    //Ce qui va suivre est très moche. Il aurait fallu faire un many-to-many mais je l'ai vu trop tard et j'ai pas envie de tout rechanger car la deadline c'était il y a 3 jours.
+    //Ca correspond aux spécialités qui intéressent la companie
+    AE:{
+      type:'boolean',
+      required:true,
+      defaultsTo:false
+    },
+    GB:{
+      type:'boolean',
+      required:true,
+      defaultsTo:false
+    },
+    GP:{
+      type:'boolean',
+      required:true,
+      defaultsTo:false
+    },
+    GMM:{
+      type:'boolean',
+      required:true,
+      defaultsTo:false
+    },
+    GM:{
+      type:'boolean',
+      required:true,
+      defaultsTo:false
+    },
+    GPE:{
+      type:'boolean',
+      required:true,
+      defaultsTo:false
+    },
+    IR:{
+      type:'boolean',
+      required:true,
+      defaultsTo:false
+    },
+    GC:{
+      type:'boolean',
+      required:true,
+      defaultsTo:false
     }
   }
 };
