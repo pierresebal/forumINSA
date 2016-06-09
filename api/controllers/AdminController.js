@@ -112,6 +112,26 @@ module.exports = {
 
       return res.redirect('/Admin/YearSettings');
     });
-  }
+  },
+
+  /*displayCompanies : function(req,res) {
+
+    var year = req.param('year');
+
+    Sells.find({year:year}).exec(function companiesOfAYear (err, records) {
+      if (err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "erreur lors de la recherches de companies pour l'année : " + year});
+
+      var companiesSelected;
+
+      for (var aSell in records) {
+
+
+      }
+
+
+    });
+
+  } */
 };
 

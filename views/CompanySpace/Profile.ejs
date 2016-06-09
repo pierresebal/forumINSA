@@ -46,7 +46,7 @@ if (typeof complementaryInformation == 'undefined')
               <label for="phoneNumber">Téléphone : <%=phoneNumber%></label>
               <input class="pure-input-1" type="text" name="phoneNumber" placeholder="<%=phoneNumber%>">
 
-              <label for="mailAddress">Mail : <br/><%=mailAddress%></label>
+              <label for="mailAddress">Mail : <%=mailAddress%></label>
               <input class="pure-input-1" type="text" name="mailAddress" placeholder="<%=mailAddress%>">
 
               <br/>
@@ -131,9 +131,10 @@ if (typeof complementaryInformation == 'undefined')
     <td>
       <form class="pure-form" id="logoUpload" method="post" action="/file/uploadLogo" enctype="multipart/form-data">
         <fieldset>
-        <input class="pure-input" type="file" name="logo"/>
-        <button class="pure-button pure-button-primary" type="submit">Sauvegarder</button>
-    </fieldset>
+          <input class="pure-input" type="file" name="logo"/>
+          <span><i>Taille max :</i> 10 Mo</span>
+          <button class="pure-button pure-button-primary" style="float: right; margin-right: 21%" type="submit">Sauvegarder</button>
+        </fieldset>
       </form>
     </td>
   </tr>
@@ -143,7 +144,7 @@ if (typeof complementaryInformation == 'undefined')
     <td>
       <form class="pure-form" id="description" method="post" action="/Company/setAUserInfo">
           <fieldset>
-        <input type="hidden" name="data" value="n"/><span>Taille max : 10 Mo</span>
+        <input type="hidden" name="data" value="n"/>
         <textarea class="pure-input-1-2" type="text" name="description"><%=description%></textarea>
         <button class="pure-button pure-button-primary" type="submit">Sauvegarder</button>
     </fieldset>
@@ -193,8 +194,8 @@ if (typeof complementaryInformation == 'undefined')
         <input class="pure-input-1-2" type="text" name="complementaryInformation" placeholder="Complément"/><br>
         <input class="pure-input-1-2" type="text" name="postCode" value="<%=postCode%>" placeholder="Code postal"/><br />
         <input class="pure-input-1-2" type="text" name="city" value="<%=city%>" placeholder="Ville"/><br />
-        <input class="pure-input-1-2" type="text" name="country" value="<%=country%>" placeholder="Pays"/><br />
-        <button class="pure-button pure-button-primary pure-input-1-2" type="submit" >Sauvegarder</button>
+        <input class="pure-input-1-2" type="text" name="country" value="<%=country%>" placeholder="Pays"/>
+        <button class="pure-button pure-button-primary" type="submit" >Sauvegarder</button>
     </fieldset>
       </form>
     </td>
@@ -203,23 +204,25 @@ if (typeof complementaryInformation == 'undefined')
 
 <h2>Intérêts</h2>
 <p>Quels sont les profils d'étudiants qui vous intéressent ?</p>
-<fieldset style="text-align: center;">
-
-  <form id="interests" method="post" action="/Company/setAUserInfo">
+<fieldset style="text-align: center; border:0px">
+  <!--<div style="display: flex; justify-content: center">-->
+  <form class="pure-form" id="interests" method="post" action="/Company/setAUserInfo">
     <table>
     <input type="hidden" name="data" value="z"/>
       <tr>
-        <th><label for="IR">Informatique et Réseaux</label><input type="checkbox" name="IR" id="IR" <%=IR%>/></th>
-        <th><label for="AE">Génie Automatique et Électronique</label><input type="checkbox" name="AE" id="AE" <%=AE%>/></th>
-        <th><label for="GP">Génie Physique</label><input type="checkbox" name="GP" id="GP" <%=GP%>/></th>
-        <th><label for="GB">Génie Biochimique</label><input type="checkbox" name="GB" id="GB" <%=GB%>/></th>
+        <td><input type="checkbox" name="IR" id="IR" <%=IR%>/><br /><label for="IR">Informatique et Réseaux</label></td>
+        <td><input type="checkbox" name="AE" id="AE" <%=AE%>/><br /><label for="AE">Génie Automatique et Électronique</label></td>
+        <td><input type="checkbox" name="GP" id="GP" <%=GP%>/><br /><label for="GP">Génie Physique</label></td>
+        <td><input type="checkbox" name="GB" id="GB" <%=GB%>/><br /><label for="GB">Génie Biochimique</label></td>
+        <td rowspan="2"><button class="pure-button pure-button-primary" type="submit" >Sauvegarder</button></td>
       </tr>
       <tr>
-        <th><label for="GPE">Génie des Procédés</label><input type="checkbox" name="GPE" id="GPE" <%=GPE%>/></th>
-        <th><label for="GC">Génie Civil</label><input type="checkbox" name="GC" id="GC" <%=GC%>/></th>
-        <th><label for="GM">Génie Mécanique</label><input type="checkbox" name="GM" id="GM" <%=GM%>/></th>
-        <th><label for="GMM">Génie Mathématiques et Modélisation</label><input type="checkbox" name="GMM" id="GMM" <%=GMM%>/></th>
+        <td><input type="checkbox" name="GPE" id="GPE" <%=GPE%>/><br /><label for="GPE">Génie des Procédés</label></td>
+        <td><input type="checkbox" name="GC" id="GC" <%=GC%>/><br /><label for="GC">Génie Civil</label></td>
+        <td><input type="checkbox" name="GM" id="GM" <%=GM%>/><br /><label for="GM">Génie Mécanique</label></td>
+        <td><input type="checkbox" name="GMM" id="GMM" <%=GMM%>/><br /><label for="GMM">Génie Mathématiques et Modélisation</label></td>
       </tr>
     </table>
-    <input type="submit" value="Sauvegarder"/>
    </form>
+  <!--</div>-->
+</fieldset>
