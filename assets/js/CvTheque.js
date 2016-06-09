@@ -96,8 +96,9 @@ var CriteriaBox =  React.createClass({
       <div className="CriteriaBox">
         <h2>Critères</h2>
         <form onSubmit={this.onSearchSubmit}>
+        <br/>
           <p>Spécialités :</p>
-          <table>
+          <table id="table_react">
             <tbody>
               <tr>
                 <td><input id="AE" type="checkbox" name='Automatique, Électronique' onClick={this.handleCheckAE}/> <label>Automatique, Électronique</label></td>
@@ -117,6 +118,7 @@ var CriteriaBox =  React.createClass({
               </tr>
             </tbody>
           </table>
+          <br/>
           <p>Années :</p>
           <table>
             <tbody>
@@ -132,14 +134,16 @@ var CriteriaBox =  React.createClass({
               </tr>
             </tbody>
           </table>
+          <br/>
           <p>Avec CV :</p>
           <table>
             <tbody>
-              <tr><input id="frCV" type="checkbox" name='withFrCv' onClick={this.handleCheckFrCV}/>Avec CV français</tr>
-              <tr><input id="enCV" type="checkbox" name='withFrCv' onClick={this.handleCheckEnCV}/>Avec CV anglais</tr>
+              <tr><input id="frCV" type="checkbox" name='withFrCv' onClick={this.handleCheckFrCV}/>français</tr><br/>
+              <tr><input id="enCV" type="checkbox" name='withFrCv' onClick={this.handleCheckEnCV}/>anglais</tr>
             </tbody>
           </table>
-          <input type="submit" value="Recherche" />
+          <br/>
+          <button id="btn_react" type="submit">Rechercher</button>
         </form>
       </div>
     );
@@ -160,7 +164,7 @@ var CVDownloadForm = React.createClass({
     }
 
     return (
-      <form id={id} method="post" action="/file/download">
+      <form class="pure-form" id={id} method="post" action="/file/download">
         <input type="hidden" name="dl" value={value}/>
         <input type="hidden" name="cvLogin" value={this.props.cvLogin}/>
         <input type="submit" value="Télécharger"/>
@@ -227,7 +231,7 @@ var CvList = React.createClass({
     return (
       <div>
         <h2>Liste des CV</h2>
-        <table>
+        <table class="pure-form">
           <tbody>
           <tr>
               <td onClick={this.props.onSortByYear}>Année</td>
