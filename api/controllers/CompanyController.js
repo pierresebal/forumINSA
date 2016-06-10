@@ -459,8 +459,6 @@ module.exports = {
       if (err)
         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Erreur Affichage',  ErrorDesc: 'Une erreur inconnue est survenue lors de l\'affichage de votre profil'});
 
-
-
       return res.view("CompanySpace/Profile", {
         layout: 'layout',
         firstName: found.firstName,
