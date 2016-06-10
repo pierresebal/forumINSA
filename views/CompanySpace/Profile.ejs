@@ -23,7 +23,6 @@ if (typeof complementaryInformation == 'undefined')
   complementaryInformation = '';
 %>
 
-
 <h1>Profil Entreprise</h1>
 <p>Je suis le formulaire de modification de l'entreprise !</p>
 
@@ -204,25 +203,27 @@ if (typeof complementaryInformation == 'undefined')
 
 <h2>Intérêts</h2>
 <p>Quels sont les profils d'étudiants qui vous intéressent ?</p>
-<fieldset style="text-align: center; border:0px">
-  <!--<div style="display: flex; justify-content: center">-->
+<fieldset style="border:0px">
   <form class="pure-form" id="interests" method="post" action="/Company/setAUserInfo">
     <table>
     <input type="hidden" name="data" value="z"/>
       <tr>
-        <td><input type="checkbox" name="IR" id="IR" <%=IR%>/><br /><label for="IR">Informatique et Réseaux</label></td>
-        <td><input type="checkbox" name="AE" id="AE" <%=AE%>/><br /><label for="AE">Génie Automatique et Électronique</label></td>
-        <td><input type="checkbox" name="GP" id="GP" <%=GP%>/><br /><label for="GP">Génie Physique</label></td>
-        <td><input type="checkbox" name="GB" id="GB" <%=GB%>/><br /><label for="GB">Génie Biochimique</label></td>
-        <td rowspan="2"><button class="pure-button pure-button-primary" type="submit" >Sauvegarder</button></td>
+        <td><input type="checkbox" name="IR" id="IR" <%=IR%>/><label for="IR">Informatique et Réseaux</label></td>
+        <td><input type="checkbox" name="AE" id="AE" <%=AE%>/><label for="AE">Génie Automatique et Électronique</label></td>
+        <td rowspan="4"><button class="pure-button pure-button-primary" type="submit" >Sauvegarder</button></td>
       </tr>
       <tr>
-        <td><input type="checkbox" name="GPE" id="GPE" <%=GPE%>/><br /><label for="GPE">Génie des Procédés</label></td>
-        <td><input type="checkbox" name="GC" id="GC" <%=GC%>/><br /><label for="GC">Génie Civil</label></td>
-        <td><input type="checkbox" name="GM" id="GM" <%=GM%>/><br /><label for="GM">Génie Mécanique</label></td>
-        <td><input type="checkbox" name="GMM" id="GMM" <%=GMM%>/><br /><label for="GMM">Génie Mathématiques et Modélisation</label></td>
+        <td><input type="checkbox" name="GP" id="GP" <%=GP%>/><label for="GP">Génie Physique</label></td>
+        <td><input type="checkbox" name="GB" id="GB" <%=GB%>/><label for="GB">Génie Biochimique</label></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="GPE" id="GPE" <%=GPE%>/><label for="GPE">Génie des Procédés</label></td>
+        <td><input type="checkbox" name="GC" id="GC" <%=GC%>/><label for="GC">Génie Civil</label></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="GM" id="GM" <%=GM%>/><label for="GM">Génie Mécanique</label></td>
+        <td><input type="checkbox" name="GMM" id="GMM" <%=GMM%>/><label for="GMM">Génie Mathématiques et Modélisation</label></td>
       </tr>
     </table>
-   </form>
-  <!--</div>-->
+  </form>
 </fieldset>
