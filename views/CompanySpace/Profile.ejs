@@ -1,4 +1,5 @@
 <style>
+
     td h3 {
         font-size: 1em;
         font-weight: bold;
@@ -6,7 +7,7 @@
     }
 
     td {
-        padding-right: 10px;
+        padding: 10px;
         width: 5%;
     }
 
@@ -23,6 +24,7 @@ if (typeof complementaryInformation == 'undefined')
   complementaryInformation = '';
 %>
 
+<div class="content">
 <h1>Profil Entreprise</h1>
 <p>Je suis le formulaire de modification de l'entreprise !</p>
 
@@ -49,7 +51,7 @@ if (typeof complementaryInformation == 'undefined')
               <input class="pure-input-1" type="text" name="mailAddress" placeholder="<%=mailAddress%>">
 
               <br/>
-              <button style="width: 100%;" type="submit" class="pure-button pure-button-primary">Sauvegarder</button>
+              <button style="width: 100%;" type="submit" >Sauvegarder</button>
           </fieldset>
         </form>
     </div>
@@ -75,14 +77,14 @@ if (typeof complementaryInformation == 'undefined')
               <input class="pure-input-1" type="text" name="bMailAddress" placeholder="<%=bMailAddress%>">
 
               <br/>
-              <button style="width: 100%;" type="submit" class="pure-button pure-button-primary">Sauvegarder</button>
+              <button style="width: 100%;" type="submit" >Sauvegarder</button>
           </fieldset>
         </form>
     </div>
 </div>
 
 <h2>Profil entreprise</h2>
-<table>
+<table class="pure-form  pure-table-bordered" style="width: 100%">
   <tr>
     <td><h3>Siret</h3></td>
     <td><%=siret%></td>
@@ -93,87 +95,95 @@ if (typeof complementaryInformation == 'undefined')
         <input type="submit" value="Sauvegarder"/>
       </form> -->
     </td>
+    <td></td>
   </tr>
   <tr>
     <td><h3>Nom</h3></td>
     <td><%=companyName%></td>
-    <td>
-        <form class="pure-form" id="companyName" method="post" action="/Company/setAUserInfo">
-            <fieldset>
-                <input type="hidden" name="data" value="l"/>
-                <input class="pure-input-1-2" type="text" name="companyName" value="<%=companyName%>"/>
-                <button class="pure-button pure-button-primary" type="submit">Sauvegarder</button>
-            </fieldset>
-        </form>
-    </td>
+    <form id="companyName" method="post" action="/Company/setAUserInfo">
+        <td>
+            <input type="hidden" name="data" value="l"/>
+            <input  type="text" name="companyName" value="<%=companyName%>"/>
+        </td>
+        <td>
+            <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
+</button>
+        </td>
+
+    </form>
   </tr>
   <tr>
     <td><h3>Group</h3></td>
     <td><%=companyGroup%></td>
-    <td>
-        <form class="pure-form" id="companyGroup" method="post" action="/Company/setAUserInfo">
-            <fieldset>
+        <form id="companyGroup" method="post" action="/Company/setAUserInfo">
+            <td>
                 <input type="hidden" name="data" value="m"/>
-                <input class="pure-input-1-2" type="text" name="companyGroup" value="<%=companyGroup%>"/>
-                <button class="pure-button pure-button-primary" type="submit">Sauvegarder</button>
-            </fieldset>
+                <input  type="text" name="companyGroup" value="<%=companyGroup%>"/>
+            </td>
+            <td>
+                <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
+    </button>
+            </td>
       </form>
-    </td>
   </tr>
   <tr>
     <td><h3>Logo</h3></td>
     <% if (typeof logoPath != 'undefined' && logoPath!=''){ %>
     <td><img src="/images/logos/<%=logoPath%>" style="width: 40px; height: auto" /></td>
     <% } else { %>
-    <td></td>
+    <td>-</td>
     <% } %>
-    <td>
-      <form class="pure-form" id="logoUpload" method="post" action="/file/uploadLogo" enctype="multipart/form-data">
-        <fieldset>
-          <input class="pure-input" type="file" name="logo"/>
-          <span><i>Taille max :</i> 10 Mo</span>
-          <button class="pure-button pure-button-primary" style="float: right; margin-right: 21%" type="submit">Sauvegarder</button>
-        </fieldset>
+      <form id="logoUpload" method="post" action="/file/uploadLogo" enctype="multipart/form-data">
+        <td>
+          <input type="file" name="logo"/>
+        </td>
+        <td>
+            <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
+</button>
+        </td>
       </form>
-    </td>
   </tr>
   <tr>
     <td><h3>Description</h3></td>
     <td><%=description%></td>
-    <td>
-      <form class="pure-form" id="description" method="post" action="/Company/setAUserInfo">
-          <fieldset>
-        <input type="hidden" name="data" value="n"/>
-        <textarea class="pure-input-1-2" type="text" name="description"><%=description%></textarea>
-        <button class="pure-button pure-button-primary" type="submit">Sauvegarder</button>
-    </fieldset>
-      </form>
-    </td>
+    <form id="description" method="post" action="/Company/setAUserInfo">
+        <td>
+            <input type="hidden" name="data" value="n"/>
+            <textarea  type="text" name="description"><%=description%></textarea>
+        </td>
+        <td>
+            <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
+</button>
+        </td>
+    </form>
   </tr>
   <tr>
     <td><h3>Site internet</h3></td>
     <td><a href="<%=websiteUrl%>" target="_blank"><%=websiteUrl%></a></td>
-    <td>
-      <form class="pure-form" id="websiteUrl" method="post" action="/Company/setAUserInfo">
-        <input type="hidden" name="data" value="o"/>
-        <input class="pure-input-1-2" type="text" name="websiteUrl" value="<%=websiteUrl%>"/>
-        <button class="pure-button pure-button-primary" type="submit">Sauvegarder</button>
-    </fieldset>
-      </form>
-    </td>
+    <form  id="websiteUrl" method="post" action="/Company/setAUserInfo">
+        <td>
+            <input type="hidden" name="data" value="o"/>
+            <input  type="text" name="websiteUrl" value="<%=websiteUrl%>"/>
+        </td>
+        <td>
+            <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
+</button>
+        </td>
+    </form>
   </tr>
   <tr>
     <td><h3>Site de recrutement</h3></td>
     <td><a href="<%=careerUrl%>" target="_blank"><%=careerUrl%></a></td>
-    <td>
-      <form class="pure-form" id="careerUrl" method="post" action="/Company/setAUserInfo">
-          <fieldset>
-        <input type="hidden" name="data" value="p"/>
-        <input class="pure-input-1-2" type="text" name="careerUrl" value="<%=careerUrl%>"/>
-        <button class="pure-button pure-button-primary" type="submit">Sauvegarder</button>
-    </fieldset>
-      </form>
-    </td>
+    <form  id="careerUrl" method="post" action="/Company/setAUserInfo">
+        <td>
+            <input type="hidden" name="data" value="p"/>
+            <input  type="text" name="careerUrl" value="<%=careerUrl%>"/>
+        </td>
+        <td>
+        <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
+</button>
+        </td>
+    </form>
   </tr>
   <tr>
     <td><h3>Adresse postale</h3></td>
@@ -185,32 +195,33 @@ if (typeof complementaryInformation == 'undefined')
       <%=postCode%> <%=city%><br />
       <%=country%>
     </td>
-    <td>
-      <form class="pure-form" id="postAddress" method="post" action="/Company/setAUserInfo">
-          <fieldset>
-        <input class="pure-input-1-2" type="hidden" name="data" value="q"/>
-        <input class="pure-input-1-2" type="text" name="road" value="<%=road%>" placeholder="N° et rue"/><br />
-        <input class="pure-input-1-2" type="text" name="complementaryInformation" placeholder="Complément"/><br>
-        <input class="pure-input-1-2" type="text" name="postCode" value="<%=postCode%>" placeholder="Code postal"/><br />
-        <input class="pure-input-1-2" type="text" name="city" value="<%=city%>" placeholder="Ville"/><br />
-        <input class="pure-input-1-2" type="text" name="country" value="<%=country%>" placeholder="Pays"/>
-        <button class="pure-button pure-button-primary" type="submit" >Sauvegarder</button>
-    </fieldset>
-      </form>
+      <form  id="postAddress" method="post" action="/Company/setAUserInfo">
+          <td>
+        <input  type="hidden" name="data" value="q"/>
+        <input  type="text" name="road" value="<%=road%>" placeholder="N° et rue"/><br />
+        <input  type="text" name="complementaryInformation" placeholder="Complément"/><br>
+        <input  type="text" name="postCode" value="<%=postCode%>" placeholder="Code postal"/><br />
+        <input  type="text" name="city" value="<%=city%>" placeholder="Ville"/><br />
+        <input  type="text" name="country" value="<%=country%>" placeholder="Pays"/>
     </td>
+    <td>
+        <button  type="submit" ><i class="fa fa-check" aria-hidden="true"></i>
+</button>
+</td>
+      </form>
   </tr>
 </table>
 
 <h2>Intérêts</h2>
 <p>Quels sont les profils d'étudiants qui vous intéressent ?</p>
 <fieldset style="border:0px">
-  <form class="pure-form" id="interests" method="post" action="/Company/setAUserInfo">
+  <form  id="interests" method="post" action="/Company/setAUserInfo">
     <table>
     <input type="hidden" name="data" value="z"/>
       <tr>
         <td><input type="checkbox" name="IR" id="IR" <%=IR%>/><label for="IR">Informatique et Réseaux</label></td>
         <td><input type="checkbox" name="AE" id="AE" <%=AE%>/><label for="AE">Génie Automatique et Électronique</label></td>
-        <td rowspan="4"><button class="pure-button pure-button-primary" type="submit" >Sauvegarder</button></td>
+        <td rowspan="4"><button  type="submit" >Sauvegarder</button></td>
       </tr>
       <tr>
         <td><input type="checkbox" name="GP" id="GP" <%=GP%>/><label for="GP">Génie Physique</label></td>
@@ -227,3 +238,5 @@ if (typeof complementaryInformation == 'undefined')
     </table>
   </form>
 </fieldset>
+
+</div>
