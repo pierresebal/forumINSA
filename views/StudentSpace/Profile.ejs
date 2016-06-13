@@ -5,25 +5,35 @@
         margin: 5px;
         margin-right: 10px;
     }
+
+    #student_profile td {
+        margin: 30px;
+    }
 </style>
 
 <div class="content">
 <h1>Mon profil</h1>
 
-<table style="margin: auto;">
+<table class="pure-table pure-table-striped" id="student_profile" style="width: 100%; margin: auto;">
   <tr>
     <td><h3>Login</h3></td>
     <td><%=login%></td>
+    <td></td>
+    <td></td>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td><h3>Prénom</h3></td>
     <td><%=firstName%></td>
+    <td></td>
+    <td></td>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td><h3>Nom</h3></td>
     <td><%=lastName%></td>
+    <td></td>
+    <td></td>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
@@ -31,168 +41,203 @@
     <% if (typeof (mailAddress) != 'undefined' && mailAddress != "") { %>
     <td><%=mailAddress%></td>
     <% } %>
-</tr>
-<tr>
-    <td></td>
+    <form id="mailAddress" method="post" action="/Student/setAUserInfo">
     <td>
-      <form id="mailAddress" method="post" action="/Student/setAUserInfo">
         <input type="hidden" name="data" value="m"/>
         <input type="text" placeholder="Modifier" name="mailAddress"/>
-        <input type="submit" value="Sauvegarder"/>
-      </form>
     </td>
-  </tr>
+    <td>
+        <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+    </td>
+     </form>
+    </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td><h3>Année</h3></td>
+    <td>
     <% if (typeof (year) != 'undefined' && year != "") { %>
-      <td><%=year%></td>
+      <%=year%>
+    <% } else {%>
+        -
     <% } %>
-      <td>
+    </td>
+
         <form id="yearForm" method="post" action="/Student/setAUserInfo">
-          <input type="hidden" name="data" value="y"/>
-          <select name="year">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-          <input type="submit" value="Sauvegarder"/>
+            <td>
+                <input type="hidden" name="data" value="y"/>
+                    <select name="year">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    </select>
+            </td>
+            <td>
+                <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+            </td>
         </form>
-      </td>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td><h3>Spécialité</h3></td>
+    <td>
     <% if (typeof (speciality) != 'undefined' && speciality != "") { %>
-    <td><%=speciality%></td>
+    <%=speciality%>
+    <% } else {%>
+        -
     <% } %>
-      <td>
-        <form id="specialityForm" method="post" action="/Student/setAUserInfo">
-          <input type="hidden" name="data" value="s"/>
-          <select name="speciality">
+    </td>
+    <form id="specialityForm" method="post" action="/Student/setAUserInfo">
+        <td>
+            <input type="hidden" name="data" value="s"/>
+            <select name="speciality">
             <% specialities.forEach(function(aSpeciality) { %>
               <option value="<%= aSpeciality %>"><%= aSpeciality%></option>
             <% }); %>
-          </select>
-          <input type="submit" value="Sauvegarder"/>
-        </form>
-      </td>
+            </select>
+        </td>
+        <td>
+            <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+        </td>
+    </form>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td><h3>CV francophone</h3></td>
-    <% if (typeof (frCVPath) != 'undefined' && frCVPath != "") { %>
-      <td>
-        <form id="downloadFormFr" method="post" action="/file/download">
+
+    <form id="downloadFormFr" method="post" action="/file/download">
+        <td>
           <input type="hidden" name="dl" value="fr" />
-          <input type="submit" value="Télécharger" />
-        </form>
-      </td>
-    <% } %>
-      <td>
-        <form id="uploadFormFr"
-                enctype="multipart/form-data"
-                action="/file/uploadCV"
-                method="post">
+          <input type="submit"
+          <% if (typeof (frCVPath) == 'undefined' && frCVPath != "") { %>
+              disabled
+          <% } %>
+               value="Télécharger" />
+        </td>
+    </form>
+
+    <form id="uploadFormFr"
+            enctype="multipart/form-data"
+            action="/file/uploadCV"
+            method="post">
+        <td>
           <input type="hidden" name="language" value="fr"/>
           <input type="hidden" name="redirect" value="profile"/>
           <input type="file" name="fr-cv" />
-          <input type="submit" value="Envoyer"/>
-        </form>
-      </td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td>Taille max : 10 Mo</td>
+        </td>
+        <td>
+            <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+        </td>
+    </form>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td><h3>CV anglophone</h3></td>
-    <% if (typeof (enCVPath) != 'undefined' && enCVPath != "") { %>
-    <td>
-      <form id="downloadFormEn" method="post" action="/file/download">
-        <input type="hidden" name="dl" value="en" />
-        <input type="submit" value="Télécharger" />
-      </form>
-
-    </td>
-    <% } %>
-    <td>
-      <form id="uploadFormEn"
+    <form id="downloadFormEn" method="post" action="/file/download">
+        <td>
+          <input type="hidden" name="dl" value="en" />
+          <input type="submit"
+          <% if (typeof (enCVPath) == 'undefined' && enCVPath != "") { %>
+              disabled
+          <% } %>
+               value="Télécharger" />
+        </td>
+    </form>
+    <form id="uploadFormEn"
             enctype="multipart/form-data"
             action="/file/uploadCV"
             method="post">
-        <input type="hidden" name="language" value="en"/>
-        <input type="hidden" name="redirect" value="profile"/>
-        <input type="file" name="en-cv" />
-        <input type="submit" value="Envoyer"/>
-      </form>
-    </td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td>Taille max : 10 Mo</td>
+        <td>
+          <input type="hidden" name="language" value="en"/>
+          <input type="hidden" name="redirect" value="profile"/>
+          <input type="file" name="en-cv" />
+        </td>
+        <td>
+            <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+        </td>
+    </form>
   </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td><h3>Site internet personnel</h3></td>
-    <% if (typeof (personalWebsite) != 'undefined' && personalWebsite != "") { %>
-      <td><a href="http://<%=personalWebsite%>"  target="_blank"><%=personalWebsite%></a></td>
-    <% } %>
     <td>
-      <form id="personalWebsite" method="post" action="/Student/setAUserInfo">
-        <input type="hidden" name="data" value="w"/>
-        http://<input type="text" name="personalWebsite"/>
-        <input type="submit" value="Sauvegarder"/>
-      </form>
+    <% if (typeof (personalWebsite) != 'undefined' && personalWebsite != "") { %>
+      <a href="http://<%=personalWebsite%>"  target="_blank"><%=personalWebsite%></a>
+    <% } else { %>
+      -
+    <% } %>
     </td>
-  </tr>
+    <form id="personalWebsite" method="post" action="/Student/setAUserInfo">
+        <td>
+            <input type="hidden" name="data" value="w"/>
+            http://<input type="text" placeholder="modifier" name="personalWebsite"/>
+        </td>
+        <td>
+            <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+        </td>
+    </form>
+    </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td><h3>Profil Linkedin</h3></td>
+    <td>
     <% if (typeof (linkedin) != 'undefined' && linkedin != "") { %>
-      <td><a href="<%=linkedin%>"  target="_blank">Voir le profil</a></td>
+      <a href="<%=linkedin%>"  target="_blank">Voir le profil</a>
+    <% } else { %>
+        -
     <% } %>
-      <td>
-        <form id="linkedinForm" method="post" action="/Student/setAUserInfo">
-          <input type="hidden" name="data" value="l"/>
-          http://<input type="text" name="linkedin"/>
-          <input type="submit" value="Sauvegarder"/>
-        </form>
-      </td>
-  </tr>
+    </td>
+    <form id="linkedinForm" method="post" action="/Student/setAUserInfo">
+        <td>
+            <input type="hidden" name="data" value="l"/>
+            http://<input type="text" placeholder="modifier" name="linkedin"/>
+        </td>
+        <td>
+            <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+        </td>
+    </form>
+    </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td><h3>Profil Viadeo</h3></td>
+    <td>
     <% if (typeof (viadeo) != 'undefined' && viadeo != "") { %>
-      <td><a href="<%=viadeo%>"  target="_blank">Voir le profil</a></td>
-    <% } %>
-      <td>
-        <form id="viadeoForm" method="post" action="/Student/setAUserInfo">
-          <input type="hidden" name="data" value="v"/>
-          http://<input type="text" name="viadeo"/>
-          <input type="submit" value="Sauvegarder"/>
-        </form>
+      <a href="<%=viadeo%>"  target="_blank">Voir le profil</a>
+      <% } else { %>
+          -
+      <% } %>
       </td>
-  </tr>
+      <form id="viadeoForm" method="post" action="/Student/setAUserInfo">
+          <td>
+              <input type="hidden" name="data" value="v"/>
+              http://<input type="text" placeholder="modifier" name="viadeo"/>
+          </td>
+          <td>
+              <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+          </td>
+      </form>
+      </tr>
   <!-- ------------------------------------------- -->
   <tr>
     <td><h3>Profil GitHub</h3></td>
+    <td>
     <% if (typeof (github) != 'undefined' && github != "") { %>
-      <td><a href="<%=github%>" target="_blank">Voir le profil</a></td>
-    <% } %>
-      <td>
-        <form id="githubForm" method="post" action="/Student/setAUserInfo">
-          <input type="hidden" name="data" value="g"/>
-          http://<input type="text" name="github"/>
-          <input type="submit" value="Sauvegarder"/>
-        </form>
+      <a href="<%=github%>" target="_blank">Voir le profil</a>
+      <% } else { %>
+          -
+      <% } %>
       </td>
-  </tr>
+      <form id="githubForm" method="post" action="/Student/setAUserInfo">
+          <td>
+              <input type="hidden" name="data" value="g"/>
+              http://<input type="text" placeholder="modifier" name="github"/>
+          </td>
+          <td>
+              <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+          </td>
+      </form>
+      </tr>
 
 </table>
 <br/>
