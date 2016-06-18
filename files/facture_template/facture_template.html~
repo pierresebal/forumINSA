@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- En-tête de la page -->
+        <meta charset="utf-8" />
+        <title>Facture</title>
+    </head>
+
+    <body style="width:500px;">
+
+      <h1>Participation au Forum INSA Entreprises @year</h1>
+
+      <p>Facture n°@billNumber</p>
+      <p>A toulouse le @date</p>
+
+      <br />
+      <h2>@companyName</h2>
+      <p>@companyAddress</p>
+
+      <br />
+      <table style="margin:auto;">
+        <tr>
+          <th>Produit</th>
+          <th>Quantité</th>
+          <th>Prix unitaire (TTC)</th>
+          <th>Total (TTC)</th>
+        </tr>
+        <tr>
+          <td>@forum</td>
+          <td>1</td>
+          <td>@forumPrice</td>
+          <td>@forumPrice</td>
+        </tr>
+        <tr>
+          <td>Sessions Speed Job Dating supplémentaires</td>
+          <td>@sjdQuantity</td>
+          <td>@sjdPrice</td>
+          <td>@totalSjdPrice</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>Payé</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>Reste à payer</td>
+          <td>@totalTTC</td>
+        </tr>
+      </table>
+      <p style="text-align:center;">
+        Conformément à l'article L 80 B du livre des procédures fiscales, notre association est exonérée de TVA. Le montant indiqué hors-taxes équivaut donc au montant TTC
+      </p>
+
+      <br />
+      <table>
+        <tr>
+          <td>La trésorière Marie JANICOT</td>
+        </tr>
+        <tr>
+          <td>
+            <img style="max-width:200px; height:auto;" src="file:///home/pierre/Documents/FIE/FIE/files/facture_template/signatureJanicot.png" />
+          </td>
+        </tr>
+      </table>
+
+      <p style="text-align:center;">
+        Domiciliation bancaire : Société Générale <br />
+        Compte Semaine Avenir
+      </p>
+      <p style="text-align:center;">
+        Forum INSA Entreprises <br />
+135, avenue de Rangueil - INSA Toulouse - 31077 TOULOUSE Cedex 4<br />
+Site internet : http://www.foruminsaentreprises.fr<br />
+La trésorière – Marie Janicot - janicot@etud.insa-toulouse.fr<br />
+Amicale des Élèves de l’INSA de Toulouse<br />
+n° Siret : 488 105 172 00016<br />
+n° APE : 9329Z<br />
+FR 76 30003 02119 00037296031 29<br />
+      </p>
+    </body>
+</html>
