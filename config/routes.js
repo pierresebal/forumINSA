@@ -132,7 +132,7 @@ module.exports.routes = {
 
   '/Student/StudentSpace':{
     view:'StudentSpace/StudentSpace',
-    locals:{layout:'layout', , title:'Espace Perso - FIE'}
+    locals:{layout:'layout', title:'Espace Perso - FIE'}
   },
 
   '/Student/Specialities':{
