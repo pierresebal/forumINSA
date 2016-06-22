@@ -250,7 +250,7 @@ module.exports = {
 
               // We show a positive result to the CompanySpace created
               console.log("Company created: "+req.param("UserEmail"));
-              return res.view('Inscription/UserCreated', {firstName: created.firstName,layout:'layout', , title:'Inscription - FIE'});
+              return res.view('Inscription/UserCreated', {firstName: created.firstName,layout:'layout', title:'Inscription - FIE'});
 
             }
             else {
