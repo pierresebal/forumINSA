@@ -64,7 +64,7 @@ module.exports = {
           if (req.param('redirect') == "first")
             return res.view('StudentSpace/FirstConnection_2', {layout:'layout', frCVPath:found.frCVPath, enCVPath:found.enCVPath});
           else if (req.param('redirect') == "profile")
-            return res.redirect('/Student/Profile');
+            return res.redirect('/');
 
         });
       }, 1000);
@@ -126,7 +126,7 @@ module.exports = {
           }
 
           setTimeout(function() {
-            return res.redirect('/Company/Profile');
+            return res.redirect('/');
           },2000);
         });
     });

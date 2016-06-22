@@ -2,14 +2,14 @@
 <p>Vous avez jusqu'au <%=deadline%> pour vous inscrire.</p>
 
 <form method="post" action="/Command/NewCommand">
-  <label for="forumCommand">Forum : <%=forumPrice%> € </label> <input id="forum" value="forum" type="radio" name="Command"/><br />
-  <label for="sjdCommand">SJD : <%=sjdPrice%> € </label> <input id="sjd" value="sjd" type="radio" name="Command"/><br />
-  <label for="premiumCommand">Forum + SJD : <%=premiumPrice%> € </label> <input id="premium" value="premium" type="radio" name="Command"/><br />
-  <label for="sjdSessionCommand">Session SJD supplémentaire : <%=sjdSessionPrice%> € </label> <input id="sjdSessionCommand" type="number" name="numberSjdSession"/><br />
-  (Disponible uniquement pour la formule "SJD" et "Forum + SJD")
+  <label for="forumCommand">Forum + 2 repas : <%=forumPrice%> € </label> <input id="forum" value="forum" type="radio" name="Command"/><br />
+  <label for="sjdCommand">SJD + 2 repas : <%=sjdPrice%> € </label> <input id="sjd" value="sjd" type="radio" name="Command"/><br />
+  <label for="premiumCommand">Forum + SJD + 2 repas: <%=premiumPrice%> € </label> <input id="premium" value="premium" type="radio" name="Command"/><br />
+  <label for="sjdSessionCommand">Session SJD supplémentaire : <%=sjdSessionPrice%> €/session </label> <input id="sjdSessionCommand" type="number" name="numberSjdSession"/><br />
+  <p style="font-size:0.8em">(Disponible uniquement pour la formule "SJD" et "Forum + SJD")</p>
   <label for="moreMeal">Nombre de repas supplémentaires : <%=mealPrice%> € </label> <input id="moreMeal" type="number" name="moreMeal"/><br />
 
-  <label for="cgu">Je reconnais que je dois payer la somme de truc par cheque ou espece ou or si jamais je réserve ma place </label><input id="cgu" name="cgu" type="checkbox"/><br />
+  <input id="cgu" name="cgu" type="checkbox"/><label for="cgu"> En cochant cette case, je m'engage à auprès du Forum INSA Entreprise à payer au plus tard 6 mois après la date du forum</label><br />
 
   <input type="submit" value="Réserver"/>
 
