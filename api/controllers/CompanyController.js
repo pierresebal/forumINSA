@@ -190,7 +190,7 @@ module.exports = {
         if (typeof record !='undefined') {
           console.log('A company with the same mailAddress was found ...User result:'+record.mailAddress);
           console.log("Impossible to create a new user, the email is already used...");
-          return res.view('Inscription/CompanyNotCreated', {layout:'layout',Email:record.mailAddress});
+          return res.view('Inscription/CompanyNotCreated', {layout:'layout',Email:record.mailAddress, title:'Erreur - FIE'});
         }
 
         // Pas d'entrepise trouvée => Ajout ds la BDD
@@ -250,7 +250,7 @@ module.exports = {
 
               // We show a positive result to the CompanySpace created
               console.log("Company created: "+req.param("UserEmail"));
-              return res.view('Inscription/UserCreated', {firstName: created.firstName,layout:'layout'});
+              return res.view('Inscription/UserCreated', {firstName: created.firstName,layout:'layout', , title:'Inscription - FIE'});
 
             }
             else {
@@ -314,7 +314,7 @@ module.exports = {
           // User authenticated but not active
           else{
             console.log("CompanySpace not activated...");
-            return res.view('Connection_Password/Connection',{error:'Votre compte n\'est pas activé veuillez vous réfférer au mail d\'activation reçu à l\'inscription...',layout:'layout'});
+            return res.view('Connection_Password/Connection',{error:'Votre compte n\'est pas activé veuillez vous réfférer au mail d\'activation reçu à l\'inscription...',layout:'layout', title:'Inscription - FIE'});
           }
         }
         // Bad IDs for authentication
@@ -322,7 +322,7 @@ module.exports = {
         {
           console.log("Wrong password/email, auth aborted...");
           //return res.view('Connection_Password/Connection',{error:'Mauvaise combinaison mot de passe - email',layout:'layout'});
-          return res.view("Connection_Password/Connection", {layout:'layout', companyConnectionFailed:true});
+          return res.view("Connection_Password/Connection", {layout:'layout', companyConnectionFailed:true, title:'Inscription - FIE'});
         }
       }
       // Bad IDs for authentication
@@ -337,7 +337,7 @@ module.exports = {
   // Show space reserved to members (test page for authentification)
   MemberHomeShow:function(req,res){
     console.log('Showing member space...');
-    res.view('CompanySpace/CompanySpace',{layout:'layout'});
+    res.view('CompanySpace/CompanySpace',{layout:'layout', title:'Espace Perso - FIE'});
   },
 
   // CompanyLogout: set session var as UnAuthentificated user
@@ -496,7 +496,7 @@ module.exports = {
 
 
   CvTheque: function(req, res) {
-    return res.view("CompanySpace/CvTheque", {layout:'layout'});
+    return res.view("CompanySpace/CvTheque", {layout:'layout', title:'CVThèque - FIE'});
   },
 
 
@@ -509,7 +509,7 @@ module.exports = {
 
       var now = new Date();
       if (found.inscriptionDeadline < now)
-        return res.view("CompanySpace/DeadlinePassed", {layout:'layout', deadline:found.inscriptionDeadline.toDateString()});
+        return res.view("CompanySpace/DeadlinePassed", {layout:'layout', deadline:found.inscriptionDeadline.toDateString(), title:'Date dépassée - FIE'});
 
       if (found.areInscriptionsOpened) {
         var year = new Date().getFullYear();
@@ -521,6 +521,7 @@ module.exports = {
 
             return res.view("CompanySpace/Command", {
               layout:'layout',
+              title:'Commande - FIE',
               year:year,
               forumPrice:record.forumPricePME,
               sjdPrice:record.sjdPricePME,
@@ -538,6 +539,7 @@ module.exports = {
 
             return res.view("CompanySpace/Command", {
               layout:'layout',
+              title:'Commande - FIE',
               year:year,
               forumPrice:record.forumPrice,
               sjdPrice:record.sjdPrice,
@@ -765,7 +767,7 @@ module.exports = {
 
     Sells.find({companySiret:req.session.siret}).exec(function afterwards(err, founds){
 
-      return res.view('CompanySpace/Bills', {layout:'layout', bills:founds});
+      return res.view('CompanySpace/Bills', {layout:'layout', bills:founds, title:'Facture - FIE'});
     });
   }
 

@@ -35,7 +35,7 @@ module.exports.routes = {
 
   '/': {
     view: 'Homepage/Homepage',
-    locals:{layout:'layout'}
+    locals:{layout:'layout', title:'Acceuil - FIE'}
   },
 
 /*
@@ -46,7 +46,7 @@ module.exports.routes = {
 
   '/Admin': {
     view: 'Admin/Admin',
-    locals:{layout:'layout'}
+    locals:{layout:'layout', title:'Admin - FIE'}
   },
 
   '/Admin/Login': {
@@ -81,27 +81,27 @@ module.exports.routes = {
 
   '/Connection':{
     view:'Connection_Password/Connection',
-    locals:{layout:'layout'}
+    locals:{layout:'layout', title:'Connexion - FIE'}
   },
 
   '/INSA':{
     view:'Insa/InsaDescription',
-    locals:{layout:'layout'}
+    locals:{layout:'layout', title:'INSA - FIE'}
   },
 
   '/Forum':{
     view:'Forum/forumDescription',
-    locals:{layout:'layout'}
+    locals:{layout:'layout', title:'Forum - FIE'}
   },
 
   '/SJD':{
     view:'SpeedJobDating/SJDDescription',
-    locals:{layout:'layout'}
+    locals:{layout:'layout', title:'Speed Job Dating - FIE'}
   },
 
   '/about':{
     view:'About/tmp',
-    locals:{layout:'layout'}
+    locals:{layout:'layout', title:'A Propos - FIE'}
   },
 
   '/file/uploadCV':{
@@ -132,7 +132,7 @@ module.exports.routes = {
 
   '/Student/StudentSpace':{
     view:'StudentSpace/StudentSpace',
-    locals:{layout:'layout'}
+    locals:{layout:'layout', , title:'Espace Perso - FIE'}
   },
 
   '/Student/Specialities':{
@@ -200,18 +200,18 @@ module.exports.routes = {
 
   '/Company/Inscription':{
     view:'Inscription/Inscription',
-    locals:{layout:'layout'}
+    locals:{layout:'layout', title:'Inscription - FIE'}
   },
 
 
   '/Company/ResetPassPage':{
     view:'Connection_Password/ResetPassPage',
-    locals:{layout:'layout'}
+    locals:{layout:'layout', title:'Reinitialisation - FIE'}
   },
 
   '/Company/CompanySpace':{
     view:'CompanySpace/CompanySpace',
-    locals:{layout:'layout'}
+    locals:{layout:'layout', , title:'Espace Perso - FIE'}
   },
 
   /*
