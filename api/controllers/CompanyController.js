@@ -244,7 +244,7 @@ module.exports = {
               SendMail.sendEmail({
                 destAddress: req.param('UserEmail'),
                 objectS: "Message de confirmation de l'inscription",
-                messageS: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe du forum INSA Entreprises.", // plaintext body
+                messageS: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante: https://\n"+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe du forum INSA Entreprises.", // plaintext body
                 messageHTML: "<h1>Bonjour "+req.param('UserFirstName')+",</h1><p>Vous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante: </p><a href=https://"+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+">Cliquez ICI</a><p>A très bientot !<p></p>L'équipe du forum INSA Entreprises.</p>"
               });
 
