@@ -32,17 +32,17 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  /*
+
   '/': {
     view: 'Homepage/Homepage',
     locals:{layout:'layout'}
   },
-  */
 
+/*
   '/' : {
     view: 'construction',
     locals:{}
-  },
+},*/
 
   '/Admin': {
     view: 'Admin/Admin',
