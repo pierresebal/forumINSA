@@ -302,7 +302,7 @@ module.exports = {
               });
             } else {
               if (typeof req.param("nexturl")=="undefined") {
-                return res.redirect('/Company/MemberSpace');
+                return res.redirect('/');
               }
               else {
                 return res.redirect(req.param("nexturl"));
