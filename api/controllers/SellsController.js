@@ -68,10 +68,11 @@ module.exports = {
             moreSjdPrice = found2.sjdSessionPrice;
           }
 
+          var moreMeal
           if (typeof req.param('moreMeal') == 'undefined' || req.param('moreMeal') == "")
-            var moreMeal = 0;
+            moreMeal = 0;
           else
-            var moreMeal = req.param("moreMealmoreMeal");
+            moreMeal = req.param("moreMealmoreMeal");
           var mealPrice = found2.mealPrice;
 
           GeneralSettings.findOne({id:1}).exec(function getBillNumber(err, found){
@@ -154,15 +155,17 @@ module.exports = {
                   var options = {format:'A4', orientation: "portrait", border:"1cm"};
 
                   pdf.create(contenu, options).toFile('files/factures/' + year + '/' + req.session.siret + '.pdf', function afterwards (err) {
-                    if (err)
-                      console.log("Erreur :'(");
+                    if (err) {
+                      console.log("Erreur :'( " + err);
+                      return res.view("ErrorPage", {layout:"layout", ErrorTitle:"Une erreur a eu lieu lors de l'édition de la facture", ErrorDesc:"Contactez le webmaster à l'adresse contact@foruminsaentreprises.fr"});
+                    }
 
 
                     //Envoi du mail de facture
                     SendMail.sendEmail({
                       destAddress: req.session.mailAddress,
                       objectS: "Confirmation de commande",
-                      messageS: "Bonjour,\n\nVous venez de passer une commade sur le site foruminsaentreprises.fr et nous vous en remercions.\n\nVous trouverez ci-joint la facture correspondante dont il vous faudra vous acquiter le plus tôt possible.", // plaintext body
+                      messageS: "Bonjour,\n\nVous venez de passer une commade sur le site foruminsaentreprises.fr et nous vous en remercions.\n\nVous trouverez ci-joint la facture correspondante.", // plaintext body
                       messageHTML: "<p>Bonjour,<br />Vous venez de passer une commade sur le site foruminsaentreprises.fr et nous vous en remercions.\n\nVous trouverez ci-joint la facture correspondante dont il vous faudra vous acquiter le plus tôt possible.</p>", // plaintext body
                       attachments : [{filename:'facture.pdf', filePath:'files/factures/' + year + '/' + req.session.siret + '.pdf'}]
                     });

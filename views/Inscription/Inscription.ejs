@@ -166,46 +166,22 @@
   <p>Quels sont les profils d'étudiants qui vous intéressent ?</p>
   <fieldset style="text-align: center;">
 
-    <table>
+    <table style="border-spacing: 10px; border-collapse: separate">
       <tr>
-        <th><label for="IR">Informatique et Réseaux</label><input type="checkbox" name="IR" id="IR"/></th>
-        <th><label for="AE">Génie Automatique et Électronique</label><input type="checkbox" name="AE" id="AE"/></th>
-        <th><label for="GP">Génie Physique</label><input type="checkbox" name="GP" id="GP"/></th>
-        <th><label for="GB">Génie Biochimique</label><input type="checkbox" name="GB" id="GB"/></th>
+        <th><input type="checkbox" name="IR" id="IR"/><label for="IR">Informatique et Réseaux</label></th>
+        <th><input type="checkbox" name="AE" id="AE"/><label for="AE">Génie Automatique et Électronique</label></th>
+        <th><input type="checkbox" name="GP" id="GP"/><label for="GP">Génie Physique</label></th>
+        <th><input type="checkbox" name="GB" id="GB"/><label for="GB">Génie Biochimique</label></th>
       </tr>
       <tr>
-        <th><label for="GPE">Génie des Procédés</label><input type="checkbox" name="GPE" id="GPE"/></th>
-        <th><label for="GC">Génie Civil</label><input type="checkbox" name="GC" id="GC"/></th>
-        <th><label for="GM">Génie Mécanique</label><input type="checkbox" name="GM" id="GM"/></th>
-        <th><label for="GMM">Génie Mathématiques et Modélisation</label><input type="checkbox" name="GMM" id="GMM"/></th>
+        <th><input type="checkbox" name="GPE" id="GPE"/><label for="GPE">Génie des Procédés</label></th>
+        <th><input type="checkbox" name="GC" id="GC"/><label for="GC">Génie Civil</label></th>
+        <th><input type="checkbox" name="GM" id="GM"/><label for="GM">Génie Mécanique</label></th>
+        <th><input type="checkbox" name="GMM" id="GMM"/><label for="GMM">Génie Mathématiques et Modélisation</label></th>
       </tr>
     </table>
 
-
-
-    <!--Champ caché contenant le mot de passe haché qui sera envoyé via POST-->
   <input type="hidden" id="POSTUserPass" name="UserPassword">
-
-
-    <!--
-      <h2>Contact Facturation</h2>
-
-        <label for="BUserFirstName">Prénom : </label>
-        <input type="text" name="BUserFirstName" id="BUserFirstName" placeholder="Prénom" required/>
-        <p style="color:red;font-size:10px;display:none" id="UserFirstNameErr" >Ce champ doit être complété et contenir moins de 20 caractères</p>
-
-        <label for="BUserLastName">Nom : </label>
-        <input type="text" name="BUserLastName" id="BUserLastName" placeholder="Nom" required/>
-
-        <label for="BPosition">Fonction : </label>
-        <input type="text" name="BPosition" id="BPosition" placeholder="Fonction" required/><br  >
-
-        <label for="BPhoneNumber">Numéro de téléphone : </label>
-        <input type="text" name="BPhoneNumber" id="BPhoneNumber" placeholder="Numérode téléphone" required/>
-
-        <label for="BUserMail">Addresse e-mail : </label>
-        <input type="email" name="BUserEmail" id="BUserEmail" placeholder="Email" required/>
-    -->
 
   <div class="pure-controls">
     <input id="ButtonSubmit" type="submit" class="pure-button pure-button-primary pure-input-1-3" value="Valider">
