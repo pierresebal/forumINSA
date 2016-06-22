@@ -163,6 +163,7 @@ module.exports = {
                     //Envoi du mail de facture
                     SendMail.sendEmail({
                       destAddress: req.session.mailAddress,
+                      Bcc: "contact@foruminsaentreprises.fr",
                       objectS: "Confirmation de commande",
                       messageS: "Bonjour,\n\nVous venez de passer une commade sur le site foruminsaentreprises.fr et nous vous en remercions.\n\nVous trouverez ci-joint la facture correspondante.", // plaintext body
                       messageHTML: "<p>Bonjour,<br />Vous venez de passer une commade sur le site foruminsaentreprises.fr et nous vous en remercions.\n\nVous trouverez ci-joint la facture correspondante dont il vous faudra vous acquiter le plus tôt possible.</p>", // plaintext body
