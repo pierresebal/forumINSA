@@ -245,7 +245,7 @@ module.exports = {
                 destAddress: req.param('UserEmail'),
                 objectS: "Message de confirmation de l'inscription",
                 messageS: "Bonjour "+req.param('UserFirstName')+",\n\nVous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:\n"+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\nA très bientot !\nL'équipe du forum INSA Entreprises.", // plaintext body
-                messageHTML: "<h1>Bonjour "+req.param('UserFirstName')+",</h1><p>Vous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:</p><a href="+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+">Cliquez ICI</a><p>A très bientot !<p></p>L'équipe du forum INSA Entreprises.</p>"
+                messageHTML: "<h1>Bonjour "+req.param('UserFirstName')+",</h1><p>Vous êtes bien inscris sur notre site internet, vous pouvez maintenant activer votre compte à l'adresse suivante:</p><a href=https://"+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+">Cliquez ICI</a><p>A très bientot !<p></p>L'équipe du forum INSA Entreprises.</p>"
               });
 
               // We show a positive result to the CompanySpace created
@@ -359,12 +359,12 @@ module.exports = {
   // (this allow the user to connect)
   ActivateCompany:function(req,res){
     if(req.session.authenticated){
-      // Error if the user is already authentificated
-      res.view('404');
+      // Error if the user is already authenticated
+      return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Vous êtes déjà connecté"});
     }
     else
     {
-      // Check for valid GET args in url request: email and url wich are the IDs for confirmation in DB
+      // Check for valid GEaddressT args in url request: email and url wich are the IDs for confirmation in DB
       if(typeof req.param('url') != 'undefined' && req.param('email') != 'undefined' ){
         // We try to update an existing user to set him Active:1
         Company.update({mailAddress:req.param('email'),activationUrl:req.param('url'), active:0},{active:1}).exec(function afterwards(err, updated){
@@ -380,7 +380,7 @@ module.exports = {
             }
             else{
               // If the right user wasn't encountered
-              console.log("User not find or bad authentification...");
+              console.log("User not find or bad authentication...");
               return res.view('ErrorPage',{layout:'layout',ErrorTitle:'Echec de l\'activation',ErrorDesc:'Erreur lors de la tentative d\'activation: Mauvaise identification ou compte déja actif...'})
 
             }
@@ -389,8 +389,7 @@ module.exports = {
       }
       else{
         // If the url doesn't bring args
-        console.log("Try for activation without GET args... Aborted.");
-        return res.view('404');
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Requete incorrect"});
       }
     }
 
@@ -771,4 +770,3 @@ module.exports = {
   }
 
 };
-
