@@ -211,7 +211,7 @@ module.exports.routes = {
 
   '/Company/CompanySpace':{
     view:'CompanySpace/CompanySpace',
-    locals:{layout:'layout', , title:'Espace Perso - FIE'}
+    locals:{layout:'layout', title:'Espace Perso - FIE'}
   },
 
   /*
