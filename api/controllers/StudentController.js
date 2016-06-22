@@ -44,7 +44,7 @@ module.exports = {
 
         } else { //Personne non reconnu par le ldap
           StudentSession.setStudentSessionVariables (req, "", "", "", false, "");
-          return res.view("Connection_Password/Connection", {layout:'layout', studentConnectionFailed:true});
+          return res.view("Connection_Password/Connection", {layout:'layout', studentConnectionFailed:true, title:'Connexion - FIE'});
         }
       } else {
         console.log("erreur : " + err);
@@ -215,16 +215,16 @@ module.exports = {
       }
 
       console.log("Yo");
-      return res.view('StudentSpace/FirstConnection_2', {layout:'layout'});
+      return res.view('StudentSpace/FirstConnection_2', {layout:'layout', title:'Connexion - FIE'});
     });
   },
 
   companies: function(req, res) {
-    return res.view('StudentSpace/Companies', {layout:'layout'});
+    return res.view('StudentSpace/Companies', {layout:'layout', title:'Entreprises - FIE'});
   },
 
   sjd: function(req, res) {
-    return res.view('StudentSpace/Sjd', {layout:'layout'});
+    return res.view('StudentSpace/Sjd', {layout:'layout', title:'Speed Job Dating - FIE'});
   },
 
   getSpecialities : function(req,res) {
@@ -258,5 +258,3 @@ module.exports = {
     });
   }
 };
-
-
