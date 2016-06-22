@@ -14,7 +14,6 @@ module.exports = {
     var month = new Date().getMonth();
     month++;
 
-    console.log("CGU : " + req.param("cgu"));
     if (req.param('cgu') != 'on')
       return res.view("ErrorPage", {layout:"layout", ErrorTitle:"Les conditions de ventes n'ont pas été validées."});
 
@@ -128,10 +127,10 @@ module.exports = {
                     productPrice = forumPrice;
                   } else if (sjd == true) {
                     product = "Speed Job Dating (? repas inclus)";
-                    productPrice = forumPrice;
+                    productPrice = sjdPrice;
                   } else if (premiumPack == true) {
                     product = "Pack premium (stand + sjd)";
-                    productPrice = forumPrice;
+                    productPrice = premiumPackPrice;
                   }
 
                   // Création de la facture en format HTML
@@ -183,4 +182,3 @@ module.exports = {
   }
 
 };
-
