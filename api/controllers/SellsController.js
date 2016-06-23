@@ -34,10 +34,10 @@ module.exports = {
           /* Traitement des informations de ventes */
           var forum, forumPrice, sjd, sjdPrice, premiumPack, premiumPackPrice, moreSjd, moreSjdPrice;
 
-          if (typeof req.param("numberSjdSession") == 'undefined' || req.param("numberSjdSession") == "" || req.param("Command") == "forum") //S'ils prennent que forum alors ils ne peuvent pas avoir de sessionSJD supplémentaires
+          if (typeof req.param("numberSjdSession") == 'undefined' || req.param("numberSjdSession") == "" || req.param("Command") == "forum" || Number(req.param('numberSjdSession')) <= 0) //S'ils prennent que forum alors ils ne peuvent pas avoir de sessionSJD supplémentaires
             moreSjd = 0;
           else
-            moreSjd = req.param("numberSjdSession");
+            moreSjd = Number(req.param("numberSjdSession"));
 
           if (req.param("Command") == "forum") {
             forum = true;
@@ -67,11 +67,11 @@ module.exports = {
             moreSjdPrice = found2.sjdSessionPrice;
           }
 
-          var moreMeal
-          if (typeof req.param('moreMeal') == 'undefined' || req.param('moreMeal') == "")
+          var moreMeal = 0
+          if (typeof req.param('moreMeal') == 'undefined' || req.param('moreMeal') == "" || Number(req.param('moreMeal') <= 0))
             moreMeal = 0;
           else
-            moreMeal = req.param("moreMealmoreMeal");
+            moreMeal = Number(req.param("moreMeal"));
           var mealPrice = found2.mealPrice;
 
           GeneralSettings.findOne({id:1}).exec(function getBillNumber(err, found){
@@ -98,12 +98,14 @@ module.exports = {
               mealPrice:mealPrice,
               billNumber:fullBillNumber
             }).exec(function afterwards(err,created){
-              if (err)
-                return err;
+              if (err) {
+                return res.view("ErrorPage", {layout:"layout", ErrorTitle:"Une erreur s'est produite", ErrorDesc:"<a href=\"/Company/Command\">Réessayez </a> ou contactez l'équipe."});
+              }
 
               GeneralSettings.update({id:1}, {billNumberMonth:found.billNumberMonth+1}).exec(function billNumberDidUpdate(err, updated) {
+
                 if (err)
-                  return err;
+                  return res.view("ErrorPage", {layout:"layout", ErrorTitle:"Une erreur s'est produite", ErrorDesc:"<a href=\"/Company/Command\">Réessayez </a> ou contactez l'équipe."});
 
                 //Récupération des infos de l'entreprise pour remplir la facture
                 Company.findOne({siret:req.session.siret}).exec(function afterwards(err,found3){
@@ -159,7 +161,6 @@ module.exports = {
                       return res.view("ErrorPage", {layout:"layout", ErrorTitle:"Une erreur a eu lieu lors de l'édition de la facture", ErrorDesc:"Contactez le webmaster à l'adresse contact@foruminsaentreprises.fr"});
                     }
 
-
                     //Envoi du mail de facture
                     SendMail.sendEmail({
                       destAddress: req.session.mailAddress,
@@ -179,7 +180,5 @@ module.exports = {
         });
       }
     });
-
   }
-
 };
