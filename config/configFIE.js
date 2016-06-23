@@ -3,7 +3,7 @@
 module.exports.configFIE = {
 
   // Domain parameter
-  FIEdomainName:"http://foruminsaentreprises.fr",
+  FIEdomainName:"foruminsaentreprises.fr",
 
   // Email parameters
   FIEmailService : "Gmail",

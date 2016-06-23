@@ -165,7 +165,7 @@ module.exports = {
                       destAddress: req.session.mailAddress,
                       Bcc: "contact@foruminsaentreprises.fr",
                       objectS: "Confirmation de commande",
-                      messageS: "Bonjour,\n\nVous venez de passer une commade sur le site foruminsaentreprises.fr et nous vous en remercions.\n\nVous trouverez ci-joint la facture correspondante.", // plaintext body
+                      messageS: "Bonjour,\n\nVous venez de passer une commande sur le site foruminsaentreprises.fr et nous vous en remercions.\n\nVous trouverez ci-joint la facture correspondante.\n\nCordialement,\n\nL'équipe du Forum INSA Entreprises", // plaintext body
                       messageHTML: "<p>Bonjour,<br />Vous venez de passer une commade sur le site foruminsaentreprises.fr et nous vous en remercions.\n\nVous trouverez ci-joint la facture correspondante dont il vous faudra vous acquiter le plus tôt possible.</p>", // plaintext body
                       attachments : [{filename:'facture.pdf', filePath:'files/factures/' + year + '/' + req.session.siret + '.pdf'}]
                     });
