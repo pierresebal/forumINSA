@@ -36,7 +36,7 @@ module.exports ={
       bcc: copie,
       subject: mailparam.objectS, // Subject line
       text: mailparam.messageS, // text body
-      html: '<!DOCTYPE html><html><head><meta charset="utf-8" /><title>Mail de la part de l\'équipe du Forum INSA Entreprise</title></head><style type="text/css">h1,p{color:#333333;}</style><body style="width:80%;margin-left:auto;margin-right:auto; border:1px solid; border-radius:25px;"><div style="background-color:#333333;height:150px;width:100%;overflow:hidden;border-radius:25px 25px 0px 0px"><a href="'+sails.config.configFIE.FIEdomainName+'"><img title="Forum INSA Entreprises" alt="Forum INSA Entreprises" style="height:auto;max-height:90%;margin:15px;" src="'+sails.config.configFIE.FIEdomainName+'/images/Logo_FIE_blanc.png" /></a></div><div style="height:100%;width:100%;margin:20px;">'+ mailparam.messageHTML +"<br/><br/></div></body></html>", // html body
+      html: '<!DOCTYPE html><html><head><meta charset="utf-8" /><title>Mail de la part de l\'équipe du Forum INSA Entreprise</title></head><style type="text/css">h1,p{color:#333333;}</style><body style="width:80%;margin-left:auto;margin-right:auto; border:1px solid; border-radius:25px;"><div style="background-color:#333333;height:150px;width:100%;overflow:hidden;border-radius:25px 25px 0px 0px"><a href="'+sails.config.configFIE.FIEdomainName+'"><img title="Forum INSA Entreprises" alt="Forum INSA Entreprises" style="height:auto;max-height:90%;margin:15px;" src="https://'+sails.config.configFIE.FIEdomainName+'/images/Logo_FIE_blanc.png" /></a></div><div style="height:100%;width:100%;margin:20px;">'+ mailparam.messageHTML +"<br/><br/></div></body></html>", // html body
       attachments: mailparam.attachments
     };
 
