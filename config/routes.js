@@ -35,7 +35,7 @@ module.exports.routes = {
 
   '/': {
     view: 'Homepage/Homepage',
-    locals:{layout:'layout', title:'Acceuil - FIE'}
+    locals:{layout:'layout', title:'Accueil - FIE'}
   },
 
 /*
