@@ -136,7 +136,7 @@ var CriteriaBox =  React.createClass({
           </table>
           <br/>
           <p>Avec CV :</p>
-          <table style="border-spacing: 10px; border-collapse: separate">
+          <table style={{borderSpacing: '10px'; borderCollapse: 'separate'}}>
             <tbody>
               <tr><input id="frCV" type="checkbox" name='withFrCv' onClick={this.handleCheckFrCV}/>français</tr><br/>
               <tr><input id="enCV" type="checkbox" name='withFrCv' onClick={this.handleCheckEnCV}/>anglais</tr>
