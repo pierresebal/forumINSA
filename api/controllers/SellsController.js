@@ -166,8 +166,18 @@ module.exports = {
                       destAddress: req.session.mailAddress,
                       Bcc: "contact@foruminsaentreprises.fr",
                       objectS: "Confirmation de commande",
-                      messageS: "Bonjour,\n\nVous venez de passer une commande sur le site foruminsaentreprises.fr et nous vous en remercions.\n\nVous trouverez ci-joint la facture correspondante.\n\nCordialement,\n\nL'équipe du Forum INSA Entreprises", // plaintext body
-                      messageHTML: "<p>Bonjour,<br />Vous venez de passer une commade sur le site foruminsaentreprises.fr et nous vous en remercions.\n\nVous trouverez ci-joint la facture correspondante dont il vous faudra vous acquiter le plus tôt possible.</p>", // plaintext body
+                      messageS: "\n\nBonjour,"
+                      + "\n\nNous vous confirmons que la commande de prestation pour le FIE a été prise en compte. Vous trouverez ci-joint la facture correspondante."
+                      + "\n\nSi vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : contact@foruminsaentreprises.fr"
+                      + "\n\nDans le cas où le plan vigipirate serait maintenu, vous serez recontactés peu de temps avant le forum afin d'enregistrer les noms de vos représentants. Une pièce d'identité vous sera alors nécessaire."
+                      + "\n\nMerci pour votre participation à notre évènement."
+                      + "\n\nCordialement,\nL'équipe FIE 2016", // plaintext body
+                      messageHTML: "<br /><br />Bonjour,"
+                      + "<br /><br />Nous vous confirmons que la commande de prestation pour le FIE a été prise en compte. Vous trouverez ci-joint la facture correspondante."
+                      + "<br /><br />Si vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : contact@foruminsaentreprises.fr"
+                      + "<br /><br />Dans le cas où le plan vigipirate serait maintenu, vous serez recontactés peu de temps avant le forum afin d'enregistrer les noms de vos représentants. Une pièce d'identité vous sera alors nécessaire."
+                      + "<br /><br />Merci pour votre participation à notre évènement."
+                      + "<br /><br />Cordialement,<br />L'équipe FIE 2016",
                       attachments : [{filename:'facture.pdf', filePath:'files/factures/' + year + '/' + req.session.siret + '.pdf'}]
                     });
 
