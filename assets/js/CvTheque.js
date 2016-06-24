@@ -98,7 +98,7 @@ var CriteriaBox =  React.createClass({
         <form onSubmit={this.onSearchSubmit}>
         <br/>
           <p>Spécialités :</p>
-          <table id="table_react" style={{borderSpacing: '10px'; borderCollapse: 'separate'}}>
+          <table id="table_react" style={{borderSpacing: '10px', borderCollapse: 'separate'}}>
             <tbody>
               <tr>
                 <td><input id="AE" type="checkbox" name='Automatique, Électronique' onClick={this.handleCheckAE}/> <label>Automatique, Électronique</label></td>
@@ -120,7 +120,7 @@ var CriteriaBox =  React.createClass({
           </table>
           <br/>
           <p>Années :</p>
-          <table style={{borderSpacing: '10px'; borderCollapse: 'separate'}}>
+          <table style={{borderSpacing: '10px', borderCollapse: 'separate'}}>
             <tbody>
               <tr>
                 <td><input id="A1" type="checkbox" name='1' onClick={this.handleCheckA1}/> <label>1e année</label></td>
@@ -136,7 +136,7 @@ var CriteriaBox =  React.createClass({
           </table>
           <br/>
           <p>Avec CV :</p>
-          <table style={{borderSpacing: '10px'; borderCollapse: 'separate'}}>
+          <table style={{borderSpacing: '10px', borderCollapse: 'separate'}}>
             <tbody>
               <tr><input id="frCV" type="checkbox" name='withFrCv' onClick={this.handleCheckFrCV}/>français</tr><br/>
               <tr><input id="enCV" type="checkbox" name='withFrCv' onClick={this.handleCheckEnCV}/>anglais</tr>
@@ -231,7 +231,7 @@ var CvList = React.createClass({
     return (
       <div>
         <h2>Liste des CV</h2>
-        <table class="pure-form" style={{borderSpacing: '10px'; borderCollapse: 'separate'}}>
+        <table class="pure-form" style={{borderSpacing: '10px', borderCollapse: 'separate'}}>
           <tbody>
           <tr>
               <td onClick={this.props.onSortByYear}>Année</td>
