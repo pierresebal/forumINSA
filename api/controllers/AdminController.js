@@ -114,24 +114,15 @@ module.exports = {
     });
   },
 
-  /*displayCompanies : function(req,res) {
+  displayCompanies : function(req,res) {
 
-    var year = req.param('year');
-
-    Sells.find({year:year}).exec(function companiesOfAYear (err, records) {
-      if (err)
-        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "erreur lors de la recherches de companies pour l'année : " + year});
-
-      var companiesSelected;
-
-      for (var aSell in records) {
-
-
+    Company.find().exec(function (err, companies) {
+      if (err) {
+        console.log('error : ' + err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Les entreprises ne sont pas récupérées"});
       }
 
-
-    });
-
-  } */
+      return res.view('/Admin/RegisteredCompanie', {layout:'layout', companies:companies})
+    })
+  }
 };
-
