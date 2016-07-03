@@ -1,16 +1,19 @@
-<h1>Bon de commande</h1>
-<p>Vous avez jusqu'au <%=deadline%> pour vous inscrire.</p>
+<h1>Réserver sa place</h1>
 
+<p>Vous avez jusqu'au <%=deadline%> pour vous inscrire.</p>
+<img src=<%=priceImgUrl%> style="display: block; width: 100%; margin: auto; padding-top: 30px; padding-bottom: 30px;"/>
+
+<h2>Formulaire de commande</h2>
 <p>
   Une fois que vous aurez cliqué sur "Réserver", si le formulaire est correctement rempli, un mail contenant la facture vous sera envoyé et vous serez engagé auprès du Forum INSA Entreprises.
-  <br/>En cas d'erreur dans la commande ou pour une modification, veuillez nous contacter par mail à contact@foruminsaentreprises.fr
+  <br/>En cas d'erreur dans la commande ou pour une modification, veuillez nous contacter par mail à <b>contact@foruminsaentreprises.fr<b>.
 </p>
 
 <form method="post" action="/Command/NewCommand">
   <table style="border-spacing: 10px; border-collapse: separate">
     <tr>
       <td><label for="forumCommand">Forum (3 repas inclus) : <%=forumPrice%> € </label> </td>
-      <td><input id="forum" value="forum" type="radio" name="Command"/></td>
+      <td><input id="forum" value="forum" type="radio" name="Command" required checked/></td>
     </tr>
     <tr>
       <td><label for="sjdCommand">SJD (2 sessions(2x8 candidats), 1 repas par recruteur inclus) : <%=sjdPrice%> € </label> </td>
@@ -25,15 +28,15 @@
         <label for="sjdSessionCommand">Session SJD supplémentaire (8 candidats/session) : <%=sjdSessionPrice%> €/session </label>
         <p style="font-size:0.8em">(Disponible uniquement pour la formule "SJD" et "Forum + SJD")</p>
       </td>
-      <td><input id="sjdSessionCommand" type="number" name="numberSjdSession"/></td>
+      <td><input id="sjdSessionCommand" type="number" name="numberSjdSession" value="0" min="0" max="10" required/></td>
     </tr>
     <tr>
-      <td><label for="moreMeal">Nombre de repas supplémentaires : <%=mealPrice%> € </label></td>
-      <td><input id="moreMeal" type="number" name="moreMeal"/></td>
+      <td><label for="moreMeal">Nombre de repas supplémentaires : <%=mealPrice%> €/repas </label></td>
+      <td><input id="moreMeal" type="number" name="moreMeal" value="0" min="0" max="10" required/></td>
     </tr>
   </table>
 
-  <input id="cgu" name="cgu" type="checkbox"/><label for="cgu">Vous vous apprêter à valider votre commande. En cochant la case ci-avant vous vous engagez à régler le montant de la prestation choisie tel que décrit sur le site. Une modification de cet engagement sera possible uniquement sur demande et au plus tard deux semaines avant la tenue du forum.</label><br />
+  <input id="cgu" name="cgu" type="checkbox" required/><label for="cgu">Vous vous apprêter à valider votre commande. En cochant la case ci-avant vous vous engagez à régler le montant de la prestation choisie tel que décrit sur le site. Une modification de cet engagement sera possible uniquement sur demande et au plus tard deux semaines avant la tenue du forum.</label><br />
 
   <input type="submit" value="Réserver"/>
 

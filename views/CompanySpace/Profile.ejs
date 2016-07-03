@@ -129,14 +129,14 @@ if (typeof complementaryInformation == 'undefined')
   </tr>
   <tr>
     <td><h3>Logo</h3></td>
-    <% if (typeof logoPath != 'undefined' && logoPath!=''){ %>
+    <% if (typeof logoPath != 'undefined' && logoPath != ''){ %>
     <td><img src="/images/logos/<%=logoPath%>" style="width: 40px; height: auto" /></td>
     <% } else { %>
     <td>-</td>
     <% } %>
       <form id="logoUpload" method="post" action="/file/uploadLogo" enctype="multipart/form-data">
         <td>
-          <input type="file" name="logo"/>
+          <input type="file" name="logo" accept="image/png"/>
         </td>
         <td>
             <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>

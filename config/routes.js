@@ -69,6 +69,11 @@ module.exports.routes = {
     action:'setInscriptionOpen'
   },
 
+  '/Admin/RegisteredCompanies': {
+    controller: 'AdminController',
+    action: 'displayCompanies'
+  },
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

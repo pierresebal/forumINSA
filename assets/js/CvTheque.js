@@ -234,16 +234,16 @@ var CvList = React.createClass({
         <table class="pure-form" style={{borderSpacing: '10px', borderCollapse: 'separate'}}>
           <tbody>
           <tr>
-              <td onClick={this.props.onSortByYear}>Année</td>
-              <td onClick={this.props.onSortBySpeciality}>Spécialité</td>
-              <td onClick={this.props.onSortByLastName}>Nom</td>
-              <td onClick={this.props.onSortByFirstName}>Prénom</td>
-              <td>CV français</td>
-              <td>CV anglais</td>
-              <td>Site personnel</td>
-              <td>Linkedin</td>
-              <td>Viadeo</td>
-              <td>Github</td>
+              <th onClick={this.props.onSortByYear}>Année</th>
+              <th onClick={this.props.onSortBySpeciality}>Spécialité</th>
+              <th onClick={this.props.onSortByLastName}>Nom</th>
+              <th onClick={this.props.onSortByFirstName}>Prénom</th>
+              <th>CV français</th>
+              <th>CV anglais</th>
+              <th>Site personnel</th>
+              <th>Linkedin</th>
+              <th>Viadeo</th>
+              <th>Github</th>
             </tr>
             {cvListDisplay}
           </tbody>

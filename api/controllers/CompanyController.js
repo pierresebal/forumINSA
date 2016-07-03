@@ -542,7 +542,8 @@ module.exports = {
               sjdSessionPrice:record.sjdSessionPricePME,
               premiumPrice:record.premiumPricePME,
               mealPrice:record.mealPrice,
-              deadline:found.inscriptionDeadline.toDateString()
+              deadline:found.inscriptionDeadline.toDateString(),
+              priceImgUrl:'/images/pme.png'
             });
           });
         } else {
@@ -560,7 +561,8 @@ module.exports = {
               sjdSessionPrice:record.sjdSessionPrice,
               premiumPrice:record.premiumPrice,
               mealPrice:record.mealPrice,
-              deadline:found.inscriptionDeadline.toDateString()
+              deadline:found.inscriptionDeadline.toDateString(),
+              priceImgUrl:'/images/regular.png'
             });
           });
         }

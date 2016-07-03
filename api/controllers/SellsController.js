@@ -125,10 +125,10 @@ module.exports = {
 
                   var product, productPrice;
                   if (forum == true) {
-                    product = "Stand taille unique (2 repas inclus)";
+                    product = "Forum Stand taille unique (3 repas inclus)";
                     productPrice = forumPrice;
                   } else if (sjd == true) {
-                    product = "Speed Job Dating (? repas inclus)";
+                    product = "Speed Job Dating (1 repas/recruteur inclu)";
                     productPrice = sjdPrice;
                   } else if (premiumPack == true) {
                     product = "Pack premium (stand + sjd)";
