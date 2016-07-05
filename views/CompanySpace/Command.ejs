@@ -2,6 +2,9 @@
 
 <p>Vous avez jusqu'au <%=deadline%> pour vous inscrire.</p>
 <img src=<%=priceImgUrl%> style="display: block; width: 100%; margin: auto; padding-top: 30px; padding-bottom: 30px;"/>
+<%if (isPME)  { %>
+<p>En tant que PME vous bénéficiez de prix réduits.</p>
+<% } %>
 
 <h2>Formulaire de commande</h2>
 <p>

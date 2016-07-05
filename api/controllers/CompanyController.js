@@ -246,7 +246,7 @@ module.exports = {
                 objectS: "Message de confirmation de l'inscription",
                 messageS: "\n\nMadame/Monsieur " + req.param('UserFirstName') + ", bonjour"
                 + "\n\nNous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :"
-                + "\nhttps://\n"+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')
+                + "\nhttps://"+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')
                 + "\n\nVous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander."
                 + "\n\nNous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux)."
                 + "\n\nLe site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr."
@@ -254,7 +254,7 @@ module.exports = {
                 + "\nCordialement,\nL'équipe FIE 2016",
                 messageHTML: "<br /><br /><p>Madame/Monsieur " + req.param('UserFirstName') + ", bonjour"
                 + "<br /><br />Nous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :"
-                + "<br /><a href=\"https://\n"+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\">Cliquez ici</a>"
+                + "<br /><a href=\"https://"+sails.config.configFIE.FIEdomainName+"/Company/ActivateCompany?url="+ActivationUrl+"&email="+req.param('UserEmail')+"\">Cliquez ici</a>"
                 + "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander."
                 + "<br /><br />Nous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux)."
                 + "<br /><br />Le site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr."
@@ -543,7 +543,8 @@ module.exports = {
               premiumPrice:record.premiumPricePME,
               mealPrice:record.mealPrice,
               deadline:found.inscriptionDeadline.toDateString(),
-              priceImgUrl:'/images/pme.png'
+              priceImgUrl:'/images/pme.png',
+              isPME: req.session.isPME
             });
           });
         } else {
@@ -562,7 +563,8 @@ module.exports = {
               premiumPrice:record.premiumPrice,
               mealPrice:record.mealPrice,
               deadline:found.inscriptionDeadline.toDateString(),
-              priceImgUrl:'/images/regular.png'
+              priceImgUrl:'/images/regular.png',
+              isPME: req.session.isPME
             });
           });
         }
