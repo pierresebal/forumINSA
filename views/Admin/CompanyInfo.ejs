@@ -1,0 +1,166 @@
+<h1>Partie admin</h1>
+
+<% if (req.session.isAdmin != true) { %>
+
+<form method="POST" action="/Admin/Login">
+  <input type="password" name="password"/>
+  <input type="submit" value="Se connecter"/>
+</form>
+
+<% } else {
+
+  var AE = company.AE ? "checked" : ""
+  var IR = company.IR ? "checked" : ""
+  var GB = company.GB ? "checked" : ""
+  var GP = company.GP ? "checked" : ""
+  var GPE = company.GPE ? "checked" : ""
+  var GC = company.GC ? "checked" : ""
+  var GM = company.GM ? "checked" : ""
+  var GMM = company.GMM ? "checked" : ""
+
+  %>
+
+  <h1><%=company.companyName%></h1>
+
+  <h2>Ventes</h2>
+  <% if (sellsExist) { %>
+  <table style="border-spacing: 10px; border-collapse: separate">
+    <tr>
+      <th>Année</th>
+      <th>Forum</th>
+      <th>SJD</th>
+      <th>Pack premium</th>
+      <th>SJD session sup.</th>
+      <th>Repas</th>
+      <th>N° facture</th>
+    </tr>
+    <%sells.forEach(function(sell) {%>
+      <tr>
+        <td><%=sell.year%></td>
+        <td><%=sell.forum%> (<%=sell.forumPrice%>€)</td>
+        <td><%=sell.sjd%> (<%=sell.sjdPrice%>€)</td>
+        <td><%=sell.premiumPack%> (<%=sell.premiumPackPrice%>€)</td>
+        <td><%=sell.moreSjd%> (<%=sell.moreSjdPrice%>€)</td>
+        <td><%=sell.moreMeal%> (<%=sell.mealPrice%>€)</td>
+        <td><%=sell.billNumber%></td>
+      </tr>
+    <% }) %>
+  </table>
+<%} else {%>
+  <p>Aucune vente n'a été faite pour le moment.</p>
+<% }%>
+  <h2>Contacts</h2>
+  <div class="pure-g">
+      <div class="pure-u-1 pure-u-md-1-4">
+            <fieldset>
+                <h4>Forum</h4>
+
+                <p for="firstName">Prénom : <%=company.firstName%></p>
+
+                <p for="lastName">Nom : <%=company.lastName%></p>
+
+                <p for="position">Fonction : <%=company.position%></p>
+
+                <p for="phoneNumber">Téléphone : <%=company.phoneNumber%></p>
+
+                <p for="mailAddress">Mail : <%=company.mailAddress%></p>
+
+                <br/>
+            </fieldset>
+      </div>
+      <div class="pure-u-md-1-8"></div>
+      <div class="pure-u-1 pure-u-md-1-4">
+            <fieldset>
+                <h4>Facturation</h4>
+
+                <p for="bFirstName">Prénom : <%=company.bFirstName%></p>
+
+                <p for="bLastName">Nom : <%=company.bLastName%></p>
+
+                <p for="bPosition">Fonction : <%=company.bPosition%></p>
+
+                <p for="bPhoneNumber">Téléphone : <%=company.bPhoneNumber%></p>
+
+                <p for="bMailAddress">Mail : <br/><%=company.bMailAddress%></p>
+
+                <br/>
+            </fieldset>
+      </div>
+  </div>
+
+    <h2>Profil entreprise</h2>
+    <table class="pure-form  pure-table-bordered" style="width: 100%">
+      <tr>
+        <td><h3>Siret</h3></td>
+        <td><%=company.siret%></td>
+      </tr>
+      <tr>
+        <td><h3>Nom</h3></td>
+        <td><%=company.companyName%></td>
+      </tr>
+      <tr>
+        <td><h3>Group</h3></td>
+        <td><%=company.companyGroup%></td>
+      </tr>
+      <tr>
+        <td><h3>Logo</h3></td>
+        <% if (typeof company.logoPath != 'undefined' && company.logoPath != ''){ %>
+        <td><img src="/images/logos/<%=company.logoPath%>" style="width: 100px; height: auto" /></td>
+        <% } else { %>
+        <td>-</td>
+        <% } %>
+      </tr>
+      <tr>
+        <td><h3>Description</h3></td>
+        <td><%=company.description%></td>
+      </tr>
+      <tr>
+        <td><h3>Site internet</h3></td>
+        <td><a href="<%=company.websiteUrl%>" target="_blank"><%=company.websiteUrl%></a></td>
+      </tr>
+      <tr>
+        <td><h3>Site de recrutement</h3></td>
+        <td><a href="<%=company.careerUrl%>" target="_blank"><%=company.careerUrl%></a></td>
+      </tr>
+      <tr>
+        <td><h3>Adresse postale</h3></td>
+        <td>
+          <%=company.road%><br />
+          <% if (typeof complementaryInformation != 'undefined' && complementaryInformation != "") { %>
+            <%=company.complementaryInformation%><br />
+          <% } %>
+          <%=company.postCode%> <%=company.city%><br />
+          <%=company.country%>
+        </td>
+      </tr>
+    </table>
+
+    <h2>Intérêts</h2>
+    <p>Quels sont les profils d'étudiants qui vous intéressent ?</p>
+    <fieldset style="border:0px">
+      <form  id="interests" method="post" action="/Company/setAUserInfo">
+        <table>
+        <input type="hidden" name="data" value="z"/>
+          <tr>
+            <td><input type="checkbox" disabled="disabled" name="IR" id="IR" <%=IR%>/><label for="IR">Informatique et Réseaux</label></td>
+            <td><input type="checkbox" disabled="disabled" name="AE" id="AE" <%=AE%>/><label for="AE">Génie Automatique et Électronique</label></td>
+            <td rowspan="4"><button  type="submit" >Sauvegarder</button></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" disabled="disabled" name="GP" id="GP" <%=GP%>/><label for="GP">Génie Physique</label></td>
+            <td><input type="checkbox" disabled="disabled" name="GB" id="GB" <%=GB%>/><label for="GB">Génie Biochimique</label></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" disabled="disabled" name="GPE" id="GPE" <%=GPE%>/><label for="GPE">Génie des Procédés</label></td>
+            <td><input type="checkbox" disabled="disabled" name="GC" id="GC" <%=GC%>/><label for="GC">Génie Civil</label></td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" disabled="disabled" name="GM" id="GM" <%=GM%>/><label for="GM">Génie Mécanique</label></td>
+            <td><input type="checkbox" disabled="disabled" name="GMM" id="GMM" <%=GMM%>/><label for="GMM">Génie Mathématiques et Modélisation</label></td>
+          </tr>
+        </table>
+      </form>
+    </fieldset>
+
+    </div>
+<% } %>
