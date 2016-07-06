@@ -124,5 +124,30 @@ module.exports = {
 
       return res.view('Admin/RegisteredCompanies', {layout:'layout', companies:companies});
     })
+  },
+
+  displayACompany : function(req, res)  {
+    Company.findOne({siret:req.param('siret')}).exec(function (err, company){
+      if (err) {
+        console.log('error : ' + err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "L'entreprise n'est pas récupérée"});
+      }
+
+      if (!company)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "L'entreprise au siret " + req.param('siret') + " n'existe pas."});
+
+      Sells.find({companySiret:req.param('siret')}).exec(function(err, sells){
+        if (err) {
+          console.log('error : ' + err)
+          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Les ventes ne sont pas récupérées"});
+        }
+
+        var sellsExist = true
+        if (!sells)
+          sellsExist = false
+
+        return res.view('Admin/CompanyInfo', {layout:'layout', company:company, sells:sells, sellsExist: sellsExist})
+      })
+    })
   }
 };
