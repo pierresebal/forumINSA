@@ -16,6 +16,9 @@ module.exports = {
       type:'string',
       required:true
     },
+    companyName : {
+      type: 'string'
+    },
     isPME : {
       type : 'boolean',
       required:true
@@ -69,6 +72,10 @@ module.exports = {
     billNumber : {
       type:'integer',
       required:true
+    },
+    didPay: {
+      type: 'boolean',
+      defaultsTo: false
     }
   }
 };

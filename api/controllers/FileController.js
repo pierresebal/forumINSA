@@ -134,15 +134,33 @@ module.exports = {
 
   downloadBill: function(req, res) {
 
+    var siret;
     var yearRequired = req.param('dl');
-    var filePath = path.resolve("files/factures/" + yearRequired, req.session.siret + ".pdf");
+    if (req.session.isAdmin) {
+      siret = req.param('siret') || req.session.siret;
+    } else {
+      siret = req.session.siret
+    }
+
+
+    var filePath = path.resolve("files/factures/" + yearRequired, siret + ".pdf");
 
     console.log("filePath : " + filePath);
 
     // Should check that it exists here, but for demo purposes, assume it does
     // and just pipe a read stream to the response.
     //fs.createReadStream(filePath).pipe(res);
-    res.download(filePath);
 
+    Sells.findOne({year: yearRequired, companySiret: siret}).exec(function (err, sell) {
+      if (err) {
+        return res.view('ErrorPage', {layout:'layout', ErrorTitle:"Erreur lors du téléchargement", ErrorDesc:"Réessayez ou contactez un admin."});
+      }
+
+      if (!sell) {
+        return res.view('ErrorPage', {layout:'layout', ErrorTitle:"Vente non trouvée", ErrorDesc:"Réessayez ou contactez un admin."});
+      }
+
+      res.download(filePath, sell.billNumber.toString() + ".pdf");
+    })
   },
 };

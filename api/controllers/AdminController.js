@@ -149,5 +149,19 @@ module.exports = {
         return res.view('Admin/CompanyInfo', {layout:'layout', company:company, sells:sells, sellsExist: sellsExist})
       })
     })
+  },
+
+  displaySells : function(req, res) {
+    Sells.find().exec(function (err, sells) {
+      if (err) {
+        console.log('error : ' + err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Erreur: les ventes n'ont pas été récupérées."});
+      }
+
+      if (!sells)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Aucune ventes trouvées."});
+
+      return res.view('Admin/Sells', {layout:'layout', sells:sells})
+    })
   }
 };

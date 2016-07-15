@@ -85,6 +85,7 @@ module.exports = {
             Sells.create({
               year:year,
               companySiret:req.session.siret,
+              companyName:req.session.companyName,
               isPME:req.session.isPME,
               forum:forum,
               forumPrice:forumPrice,
