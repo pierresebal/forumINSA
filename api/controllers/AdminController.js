@@ -163,5 +163,23 @@ module.exports = {
 
       return res.view('Admin/Sells', {layout:'layout', sells:sells})
     })
+  },
+
+  setDidPay: function (req, res) {
+    var siret = req.param('siret')
+    var didPay = req.param('didPay')
+    var yearTargeted = req.param('year')
+
+    Sells.update({companySiret: siret, year: yearTargeted}, {didPay: didPay}).exec(function(err, updated) {
+      if (err) {
+        console.log('error : ' + err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Erreur lors de la mise à jour."})
+      }
+
+      if (!updated)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Aucune entreprise trouvée avec ce siret."});
+
+      return res.redirect('/Admin/Sells')
+    })
   }
 };
