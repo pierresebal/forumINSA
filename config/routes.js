@@ -84,6 +84,11 @@ module.exports.routes = {
     action: 'displaySells'
   },
 
+  '/Admin/SetDidPay': {
+    controller: 'AdminController',
+    action: 'setDidPay'
+  },
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

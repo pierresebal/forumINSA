@@ -7,8 +7,10 @@
   <input type="submit" value="Se connecter"/>
 </form>
 
-<% } else { %>
-
+<% } else {
+  var selecYes;
+  var selecNo;
+%>
   <table style="border-spacing: 10px; border-collapse: separate">
     <tr>
       <th>Entreprise</th>
@@ -21,7 +23,18 @@
       <th>Facture</th>
       <th>A payé</th>
     </tr>
-    <%sells.forEach(function(sell) {%>
+    <%sells.forEach(function(sell) {
+      if (sell.didPay) {
+        selectYes = 'selected'
+        selectNo = ''
+      } else {
+        selectNo = 'selected'
+        selectYes = ''
+      }
+
+      console.log('selectYes ' + selectYes)
+      console.log('selectNo ' + selectNo)
+    %>
       <tr>
         <td><%=sell.companyName%></td>
         <td><%=sell.year%></td>
@@ -37,7 +50,19 @@
             <input type="submit" value="n°<%=sell.billNumber%>" />
           </form>
         </td>
-        <td><%=sell.didPay%></td>
+        <form method="post" action="/Admin/SetDidPay">
+          <td>
+            <select name="didPay" id="didPay">
+              <option value="true" <%=selectYes%>>Oui</option>
+              <option value="false" <%=selectNo%>>Non</option>
+            </select>
+          </td>
+          <td>
+            <input type="hidden" name="siret" value="<%=sell.companySiret%>" />
+            <input type="hidden" name="year" value="<%=sell.year%>" />
+            <input type="submit" value="sauvegarder" />
+          </td>
+        </form>
       </tr>
     <% }) %>
   </table>
