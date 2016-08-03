@@ -323,10 +323,7 @@ module.exports = {
               }
 
             }
-          }
-
-          // User authenticated but not active
-          else{
+          } else { // User authenticated but not active
             console.log("CompanySpace not activated...");
             return res.view('Connection_Password/Connection',{error:'Votre compte n\'est pas activé veuillez vous réfférer au mail d\'activation reçu à l\'inscription...',layout:'layout', title:'Inscription - FIE'});
           }
@@ -472,39 +469,43 @@ module.exports = {
       if (err)
         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Erreur Affichage',  ErrorDesc: 'Une erreur inconnue est survenue lors de l\'affichage de votre profil'});
 
-      return res.view("CompanySpace/Profile", {
-        layout: 'layout',
-        firstName: found.firstName,
-        lastName: found.lastName,
-        position: found.position,
-        phoneNumber: found.phoneNumber,
-        mailAddress: found.mailAddress,
-        bFirstName: found.bFirstName,
-        bLastName: found.bLastName,
-        bPosition: found.bPosition,
-        bPhoneNumber: found.bPhoneNumber,
-        bMailAddress: found.bMailAddress,
-        siret: found.siret,
-        companyName: found.companyName,
-        companyGroup: found.companyGroup,
-        logoPath: found.logoPath,
-        description: found.description,
-        websiteUrl: found.websiteUrl,
-        careerUrl: found.careerUrl,
-        road: found.road,
-        complementaryInformation: found.complementaryInformation,
-        postCode: found.postCode,
-        city: found.city,
-        country: found.country,
-        AE:(found.AE ? "checked" :""),
-        IR:(found.IR ? "checked" :""),
-        GB:(found.GB ? "checked" :""),
-        GP:(found.GP ? "checked" :""),
-        GPE:(found.GPE ? "checked" :""),
-        GC:(found.GC ? "checked" :""),
-        GM:(found.GM ? "checked" :""),
-        GMM:(found.GMM ? "checked" :"")
-      });
+      if (found) {
+        return res.view("CompanySpace/Profile", {
+          layout: 'layout',
+          firstName: found.firstName,
+          lastName: found.lastName,
+          position: found.position,
+          phoneNumber: found.phoneNumber,
+          mailAddress: found.mailAddress,
+          bFirstName: found.bFirstName,
+          bLastName: found.bLastName,
+          bPosition: found.bPosition,
+          bPhoneNumber: found.bPhoneNumber,
+          bMailAddress: found.bMailAddress,
+          siret: found.siret,
+          companyName: found.companyName,
+          companyGroup: found.companyGroup,
+          logoPath: found.logoPath,
+          description: found.description,
+          websiteUrl: found.websiteUrl,
+          careerUrl: found.careerUrl,
+          road: found.road,
+          complementaryInformation: found.complementaryInformation,
+          postCode: found.postCode,
+          city: found.city,
+          country: found.country,
+          AE:(found.AE ? "checked" :""),
+          IR:(found.IR ? "checked" :""),
+          GB:(found.GB ? "checked" :""),
+          GP:(found.GP ? "checked" :""),
+          GPE:(found.GPE ? "checked" :""),
+          GC:(found.GC ? "checked" :""),
+          GM:(found.GM ? "checked" :""),
+          GMM:(found.GMM ? "checked" :"")
+        });
+      } else {
+        return res.view("ErrorPage", {layout: 'layout', ErrorTitle: "Votre compte n'a pas été trouvé."});
+      }
     });
   },
 
@@ -576,6 +577,8 @@ module.exports = {
 
   //Modifie une information de l'utilisateur
   setAUserInfo:function(req, res) {
+    if (!req.param('data'))
+      return res.redirect('/Company/Profile')
 
     var data = req.param('data').charAt(0); //Type d'info à modifier
 
@@ -586,36 +589,31 @@ module.exports = {
         var position = req.param('position');
         var phoneNumber = req.param('phoneNumber');
         var mailAddress = req.param('mailAddress');
-        //Todo: Verification de firstName;
-        Company.update({mailAddress:req.session.mailAddress}, {
-          firstName:firstName,
-          lastName:lastName,
-          position:position,
-          phoneNumber:phoneNumber,
-          mailAddress:mailAddress
-        }).exec(function(err, record) {
+
+        Company.findOne({mailAddress:mailAddress}).exec(function(err,found){
           if (err)
-            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update firstName."});
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "problème pour trouver si adresse déjà existante."});
 
-          var mailAddress = req.param('mailAddress');
-          //Todo: Verification de mailAddress;
-          //Différent d'une adresse mail qui existe déjà !
-          Company.findOne({mailAddress:mailAddress}).exec(function(err,found){
-            if (err)
-              return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb pour trouver si adresse déjà existante."});
+          if (!found || found.mailAddress === req.session.mailAddress) {
+            Company.update({mailAddress:req.session.mailAddress}, {
+              firstName:firstName,
+              lastName:lastName,
+              position:position,
+              phoneNumber:phoneNumber,
+              mailAddress:mailAddress
+            }).exec(function(err, record) {
+              if (err) {
+                return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Problème lors de la mise à jour", ErrorDesc: "Votre adresse mail est-elle valide ?"});
+              }
 
-            if (!found || found.mailAddress == req.session.mailAddress) {
-              Company.update({mailAddress:req.session.mailAddress}, {mailAddress:mailAddress}).exec(function(err, record) {
-                if (err)
-                  return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update firstName."});
-
-                req.session.mailAddress = record.mailAddress;
-                return res.redirect('/Company/Profile');
-              });
-            } else {
-              return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Cette adresse existe déjà."});
-            }
-          });
+              // console.log('RECORD : ' + JSON.stringify(record, null, 2))
+              req.session.mailAddress = record['0'].mailAddress;
+              req.session.firstName = record['0'].firstName;
+              return res.redirect('/Company/Profile')
+            });
+          } else {
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Cette adresse existe déjà."});
+          }
         });
         break;
 
@@ -634,10 +632,11 @@ module.exports = {
           bPhoneNumber:bPhoneNumber,
           bMailAddress:bMailAddress
         }).exec(function(err, record) {
-          if (err)
-            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update bFirstName."});
+          if (err) {
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Problème lors de la mise à jour", ErrorDesc: "L'adresse mail est-elle valide ?"});
+          }
 
-          return res.redirect('/Company/Profile');
+            return res.redirect('/Company/Profile')
         });
         break;
 

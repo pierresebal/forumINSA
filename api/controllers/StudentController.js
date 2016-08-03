@@ -198,7 +198,7 @@ module.exports = {
     if (req.param('maillAddress') == "")
       mailAddress= req.param('mailAddress');
 
-
+      //Todo : vérifier que l'adresse n'existe pas déjà
 
     Student.update({login:req.session.login}, {
       mailAddress: mailAddress,
@@ -214,7 +214,6 @@ module.exports = {
         return res.view("ErrorPage", {layout: 'layout', ErrorTitle: "Update failed"});
       }
 
-      console.log("Yo");
       return res.view('StudentSpace/FirstConnection_2', {layout:'layout', title:'Connexion - FIE'});
     });
   },
