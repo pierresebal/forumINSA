@@ -1,0 +1,84 @@
+<h1>Partie suivi</h1>
+
+<%
+  var inscriptionOpen;
+  if (inscriptionsAreOpen)
+    inscriptionOpen = 'ouvertes';
+  else
+    inscriptionOpen = 'fermées';
+
+  if (typeof inscriptionDeadline == 'undefined')
+    inscriptionDeadline = 'indéfinie';
+
+%>
+
+<% if (req.session.isTrack != true) { %>
+
+<form method="POST" action="/Track/Login">
+  <input type="password" name="password"/>
+  <input type="submit" value="Se connecter"/>
+</form>
+
+<% } else { %>
+
+<h2>Paramètres génraux</h2>
+
+<h3>Prix entreprises classiques (hors PME) pour <%=year%></h3>
+<table style="border-spacing: 5px; border-collapse: separate">
+  <tr>
+    <th>Prix d'un repas</th>
+    <th><%=mealPrice%>€</th>
+  </tr>
+  <tr>
+    <th>Prix Forum</th>
+    <th><%=forumPrice%>€</th>
+  </tr>
+  <tr>
+    <th>Prix SJD</th>
+    <th><%=sjdPrice%>€</th>
+  </tr>
+  <tr>
+    <th>Prix créneaux SJD supp.</th>
+    <th><%=sjdSessionPrice%>€</th>
+  </tr>
+  <tr>
+    <th>Prix Forum + SJD</th>
+    <th><%=premiumPrice%>€</th>
+  </tr>
+</table>
+
+<h3>Prix PME pour <%=year%></h3>
+<table style="border-spacing: 5px; border-collapse: separate">
+  <tr>
+    <th>Prix d'un repas</th>
+    <th><%=mealPrice%>€</th>
+  </tr>
+  <tr>
+    <th>Prix Forum</th>
+    <th> <%=forumPricePME%>€</th>
+  </tr>
+  <tr>
+    <th>Prix SJD</th>
+    <th><%=sjdPricePME%>€</th>
+  </tr>
+  <tr>
+    <th>Prix créneaux SJD supp.</th>
+    <th><%=sjdSessionPricePME%>€</th>
+  </tr>
+  <tr>
+    <th>Prix Forum + SJD</th>
+    <th><%=premiumPricePME%>€</th>
+  </tr>
+</table>
+
+<h3>Date limite d'inscription</h3>
+<p>
+  Actuellement la deadline est fixée au <b><%=inscriptionDeadline%></b>.<br />
+</p>
+
+<h3>Ouvrir les inscriptions pour l'année <%=year%></h3>
+  <p>
+    Actuellement, le inscriptions au forum sont <b><%=inscriptionOpen%></b>.
+  </p>
+
+<% } %>
