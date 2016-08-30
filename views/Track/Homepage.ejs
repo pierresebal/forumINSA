@@ -1,0 +1,17 @@
+<h1>Partie suivi</h1>
+
+<% if (req.session.isTrack != true) { %>
+
+<form method="POST" action="/Track/Login">
+  <input type="password" name="password"/>
+  <input type="submit" value="Se connecter"/>
+</form>
+
+<% } else { %>
+  <p>Je suis connecté pour le suivi des entreprises.</p>
+<ul>
+  <li><a href="/Track/YearSettings">Informations générales</a></li>
+  <li><a href="/Track/RegisteredCompanies">Entreprises inscrites sur le site</a></li>
+  <li><a href="/Track/Sells">Entreprises inscrites sur le site et au forum</a></li>
+</ul>
+<% } %>

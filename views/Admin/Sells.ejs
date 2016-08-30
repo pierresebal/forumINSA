@@ -10,6 +10,7 @@
 <% } else {
   var selecYes;
   var selecNo;
+  var total = 0;
 %>
   <table style="border-spacing: 10px; border-collapse: separate">
     <tr>
@@ -32,8 +33,9 @@
         selectYes = ''
       }
 
-      console.log('selectYes ' + selectYes)
-      console.log('selectNo ' + selectNo)
+      total = total + sell.forum * sell.forumPrice + sell.sjd * sell.sjdPrice + sell.premiumPack + sell.premiumPackPrice;
+      total = total + sell.moreSjd * sell.moreSjdPrice + sell.moreMeal * sell.mealPrice
+
     %>
       <tr>
         <td><%=sell.companyName%></td>
@@ -66,5 +68,8 @@
       </tr>
     <% }) %>
   </table>
+  <br />
+  <br />
+  <p>Total vendu : <b><%=total%>€</b></p>
 
 <% } %>
