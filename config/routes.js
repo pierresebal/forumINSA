@@ -89,6 +89,37 @@ module.exports.routes = {
     action: 'setDidPay'
   },
 
+  '/Track': {
+    view: 'Track/Homepage',
+    locals:{layout:'layout', title:'Suivi - FIE'}
+  },
+
+  '/Track/Login': {
+    controller: 'TrackController',
+    action: 'trackLogin'
+  },
+
+  '/Track/YearSettings' :{
+    controller: 'TrackController',
+    action: 'displayYearSettings'
+  },
+
+  '/Track/RegisteredCompanies': {
+    controller: 'TrackController',
+    action: 'displayCompanies'
+  },
+
+  '/Track/CompanyInfo': {
+    controller: 'TrackController',
+    action: 'displayACompany'
+  },
+
+  '/Track/Sells': {
+    controller: 'TrackController',
+    action: 'displaySells'
+  },
+
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

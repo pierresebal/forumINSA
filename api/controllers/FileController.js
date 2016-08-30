@@ -142,14 +142,9 @@ module.exports = {
       siret = req.session.siret
     }
 
-
     var filePath = path.resolve("files/factures/" + yearRequired, siret + ".pdf");
 
     console.log("filePath : " + filePath);
-
-    // Should check that it exists here, but for demo purposes, assume it does
-    // and just pipe a read stream to the response.
-    //fs.createReadStream(filePath).pipe(res);
 
     Sells.findOne({year: yearRequired, companySiret: siret}).exec(function (err, sell) {
       if (err) {

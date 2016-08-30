@@ -1,0 +1,47 @@
+<h1>Partie suivi</h1>
+
+<% if (req.session.isTrack != true) { %>
+
+<form method="POST" action="/Track/Login">
+  <input type="password" name="password"/>
+  <input type="submit" value="Se connecter"/>
+</form>
+
+<% } else {
+  var selecYes;
+  var selecNo;
+%>
+  <table style="border-spacing: 5px; border-collapse: separate">
+    <tr>
+      <th>Entreprise</th>
+      <th>Année</th>
+      <th>Forum</th>
+      <th>SJD</th>
+      <th>Pack premium</th>
+      <th>SJD sup.</th>
+      <th>Repas</th>
+      <th>Facture</th>
+      <th>A payé</th>
+    </tr>
+    <% sells.forEach(function(sell) { %>
+      <tr>
+        <td><%=sell.companyName%></td>
+        <td><%=sell.year%></td>
+        <td><%=sell.forum%> (<%=sell.forumPrice%>€)</td>
+        <td><%=sell.sjd%> (<%=sell.sjdPrice%>€)</td>
+        <td><%=sell.premiumPack%> (<%=sell.premiumPackPrice%>€)</td>
+        <td><%=sell.moreSjd%> (<%=sell.moreSjdPrice%>€)</td>
+        <td><%=sell.moreMeal%> (<%=sell.mealPrice%>€)</td>
+        <td>
+          <form id="downloadBill" method="post" action="/file/bills/download">
+            <input type="hidden" name="dl" value="<%=sell.year%>" />
+            <input type="hidden" name="siret" value="<%=sell.companySiret%>" />
+            <input type="submit" value="n°<%=sell.billNumber%>" />
+          </form>
+        </td>
+        <td><%=sell.didPay%></td>
+      </tr>
+    <% }) %>
+  </table>
+
+<% } %>
