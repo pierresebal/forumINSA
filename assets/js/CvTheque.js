@@ -233,7 +233,7 @@ var CvList = React.createClass({
         <h2>Liste des CV</h2>
         <table class="pure-form" style={{borderSpacing: '10px', borderCollapse: 'separate'}}>
           <tbody>
-          <tr>
+          <tr className='unselectable'>
               <th onClick={this.props.onSortByYear}>Année</th>
               <th onClick={this.props.onSortBySpeciality}>Spécialité</th>
               <th onClick={this.props.onSortByLastName}>Nom</th>

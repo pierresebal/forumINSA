@@ -1,2 +1,48 @@
 <h1>Liste des entreprises 2016</h1>
-<p>Bonjour, je suis une liste de companies</p>
+
+<form method="POST" action="/Student/Companies" >
+  <label>Afficher les entreprises intéressées par</label>
+  <select name="speciality">
+    <% specialities.forEach(function(aSpeciality) { %>
+    <option value="<%= aSpeciality %>" <%= specialitySelected == aSpeciality ? 'selected' : ''%>><%= aSpeciality%></option>
+    <% }); %>
+  </select>
+  <input type="submit" value="Envoyer"/>
+</form>
+
+<% if (typeof companies != 'undefined') {
+  if (companies.length == 0) { %>
+    <p>Aucune entreprise trouvée.</p>
+    <% } else { %>
+    <table style="border-spacing: 10px; border-collapse: separate">
+      <tr>
+        <th></th> <th>Nom</th> <th>PME</th> <th>site internet</th> <th>Plus d'info</th>
+      </tr>
+    <% companies.forEach(function(company) { %>
+    <tr>
+      <% if (typeof company.logoPath != 'undefined' && company.logoPath != ''){ %>
+      <td><img src="/images/logos/<%=company.logoPath%>" style="width: 70px; height: auto" /></td>
+      <% } else { %>
+      <td>-</td>
+      <% } %>
+
+      <td>
+        <%=company.companyName %>
+      </td>
+      <td>
+        <%= company.isPME ? 'oui' : 'non' %>
+      </td>
+
+      <td>
+        <a href="<%=company.websiteUrl%>" target="_blank">
+          <%=company.websiteUrl%>
+        </a>
+      </td>
+
+      <td>
+        <a href="/Student/CompanyInfo?siret=<%=company.siret%>">Voir plus</a>
+      </td>
+    </tr>
+  <% })
+  }}; %>
+</table>
