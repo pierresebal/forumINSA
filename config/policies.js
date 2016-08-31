@@ -36,7 +36,8 @@ module.exports.policies = {
     setAUserInfo:"StudentAuth",
     setAllInfo:"StudentAuth",
     Companies:"StudentAuth",
-    sjd:"StudentAuth"
+    sjd:"StudentAuth",
+    displayACompany:"StudentAuth"
   },
 
   SellsController:{

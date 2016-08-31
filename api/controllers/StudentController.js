@@ -219,7 +219,63 @@ module.exports = {
   },
 
   companies: function(req, res) {
-    return res.view('StudentSpace/Companies', {layout:'layout', title:'Entreprises - FIE'});
+
+    const specialities = ['AE', 'GB', 'GP', 'GMM', 'GM', 'GPE', 'IR', 'GC']
+
+    if (!req.param('speciality')) {//Si aucune spécialité choisi
+      return res.view('StudentSpace/Companies', {layout:'layout', title:'Entreprises - FIE', specialities: specialities, specialitySelected: ''});
+    }
+    else {
+      const actualYear = new Date().getFullYear();
+
+      Sells.find({year: actualYear}).exec(function (err, sells) {
+        if (err) {
+          console.log('error : ' + err)
+          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Erreur: les ventes n'ont pas été récupérées."});
+        }
+
+        const companiesSiret = sells.map((sell) => sell.companySiret)
+        var sortSettings = {siret: companiesSiret}
+        sortSettings[req.param('speciality')] = true
+
+        Company.find(sortSettings).exec(function (err, companies) {
+          if (err) {
+            console.log('error : ' + err)
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Les entreprises ne sont pas récupérées"});
+          }
+          return res.view('StudentSpace/Companies', {layout:'layout', companies:companies, specialities: specialities, specialitySelected: req.param('speciality')});
+        })
+      })
+    }
+  },
+
+  displayACompany : function(req, res)  {
+    Company.findOne({siret:req.param('siret')}).exec(function (err, company){
+      const actualYear = new Date().getFullYear();
+
+      if (err) {
+        console.log('error : ' + err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "L'entreprise n'est pas récupérée"});
+      }
+
+      if (!company)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "L'entreprise au siret " + req.param('siret') + " n'existe pas."});
+
+      Sells.findOne({companySiret:req.param('siret'), year:actualYear}).exec(function(err, sell){
+        if (err) {
+          console.log('error : ' + err)
+          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Les ventes ne sont pas récupérées"});
+        }
+
+        var sellsExist = true
+        if (!sell)
+          sellsExist = false
+
+          console.log('sells :', sell)
+
+        return res.view('StudentSpace/CompanyInfo', {layout:'layout', company:company, sell:sell, sellsExist: sellsExist})
+      })
+    })
   },
 
   sjd: function(req, res) {
