@@ -40,6 +40,7 @@ module.exports = {
         'Génie Biochimique',
         'Génie des Procédés',
         'Génie Mathématique et Modélisation',
+        'Génie Civil',
         'Génie Mécanique',
         'Génie Physique',
         'Informatique et Réseaux',
@@ -75,4 +76,3 @@ module.exports = {
 
   }
 };
-

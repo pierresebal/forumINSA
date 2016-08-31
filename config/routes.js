@@ -240,8 +240,10 @@ module.exports.routes = {
     action: 'sjd'
   },
 
-
-
+  '/Student/CompanyInfo': {
+    controller: 'StudentController',
+    action: 'displayACompany'
+  },
 
   /*
    ===========================================================================================================
