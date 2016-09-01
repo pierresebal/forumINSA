@@ -18,6 +18,7 @@ module.exports = {
       if (!err && httpResponse.statusCode == 200) {
         if (body != '0') { // si la personne a pu se connecter au ldap
           var result = JSON.parse(body);
+          delete result.studentId; //On n'a pas besoin de cette property
 
           Student.findOne({login: result.login}).exec(function find(err, record) {
             if (err)
@@ -220,33 +221,36 @@ module.exports = {
 
   companies: function(req, res) {
 
-    const specialities = ['AE', 'GB', 'GP', 'GMM', 'GM', 'GPE', 'IR', 'GC']
+    const specialities = ['tout', 'AE', 'GB', 'GP', 'GMM', 'GM', 'GPE', 'IR', 'GC']
+    var selectedSpeciality
+    const actualYear = new Date().getFullYear();
 
-    if (!req.param('speciality')) {//Si aucune spécialité choisi
-      return res.view('StudentSpace/Companies', {layout:'layout', title:'Entreprises - FIE', specialities: specialities, specialitySelected: ''});
+    if (!req.param('speciality')) {//Si aucune spécialité choisie
+      selectedSpeciality = specialities[0]
+    } else {
+      selectedSpeciality = req.param('speciality')
     }
-    else {
-      const actualYear = new Date().getFullYear();
 
-      Sells.find({year: actualYear}).exec(function (err, sells) {
-        if (err) {
-          console.log('error : ' + err)
-          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Erreur: les ventes n'ont pas été récupérées."});
-        }
+    Sells.find({year: actualYear}).exec(function (err, sells) {
+      if (err) {
+        console.log('error : ' + err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Erreur: les ventes n'ont pas été récupérées."});
+      }
 
-        const companiesSiret = sells.map((sell) => sell.companySiret)
-        var sortSettings = {siret: companiesSiret}
+      const companiesSiret = sells.map((sell) => sell.companySiret)
+      var sortSettings = {siret: companiesSiret}
+
+      if (selectedSpeciality != 'tout') //On rajoute le tri sur les spé que si on ne les veut pas toutes
         sortSettings[req.param('speciality')] = true
 
-        Company.find(sortSettings).exec(function (err, companies) {
-          if (err) {
-            console.log('error : ' + err)
-            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Les entreprises ne sont pas récupérées"});
-          }
-          return res.view('StudentSpace/Companies', {layout:'layout', companies:companies, specialities: specialities, specialitySelected: req.param('speciality')});
-        })
+      Company.find(sortSettings).exec(function (err, companies) {
+        if (err) {
+          console.log('error : ' + err)
+          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Les entreprises ne sont pas récupérées"});
+        }
+        return res.view('StudentSpace/Companies', {layout:'layout', companies:companies, specialities: specialities, selectedSpeciality: selectedSpeciality});
       })
-    }
+    })
   },
 
   displayACompany : function(req, res)  {
@@ -271,9 +275,7 @@ module.exports = {
         if (!sell)
           sellsExist = false
 
-          console.log('sells :', sell)
-
-        return res.view('StudentSpace/CompanyInfo', {layout:'layout', company:company, sell:sell, sellsExist: sellsExist})
+        return res.view('StudentSpace/CompanyInfo', {layout: 'layout', company: company, sell: sell, sellsExist: sellsExist})
       })
     })
   },
