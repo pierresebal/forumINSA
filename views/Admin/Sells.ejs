@@ -14,6 +14,7 @@
 %>
   <table style="border-spacing: 10px; border-collapse: separate">
     <tr>
+      <th>N°</th>
       <th>Entreprise</th>
       <th>Année</th>
       <th>Forum</th>
@@ -24,7 +25,7 @@
       <th>Facture</th>
       <th>A payé</th>
     </tr>
-    <%sells.forEach(function(sell) {
+    <%sells.forEach(function(sell, index) {
       if (sell.didPay) {
         selectYes = 'selected'
         selectNo = ''
@@ -38,6 +39,7 @@
 
     %>
       <tr>
+        <td><%=index%></td>
         <td><%=sell.companyName%></td>
         <td><%=sell.year%></td>
         <td><%=sell.forum%> (<%=sell.forumPrice%>€)</td>
