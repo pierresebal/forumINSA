@@ -13,10 +13,13 @@
 
 <table style="border-spacing: 10px; border-collapse: separate">
   <tr>
-    <th>Nom</th> <th>PME</th> <th>Siret</th> <th>Date d'inscrition</th> <th>Blacklistée</th> <th>Plus d'info</th>
+    <th>N°</th> <th>Nom</th> <th>PME</th> <th>Siret</th> <th>Date d'inscrition</th> <th>Blacklistée</th> <th>Plus d'info</th>
   </tr>
-  <% companies.forEach( function(company) { %>
+  <% companies.forEach( function(company, index) { %>
   <tr>
+    <td>
+      <%=index %>)
+    </td>
     <td>
       <%=company.companyName %>
     </td>

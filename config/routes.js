@@ -33,6 +33,7 @@ module.exports.routes = {
   ***************************************************************************/
 
 
+
   '/': {
     view: 'Homepage/Homepage',
     locals:{layout:'layout', title:'Accueil - FIE'}
@@ -87,6 +88,11 @@ module.exports.routes = {
   '/Admin/SetDidPay': {
     controller: 'AdminController',
     action: 'setDidPay'
+  },
+
+  '/Admin/ParticipatingStudents': {
+    controller: 'AdminController',
+    action: 'displayParticipatingStudents'
   },
 
   '/Track': {
@@ -335,8 +341,24 @@ module.exports.routes = {
   },
 
   '/Admin/setInscriptionDeadline':{
-    controller:'AdminController',
+    controller: 'AdminController',
     action : 'setInscriptionDeadline'
-  }
+  },
+
+  /*
+   ===========================================================================================================
+   ======================================== PARTICIPATING STUDENTS ==================================
+   ===========================================================================================================
+   */
+
+   '/Participation/Login': {
+     controller: 'ParticipatingStudentController',
+     action: 'login'
+   },
+
+   '/Participation': {
+     view: 'StudentParticipation/Participation',
+     locals: {layout: 'layout'}
+   }
 
 };
