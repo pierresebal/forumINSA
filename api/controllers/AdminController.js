@@ -181,5 +181,17 @@ module.exports = {
 
       return res.redirect('/Admin/Sells')
     })
-  }
+  },
+
+  displayParticipatingStudents : function(req,res) {
+
+    ParticipatingStudent.find().exec(function (err, students) {
+      if (err) {
+        console.log('error : ' + err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Les étudiants ne sont pas récupérés"});
+      }
+
+      return res.view('Admin/ParticipatingStudents', {layout:'layout', students:students});
+    })
+  },
 };

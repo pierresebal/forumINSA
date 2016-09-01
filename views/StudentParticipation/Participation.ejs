@@ -1,0 +1,19 @@
+<h1>Inscription au Forum INSA Entreprises 2016</h1>
+<p>
+  En raison du plan vigipirate, il est obligatoire de s'inscrire pour participer au forum.
+  <br/>
+  L'inscription ne vous oblige pas à venir et ne vous engage pas.
+</p>
+
+<p>
+  Pour vous inscrire il suffit de vous connecter avec vos identifiants INSA et de valider.
+</p>
+
+<form method="post" style="text-algin: center" class="form-group" action="/Participation/Login">
+  <input class="pure-input-1-3" type="text" name="login" placeholder="Login" required/>
+  <input class="pure-input-1-3" type="password" name="password" placeholder="Password" required/>
+  <input class="btn btn-primary pure-input-1-3" type="submit" value="Valider ma participation"/>
+</form>
+<% if (typeof loginFailed != 'undefined' && loginFailed)  { %>
+  <p style="color: red;">Login/mot de passe erroné</p>
+<% } %>
