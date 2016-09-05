@@ -195,8 +195,7 @@ var CvList = React.createClass({
       if (cv.personalWebsite == "")
         personalWebsite = "-";
       else {
-        var httpPersonalWebsite = "http://" + cv.personalWebsite;
-        personalWebsite = <a href={httpPersonalWebsite} target="_blank">{cv.personalWebsite}</a>;
+        personalWebsite = <a href={cv.personalWebsite} target="_blank">Site personnel</a>;
       }
       if (cv.linkedin == "")
         linkedin = "-";

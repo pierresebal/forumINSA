@@ -63,8 +63,8 @@ module.exports = {
 
           if (req.param('redirect') == "first")
             return res.view('StudentSpace/FirstConnection_2', {layout:'layout', frCVPath:found.frCVPath, enCVPath:found.enCVPath, title:'Connection - FIE'});
-          else if (req.param('redirect') == "profile")
-            return res.redirect('/');
+          else // if (req.param('redirect') == "profile")
+            return res.redirect('/Student/Profile');
 
         });
       }, 1000);
