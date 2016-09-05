@@ -34,7 +34,7 @@
         selectYes = ''
       }
 
-      total = total + sell.forum * sell.forumPrice + sell.sjd * sell.sjdPrice + sell.premiumPack + sell.premiumPackPrice;
+      total = total + sell.forum * sell.forumPrice + sell.sjd * sell.sjdPrice + sell.premiumPack * sell.premiumPackPrice;
       total = total + sell.moreSjd * sell.moreSjdPrice + sell.moreMeal * sell.mealPrice
 
     %>
@@ -42,9 +42,9 @@
         <td><%=index%></td>
         <td><%=sell.companyName%></td>
         <td><%=sell.year%></td>
-        <td><%=sell.forum%> (<%=sell.forumPrice%>€)</td>
-        <td><%=sell.sjd%> (<%=sell.sjdPrice%>€)</td>
-        <td><%=sell.premiumPack%> (<%=sell.premiumPackPrice%>€)</td>
+        <td><%=sell.forum ? 'oui' : '-'%> (<%=sell.forumPrice%>€)</td>
+        <td><%=sell.sjd ? 'oui' : '-'%> (<%=sell.sjdPrice%>€)</td>
+        <td><%=sell.premiumPack ? 'oui' : '-'%> (<%=sell.premiumPackPrice%>€)</td>
         <td><%=sell.moreSjd%> (<%=sell.moreSjdPrice%>€)</td>
         <td><%=sell.moreMeal%> (<%=sell.mealPrice%>€)</td>
         <td>
