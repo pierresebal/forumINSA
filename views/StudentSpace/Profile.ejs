@@ -110,7 +110,7 @@
         <td>
           <input type="hidden" name="dl" value="fr" />
           <input type="submit"
-          <% if (typeof (frCVPath) == 'undefined' && frCVPath != "") { %>
+          <% if (typeof (frCVPath) == 'undefined' || frCVPath == "") { %>
               disabled
           <% } %>
                value="Télécharger" />
@@ -138,7 +138,7 @@
         <td>
           <input type="hidden" name="dl" value="en" />
           <input type="submit"
-          <% if (typeof (enCVPath) == 'undefined' && enCVPath != "") { %>
+          <% if (typeof (enCVPath) == 'undefined' || enCVPath == "") { %>
               disabled
           <% } %>
                value="Télécharger" />
@@ -163,7 +163,7 @@
     <td><h3>Site internet personnel</h3></td>
     <td>
     <% if (typeof (personalWebsite) != 'undefined' && personalWebsite != "") { %>
-      <a href="http://<%=personalWebsite%>"  target="_blank"><%=personalWebsite%></a>
+      <a href="<%=personalWebsite%>"  target="_blank">Voir le site</a>
     <% } else { %>
       -
     <% } %>
@@ -171,7 +171,7 @@
     <form id="personalWebsite" method="post" action="/Student/setAUserInfo">
         <td>
             <input type="hidden" name="data" value="w"/>
-            http://<input type="text" placeholder="modifier" name="personalWebsite"/>
+            <input type="text" placeholder="ex: http://beaugossdu31.fr" name="personalWebsite"/>
         </td>
         <td>
             <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
@@ -191,7 +191,7 @@
     <form id="linkedinForm" method="post" action="/Student/setAUserInfo">
         <td>
             <input type="hidden" name="data" value="l"/>
-            http://<input type="text" placeholder="modifier" name="linkedin"/>
+            <input type="text" placeholder="https://www.linkedin.com/..." name="linkedin"/>
         </td>
         <td>
             <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
@@ -211,7 +211,7 @@
       <form id="viadeoForm" method="post" action="/Student/setAUserInfo">
           <td>
               <input type="hidden" name="data" value="v"/>
-              http://<input type="text" placeholder="modifier" name="viadeo"/>
+              <input type="text" placeholder="http://fr.viadeo.com/..." name="viadeo"/>
           </td>
           <td>
               <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
@@ -231,7 +231,7 @@
       <form id="githubForm" method="post" action="/Student/setAUserInfo">
           <td>
               <input type="hidden" name="data" value="g"/>
-              http://<input type="text" placeholder="modifier" name="github"/>
+              <input type="text" placeholder="https://github.com/..." name="github"/>
           </td>
           <td>
               <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>

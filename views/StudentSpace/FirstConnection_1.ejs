@@ -2,9 +2,11 @@
 
 <p>
   Bienvenue sur le site Forum INSA Entreprise.
-  Blabla bla.
-
+  <br />
   Afin que les entreprises puissent exploiter au mieux votre profil, nous vous invitons à le compléter dès maintenant. Vous pourrez le modifier plus tard si vous le souhaitez.
+  <br />
+  Il est particulièrement prévu pour les 4 et 5A et l'inscription n'est pas utile pour les années en dessous.
+
 </p>
 
 <form id="setAllInfo" method="POST" action ="/Student/setAllInfo">
@@ -12,11 +14,10 @@
     <label>Login</label> : <%=login%><br />
     <label>Prénom</label> : <%=firstName%><br />
     <label>Nom</label> : <%=lastName%><br />
-    <label>Adresse mail </label> : <input type="text" name="mailAddress" placeholder="Adresse mail"/>
-    <br />
     Votre addresse mail actuelle est <b><%=mailAddress%></b>. Mettez en une nouvelle si vous souhaitez la modifier. Sinon laissez la case vide.
     <br />
-
+    <label>Adresse mail </label> : <input type="text" name="mailAddress" placeholder="Adresse mail"/>
+    <br />
     <label>Année</label> :
     <select name="year">
       <option value="1">1</option>
@@ -35,7 +36,7 @@
     </select>
     <br />
 
-    <label>Site web personnel</label> : http://<input type="text" name="personalWebsite"/>
+    <label>Site web personnel</label> : <input type="text" name="personalWebsite" placeholder="exemple : http://beaugossdu31.fr"/>
     <br />
 
     <label>Profil linkedin</label> : <input type="text" name="linkedin" placeholder="https://www.linkedin.com/..."/>
