@@ -345,6 +345,11 @@ module.exports.routes = {
     action : 'setInscriptionDeadline'
   },
 
+  '/Company/ChangePassword':{
+    controller:'CompanyController',
+    action:'changePassword'
+  },
+
   /*
    ===========================================================================================================
    ======================================== PARTICIPATING STUDENTS ==================================
