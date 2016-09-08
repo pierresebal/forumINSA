@@ -27,7 +27,8 @@ module.exports.policies = {
     Command: "CompanyAuth",
     CompanyLogout:"CompanyAuth",
     setAUserInfo:"CompanyAuth",
-    displayBills:"CompanyAuth"
+    displayBills:"CompanyAuth",
+    changePassword:"CompanyAuth"
   },
 
   StudentController:{

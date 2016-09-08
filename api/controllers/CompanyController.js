@@ -6,6 +6,7 @@
  */
 var fs = require('fs');
 var path = require('path');
+var sha1 = require('sha1');
 
 module.exports = {
 
@@ -788,6 +789,37 @@ module.exports = {
 
       return res.view('CompanySpace/Bills', {layout:'layout', bills:founds, title:'Facture - FIE'});
     });
-  }
+  },
 
+  changePassword : function(req,res){
+  var OldPassA = req.param("OldPassA");
+  var OldPassB = req.param("OldPassB");
+    if (OldPassA != OldPassB) {
+      return res.json({
+        changePassResponse: {
+          succes: false,
+          msg: "Les mots de passe courants doivent être identiques"
+        }
+      })
+    }
+    else {
+      var OldPass = OldPassA;
+      Company.update({mailAddress:req.session.mailAddress,password:sha1(OldPass)},{password: sha1(req.param("NewPassword"))}).exec(function afterwards(err, updated) {
+        if (typeof updated[0] == "undefined" && !err) {
+          return res.json({
+            changePassResponse: {
+              succes: false,
+              msg: "Erreur... Le mot de passe courant saisi est incorrect."
+            }
+          });
+        }
+        else {
+          // On supprime le compteur de tentatives
+          delete(req.session.changePasswordTries);
+          // On renvoie une réponse pour la requette AJAX
+          return res.json({changePassResponse: {succes: true, msg: "Modification du mot de passe validée"}});
+        }
+      });
+    }
+  }
 };
