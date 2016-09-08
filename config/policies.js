@@ -42,6 +42,11 @@ module.exports.policies = {
 
   SellsController:{
     addASell:"CompanyAuth"
+  },
+
+  SjdController: {
+    addSpecialities: "CompanyAuth",
+    showSjdCompanyInscription: "CompanyAuth"
   }
 
 };

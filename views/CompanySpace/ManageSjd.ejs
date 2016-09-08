@@ -1,0 +1,31 @@
+<h1>Gestion SJD</h1>
+<h2>Description</h2>
+<p>
+Le Speed Job Dating est séparé en crenaux horaires et en salles. Une session (une salle pendant un créneau) correspond à une spécialité.
+<br />Ainsi si vous avez 2 sessions à votre disposition, vous serez réparti sur 2 créneaux horaires différents et dans les salles correspondant aux spécialités choisies.
+<br/>
+<br/>
+  <% if (specialities.length == 0) { %>
+    Actuellement vous n'avez choisi aucune spécialité.
+    Vous avez <%= sessionNb %> sessions disponible. Veuillez choisir les spécialités qui vous intéressent pour chacune de vos sessions.
+  <% } else { %>
+    Actuellement vous avez choisi : <br />
+    <% specialities.forEach((speciality, i) => { %>
+      Session <%= i+1 %> : <%=speciality%><br />
+    <% }) %>
+    Vous pouvez mettre à jours vos choix jusqu'au 4 octobre 2016.<br/>
+  <% } %>
+</p>
+
+<h2>Modification des sessions</h2>
+<form action='/Company/AddSpecialities'>
+  <% for (var i=0; i<sessionNb; i++) { %>
+    <label>Session <%=i+1%></label>
+    <select name="<%= i %>">
+      <% possibleSpecialities.forEach(function(aSpeciality) { %>
+        <option value="<%= aSpeciality %>"><%= aSpeciality%></option>
+      <% }); %>
+    </select><br />
+  <% } %>
+  <input type="submit" value="Enregistrer" />
+</form>
