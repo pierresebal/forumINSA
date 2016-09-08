@@ -126,6 +126,8 @@ module.exports.routes = {
   },
 
 
+
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
@@ -359,6 +361,27 @@ module.exports.routes = {
    '/Participation': {
      view: 'StudentParticipation/Participation',
      locals: {layout: 'layout'}
+   },
+
+   /*
+    ===========================================================================================================
+    ======================================== SJD ==================================
+    ===========================================================================================================
+    */
+
+   '/Company/AddSpecialities': {
+     controller: 'SjdController',
+     action: 'AddSpecialities'
+   },
+
+   '/Company/ManageSjd': {
+     controller: 'SjdController',
+     action: 'showSjdCompanyInscription'
+   },
+
+   '/Admin/InitializeSjd': {
+     controller: 'SjdController',
+     action: 'initialize'
    }
 
 };
