@@ -12,6 +12,9 @@ module.exports = {
       type: 'Integer',
       required: true
     },
+    companyName: {
+      type: 'string'
+    },
     companySiret: {
       type: 'string',
       required: true

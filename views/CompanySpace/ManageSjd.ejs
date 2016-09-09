@@ -1,20 +1,23 @@
 <h1>Gestion SJD</h1>
 <h2>Description</h2>
 <p>
-Le Speed Job Dating est séparé en crenaux horaires et en salles. Une session (une salle pendant un créneau) correspond à une spécialité.
+  Afin de rencontrer des étudiants de plusieurs spécialités, et ainsi de pourvoir les différents besoins/intérêts de votre l'entreprise, il est possible de sélectionner des spécialité différentes lors de chaque session de SJD. En ce faisant, les étudiants rencontrés ne correspondront qu'à cette spécialité sélectionnée.
+
 <br />Ainsi si vous avez 2 sessions à votre disposition, vous serez réparti sur 2 créneaux horaires différents et dans les salles correspondant aux spécialités choisies.
+
+Vous serez prévenu par mail des horaires qui vous ont été attribués dans les 2 semaines précédent le forum.
 <br/>
 <br/>
   <% if (specialities.length == 0) { %>
     Actuellement vous n'avez choisi aucune spécialité.
-    Vous avez <%= sessionNb %> sessions disponible. Veuillez choisir les spécialités qui vous intéressent pour chacune de vos sessions.
+    Vous avez <%= sessionNb %> sessions disponibles. Veuillez choisir les spécialités qui vous intéressent pour chacune de vos sessions.
   <% } else { %>
     Actuellement vous avez choisi : <br />
     <% specialities.forEach((speciality, i) => { %>
       Session <%= i+1 %> : <%=speciality%><br />
     <% }) %>
-    Vous pouvez mettre à jours vos choix jusqu'au 4 octobre 2016.<br/>
   <% } %>
+  Vous pouvez mettre à jours vos choix jusqu'au 4 octobre 2016.<br/>
 </p>
 
 <h2>Modification des sessions</h2>

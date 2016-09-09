@@ -514,7 +514,21 @@ module.exports = {
 
 
   CvTheque: function(req, res) {
-    return res.view("CompanySpace/CvTheque", {layout:'layout', title:'CVThèque - FIE'});
+    const actualYear = new Date().getFullYear();
+
+    Sells.findOne({companySiret: req.session.siret}).exec((err, found) => { //Il faut filtrer pour que la commande soit de l'année en cours.
+      if (err) {
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      if (found) {
+        return res.view("CompanySpace/CvTheque", {layout:'layout', title:'CVThèque - FIE'});
+      } else {
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Accès non autorisé", ErrorDesc: 'Pour avoir accès à cette page, vous devez d\'abord passer commande.'});
+      }
+
+    })
+
   },
 
 

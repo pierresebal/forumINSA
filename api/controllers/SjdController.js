@@ -24,6 +24,7 @@ module.exports = {
 			sells.forEach((sell) => {
 				entries.push({
 					year: actualYear,
+					companyName: sell.companyName,
 					companySiret: sell.companySiret,
 					sessionNb: 2 + sell.moreSjd,
 					specialities: []
@@ -53,12 +54,9 @@ module.exports = {
 			if (!found)
 				return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Votre entreprise n\'a pas été trouvée. Veuillez réessayer ou contacter le webmaster'});
 
-				console.log('FFFOUND :', found)
-
 			var specialities = []
 			var i
 			for (i=0; i < found.sessionNb; i++) {
-					console.log('Ajout de ' + req.param(i) )
 					specialities.push(req.param(i))
 			}
 

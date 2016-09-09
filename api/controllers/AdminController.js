@@ -194,4 +194,17 @@ module.exports = {
       return res.view('Admin/ParticipatingStudents', {layout:'layout', students:students});
     })
   },
+
+  displaySjdParticipants: function (req,res) {
+
+    const actualYear = new Date().getFullYear();
+    Sjd.find({year:actualYear}).exec((err, founds) => {
+      if (err) {
+        console.log('err', err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      return res.view('Admin/SjdParticipants', {layout:'layout', participants: founds})
+    })
+  }
 };
