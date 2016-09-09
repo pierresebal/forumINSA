@@ -193,6 +193,7 @@ module.exports = {
                     if (created.premiumPack || created.sjd) {
                       Sjd.create({
                         year: year,
+                        companyName: req.session.companyName,
                         companySiret: req.session.siret,
                         sessionNb: 2 + created.moreSjd
                       })

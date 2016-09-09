@@ -95,6 +95,11 @@ module.exports.routes = {
     action: 'displayParticipatingStudents'
   },
 
+  '/Admin/SjdParticipants': {
+    controller: 'AdminController',
+    action: 'displaySjdParticipants'
+  },
+
   '/Track': {
     view: 'Track/Homepage',
     locals:{layout:'layout', title:'Suivi - FIE'}
@@ -388,5 +393,4 @@ module.exports.routes = {
      controller: 'SjdController',
      action: 'initialize'
    }
-
 };
