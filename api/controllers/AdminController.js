@@ -206,5 +206,83 @@ module.exports = {
 
       return res.view('Admin/SjdParticipants', {layout:'layout', participants: founds})
     })
+  },
+
+  initializeSjdSessions: function(req, res) {
+
+    const criterias = [
+      {sessionId: 1},
+      {sessionId: 2},
+      {sessionId: 3},
+      {sessionId: 4},
+    ]
+
+    const sessions = [
+      {sessionId: 1, hours: '9h30-10h30'},
+      {sessionId: 2, hours: '11h00-12h00'},
+      {sessionId: 3, hours: '14h00-15h00'},
+      {sessionId: 4, hours: '15h30-16h30'}
+    ]
+
+    SjdSession.findOrCreate(criterias, sessions).exec((err, founds) => {
+      if (err) {
+        console.log('err', err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      return res.redirect('/admin/SjdSessions');
+    })
+  },
+
+  displaySjdSessions: function(req, res) {
+
+    specialities = ['AE', 'IR', 'GMM', 'GC', 'GM', 'GB', 'GP', 'GPE']
+
+    SjdSession.find().exec((err, sessions) => {
+      if (err) {
+        console.log('err', err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      return res.view('Admin/SjdSessions', {layout: 'layout', sessions: sessions, specialities: specialities, maxCompanies: 8})
+
+    })
+  },
+
+  addCompaniesToSjd: function(req, res) {
+
+    SjdSession.findOne({sessionId: req.param('sessionId')}).exec((err, session) => {
+      if (err) {
+        console.log('err', err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      if (!session) {
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'L\'id de session est incorrect.'});
+      }
+
+      var newCompanies = []
+
+      for (var i=0; i<8; i++) {
+        if (req.param(i)) {
+          newCompanies.push(req.param(i))
+        }
+      }
+
+      const newSpecialities = session.specialities.map((speciality) => {
+        if (speciality.name == req.param('speciality'))
+          return {name: speciality.name, companies: newCompanies}
+        return speciality
+      })
+
+      SjdSession.update({sessionId: req.param('sessionId')}, {specialities: newSpecialities}).exec((err, updated) => {
+        if (err) {
+          console.log('err', err)
+          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Erreur lors de la mise à jour'});
+        }
+
+        return res.redirect("/Admin/SjdSessions")
+      })
+    })
   }
 };

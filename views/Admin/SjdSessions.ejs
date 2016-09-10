@@ -1,0 +1,49 @@
+<h1>Partie admin</h1>
+
+<% if (req.session.isAdmin != true) { %>
+
+<form method="POST" action="/Admin/Login">
+  <input type="password" name="password"/>
+  <input type="submit" value="Se connecter"/>
+</form>
+
+<% } else { %>
+
+  <p>
+    Si les créneaux n'existent pas vous pouvez les créer en cliquant ici : <a href="/Admin/SjdSessionInitialization">Créer</a>
+  </p>
+
+  <h2>Créneaux actuels</h2>
+
+  <% sessions.forEach((session, index) => { %>
+    <p>
+      <b>Session <%=session.sessionId%> (<%=session.hours%>)</b><br />
+      <% session.specialities.forEach((speciality) => { %>
+      <b><%=speciality.name%></b> : <%=speciality.companies%><br />
+      <% }) %>
+    </p>
+  <% }) %>
+
+  <% if (sessions.length != 0) {%>
+    <h2>Modifications</h2>
+    <form method="post" action="/Admin/addCompaniesToSjd">
+      <select name="sessionId">
+        <% sessions.forEach((session, index) => { %>
+          <option value="<%=session.sessionId%>">Session <%=session.sessionId%></option>
+        <% }) %>
+      </select>
+      <select name="speciality">
+        <% specialities.forEach((speciality) => { %>
+          <option value="<%=speciality%>"><%=speciality%></option>
+        <% }) %>
+      </select>
+      <% for (var i = 0; i<maxCompanies; i++) {%>
+          <br />
+          <input type="text" name="<%=i%>" placeholder="Entreprise <%= i+1 %>"/>
+      <% } %>
+      <br />
+      <input type="submit" value="Enregistrer"/>
+    </form>
+  <% } %>
+
+<% } %>
