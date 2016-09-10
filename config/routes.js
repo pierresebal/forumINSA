@@ -95,9 +95,24 @@ module.exports.routes = {
     action: 'displayParticipatingStudents'
   },
 
+  '/Admin/SjdSessionInitialization': {
+    controller: 'AdminController',
+    action: 'initializeSjdSessions'
+  },
+
+  '/Admin/SjdSessions': {
+    controller: 'AdminController',
+    action: 'displaySjdSessions'
+  },
+
   '/Admin/SjdParticipants': {
     controller: 'AdminController',
     action: 'displaySjdParticipants'
+  },
+
+  '/Admin/addCompaniesToSjd': {
+    controller: 'AdminController',
+    action: 'addCompaniesToSjd'
   },
 
   '/Track': {
