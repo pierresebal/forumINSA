@@ -20,6 +20,8 @@
       <b>Session <%=session.sessionId%> (<%=session.hours%>)</b><br />
       <% session.specialities.forEach((speciality) => { %>
       <b><%=speciality.name%></b> : <%=speciality.companies%><br />
+      <b>Etudiants</b> : <%=speciality.students%><br />
+      <br />
       <% }) %>
     </p>
   <% }) %>

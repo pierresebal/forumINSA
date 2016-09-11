@@ -195,6 +195,17 @@ module.exports = {
     })
   },
 
+  displayParticipatingCompanies: function(req,res) {
+    Company.find().exec(function (err, companies) {
+      if (err) {
+        console.log('error : ' + err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Les entreprises ne sont pas récupérés"});
+      }
+
+      return res.view('Admin/ParticipatingCompanies', {layout:'layout', companies:companies});
+    })
+  },
+
   displaySjdParticipants: function (req,res) {
 
     const actualYear = new Date().getFullYear();
@@ -269,9 +280,9 @@ module.exports = {
         }
       }
 
-      const newSpecialities = session.specialities.map((speciality) => {
+      const newSpecialities = session.specialities.map((speciality) => { //On aurait aussi pu utiliser findIndex()
         if (speciality.name == req.param('speciality'))
-          return {name: speciality.name, companies: newCompanies}
+          return {name: speciality.name, companies: newCompanies, students: speciality.students}
         return speciality
       })
 
@@ -285,4 +296,5 @@ module.exports = {
       })
     })
   }
+
 };

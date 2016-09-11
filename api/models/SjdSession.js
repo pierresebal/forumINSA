@@ -20,15 +20,15 @@ module.exports = {
     specialities: {
       type: 'array',
       defaultsTo: [
-        {name: 'AE', companies: []},
-        {name: 'IR', companies: []},
-        {name: 'GMM', companies: []},
-        {name: 'GC', companies: []},
-        {name: 'GM', companies: []},
-        {name: 'GB', companies: []},
-        {name: 'GP', companies: []},
-        {name: 'GPE', companies: []},
+        {name: 'AE', companies: [], students: []},
+        {name: 'IR', companies: [], students: []},
+        {name: 'GMM', companies: [], students: []},
+        {name: 'GC', companies: [], students: []},
+        {name: 'GM', companies: [], students: []},
+        {name: 'GB', companies: [], students: []},
+        {name: 'GP', companies: [], students: []},
+        {name: 'GPE', companies: [], students: []},
       ]
-    }
+    },
   }
 };

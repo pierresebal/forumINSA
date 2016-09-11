@@ -1,0 +1,23 @@
+<h1>Inscription Vigipirate</h1>
+<h2>Description</h2>
+Dans le cadre des mesures vigipirate, il est obligatoire que les personnes participantes au forum soit listées. Toute personne non listée se verra interdire l'entrée du forum.
+<br/>
+<br/>Afin de respecter ces mesures de sécurités, merci d'inscrire toute personne de votre équipe susceptible de venir au forum.
+
+<h2>Inscription</h2>
+
+<% if (typeof company.vigipirate != 'undefined' && company.vigipirate.length != 0) { %>
+  <p>
+    Actuellement les personnes enregistrées sont :<br />
+    <%= company.vigipirate %>
+  </p>
+<% } else { %>
+  <p>Actuellement aucune personne n'a été enregistrée pour votre entreprise.</p>
+<% } %>
+<p>Vous pouvez modifier les personnes inscrites à tout moment.</p>
+<form method="post" action="/Company/VigipirateRegistration">
+  <% for (var i=0; i<15; i++) { %>
+    <input name="<%= i%>" placeholder="<%= i+1%> prénom NOM"/><br />
+  <% } %>
+  <input type="submit" value="Enregistrer"/>
+</form>

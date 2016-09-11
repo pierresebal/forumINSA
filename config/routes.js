@@ -115,6 +115,11 @@ module.exports.routes = {
     action: 'addCompaniesToSjd'
   },
 
+  '/Admin/ParticipatingCompanies': {
+    controller: 'AdminController',
+    action: 'displayParticipatingCompanies'
+  },
+
   '/Track': {
     view: 'Track/Homepage',
     locals:{layout:'layout', title:'Suivi - FIE'}
@@ -273,6 +278,11 @@ module.exports.routes = {
     action: 'displayACompany'
   },
 
+  '/Student/SjdInscription': {
+    controller: 'StudentController',
+    action: 'sjdInscription'
+  },
+
   /*
    ===========================================================================================================
    ============================================== COMPANY'S VIEWS ============================================
@@ -370,6 +380,16 @@ module.exports.routes = {
   '/Company/ChangePassword':{
     controller:'CompanyController',
     action:'changePassword'
+  },
+
+  '/Company/VigipirateRegistration': {
+    controller: 'CompanyController',
+    action: 'addVigipirate'
+  },
+
+  '/Company/Vigipirate': {
+    controller: 'CompanyController',
+    action: 'displayVigipirate'
   },
 
   /*
