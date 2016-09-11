@@ -409,7 +409,6 @@ module.exports = {
 
   },
 
-
   // InitPasswd; We call this function when the user needs to receive a new password by email (because he losts it)
   // This function need POST arg named "email" wich corespond to the attribute Email of the user who need to reset password
   InitPasswdCompany:function(req,res) {
@@ -465,7 +464,6 @@ module.exports = {
     })
   },
 
-
   Profile: function(req,res) {
 
     Company.findOne({mailAddress: req.session.mailAddress}).exec(function (err, found) {
@@ -512,7 +510,6 @@ module.exports = {
     });
   },
 
-
   CvTheque: function(req, res) {
     const actualYear = new Date().getFullYear();
 
@@ -530,7 +527,6 @@ module.exports = {
     })
 
   },
-
 
   Command: function(req, res) {
 
@@ -835,5 +831,35 @@ module.exports = {
         }
       });
     }
+  },
+
+  displayVigipirate: function(req, res) {
+    Company.findOne({siret: req.session.siret}).exec((err, company) => {
+      if (err) {
+        console.log('err', err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      return res.view('CompanySpace/Vigipirate', {layout: 'layout', company: company})
+    })
+  },
+
+  addVigipirate: function(req, res) {
+
+    var registeredPeople = []
+
+    for (var i=0; i<15; i++) {
+      if (req.param(i) != '')
+        registeredPeople.push(req.param(i))
+    }
+
+    Company.update({siret: req.session.siret}, {vigipirate: registeredPeople}).exec((err, updated) => {
+      if (err) {
+        console.log('err', err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      return res.redirect('/Company/vigipirate')
+    })
   }
 };

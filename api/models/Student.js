@@ -71,8 +71,17 @@ module.exports = {
       type:'string',
       defaultsTo:""
     },
-
-
-
+    sjdRegistered: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+    sjdSession: {
+      type: 'string',
+      defaultsTo: ''
+    },
+    sjdSpeciality: {
+      type: 'string',
+      defaultsTo: ''
+    }
   }
 };
