@@ -95,11 +95,11 @@ if (typeof complementaryInformation == 'undefined')
         <label for="OldPassA">1- Entrez votre mot de passe actuel</label>
         <input class="pure-input-1" type="password" id="OldPassA" name="OldPassA" placeholder="Mot de passe">
 
-        <label for="OldPassB">2- Confirmez votre mot de passe actuel</label>
-        <input class="pure-input-1" type="password" id="OldPassB" name="OldPassB" placeholder="Confirmez le mot de passe">
+        <label for="NewPassA">2- Entrez le nouveau mot de passe</label>
+        <input class="pure-input-1" type="password" id="NewPassA" name="NewPassA" placeholder="Confirmez le mot de passe">
 
-        <label for="NewPassword">3- Entrez votre nouveau mot de passe</label>
-        <input class="pure-input-1" type="password" id="NewPassword" name="NewPassword" placeholder="Nouveau mot de passe">
+        <label for="NewPassB">3- Confirmez votre nouveau mot de passe</label>
+        <input class="pure-input-1" type="password" id="NewPassB" name="NewPassB" placeholder="Nouveau mot de passe">
 
         <p id="MsgPassword"></p>
         <button style="width: 100%;" onclick="ModifPass()">Changer de MDP</button>
@@ -304,8 +304,8 @@ if (typeof complementaryInformation == 'undefined')
     if (!AJAXrunning) {
       // Récupération des valeurs des mots de passe
       var OldPassA = document.getElementById("OldPassA").value;
-      var OldPassB = document.getElementById("OldPassB").value;
-      var NewPassword = document.getElementById("NewPassword").value;
+      var NewPassA = document.getElementById("NewPassA").value;
+      var NewPassB = document.getElementById("NewPassB").value;
 
       // Récupération des valeurs de mots de passe
       var AJAXreq = getXMLHttpRequest();
@@ -321,7 +321,7 @@ if (typeof complementaryInformation == 'undefined')
       // Envoi de la requêtte AJAX
       AJAXreq.open("POST", "http://localhost:8080/Company/ChangePassword");
       AJAXreq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      AJAXreq.send("OldPassA=" + OldPassA + "&OldPassB=" + OldPassB + "&NewPassword=" + NewPassword);
+      AJAXreq.send("OldPassA=" + OldPassA + "&NewPassA=" + NewPassA + "&NewPassB=" + NewPassB);
       AJAXrunning = true;
 
       // Paramétrage de l'action a lancer en cas de réussite de la requête
@@ -335,9 +335,9 @@ if (typeof complementaryInformation == 'undefined')
           document.getElementById("MsgPassword").animationPlayState = "initial";
 
           // On vide les champs remplis
-          document.getElementById("NewPassword").value = "";
+          document.getElementById("NewPassB").value = "";
           document.getElementById("OldPassA").value = "";
-          document.getElementById("OldPassB").value = "";
+          document.getElementById("NewPassA").value = "";
 
           // On affiche le message renvoyé par le serveur
           document.getElementById("MsgPassword").innerHTML = AJAXresult.changePassResponse.msg;
