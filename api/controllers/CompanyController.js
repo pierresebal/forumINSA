@@ -802,19 +802,20 @@ module.exports = {
   },
 
   changePassword : function(req,res){
-  var OldPassA = req.param("OldPassA");
-  var OldPassB = req.param("OldPassB");
-    if (OldPassA != OldPassB) {
+  var OldPass = req.param("OldPassA");
+  var NewPassA = req.param("NewPassA");
+  var NewPassB = req.param("NewPassB");
+
+    if (NewPassA != NewPassB) {
       return res.json({
         changePassResponse: {
           succes: false,
-          msg: "Les mots de passe courants doivent être identiques"
+          msg: "Les nouveaux mots de passe doivent être identiques"
         }
       })
     }
     else {
-      var OldPass = OldPassA;
-      Company.update({mailAddress:req.session.mailAddress,password:sha1(OldPass)},{password: sha1(req.param("NewPassword"))}).exec(function afterwards(err, updated) {
+      Company.update({mailAddress:req.session.mailAddress,password:sha1(OldPass)},{password: sha1(NewPassA)}).exec(function afterwards(err, updated) {
         if (typeof updated[0] == "undefined" && !err) {
           return res.json({
             changePassResponse: {
