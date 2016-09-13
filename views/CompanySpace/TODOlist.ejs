@@ -1,0 +1,22 @@
+<style type="text/css">
+  .Task {
+    background-color:rgba(0,0,0,0.2);
+    color:white;
+  }
+</style>
+
+<div class="content">
+  <h1>TODO List</h1>
+  <%
+  var n_tasks = 0;
+  TODOlist.forEach(function(task){ if(task){ %>
+  <div class="Task">
+    <h3 class="TaskTITLE"><%=task.title%></h3>
+    <p class="TaskMSG"><%-task.msg%></p>
+  </div>
+  <% n_tasks++;}});
+  if(n_tasks < 1){%>
+    <p>Vous n'avez pas de tâches particulières à effecuer pour le moment</p>
+  <%};%>
+
+</div>
