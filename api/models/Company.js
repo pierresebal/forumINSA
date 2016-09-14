@@ -85,7 +85,7 @@ module.exports = {
 
     description:{
       type:'string',
-      defaultsTo:''
+      defaultsTo:'Pas de description fournie.'
     },
 
     websiteUrl:{

@@ -1,22 +1,32 @@
 <style type="text/css">
   .Task {
-    background-color:rgba(0,0,0,0.2);
-    color:white;
+    background-color:#F7BF25;
+    padding:0.5em;
+    padding-left:2em;
+    padding-right:2em;
+    margin:0.5em;
+    border-radius:5em;
   }
 </style>
 
 <div class="content">
-  <h1>TODO List</h1>
-  <%
-  var n_tasks = 0;
-  TODOlist.forEach(function(task){ if(task){ %>
-  <div class="Task">
-    <h3 class="TaskTITLE"><%=task.title%></h3>
-    <p class="TaskMSG"><%-task.msg%></p>
-  </div>
+  <h1>Espace entreprise</h1>
+  <p>Bienvenue sur votre compte entreprise, vous pouvez acceder aux différentes fonctionnalités utiles pour votre inscription dans le menu "ESPACE PERSO". Ci-dessous figure la liste (TODO list) des actions que vous devez fournir pour finaliser votre inscription au Forum.</p>
+  <br/>
+  <h2>TODO List :</h2>
+
+  <%var n_tasks = 0;
+  TODOlist.forEach(function(task){
+  if(task){ %>
+
+    <div class="Task">
+      <h3 class="TaskTITLE"><%=task.title%></h3>
+      <p class="TaskMSG"><%-task.msg%></p>
+    </div>
+
   <% n_tasks++;}});
   if(n_tasks < 1){%>
-    <p>Vous n'avez pas de tâches particulières à effecuer pour le moment</p>
+    <p>Vous n'avez pas de tâches particulières à effecuer pour le moment. Vérifiez régulièrement cette page.</p>
   <%};%>
 
 </div>

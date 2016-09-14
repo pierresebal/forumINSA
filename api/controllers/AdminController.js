@@ -126,6 +126,49 @@ module.exports = {
     })
   },
 
+  checkTasks: function(req,res){
+    //Fonction qui permet de valider les taches faites par les entreprises
+    // L'ensemble des verifs sont contenues dans le JSON de config sails.config.TODOtasks(/config/TODOtasks.js
+
+    Company.find().exec(function (err, companies) {
+
+      if(!err){
+        // Récupération de la configuration (fichier /config/TODOtasks.js)
+        TODOtasks = sails.config.TODOtasks;
+
+        // Initialisation du tableau pour la view Admin(pour chaque entreprise, les attribut oui ou non sont donné dans les colonnes)
+        var checkCompaniesTasks = [];
+
+        for(var a=0;a<companies.length;a++){
+          //Pour chaque entreprise on vérifie les taches a faire...
+          company=companies[a];
+
+          //Chargement des données pour retrouver l'entreprise dans le tableau
+          checkCompaniesTasks[a] = {mailAddress:company.mailAddress,siret:company.siret,companyName:company.companyName,tasksCheck:[]};
+
+          // Vérification des taches a partir de la config TODOtasks
+          for(var i=0;i<TODOtasks.length;i++){
+            if(TODOtasks[i].checkFun(company)){
+              // Si la tache est a faire on enregistre le message a passer à la view
+              checkCompaniesTasks[a].tasksCheck[i] = "Non fait";
+            }
+            else {
+              // Si la taches est faite on met FAIT :D
+              checkCompaniesTasks[a].tasksCheck[i] = "Fait";
+            }
+          }
+
+        }
+        res.view("Admin/CheckList",{layout:'layout',checkCompaniesTasks:checkCompaniesTasks});
+      }
+      else {
+        res.view('ErrorPage',{layout:'layout',ErrorTitle:'Controller Admin, Action Check Tasks, Erreur lors de la lecture BDD Company'})
+      }
+
+
+    });
+  },
+
   displayACompany : function(req, res)  {
     Company.findOne({siret:req.param('siret')}).exec(function (err, company){
       if (err) {
