@@ -1,0 +1,44 @@
+<% if (req.session.isAdmin != true) { %>
+
+<form method="POST" action="/Admin/Login">
+  <input type="password" name="password"/>
+  <input type="submit" value="Se connecter"/>
+</form>
+
+<% }else{%>
+
+<div class="content">
+  <h1>Suivi des informations entreprises</h1>
+  <p>Le tableau ci-dessous résume les informations manquantes (Ex:Description) ET les différentes taches a accomplir (Ex:Payer les factures...) pour l'ensemble des entreprises inscrites.</p>
+  <br/>
+  <table class="pure-table">
+
+    <!--Ligne d'en têtes-->
+    <thead>
+      <tr>
+        <th>Entreprise</th>
+        <th>Siret</th>
+        <th>Contact</th>
+        <%sails.config.TODOtasks.forEach(function(task){%>
+        <th><%=task.title%></th>
+        <%})%>
+      </tr>
+    </thead>
+
+
+    <!--Entreprises-->
+    <tbody>
+      <%checkCompaniesTasks.forEach(function(company){%>
+      <tr>
+        <th><%=company.companyName%></th>
+        <th><%=company.siret%></th>
+        <th><%=company.mailAddress%></th>
+        <%company.tasksCheck.forEach(function(task){%>
+        <th><%=task%></th>
+        <%})%>
+      </tr>
+      <%});%>
+    </tbody>
+  </table>
+</div>
+<%}%>

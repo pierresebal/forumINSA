@@ -120,6 +120,11 @@ module.exports.routes = {
     action: 'displayParticipatingCompanies'
   },
 
+  '/Admin/CheckList':{
+    controller:'AdminController',
+    action:'checkTasks'
+  },
+
   '/Track': {
     view: 'Track/Homepage',
     locals:{layout:'layout', title:'Suivi - FIE'}
@@ -311,6 +316,7 @@ module.exports.routes = {
    ===========================================================================================================
    */
 
+
   '/Company/CreateCompany':{
     controller:'CompanyController',
     action:'CreateCompany'
@@ -390,6 +396,11 @@ module.exports.routes = {
   '/Company/Vigipirate': {
     controller: 'CompanyController',
     action: 'displayVigipirate'
+  },
+
+  '/Company': {
+    controller: 'CompanyController',
+    action: 'TODOlist'
   },
 
   /*

@@ -306,6 +306,7 @@ module.exports = {
             req.session.companyName=record.companyName;
             req.session.firstName=record.firstName;
             req.session.isPME = record.isPME;
+            req.session.descLength = record.description.length;
 
             // We confirm the authentication
             console.log('Authentification succeed: '+record.firstName);
@@ -319,7 +320,7 @@ module.exports = {
               });
             } else {
               if (typeof req.param("nexturl")=="undefined") {
-                return res.redirect('/');
+                return res.redirect('/Company');
               }
               else {
                 return res.redirect(req.param("nexturl"));
@@ -720,6 +721,7 @@ module.exports = {
           if (err)
             return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update description."});
 
+          req.session.descLength = description.length;
           return res.redirect('/Company/Profile');
         });
         break;
@@ -862,5 +864,44 @@ module.exports = {
 
       return res.redirect('/Company/vigipirate')
     })
+  },
+
+  TODOlist : function(req,res) {
+    // Controller qui permet d'afficher les taches à faire aux entreprises
+    // Les taches a faire sont contenues dans le JSON TODOtasks
+
+    //TODOtasks (contenu dans le fichier /config/TODOtasks)
+    // titre: titre de la notification qui apparait quand la tache n'a pas ete faite
+    // msg: message affiché en dessous de la notification (supporte le html)
+    // checkFun: fonction de validation de la tache qui renvoie un booléen, true si la notification doit être affichée
+
+    var TODOtasks = sails.config.TODOtasks;
+
+
+    // Génération du JSON TODOlist qui sera envoyé à la view par traitement de TODOtasks
+    var TODOlist = [];
+
+    // Traitment des taches
+    Company.findOne({mailAddress:req.session.mailAddress}).exec(function(err,company){
+      if(!err){
+        for(var i=0;i<TODOtasks.length;i++){
+          if(TODOtasks[i].checkFun(company)){
+            // Si la tache est a faire on enregistre le message a passer à la view
+            TODOlist[i] = {title:TODOtasks[i].title,msg:TODOtasks[i].msg};
+          }
+          else {
+            TODOlist[i] = false;
+          }
+        }
+
+        // On envoie la view avec les taches à faire
+        res.view("CompanySpace/TODOlist",{layout:'layout',TODOlist:TODOlist});
+
+      }
+      else {
+        res.view('ErrorPage',{layout:'layout',ErrorTitle:'Erreur lors de la génération de la TODOlist.'})
+      }
+    });
   }
+
 };
