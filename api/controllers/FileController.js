@@ -126,7 +126,7 @@ module.exports = {
           }
 
           setTimeout(function() {
-            return res.redirect('/');
+            return res.redirect('/Company/Profile');
           },2000);
         });
     });

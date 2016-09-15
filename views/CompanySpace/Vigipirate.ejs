@@ -4,20 +4,29 @@ Dans le cadre des mesures vigipirate, il est obligatoire que les personnes parti
 <br/>
 <br/>Afin de respecter ces mesures de sécurités, merci d'inscrire toute personne de votre équipe susceptible de venir au forum.
 
-<h2>Inscription</h2>
+<div class="content">
+  <h2>Inscription</h2>
 
-<% if (typeof company.vigipirate != 'undefined' && company.vigipirate.length != 0) { %>
-  <p>
-    Actuellement les personnes enregistrées sont :<br />
-    <%= company.vigipirate %>
-  </p>
-<% } else { %>
-  <p>Actuellement aucune personne n'a été enregistrée pour votre entreprise.</p>
-<% } %>
-<p>Vous pouvez modifier les personnes inscrites à tout moment.</p>
-<form method="post" action="/Company/VigipirateRegistration">
-  <% for (var i=0; i<15; i++) { %>
-    <input name="<%= i%>" placeholder="<%= i+1%> prénom NOM"/><br />
+  <% if (typeof company.vigipirate != 'undefined' && company.vigipirate.length != 0) { %>
+    <p>
+      Actuellement les personnes enregistrées sont :<br />
+      <%= company.vigipirate %>
+    </p>
+  <% } else { %>
+    <p>Actuellement aucune personne n'a été enregistrée pour votre entreprise.</p>
   <% } %>
-  <input type="submit" value="Enregistrer"/>
-</form>
+  <p>Vous pouvez modifier les personnes inscrites à tout moment.</p>
+  <div class="pure-g">
+    <div class="pure-u-1 pure-u-md-1-4">
+      <form class="pure-form pure-form-stacked" method="post" action="/Company/VigipirateRegistration">
+        <fieldset>
+          <% for (var i=0; i<15; i++) { %>
+            <input class="pure-input-1" name="<%= i%>" placeholder="<%= i+1%> prénom NOM"/>
+          <% } %>
+          <br />
+          <button style="width: 100%;" type="submit" >Enregistrer</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
