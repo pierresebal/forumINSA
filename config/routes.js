@@ -433,10 +433,10 @@ module.exports.routes = {
    '/Company/ManageSjd': {
      controller: 'SjdController',
      action: 'showSjdCompanyInscription'
-   },
-
+   }
+   /*
    '/Admin/InitializeSjd': {
      controller: 'SjdController',
      action: 'initialize'
-   }
+   } */
 };
