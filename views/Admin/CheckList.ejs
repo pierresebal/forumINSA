@@ -1,3 +1,5 @@
+<h1>Partie admin</h1>
+
 <% if (req.session.isAdmin != true) { %>
 
 <form method="POST" action="/Admin/Login">
@@ -9,7 +11,7 @@
 
 <div class="content">
   <h1>Suivi des informations entreprises</h1>
-  <p>Le tableau ci-dessous résume les informations manquantes (Ex:Description) ET les différentes taches a accomplir (Ex:Payer les factures...) pour l'ensemble des entreprises inscrites.</p>
+  <p>Le tableau ci-dessous résume les informations manquantes (Ex:Description) et les différentes tâches à accomplir (Ex:Payer les factures...) pour l'ensemble des entreprises inscrites.</p>
   <br/>
   <table class="pure-table">
 
