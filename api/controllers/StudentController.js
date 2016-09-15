@@ -281,7 +281,75 @@ module.exports = {
   },
 
   sjd: function(req, res) {
-    return res.view('StudentSpace/Sjd', {layout:'layout', title:'Speed Job Dating - FIE'});
+
+    specialities = ['AE', 'IR', 'GMM', 'GC', 'GM', 'GB', 'GP', 'GPE']
+
+    SjdSession.find().exec((err, sessions) => {
+      if (err) {
+        console.log('err', err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      Student.findOne({login: req.session.login}).exec((err, student) => {
+        if (err) {
+          console.log('err', err)
+          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+        }
+
+        return res.view('StudentSpace/Sjd', {layout: 'layout', sessions: sessions, student: student, specialities: specialities})
+      })
+
+    })
+  },
+
+  sjdInscription: function(req, res) {
+
+    Student.findOne({login: req.session.login}).exec((err, student) => {
+      if (err) {
+        console.log('err', err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      if (student.sjdRegistered)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Vous êtes déjà inscrit"});
+
+      SjdSession.findOne({sessionId: req.param('sessionId')}).exec((err, session) => {
+        if (err) {
+          console.log('err', err)
+          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+        }
+
+        const index = session.specialities.findIndex((spe) => spe.name == req.param('speciality'))
+
+        if (session.specialities[index].students.length >= 8) {
+          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Créneau complet", ErrorDesc: 'Le créneau sélectionné est déjà complet. Nous vous invitons à en choisir un autre.'});
+        } else {
+          var newSpecialities = session.specialities
+          newSpecialities[index].students.push(req.session.login)
+
+          SjdSession.update({sessionId: req.param('sessionId')}, {specialities: newSpecialities}).exec((err, updated) => {
+            if (err) {
+              console.log('err', err)
+              return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+            }
+
+            Student.update({login: req.session.login}, {
+              sjdRegistered: true,
+              sjdSession: req.param('sessionId'),
+              sjdSpeciality: req.param('speciality')
+            }).exec((err, newStudent) => {
+              if (err) {
+                console.log('err', err)
+                return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Votre inscription s\'est mal passée et est dans un état instable. Veuillez prévenir le webmaster pour qu\'il règle le problème.'});
+              }
+
+              return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Inscription réussie", ErrorDesc: 'Votre inscription a bien été enregistrée.'});
+            })
+
+          })
+        }
+      })
+    })
   },
 
   getSpecialities : function(req,res) {

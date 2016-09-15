@@ -7,16 +7,20 @@
 
 <% } else { %>
 
-  <table>
+  <table style="border-spacing: 10px; border-collapse: separate">
     <% bills.forEach( function(bill) { %>
       <tr>
-        <td><%=bill.year%></td>
         <td>
-          <form id="downloadBill" method="post" action="/file/bills/download">
-            <input type="hidden" name="dl" value="<%= bill.year%>" />
-            <input type="submit" value="Télécharger" />
-          </form>
+          <%=bill.year%>
         </td>
+        <form id="downloadBill" method="post" action="/file/bills/download">
+          <td>
+            <input type="hidden" name="dl" value="<%= bill.year%>" />
+          </td>
+          <td>
+            <input type="submit" value="Télécharger" />
+          </td>
+        </form>
       </tr>
     <% }); %>
   </table>
