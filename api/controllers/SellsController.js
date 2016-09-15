@@ -190,7 +190,24 @@ module.exports = {
                       attachments : [{filename:'facture.pdf', filePath:'files/factures/' + year + '/' + req.session.siret + '.pdf'}, {filename:'RIB-FIE.pdf', filePath:'files/facture_template/RIB-FIE.pdf'}]
                     });
 
-                    return res.view("CompanySpace/CommandSent", {layout:"layout"});
+                    if (created.premiumPack || created.sjd) {
+                      Sjd.create({
+                        year: year,
+                        companyName: req.session.companyName,
+                        companySiret: req.session.siret,
+                        sessionNb: 2 + created.moreSjd
+                      })
+                      .exec((err, record) => {
+                        if (err) {
+                          console.log('err :' + err)
+                          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Erreur lors de la création"});
+                        }
+                        return res.view("CompanySpace/CommandSent", {layout:"layout"});
+                      })
+                    } else {
+                      return res.view("CompanySpace/CommandSent", {layout:"layout"});
+                    }
+
                   });
                 });
               });

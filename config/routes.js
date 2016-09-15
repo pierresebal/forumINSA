@@ -95,6 +95,36 @@ module.exports.routes = {
     action: 'displayParticipatingStudents'
   },
 
+  '/Admin/SjdSessionInitialization': {
+    controller: 'AdminController',
+    action: 'initializeSjdSessions'
+  },
+
+  '/Admin/SjdSessions': {
+    controller: 'AdminController',
+    action: 'displaySjdSessions'
+  },
+
+  '/Admin/SjdParticipants': {
+    controller: 'AdminController',
+    action: 'displaySjdParticipants'
+  },
+
+  '/Admin/addCompaniesToSjd': {
+    controller: 'AdminController',
+    action: 'addCompaniesToSjd'
+  },
+
+  '/Admin/ParticipatingCompanies': {
+    controller: 'AdminController',
+    action: 'displayParticipatingCompanies'
+  },
+
+  '/Admin/CheckList':{
+    controller:'AdminController',
+    action:'checkTasks'
+  },
+
   '/Track': {
     view: 'Track/Homepage',
     locals:{layout:'layout', title:'Suivi - FIE'}
@@ -124,6 +154,8 @@ module.exports.routes = {
     controller: 'TrackController',
     action: 'displaySells'
   },
+
+
 
 
   /***************************************************************************
@@ -251,6 +283,11 @@ module.exports.routes = {
     action: 'displayACompany'
   },
 
+  '/Student/SjdInscription': {
+    controller: 'StudentController',
+    action: 'sjdInscription'
+  },
+
   /*
    ===========================================================================================================
    ============================================== COMPANY'S VIEWS ============================================
@@ -278,6 +315,7 @@ module.exports.routes = {
    ======================================== ROUTES TO COMPANY'S CONTROLLERS ==================================
    ===========================================================================================================
    */
+
 
   '/Company/CreateCompany':{
     controller:'CompanyController',
@@ -345,6 +383,26 @@ module.exports.routes = {
     action : 'setInscriptionDeadline'
   },
 
+  '/Company/ChangePassword':{
+    controller:'CompanyController',
+    action:'changePassword'
+  },
+
+  '/Company/VigipirateRegistration': {
+    controller: 'CompanyController',
+    action: 'addVigipirate'
+  },
+
+  '/Company/Vigipirate': {
+    controller: 'CompanyController',
+    action: 'displayVigipirate'
+  },
+
+  '/Company': {
+    controller: 'CompanyController',
+    action: 'TODOlist'
+  },
+
   /*
    ===========================================================================================================
    ======================================== PARTICIPATING STUDENTS ==================================
@@ -359,6 +417,26 @@ module.exports.routes = {
    '/Participation': {
      view: 'StudentParticipation/Participation',
      locals: {layout: 'layout'}
-   }
+   },
 
+   /*
+    ===========================================================================================================
+    ======================================== SJD ==================================
+    ===========================================================================================================
+    */
+
+   '/Company/AddSpecialities': {
+     controller: 'SjdController',
+     action: 'AddSpecialities'
+   },
+
+   '/Company/ManageSjd': {
+     controller: 'SjdController',
+     action: 'showSjdCompanyInscription'
+   },
+
+   '/Admin/InitializeSjd': {
+     controller: 'SjdController',
+     action: 'initialize'
+   }
 };

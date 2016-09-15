@@ -6,6 +6,7 @@
  */
 var fs = require('fs');
 var path = require('path');
+var sha1 = require('sha1');
 
 module.exports = {
 
@@ -305,6 +306,7 @@ module.exports = {
             req.session.companyName=record.companyName;
             req.session.firstName=record.firstName;
             req.session.isPME = record.isPME;
+            req.session.descLength = record.description.length;
 
             // We confirm the authentication
             console.log('Authentification succeed: '+record.firstName);
@@ -408,7 +410,6 @@ module.exports = {
 
   },
 
-
   // InitPasswd; We call this function when the user needs to receive a new password by email (because he losts it)
   // This function need POST arg named "email" wich corespond to the attribute Email of the user who need to reset password
   InitPasswdCompany:function(req,res) {
@@ -464,7 +465,6 @@ module.exports = {
     })
   },
 
-
   Profile: function(req,res) {
 
     Company.findOne({mailAddress: req.session.mailAddress}).exec(function (err, found) {
@@ -511,11 +511,23 @@ module.exports = {
     });
   },
 
-
   CvTheque: function(req, res) {
-    return res.view("CompanySpace/CvTheque", {layout:'layout', title:'CVThèque - FIE'});
-  },
+    const actualYear = new Date().getFullYear();
 
+    Sells.findOne({companySiret: req.session.siret}).exec((err, found) => { //Il faut filtrer pour que la commande soit de l'année en cours.
+      if (err) {
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      if (found) {
+        return res.view("CompanySpace/CvTheque", {layout:'layout', title:'CVThèque - FIE'});
+      } else {
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Accès non autorisé", ErrorDesc: 'Pour avoir accès à cette page, vous devez d\'abord passer commande.'});
+      }
+
+    })
+
+  },
 
   Command: function(req, res) {
 
@@ -709,6 +721,7 @@ module.exports = {
           if (err)
             return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "prb update description."});
 
+          req.session.descLength = description.length;
           return res.redirect('/Company/Profile');
         });
         break;
@@ -787,6 +800,107 @@ module.exports = {
     Sells.find({companySiret:req.session.siret}).exec(function afterwards(err, founds){
 
       return res.view('CompanySpace/Bills', {layout:'layout', bills:founds, title:'Facture - FIE'});
+    });
+  },
+
+  changePassword : function(req,res){
+  var OldPass = req.param("OldPassA");
+  var NewPassA = req.param("NewPassA");
+  var NewPassB = req.param("NewPassB");
+
+    if (NewPassA != NewPassB) {
+      return res.json({
+        changePassResponse: {
+          succes: false,
+          msg: "Les nouveaux mots de passe doivent être identiques"
+        }
+      })
+    }
+    else {
+      Company.update({mailAddress:req.session.mailAddress,password:sha1(OldPass)},{password: sha1(NewPassA)}).exec(function afterwards(err, updated) {
+        if (typeof updated[0] == "undefined" && !err) {
+          return res.json({
+            changePassResponse: {
+              succes: false,
+              msg: "Erreur... Le mot de passe courant saisi est incorrect."
+            }
+          });
+        }
+        else {
+          // On supprime le compteur de tentatives
+          delete(req.session.changePasswordTries);
+          // On renvoie une réponse pour la requette AJAX
+          return res.json({changePassResponse: {succes: true, msg: "Modification du mot de passe validée"}});
+        }
+      });
+    }
+  },
+
+  displayVigipirate: function(req, res) {
+    Company.findOne({siret: req.session.siret}).exec((err, company) => {
+      if (err) {
+        console.log('err', err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      return res.view('CompanySpace/Vigipirate', {layout: 'layout', company: company})
+    })
+  },
+
+  addVigipirate: function(req, res) {
+
+    var registeredPeople = []
+
+    for (var i=0; i<15; i++) {
+      if (req.param(i) != '')
+        registeredPeople.push(req.param(i))
+    }
+
+    Company.update({siret: req.session.siret}, {vigipirate: registeredPeople}).exec((err, updated) => {
+      if (err) {
+        console.log('err', err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      return res.redirect('/Company/vigipirate')
+    })
+  },
+
+  TODOlist : function(req,res) {
+    // Controller qui permet d'afficher les taches à faire aux entreprises
+    // Les taches a faire sont contenues dans le JSON TODOtasks
+
+    //TODOtasks (contenu dans le fichier /config/TODOtasks)
+    // titre: titre de la notification qui apparait quand la tache n'a pas ete faite
+    // msg: message affiché en dessous de la notification (supporte le html)
+    // checkFun: fonction de validation de la tache qui renvoie un booléen, true si la notification doit être affichée
+
+    var TODOtasks = sails.config.TODOtasks;
+
+
+    // Génération du JSON TODOlist qui sera envoyé à la view par traitement de TODOtasks
+    var TODOlist = [];
+
+    // Traitment des taches
+    Company.findOne({mailAddress:req.session.mailAddress}).exec(function(err,company){
+      if(!err){
+        for(var i=0;i<TODOtasks.length;i++){
+          if(TODOtasks[i].checkFun(company)){
+            // Si la tache est a faire on enregistre le message a passer à la view
+            TODOlist[i] = {title:TODOtasks[i].title,msg:TODOtasks[i].msg};
+          }
+          else {
+            TODOlist[i] = false;
+          }
+        }
+
+        // On envoie la view avec les taches à faire
+        res.view("CompanySpace/TODOlist",{layout:'layout',TODOlist:TODOlist});
+
+      }
+      else {
+        res.view('ErrorPage',{layout:'layout',ErrorTitle:'Erreur lors de la génération de la TODOlist.'})
+      }
     });
   }
 

@@ -85,7 +85,7 @@ module.exports = {
 
     description:{
       type:'string',
-      defaultsTo:''
+      defaultsTo:'Pas de description fournie.'
     },
 
     websiteUrl:{
@@ -157,6 +157,10 @@ module.exports = {
       defaultsTo:false
     },
 
+    vigipirate: {
+      type: 'array',
+      defaultsTo: []
+    },
     //Ce qui va suivre est très moche. Il aurait fallu faire un many-to-many mais je l'ai vu trop tard et j'ai pas envie de tout rechanger car la deadline c'était il y a 3 jours.
     //Ca correspond aux spécialités qui intéressent la companie
     AE:{

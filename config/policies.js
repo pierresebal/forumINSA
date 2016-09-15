@@ -27,7 +27,9 @@ module.exports.policies = {
     Command: "CompanyAuth",
     CompanyLogout:"CompanyAuth",
     setAUserInfo:"CompanyAuth",
-    displayBills:"CompanyAuth"
+    displayBills:"CompanyAuth",
+    changePassword:"CompanyAuth",
+    TODOlist:"CompanyAuth"
   },
 
   StudentController:{
@@ -42,6 +44,11 @@ module.exports.policies = {
 
   SellsController:{
     addASell:"CompanyAuth"
+  },
+
+  SjdController: {
+    addSpecialities: "CompanyAuth",
+    showSjdCompanyInscription: "CompanyAuth"
   }
 
 };
