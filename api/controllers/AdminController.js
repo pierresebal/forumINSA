@@ -338,6 +338,22 @@ module.exports = {
         return res.redirect("/Admin/SjdSessions")
       })
     })
+  },
+
+  displayStudents: function(req, res) {
+    Student.find().exec((err, students) => {
+      if (err) {
+        console.log('err', err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      students.sort((a, b) => a.speciality < b.speciality)
+      
+      return res.view('Admin/RegisteredStudents', {layout: 'layout', students: students})
+
+    })
+
   }
+
 
 };

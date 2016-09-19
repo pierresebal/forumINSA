@@ -1,0 +1,103 @@
+<h1>Partie admin</h1>
+
+<% if (req.session.isAdmin != true) { %>
+
+<form method="POST" action="/Admin/Login">
+  <input type="password" name="password"/>
+  <input type="submit" value="Se connecter"/>
+</form>
+
+<% } else {
+    var speciality = ""
+%>
+
+<h2>Etudiants enregistrées sur le site</h2>
+<table style="border-spacing: 10px; border-collapse: separate">
+  <tr>
+    <th>n°</th> <th>Login</th> <th>Nom</th> <th>Prénom</th> <th>M/F</th> <th>Mail</th> <th>Année</th> <th>CV fr</th> <th>CV en</th> <th>Site</th> <th>Ln</th> <th>Vd</th> <th>Gh</th>
+  </tr>
+<% students.forEach( function(student, index) { %>
+  <% if (student.speciality != speciality) {
+    speciality = student.speciality
+  %>
+  <tr>
+    <td colspan="13"><b><%=student.speciality%></b></td>
+  </tr>
+  <% }%>
+  <tr>
+    <td>
+      <%=index %>)
+    </td>
+    <td>
+      <%=student.login %>
+    </td>
+    <td>
+      <%=student.lastName %>
+    </td>
+    <td>
+      <%=student.firstName %>
+    </td>
+    <td>
+      <%=student.gender %>
+    </td>
+    <td>
+      <%=student.mailAddress %>
+    </td>
+    <td>
+      <%=student.year %>
+    </td>
+    <td>
+      <% if (typeof (frCVPath) == 'undefined' || frCVPath == "") { %>
+      <form class="pure-form" id="downloadFormFR" method="post" action="/file/download">
+        <input type="hidden" name="dl" value="fr"/>
+        <input type="hidden" name="cvLogin" value="<%=student.login%>"/>
+        <button type="submit" ><i class="fa fa-download" aria-hidden="true"></i></button>
+      </form>
+      <% } else { %>
+        -
+      <% } %>
+    </td>
+    <td>
+      <% if (typeof (frCVPath) == 'undefined' || frCVPath == "") { %>
+      <form class="pure-form" id="downloadFormEN" method="post" action="/file/download">
+        <input type="hidden" name="dl" value="en"/>
+        <input type="hidden" name="cvLogin" value="<%=student.login%>"/>
+        <button type="submit" ><i class="fa fa-download" aria-hidden="true"></i></button>
+      </form>
+      <% } else { %>
+        -
+      <% } %>
+    </td>
+    <td>
+      <% if (student.personalWebsite.length != 0)  { %>
+        <a href="<%=student.personalWebsite%>">Voir</a>
+      <% } else { %>
+        -
+      <% } %>
+    </td>
+    <td>
+      <% if (student.linkedin.length != 0)  { %>
+        <a href="<%= student.linkedin%>">Voir</a>
+      <% } else { %>
+        -
+      <% } %>
+    </td>
+    <td>
+      <% if (student.viadeo.length != 0)  { %>
+        <a href="<%= student.viadeo%>">Voir</a>
+      <% } else { %>
+        -
+      <% } %>
+    </td>
+    <td>
+      <% if (student.github.length != 0)  { %>
+        <a href="<%= student.github%>">Voir</a>
+      <% } else { %>
+        -
+      <% } %>
+    </td>
+  </tr>
+<% }); %>
+</table>
+
+<% } %>
