@@ -10,7 +10,7 @@ module.exports.TODOtasks = [
   // Vérification de la longueur de la description
     {
       title:"Description > 100 mots",
-      msg:"La description de votre entreprise fait moins de 100 mots. Nous vous conseillons une taille entre 100 et 250 mots afin de s'adapter au mieux au le livret donné aux étudiants le jour J. Vous pouvez la modifier ici : <a href='/Company/Profile'>\"Profil\"</a>",
+      msg:"La description de votre entreprise fait moins de 100 mots. Nous vous conseillons une taille entre 100 et 250 mots afin de s'adapter au mieux au livret donné aux étudiants le jour J. Vous pouvez la modifier ici : <a href='/Company/Profile'>\"Profil\"</a>",
       checkFun:function(record){
         //le paramètre record prends un record de la BDD entreprises
         if(record.description.split(' ').length <= 150){

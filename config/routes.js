@@ -125,6 +125,11 @@ module.exports.routes = {
     action:'checkTasks'
   },
 
+  '/Admin/RegisteredStudents': {
+    controller: 'AdminController',
+    action: 'displayStudents'
+  },
+
   '/Track': {
     view: 'Track/Homepage',
     locals:{layout:'layout', title:'Suivi - FIE'}
