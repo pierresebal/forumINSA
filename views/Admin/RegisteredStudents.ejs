@@ -47,7 +47,7 @@
       <%=student.year %>
     </td>
     <td>
-      <% if (typeof frCVPath != 'undefined' && frCVPath != "") { %>
+      <% if (typeof student.frCVPath != 'undefined' && student.frCVPath != "") { %>
       <form class="pure-form" id="downloadFormFR" method="post" action="/file/download">
         <input type="hidden" name="dl" value="fr"/>
         <input type="hidden" name="cvLogin" value="<%=student.login%>"/>
@@ -58,7 +58,8 @@
       <% } %>
     </td>
     <td>
-      <% if (typeof enCVPath != 'undefined' && enCVPath != "") { %>
+
+      <% if (typeof student.enCVPath != 'undefined' && student.enCVPath != "") { %>
       <form class="pure-form" id="downloadFormEN" method="post" action="/file/download">
         <input type="hidden" name="dl" value="en"/>
         <input type="hidden" name="cvLogin" value="<%=student.login%>"/>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title><%=typeof title == 'undefined' ? 'Forum INSA Entreprises' : title%></title>
+
+
+  <!-- Viewport mobile tag for sensible mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- Latest compiled and minified jquery core -->
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+
+  <!-- Bootstrap - Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- Bootstrap - Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+  <!-- Bootstrap - Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <!--STYLES-->
+  <link rel="stylesheet" href="/styles/custom.css">
+  <link rel="stylesheet" href="/styles/importer.css">
+  <link rel="stylesheet" href="/styles/pure-min.css">
+  <link rel="stylesheet" href="/styles/qgrids-responsive-min.css">
+  <link rel="stylesheet" href="/styles/unslider-dots.css">
+  <link rel="stylesheet" href="/styles/unslider.css">
+  <!--STYLES END-->
+
+  <!-- React -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.8/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.8/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+
+
+</head>
+<body class="custom-body">
+      <header>
+          <div class="center-column">
+
+            <div id="networks">
+                <a href="https://www.facebook.com/ForumInsaEntreprises" class="icon-button facebook" target="_blank"><i class="fa fa-facebook icon-facebook"></i><span></span></a>
+                <a href="https://twitter.com/INSAToulouse" class="icon-button twitter" target="_blank"><i class="fa fa-twitter icon-twitter"></i><span></span></a>
+                <a href="https://fr.linkedin.com/in/forum-insa-entreprises-49377699" class="icon-button linkedin" target="_blank"><i class="fa fa-linkedin icon-linkedin"></i><span></span></a>
+            </div>
+
+            <div class="pure-g">
+                <div id="logo" class="pure-u-1">
+                    <a href="/" ><img id="logo-img" src='/images/Logo_FIE_rouge.png' width="400" alt="logo"/></a>
+                </div>
+
+                <div class="pure-u" id="connect-infos">
+                    <% if(req.session.authenticated){ %>
+                        <p>Connecté en tant que:<br/><b>
+                      <% if (req.session.sessionType == "company") {%>
+                          <%=req.session.companyName%>
+                    <%  } else if (req.session.sessionType == "student") { %>
+                          <%=req.session.firstName%>
+                    <%  } else { %>
+                          Type inconnu
+                    <%  } %>
+                        </b></p>
+                    <% } else { %>
+                            <p>CONNEXION </p>
+                            <button id="connectStudent"  type="button" class="btn red-button student"><i class="fa fa-graduation-cap"></i> Etudiant</button>
+                            <button id="connectCompany"  type="button" class="btn red-button company"><i class="fa fa-briefcase"></i> Entreprise</button>
+                    <% } %>
+                </div>
+            </div>
+
+        </div>
+      </header>
+
+      <!-- Content inserted here -->
+      <%- include nav %>
+      <div class="center-column" style="padding-right: 20px; padding-left: 20px">
+        <%- body %>
+        <div id="subBody"></div>
+      </div>
+
+
+      <footer>
+        <div id="footer-content" class="pure-g">
+            <div class="pure-u-1 pure-u-md-1 footer">
+            <%- include footer %>
+            </div>
+        </div>
+      </footer>
+<script src="/js/unslider-min.js"></script>
+<script>
+		jQuery(document).ready(function($) {
+
+            var margin_left;
+            var logo_width;
+            var fill_size;
+            var page_size;
+            var page_width;
+
+            update_size();
+
+
+
+            $( window ).resize(function(){
+                update_size();
+            });
+
+            function update_size(){
+
+                // Position connect info
+                //margin_left = (($(".center-column").width() - $("#connect-infos").width() - $("#logo").width()) - 10);
+                //margin_left = (margin_left < 10) ? 10 : margin_left;
+                //$("#connect-infos").css("margin-left", margin_left);
+
+                // Resize content
+                //$(".center-column").width(($(window).width() > 1200) ? 1200 : $(window).outerWidth());
+
+
+                // Resize the logo
+                logo_width = $(".center-column").outerWidth() - $("#networks").width() + 56;
+                $("#logo-img").width(logo_width > 400 ? 400 : $(".center-column").width() - $("#networks").width() + 56);
+
+                // Stick the footer to the bottom
+                page_size = $("header").outerHeight() + $(".nav").outerHeight() + $(".content-part").outerHeight() + $("footer").outerHeight();
+                fill_size = $(window).height() - page_size - 2;
+                $(".content-part").height(page_size > $(window).height() ? $(".content-part").height() : $(".content-part").height()+fill_size);
+
+                // footer
+                page_middle = $(window).width()/2;
+                $("#footer-content").html(
+                    '<svg height="220" width="'+ $(window).width() + '">'
+                        +'<polygon points="0,50 0,150 ' + parseInt(page_middle + 50) + ',150 ' + parseInt(page_middle + 100) + ',50" style="fill:#e42618;" />'
+                        +'<polygon points="'+ parseInt(page_middle - 50) + ',0 '+ parseInt(page_middle - 100)+',100 '+$(window).width()+',100 '+$(window).width()+',0" style="fill:#353336;" />'
+                        +'Sorry, your browser does not support inline SVG.'
+                    +'</svg>'
+                );
+
+            }
+
+            $("#connect-infos").css("margin-left", margin_left);
+
+		});
+	</script>
+</body>
+
+
+</html>
