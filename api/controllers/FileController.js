@@ -78,7 +78,7 @@ module.exports = {
 
     if (req.session.sessionType == 'student')
       cvLogin = req.session.login;
-    else if (req.session.sessionType == 'company')
+    else if (req.session.sessionType == 'company' || req.session.isAdmin)
       cvLogin = req.param('cvLogin');
 
     // Get the URL of the file to download
