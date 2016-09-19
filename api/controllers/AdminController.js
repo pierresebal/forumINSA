@@ -348,7 +348,7 @@ module.exports = {
       }
 
       const sortedStudents = students
-      sortedStudents.sort((a, b) => a.speciality.localeCompare(b.speciality))
+      sortedStudents.sort(function(a, b) {return a.speciality.localeCompare(b.speciality)})
 
       return res.view('Admin/RegisteredStudents', {layout: 'layout', students: sortedStudents})
 
