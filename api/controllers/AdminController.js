@@ -347,9 +347,10 @@ module.exports = {
         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
       }
 
-      students.sort((a, b) => a.speciality < b.speciality)
-      
-      return res.view('Admin/RegisteredStudents', {layout: 'layout', students: students})
+      const sortedStudents = students
+      sortedStudents.sort((a, b) => a.speciality.localeCompare(b.speciality))
+
+      return res.view('Admin/RegisteredStudents', {layout: 'layout', students: sortedStudents})
 
     })
 
