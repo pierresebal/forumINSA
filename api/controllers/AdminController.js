@@ -122,7 +122,10 @@ module.exports = {
         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Les entreprises ne sont pas récupérées"});
       }
 
-      return res.view('Admin/RegisteredCompanies', {layout:'layout', companies:companies});
+      var sortedCompanies = companies
+      sortedCompanies.sort((a,b) => a.active > b.active)
+
+      return res.view('Admin/RegisteredCompanies', {layout:'layout', companies:sortedCompanies});
     })
   },
 
