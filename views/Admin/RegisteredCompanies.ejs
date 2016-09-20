@@ -7,7 +7,10 @@
   <input type="submit" value="Se connecter"/>
 </form>
 
-<% } else { %>
+<% } else {
+  var notActive = true
+  var active = true
+  %>
 
 <h2>Entreprises enregistrées sur le site</h2>
 
@@ -16,6 +19,19 @@
     <th>N°</th> <th>Nom</th> <th>PME</th> <th>Siret</th> <th>Date d'inscrition</th> <th>Blacklistée</th> <th>Plus d'info</th>
   </tr>
   <% companies.forEach( function(company, index) { %>
+    <% if (company.active == 0 && notActive) {
+      notActive = false
+    %>
+        <tr>
+          <td colspan="7"><b>NOT ACTIVATED ACCOUNT YET</b></td>
+        </tr>
+    <% } else if (company.active == 1 && active) {
+      active = false
+    %>
+      <tr>
+        <td colspan="7"><b>ACTIVATED ACCOUNT</b></td>
+      </tr>
+    <% } %>
   <tr>
     <td>
       <%=index %>)
