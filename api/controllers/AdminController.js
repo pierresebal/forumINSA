@@ -123,7 +123,8 @@ module.exports = {
       }
 
       var sortedCompanies = companies
-      sortedCompanies.sort((a,b) => a.active > b.active)
+      sortedCompanies.sort((a,b) => a.active)
+
 
       return res.view('Admin/RegisteredCompanies', {layout:'layout', companies:sortedCompanies});
     })
