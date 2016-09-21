@@ -49,6 +49,23 @@ module.exports.policies = {
   SjdController: {
     addSpecialities: "CompanyAuth",
     showSjdCompanyInscription: "CompanyAuth"
+  },
+
+  AdminController:{
+    'displayYearSettings':'adminAuth',
+    'setPrices':'adminAuth',
+    'setInscriptionOpen':'adminAuth',
+    'setInscriptionDeadline':'adminAuth',
+    'displayCompanies':'adminAuth',
+    'checkTasks':'adminAuth',
+    'displayACompany':'adminAuth',
+    'displaySells':'adminAuth',
+    'displayParticipatingStudents':'adminAuth',
+    'displaySjdParticipants':'adminAuth',
+    'initializeSjdSessions':'adminAuth',
+    'displaySjdSessions':'adminAuth',
+    'addCompaniesToSjd':'adminAuth',
+    'displayStudents':'adminAuth'
   }
 
 };
