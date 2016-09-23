@@ -138,7 +138,7 @@ module.exports = {
     active:{
       type:"integer",
       required:true,
-      defaultsTo:false
+      defaultsTo:0
     },
 
     activationUrl:{
