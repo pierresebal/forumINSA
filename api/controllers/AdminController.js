@@ -208,7 +208,23 @@ module.exports = {
       if (!sells)
         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Aucune ventes trouvées."});
 
-      return res.view('Admin/Sells', {layout:'layout', sells:sells})
+      const companiesSiret = sells.map((sell) => sell.companySiret)
+      const sortSettings = {siret: companiesSiret}
+
+      Company.find(sortSettings).exec(function (err2, companies) {
+        if (err2) {
+          console.log('error : ' + err)
+          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Erreur: les entreprises n'ont pas été récupérées."});
+        }
+
+        if (!companies)
+          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Aucune entreprises trouvées."});
+
+        var companiesMail = companies.reduce((a,b,i) => a + ", " + b.mailAddress, "")
+        companiesMail = companiesMail.substring(2)
+
+        return res.view('Admin/Sells', {layout:'layout', sells:sells, companiesMail: companiesMail})
+      })
     })
   },
 
