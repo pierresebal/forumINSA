@@ -12,6 +12,9 @@
   var selecNo;
   var total = 0;
 %>
+
+  <h2>Liste des ventes</h2>
+
   <table style="border-spacing: 5px; border-collapse: separate">
     <tr>
       <th>N°</th>
@@ -73,5 +76,10 @@
   <br />
   <br />
   <p>Total vendu : <b><%=total%>€</b></p>
+  <br />
+  <br />
+  <h2>Mails des entreprises</h2>
+  <p>Afin de facilement envoyer un message groupé aux entreprises inscrites vous pouvez utiliser les adresses suivantes :</p>
+  <p><%= companiesMail%></p>
 
 <% } %>
