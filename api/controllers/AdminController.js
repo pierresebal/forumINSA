@@ -351,10 +351,10 @@ module.exports = {
         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
       }
 
-      const sortedStudents = students
+      var sortedStudents = students
       sortedStudents.sort(function(a, b) {
         if (typeof a.speciality && b.speciality) {
-          return a.speciality < b.speciality
+          return a.speciality.localeCompare(b.speciality)
         } else if (a.speciality && !b.speciality) {
           return a.speciality.localeCompare("undefined")
         } else if (!a.speciality && b.speciality){
