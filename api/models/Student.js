@@ -31,7 +31,8 @@ module.exports = {
     },
     year: { //Voir si on peut le déterminer depuis le ldap
       type:'integer',
-      enum:[1,2,3,4,5]
+      enum:[1,2,3,4,5],
+      defaultsTo: 1
     },
     speciality: {
       type:'string',
@@ -45,7 +46,8 @@ module.exports = {
         'Génie Physique',
         'Informatique et Réseaux',
         'Aucune spécialité'
-      ]
+      ],
+      defaultsTo: "Aucune spécialité"
     },
     enCVPath: {
       type:'string',
