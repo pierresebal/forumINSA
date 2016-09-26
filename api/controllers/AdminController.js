@@ -353,11 +353,13 @@ module.exports = {
 
       const sortedStudents = students
       sortedStudents.sort(function(a, b) {
-        if (typeof a.speciality == 'undefined') {
+        if (typeof a.speciality == 'undefined' && typeof b.speciality != 'undefined') {
           const truc = "undefined"
           return truc.localeCompare(b.speciality)
-        } else if (typeof b.speciality == 'undefined') {
+        } else if (typeof a.speciality != 'undefined' && typeof b.speciality == 'undefined') {
           return a.speciality.localeCompare("undefined")
+        } else if (typeof a.speciality == 'undefined' && typeof b.speciality == 'undefined') {
+          return -1
         } else {
           return a.speciality.localeCompare(b.speciality)
         }
