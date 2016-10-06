@@ -18,6 +18,9 @@
   var GM = company.GM ? "checked" : ""
   var GMM = company.GMM ? "checked" : ""
 
+  var description = company.description
+  description = description.replace(/(?:\r\n|\r|\n)/g, '<br />');
+
   %>
 
   <h1><%=company.companyName%></h1>
@@ -112,7 +115,7 @@
       </tr>
       <tr>
         <td><h3>Description</h3></td>
-        <td><%=company.description%></td>
+        <td><%-description%></td>
       </tr>
       <tr>
         <td><h3>Site internet</h3></td>

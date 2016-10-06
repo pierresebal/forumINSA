@@ -6,6 +6,8 @@ var GPE = company.GPE ? "checked" : ""
 var GC = company.GC ? "checked" : ""
 var GM = company.GM ? "checked" : ""
 var GMM = company.GMM ? "checked" : ""
+var description = company.description
+description = description.replace(/(?:\r\n|\r|\n)/g, '<br />');
 
 var inscription = ''
 if (sell.forum)
@@ -14,6 +16,7 @@ else if (sell.sjd)
   inscription = 'SJD uniquement'
 else if (sell.premiumPack)
   inscription = 'Forum et SJD'
+
 %>
 
 <h1><%=company.companyName%></h1>
@@ -41,7 +44,7 @@ else if (sell.premiumPack)
     </tr>
     <tr>
       <td><b>Description</b></td>
-      <td><%=company.description%></td>
+      <td><%-description%></td>
     </tr>
     <tr>
       <td><b>Site internet</b></td>
