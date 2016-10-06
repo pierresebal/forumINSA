@@ -473,6 +473,9 @@ module.exports = {
         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Erreur Affichage',  ErrorDesc: 'Une erreur inconnue est survenue lors de l\'affichage de votre profil'});
 
       if (found) {
+        var description = found.description
+        description = description.replace(/(?:\r\n|\r|\n)/g, '<br />');
+
         return res.view("CompanySpace/Profile", {
           layout: 'layout',
           firstName: found.firstName,
@@ -489,7 +492,7 @@ module.exports = {
           companyName: found.companyName,
           companyGroup: found.companyGroup,
           logoPath: found.logoPath,
-          description: found.description,
+          description: description,
           websiteUrl: found.websiteUrl,
           careerUrl: found.careerUrl,
           road: found.road,

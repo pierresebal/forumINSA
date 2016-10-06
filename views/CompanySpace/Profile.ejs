@@ -23,6 +23,7 @@ if (typeof bMailAddress == 'undefined')
 
 if (typeof complementaryInformation == 'undefined')
   complementaryInformation = '';
+
 %>
 
 <div class="content">
@@ -169,11 +170,12 @@ if (typeof complementaryInformation == 'undefined')
   </tr>
   <tr>
     <td><h3>Description</h3></td>
-    <td><%=description%></td>
+    <td><%-description%></td>
     <form id="description" method="post" action="/Company/setAUserInfo">
         <td>
             <input type="hidden" name="data" value="n"/>
-            <textarea  type="text" name="description"><%=description%></textarea>
+            <textarea  type="text" name="description"><%-description%></textarea>
+            <p><i>*Balises HTML autorisées</i></p>
         </td>
         <td>
             <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
