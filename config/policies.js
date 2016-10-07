@@ -29,7 +29,9 @@ module.exports.policies = {
     setAUserInfo:"CompanyAuth",
     displayBills:"CompanyAuth",
     changePassword:"CompanyAuth",
-    TODOlist:"CompanyAuth"
+    TODOlist:"CompanyAuth",
+    displayVigipirate:"CompanyAuth",
+    addVigipirate:"CompanyAuth"
   },
 
   StudentController:{
