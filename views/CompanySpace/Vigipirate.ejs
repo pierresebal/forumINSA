@@ -21,7 +21,7 @@ Dans le cadre des mesures vigipirate, il est obligatoire que les personnes parti
       <form class="pure-form pure-form-stacked" method="post" action="/Company/VigipirateRegistration">
         <fieldset>
           <% for (var i=0; i<15; i++) { %>
-            <input class="pure-input-1" name="<%= i%>" placeholder="<%= i+1%> prénom NOM"/>
+            <input class="pure-input-1" name="<%= i%>" placeholder="<%= i+1%> prénom NOM" value="<%=(company.vigipirate && company.vigipirate[i]) || ''%>"/>
           <% } %>
           <br />
           <button style="width: 100%;" type="submit" >Enregistrer</button>
