@@ -121,6 +121,11 @@ module.exports = {
 
       case 'w' :
         var personalWebsite = req.param('personalWebsite');
+
+        if (personalWebsite.charAt(4) != ':' && personalWebsite.charAt(5) != ':') {
+          personalWebsite = "http://" + personalWebsite
+        }
+
         //Todo: Verification de personnalWebsite;
         Student.update({login:req.session.login}, {personalWebsite:personalWebsite}).exec(function(err, record) {
           if (err)
@@ -132,6 +137,10 @@ module.exports = {
 
       case 'l' :
         var linkedin = req.param('linkedin');
+
+        if (linkedin.charAt(4) != ':' && linkedin.charAt(5) != ':') {
+          linkedin = "https://" + linkedin
+        }
         //Todo: Verification de year;
         Student.update({login:req.session.login}, {linkedin:linkedin}).exec(function(err, record) {
           if (err)
@@ -143,6 +152,10 @@ module.exports = {
 
       case 'v' :
         var viadeo = req.param('viadeo');
+        if (viadeo.charAt(4) != ':' && viadeo.charAt(5) != ':') {
+          viadeo = "https://" + viadeo
+        }
+
         //Todo: Verification de year;
         Student.update({login:req.session.login}, {viadeo:viadeo}).exec(function(err, record) {
           if (err)
@@ -154,6 +167,10 @@ module.exports = {
 
       case 'g' :
         var github = req.param('github');
+
+        if (github.charAt(4) != ':' && github.charAt(5) != ':') {
+          github = "https://" + github
+        }
         //Todo: Verification de year;
         Student.update({login:req.session.login}, {github:github}).exec(function(err, record) {
           if (err)
@@ -199,16 +216,38 @@ module.exports = {
     if (req.param('maillAddress') == "")
       mailAddress= req.param('mailAddress');
 
+      var personalWebsite = req.param('personalWebsite')
+      var linkedin = req.param('linkedin')
+      var viadeo = req.param('viadeo')
+      var github = req.param('github')
+
+
+      if (personalWebsite.charAt(4) != ':' && personalWebsite.charAt(5) != ':' && personalWebsite != "") {
+        personalWebsite = "http://" + personalWebsite
+      }
+
+      if (linkedin.charAt(4) != ':' && linkedin.charAt(5) != ':' && linkedin != "") {
+        linkedin = "https://" + linkedin
+      }
+
+      if (github.charAt(4) != ':' && github.charAt(5) != ':' && github != "") {
+        github = "https://" + github
+      }
+
+      if (viadeo.charAt(4) != ':' && viadeo.charAt(5) != ':' && viadeo != "") {
+        viadeo = "https://" + viadeo
+      }
+
       //Todo : vérifier que l'adresse n'existe pas déjà
 
     Student.update({login:req.session.login}, {
       mailAddress: mailAddress,
       year: req.param('year'),
       speciality: req.param('speciality'),
-      personalWebsite: req.param('personalWebsite'),
-      linkedin: req.param('linkedin'),
-      viadeo: req.param('viadeo'),
-      github: req.param('github')
+      personalWebsite: personalWebsite,
+      linkedin: linkedin,
+      viadeo: viadeo,
+      github: github
     }).exec(function update(err, updatedUser){
       if (err) {
         console.log(err);
