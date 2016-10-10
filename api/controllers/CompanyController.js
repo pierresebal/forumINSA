@@ -208,6 +208,16 @@ module.exports = {
           var sha1 = require('sha1');
           var date = new Date();
           var ActivationUrl = sha1(date.getTime());
+          var websiteUrl = req.param('CompanyWebsiteUrl')
+          var careerUrl = req.param('CompanyCareerUrl')
+
+          if (websiteUrl.charAt(4) != ':' && websiteUrl.charAt(5) != ':' && websiteUrl != "") {
+            websiteUrl = "http://" + websiteUrl
+          }
+
+          if (careerUrl.charAt(4) != ':' && careerUrl.charAt(5) != ':' && careerUrl != "") {
+            careerUrl = "http://" + careerUrl
+          }
 
           // Ajout de l'entreprise dans la BDD
           Company.create({
@@ -221,8 +231,8 @@ module.exports = {
             companyName:req.param('CompanyName'),
             companyGroup:req.param('CompanyGroup'),
             description:req.param('CompanyDescription'),
-            websiteUrl:req.param('CompanyWebsiteUrl'),
-            careerUrl:req.param('CompanyCareerUrl'),
+            websiteUrl:websiteUrl,
+            careerUrl:careerUrl,
             road:req.param('CompanyAddressRoad'),
             complementaryInformation:req.param('complementaryInformation'),
             city:req.param('CompanyAddressCity'),
@@ -732,6 +742,11 @@ module.exports = {
 
       case 'o' :
         var websiteUrl = req.param('websiteUrl');
+
+        if (websiteUrl.charAt(4) != ':' && websiteUrl.charAt(5) != ':' && websiteUrl != "") {
+          websiteUrl = "http://" + websiteUrl
+        }
+
         //Todo: Verification de websiteUrl;
         Company.update({mailAddress:req.session.mailAddress}, {websiteUrl:websiteUrl}).exec(function(err, record) {
           if (err)
@@ -743,6 +758,11 @@ module.exports = {
 
       case 'p' :
         var careerUrl = req.param('careerUrl');
+
+        if (careerUrl.charAt(4) != ':' && careerUrl.charAt(5) != ':' && careerUrl != "") {
+          careerUrl = "http://" + careerUrl
+        }
+
         //Todo: Verification de careerUrl;
         Company.update({mailAddress:req.session.mailAddress}, {careerUrl:careerUrl}).exec(function(err, record) {
           if (err)
