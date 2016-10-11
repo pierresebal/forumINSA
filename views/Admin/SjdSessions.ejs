@@ -11,6 +11,7 @@
 
   <p>
     Si les créneaux n'existent pas vous pouvez les créer en cliquant ici : <a href="/Admin/SjdSessionInitialization">Créer</a>
+    Vous pouvez ajouter ou supprimer
   </p>
 
   <h2>Créneaux actuels</h2>
@@ -21,6 +22,24 @@
       <% session.specialities.forEach((speciality) => { %>
       <b><%=speciality.name%></b> : <%=speciality.companies%><br />
       <b>Etudiants</b> : <%=speciality.students%><br />
+      <form method="post" action="/Admin/changeStudentSjd">
+        <input type="text" name="student" />
+        <input type="text" name="speciality" hidden="hidden" value="<%= speciality.name%>"/>
+        <input type="text" name="sessionId" hidden="hidden" value="<%= session.sessionId%>"/>
+        <input type="text" name="addOrRemove" hidden="hidden" value="add"/>
+
+        <input type="submit" value="Ajouter" />
+      </form>
+
+      <form method="post" action="/Admin/changeStudentSjd">
+        <input type="text" name="student" />
+        <input type="text" name="speciality" hidden="hidden" value="<%= speciality.name%>"/>
+        <input type="text" name="sessionId" hidden="hidden" value="<%= session.sessionId%>"/>
+        <input type="text" name="addOrRemove" hidden="hidden" value="remove"/>
+        <input type="submit" value="Supprimer" />
+      </form>
+
+
       <br />
       <% }) %>
     </p>
