@@ -130,6 +130,11 @@ module.exports.routes = {
     action: 'displayStudents'
   },
 
+  '/Admin/changeStudentSjd': {
+    controller: 'AdminController',
+    action: 'changeStudentSjd'
+  },
+
   '/Track': {
     view: 'Track/Homepage',
     locals:{layout:'layout', title:'Suivi - FIE'}
