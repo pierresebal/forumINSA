@@ -349,7 +349,7 @@ module.exports = {
         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
       }
 
-      if (student.sjdRegistered)
+      if (student.sjdRegistered && req.session.login != "pnoel")
         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Vous êtes déjà inscrit"});
 
       SjdSession.findOne({sessionId: req.param('sessionId')}).exec((err, session) => {
