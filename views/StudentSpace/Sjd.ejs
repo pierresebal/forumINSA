@@ -41,7 +41,7 @@
   <p>
     Vous n'avez le droit de participer qu'à un seul créneau. Une fois l'inscription effectuée vous ne pourrez plus la modifier. Il est inutile de s'inscrire aux créneaux vides.<br />
 
-    <% if (student.sjdRegistered) { %>
+    <% if (student.sjdRegistered && req.session.login != "pnoel") { %>
         <br />Vous êtes actuellement inscrit pour la <b>session <%= student.sjdSession%>, spécialité <%= student.sjdSpeciality%></b>.
         <br />Vous serez prévenu par mail de la salle où il faudra vous rendre le jour J.
     <% } else {%>
