@@ -384,6 +384,73 @@ module.exports = {
 
     })
 
+  },
+
+  changeStudentSjd: function(req, res) {
+    const login = req.param("student")
+    const add = req.param("addOrRemove") == "add"
+
+    Student.findOne({login:login}).exec((err, found) => {
+      if (err) {
+        console.log('err', err)
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      if (!found) {
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "L'étudiant " + login + " n'est pas inscrit sur le site", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      if (found && found.sjdRegistered && add) {
+        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "L'étudiant " + login + " est déjà inscrit ailleurs", ErrorDesc: 'Veuillez réessayer'});
+      }
+
+      Student.update({login: login},  {sjdRegistered: add}).exec((err, updated) => {
+        if (err) {
+          console.log('err', err)
+          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+        }
+
+        SjdSession.findOne({sessionId: req.param('sessionId')}).exec((err, session) => {
+          if (err) {
+            console.log('err', err)
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+          }
+
+          if (!session) {
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Session non trouvée", ErrorDesc: 'Veuillez réessayer'});
+          }
+
+          var newSpecialities = session.specialities
+          const index = session.specialities.findIndex((spe) => spe.name == req.param('speciality'))
+
+          newStudents = session.specialities[index].students
+
+          const studentIndex = newStudents.indexOf(login)
+
+          if (studentIndex > -1 && add) {
+              return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Etudiant déjà présent dans ce créneau", ErrorDesc: 'Veuillez réessayer'});
+          } else if (studentIndex == -1 && !add) {
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Etudiant non présent dans ce créneau", ErrorDesc: 'Veuillez réessayer'});
+          }
+
+          if (add) {
+            newSpecialities[index].students.push(login)
+          } else {
+            console.log('COUCOU : ', studentIndex)
+            newSpecialities[index].students.splice(studentIndex, 1)
+          }
+
+          SjdSession.update({sessionId: req.param('sessionId')}, {specialities: newSpecialities}).exec((err, updated) => {
+            if (err) {
+              console.log('err', err)
+              return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
+            }
+
+            return res.redirect('/Admin/SjdSessions')
+          })
+        })
+      })
+    })
   }
 
 
