@@ -1,6 +1,6 @@
 <h1>Inscription SJD</h1>
 
-<% if (true) { %>
+<% if (false) { %>
     <h2>Inscriptions fermées</h2>
     <p>L'ouverture des inscriptions aura lieu dans les 2 semaines précédent le forum.<p>
 <% } else { %>
@@ -21,6 +21,7 @@
         var places = 8 - speciality.students.length
         var first
       %>
+      <% if (speciality.companies.length != 0) { %>
         <b><%=speciality.name%></b> (<%=places + ' pr'%>):
           <% first = true
             speciality.companies.forEach((company) => {
@@ -32,7 +33,7 @@
               <% } %>
           <% }) %>
           <br />
-      <% }) %>
+      <% }}) %>
     </p>
   <% }) %>
 
