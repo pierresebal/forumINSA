@@ -67,7 +67,8 @@ module.exports.policies = {
     'initializeSjdSessions':'adminAuth',
     'displaySjdSessions':'adminAuth',
     'addCompaniesToSjd':'adminAuth',
-    'displayStudents':'adminAuth'
+    'displayStudents':'adminAuth',
+    'changeStudentSjd': 'adminAuth'
   }
 
 };
