@@ -389,6 +389,8 @@ module.exports = {
   changeStudentSjd: function(req, res) {
     const login = req.param("student")
     const add = req.param("addOrRemove") == "add"
+    const sjdSession = add ? req.param('sessionId') : ""
+    const sjdSpeciality = add ? req.param('speciality') : ""
 
     Student.findOne({login:login}).exec((err, found) => {
       if (err) {
@@ -404,7 +406,9 @@ module.exports = {
         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "L'étudiant " + login + " est déjà inscrit ailleurs", ErrorDesc: 'Veuillez réessayer'});
       }
 
-      Student.update({login: login},  {sjdRegistered: add}).exec((err, updated) => {
+
+
+      Student.update({login: login},  {sjdRegistered: add, sjdSession: sjdSession, sjdSpeciality: sjdSpeciality}).exec((err, updated) => {
         if (err) {
           console.log('err', err)
           return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
@@ -445,6 +449,9 @@ module.exports = {
               console.log('err', err)
               return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'});
             }
+
+
+
 
             return res.redirect('/Admin/SjdSessions')
           })
