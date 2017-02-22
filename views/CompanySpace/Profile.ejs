@@ -320,7 +320,7 @@ if (typeof complementaryInformation == 'undefined')
       document.getElementById("MsgPassword").innerHTML = "Veuillez patienter";
 
       // Envoi de la requêtte AJAX
-      AJAXreq.open("POST", "http://localhost:8080/Company/ChangePassword");
+      AJAXreq.open("POST", "https://foruminsaentreprises.fr/Company/ChangePassword");
       AJAXreq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       AJAXreq.send("OldPassA=" + OldPassA + "&NewPassA=" + NewPassA + "&NewPassB=" + NewPassB);
       AJAXrunning = true;
