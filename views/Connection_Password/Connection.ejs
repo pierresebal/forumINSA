@@ -1,0 +1,58 @@
+<div class="content">
+
+<!--Connection block-->
+
+<h1>Connexion</h1>
+
+<!--Errors to be precised-->
+<%if (typeof error !='undefined'){%>
+<p style="color:#ff2b23;"><%= error %></p>
+<%
+  }
+  if (typeof nexturl == 'undefined' || nexturl == '' || nexturl == null) {
+    nexturl = '/';
+  }
+%>
+
+<% if (!req.session.authenticated) { %>
+<div style="margin: auto">
+<!-- COMPANY-->
+<h2>Entreprises</h2>
+
+<%if (typeof companyConnectionFailed != 'undefined' && companyConnectionFailed == true) { %>
+<p>Authentication failed. Is your login or password incorrect ?</p>
+<% } %>
+
+<form style="text-algin: center;" class="form-group" method="post" action="/Company/AuthCompany">
+  <input class="pure-input-1-3" type="email" placeholder="Email utilisateur" name="login" required/>
+  <input class="pure-input-1-3" type="password" placeholder="Mot de passe" name="password" required/>
+  <input class="pure-input-1-3" type="hidden" name="nexturl" value="<%=nexturl%>"/>
+  <input class="btn btn-primary pure-input-1-3" type="submit"/>
+</form>
+
+<p><a href="/Company/ResetPassPage">Mot de passe oublié ?</a></p>
+<br />
+<br />
+
+<!-- STUDENT -->
+<h2>Etudiants INSA</h2>
+
+<%if (typeof studentConnectionFailed != 'undefined' && studentConnectionFailed == true) { %>
+<p>Authentication failed. Is your login or password incorrect ?</p>
+<% } %>
+
+<form method="post" style="text-algin: center" class="form-group" action="/Student/Login">
+  <input class="pure-input-1-3" type="text" name="login" placeholder="Login" required/>
+  <input class="pure-input-1-3" type="password" name="password" placeholder="Password" required/>
+  <input class="btn btn-primary pure-input-1-3" type="submit"/>
+</form>
+
+
+
+<% } else { %>
+<p>Vous êtes déjà connecté <%= req.session.firstName%>.</p>
+
+<% }%>
+
+</div>
+</div>

@@ -1,0 +1,22 @@
+<div class="content">
+
+<h1>Bienvenue !</h1>
+
+<p>
+  Avant de continuer à visiter le site nous vous invitons à uploader le logo de votre entreprise. <br />
+  Ce logo sera utilisé pour vous représenter sur le site et dans nos différents supports de communication. <br />
+</p>
+
+<p>Fichier uniquement au format <b>png</b> pour l'instant.<br/>
+    Taille max : <b>10 Mo</b>.
+
+</p>
+<form class="form" id="uploadLogo"
+      enctype="multipart/form-data"
+      action="/file/uploadLogo"
+      method="post">
+  <input type="file" name="logo" accept="image/png"/>
+  <input type="submit" value="Envoyer"/>
+</form>
+
+</div>

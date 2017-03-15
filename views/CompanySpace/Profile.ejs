@@ -1,0 +1,376 @@
+
+<style>
+
+    td h3 {
+        font-size: 1em;
+        font-weight: bold;
+        margin: 5px;
+    }
+
+    td {
+        padding: 10px;
+        width: 5%;
+    }
+
+    label {
+        font-weight: normal;
+    }
+</style>
+
+<%
+if (typeof bMailAddress == 'undefined')
+  bMailAddress = '';
+
+if (typeof complementaryInformation == 'undefined')
+  complementaryInformation = '';
+
+%>
+
+<div class="content">
+<h1>Profil Entreprise</h1>
+<p>Vous pouvez ici modifier votre profil.<br />Pensez à mettre une description et un logo. Ils seront utilisés dans nos supports de communication.</p>
+
+<h2>Contacts</h2>
+<div class="pure-g">
+    <div class="pure-u-1 pure-u-md-1-4">
+        <form class="pure-form pure-form-stacked" method="post" action="/Company/setAUserInfo">
+          <input type="hidden" name="data" value="a"/>
+          <fieldset>
+              <legend>Forum</legend>
+
+              <label for="firstName">Prénom : <%=firstName%></label>
+              <input class="pure-input-1" type="text" name="firstName" value="<%=firstName%>">
+
+              <label for="lastName">Nom : <%=lastName%></label>
+              <input class="pure-input-1" type="text" name="lastName" value="<%=lastName%>">
+
+              <label for="position">Fonction : <%=position%></label>
+              <input class="pure-input-1" type="text" name="position" value="<%=position%>">
+
+              <label for="phoneNumber">Téléphone : <%=phoneNumber%></label>
+              <input class="pure-input-1" type="text" name="phoneNumber" value="<%=phoneNumber%>">
+
+              <label for="mailAddress">Mail : <%=mailAddress%></label>
+              <input class="pure-input-1" type="text" name="mailAddress" value="<%=mailAddress%>">
+
+              <br/>
+              <button style="width: 100%;" type="submit" >Enregistrer</button>
+          </fieldset>
+        </form>
+    </div>
+    <div class="pure-u-md-1-8"></div>
+    <div class="pure-u-1 pure-u-md-1-4">
+        <form class="pure-form pure-form-stacked" method="post" action="/Company/setAUserInfo">
+          <input type="hidden" name="data" value="f"/>
+          <fieldset>
+              <legend>Facturation</legend>
+
+              <label for="bFirstName">Prénom : <%=bFirstName%></label>
+              <input class="pure-input-1" type="text" name="bFirstName" value="<%=bFirstName%>">
+
+              <label for="bLastName">Nom : <%=bLastName%></label>
+              <input class="pure-input-1" type="text" name="bLastName" value="<%=bLastName%>">
+
+              <label for="bPosition">Fonction : <%=bPosition%></label>
+              <input class="pure-input-1" type="text" name="bPosition" value="<%=bPosition%>">
+
+              <label for="bPhoneNumber">Téléphone : <%=bPhoneNumber%></label>
+              <input class="pure-input-1" type="text" name="bPhoneNumber" value="<%=bPhoneNumber%>">
+
+              <label for="bMailAddress">Mail : <%=bMailAddress%></label>
+              <input class="pure-input-1" type="text" name="bMailAddress" value="<%=bMailAddress%>">
+
+              <br/>
+              <button style="width: 100%;" type="submit" >Enregistrer</button>
+          </fieldset>
+        </form>
+    </div>
+</div>
+
+<h2>Mot de passe</h2>
+<div class="pure-g">
+  <div class="pure-u-1 pure-u-md-1-3">
+    <form class="pure-form pure-form-stacked" onsubmit="ModifPass()" action="javascript:ModifPass()">
+      <fieldset>
+        <label for="OldPassA">Mot de passe actuel</label>
+        <input class="pure-input-1" type="password" id="OldPassA" name="OldPassA" placeholder="Mot de passe actuel">
+
+        <label for="NewPassA">Nouveau mot de passe</label>
+        <input class="pure-input-1" type="password" id="NewPassA" name="NewPassA" placeholder="Nouveau mot de passe">
+
+        <label for="NewPassB">Confirmation nouveau mot de passe </label>
+        <input class="pure-input-1" type="password" id="NewPassB" name="NewPassB" placeholder="Confirmez votre nouveau mot de passe">
+
+        <p id="MsgPassword"></p>
+        <button style="width: 100%;" onclick="ModifPass()">Enregistrer</button>
+      </fieldset>
+    </form>
+  </div>
+</div>
+
+<h2>Informations générales</h2>
+<table class="pure-form  pure-table-bordered" style="width: 100%">
+  <tr>
+    <td><h3>Siret</h3></td>
+    <td><%=siret%></td>
+    <td>
+      <!-- <form id="siret" method="post" action="/Company/setAUserInfo">
+        <input type="hidden" name="data" value="k"/>
+        <input type="text" name="siret" value="<%=siret%>"/>
+        <input type="submit" value="Sauvegarder"/>
+      </form> -->
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><h3>Nom</h3></td>
+    <td><%=companyName%></td>
+    <form id="companyName" method="post" action="/Company/setAUserInfo">
+        <td>
+            <input type="hidden" name="data" value="l"/>
+            <input  type="text" name="companyName" value="<%=companyName%>"/>
+        </td>
+        <td>
+            <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
+</button>
+        </td>
+
+    </form>
+  </tr>
+  <tr>
+    <td><h3>Group</h3></td>
+    <td><%=companyGroup%></td>
+        <form id="companyGroup" method="post" action="/Company/setAUserInfo">
+            <td>
+                <input type="hidden" name="data" value="m"/>
+                <input  type="text" name="companyGroup" value="<%=companyGroup%>"/>
+            </td>
+            <td>
+                <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
+    </button>
+            </td>
+      </form>
+  </tr>
+  <tr>
+    <td><h3>Logo</h3></td>
+    <% if (typeof logoPath != 'undefined' && logoPath != ''){ %>
+    <td><img src="/images/logos/<%=logoPath%>" style="width: 100px; height: auto" /></td>
+    <% } else { %>
+    <td>-</td>
+    <% } %>
+      <form id="logoUpload" method="post" action="/file/uploadLogo" enctype="multipart/form-data">
+        <td>
+          <input type="file" name="logo" accept="image/png"/>
+        </td>
+        <td>
+            <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
+</button>
+        </td>
+      </form>
+  </tr>
+  <tr>
+    <td><h3>Description</h3></td>
+    <td><%-description%></td>
+    <form id="description" method="post" action="/Company/setAUserInfo">
+        <td>
+            <input type="hidden" name="data" value="n"/>
+            <textarea  type="text" name="description"><%-description%></textarea>
+            <p><i>*Balises HTML autorisées</i></p>
+        </td>
+        <td>
+            <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
+</button>
+        </td>
+    </form>
+  </tr>
+  <tr>
+    <td><h3>Site internet</h3></td>
+    <td><a href="<%=websiteUrl%>" target="_blank"><%=websiteUrl%></a></td>
+    <form  id="websiteUrl" method="post" action="/Company/setAUserInfo">
+        <td>
+            <input type="hidden" name="data" value="o"/>
+            <input  type="text" name="websiteUrl" value="<%=websiteUrl%>"/>
+        </td>
+        <td>
+            <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
+</button>
+        </td>
+    </form>
+  </tr>
+  <tr>
+    <td><h3>Site de recrutement</h3></td>
+    <td><a href="<%=careerUrl%>" target="_blank"><%=careerUrl%></a></td>
+    <form  id="careerUrl" method="post" action="/Company/setAUserInfo">
+        <td>
+            <input type="hidden" name="data" value="p"/>
+            <input  type="text" name="careerUrl" value="<%=careerUrl%>"/>
+        </td>
+        <td>
+        <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
+</button>
+        </td>
+    </form>
+  </tr>
+  <tr>
+    <td><h3>Adresse postale</h3></td>
+    <td>
+      <%=road%><br />
+      <% if (typeof complementaryInformation != 'undefined' && complementaryInformation != "") { %>
+        <%=complementaryInformation%><br />
+      <% } %>
+      <%=postCode%> <%=city%><br />
+      <%=country%>
+    </td>
+      <form  id="postAddress" method="post" action="/Company/setAUserInfo">
+          <td>
+        <input  type="hidden" name="data" value="q"/>
+        <input  type="text" name="road" value="<%=road%>" placeholder="N° et rue"/><br />
+        <input  type="text" name="complementaryInformation" placeholder="Complément"/><br>
+        <input  type="text" name="postCode" value="<%=postCode%>" placeholder="Code postal"/><br />
+        <input  type="text" name="city" value="<%=city%>" placeholder="Ville"/><br />
+        <input  type="text" name="country" value="<%=country%>" placeholder="Pays"/>
+    </td>
+    <td>
+        <button  type="submit" ><i class="fa fa-check" aria-hidden="true"></i>
+</button>
+</td>
+      </form>
+  </tr>
+</table>
+
+<h2>Intérêts</h2>
+<p>Quels sont les profils d'étudiants qui vous intéressent ?</p>
+<fieldset style="border:0px">
+  <form  id="interests" method="post" action="/Company/setAUserInfo">
+    <table>
+    <input type="hidden" name="data" value="z"/>
+      <tr>
+        <td><input type="checkbox" name="IR" id="IR" <%=IR%>/><label for="IR">Informatique et Réseaux</label></td>
+        <td><input type="checkbox" name="AE" id="AE" <%=AE%>/><label for="AE">Génie Automatique et Électronique</label></td>
+        <td rowspan="4"><button  type="submit" >Enregistrer</button></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="GP" id="GP" <%=GP%>/><label for="GP">Génie Physique</label></td>
+        <td><input type="checkbox" name="GB" id="GB" <%=GB%>/><label for="GB">Génie Biochimique</label></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="GPE" id="GPE" <%=GPE%>/><label for="GPE">Génie des Procédés</label></td>
+        <td><input type="checkbox" name="GC" id="GC" <%=GC%>/><label for="GC">Génie Civil</label></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="GM" id="GM" <%=GM%>/><label for="GM">Génie Mécanique</label></td>
+        <td><input type="checkbox" name="GMM" id="GMM" <%=GMM%>/><label for="GMM">Génie Mathématiques et Modélisation</label></td>
+      </tr>
+    </table>
+  </form>
+</fieldset>
+
+</div>
+
+<script type="text/javascript">
+
+  //============= FONCTIONS UTILES =====================
+
+  // Fonction permettant de créer les objets XHR utilisés pour les requêttes AJAX
+  function getXMLHttpRequest() {
+
+    var xhr = null;
+
+    if (window.XMLHttpRequest || window.ActiveXObject) {
+      if (window.ActiveXObject) {
+        try {
+          xhr = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch(e) {
+          xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+      } else {
+        xhr = new XMLHttpRequest();
+      }
+    }
+    else
+    {
+      alert("Votre navigateur ne supporte pas l'objet XMLHTTPRequest...");
+      return null;
+    }
+
+    return xhr;
+  }
+
+  // =============== VARIABLES GLOBALES ========================
+  var AJAXrunning = false;
+
+  // ===========  FONCTIONS DE CHANGEMENT DE MOT de PASSE ======================
+
+  function ModifPass() {
+    if (!AJAXrunning) {
+      // Récupération des valeurs des mots de passe
+      var OldPassA = document.getElementById("OldPassA").value;
+      var NewPassA = document.getElementById("NewPassA").value;
+      var NewPassB = document.getElementById("NewPassB").value;
+
+      // Récupération des valeurs de mots de passe
+      var AJAXreq = getXMLHttpRequest();
+
+      // On démarre le clignotement
+      document.getElementById("MsgPassword").animationPlayState = "running";
+      document.getElementById("MsgPassword").style.color = "orange";
+      document.getElementById("MsgPassword").innerHTML = "Patientez SVP";
+
+      // On informe l'utilisateur de l'envoi de la requêtte
+      document.getElementById("MsgPassword").innerHTML = "Veuillez patienter";
+
+      // Envoi de la requêtte AJAX
+      AJAXreq.open("POST", "https://foruminsaentreprises.fr/Company/ChangePassword");
+      AJAXreq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      AJAXreq.send("OldPassA=" + OldPassA + "&NewPassA=" + NewPassA + "&NewPassB=" + NewPassB);
+      AJAXrunning = true;
+
+      // Paramétrage de l'action a lancer en cas de réussite de la requête
+      AJAXreq.onreadystatechange = function () {
+        if (AJAXreq.readyState == 4 && (AJAXreq.status == 200 || AJAXreq.status == 0)) {
+
+          // On convertit la requette en JSON
+          var AJAXresult = JSON.parse(AJAXreq.responseText);
+
+          // On arrete l'anim sur patientez SVP
+          document.getElementById("MsgPassword").animationPlayState = "initial";
+
+          // On vide les champs remplis
+          document.getElementById("NewPassB").value = "";
+          document.getElementById("OldPassA").value = "";
+          document.getElementById("NewPassA").value = "";
+
+          // On affiche le message renvoyé par le serveur
+          document.getElementById("MsgPassword").innerHTML = AJAXresult.changePassResponse.msg;
+
+          // On choisi la couleur du message
+          if (AJAXresult.changePassResponse.succes) {
+            document.getElementById("MsgPassword").style.color = "rgb(0,255,0)";
+          }
+          else {
+            document.getElementById("MsgPassword").style.color = "rgb(255,0,0)";
+          }
+
+          AJAXrunning = false;
+
+        }
+      }
+    }
+  }
+
+</script>
+
+<style type="text/css">
+
+  #MsgPassword {
+    animation-duration:0.5s;
+    animation-name:patientez;
+    animation-play-state:initial;
+  }
+
+  @keyframes patientez {
+    0% {opacity:1;}
+    50% {opacity:0.3;}
+    100% {opactiy:1;}
+  }
+</style>

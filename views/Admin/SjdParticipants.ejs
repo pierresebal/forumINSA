@@ -1,0 +1,30 @@
+<h1>Partie admin</h1>
+
+<% if (req.session.isAdmin != true) { %>
+
+<form method="POST" action="/Admin/Login">
+  <input type="password" name="password"/>
+  <input type="submit" value="Se connecter"/>
+</form>
+
+<% } else { %>
+  <table style="border-spacing: 5px; border-collapse: separate">
+    <tr>
+      <th>N°</th>
+      <th>Année</th>
+      <th>Entreprise</th>
+      <th>Nb de sessions</th>
+      <th>Spécialités</th>
+    </tr>
+    <% participants.forEach(function(participant, index) {
+    %>
+      <tr>
+        <td><%=index%></td>
+        <td><%=participant.year%></td>
+        <td><a href="/Admin/CompanyInfo?siret=<%=participant.companySiret%>"><%=participant.companyName%></a></td>
+        <td><%=participant.sessionNb%></td>
+        <td><%=participant.specialities%></td>
+      </tr>
+    <% }) %>
+  </table>
+<% } %>

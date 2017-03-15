@@ -1,0 +1,96 @@
+<nav class="navbar navbar-default">
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-login">
+      <span class="close"></span>
+      <form id="connectForm" method="post" action="/test">
+        <input id="login" type="text" name="login" class="form-control" placeholder="Login"/><br>
+        <input type="password" name="password" class="form-control" placeholder="Password"/><br>
+        <input type="submit" class="btn red-button form-control" value="Connexion" />
+      </form>
+    </div>
+
+  </div>
+
+  <!-- The Menu itself -->
+  <div class="container-fluid">
+    <ul class="nav navbar-nav custom-nav">
+    <!-- Navbar content -->
+    <li><a href="/">ACCUEIL</a></li>
+    <li><a href="/Forum">FORUM</a></li>
+    <li><a href="/SJD">SPEED JOB DATING</a></li>
+    <li><a href="/INSA">INSA TOULOUSE</a></li>
+    <% if (req.session.authenticated) { %>
+      <% if(req.session.sessionType=="company"){%>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ESPACE PERSO <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/Company/Profile">Mon Profil</a></li>
+              <li><a href="/Company/CvTheque">CVThèque</a></li>
+              <li><a href="/Company/Command">Réserver sa place</a></li>
+              <li><a href="/Company/ManageSjd">Gérer SJD</a></li>
+              <li><a href="/Company/Bills">Factures</a></li>
+              <li><a href="/Company/Vigipirate">Vigipirate</a></li>
+            </ul>
+          </li>
+        <li><a href="/Company/CompanyLogout">DECONNEXION <i class="fa fa-sign-out"></i></a></li>
+
+      <% } else if (req.session.sessionType=="student") { %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ESPACE PERSO <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/Student/Profile">Mon Profil</a></li>
+              <li><a href="/Student/Companies">Entreprises</a></li>
+              <li><a href="/Student/SJD">Speed Job Dating</a></li>
+            </ul>
+          </li>
+        <li><a href="/Student/StudentLogout">DECONNEXION <i class="fa fa-sign-out"></i></a></li>
+      <% }
+      } else { %>
+      <li><a href="/Company/Inscription" style="color: #e42618">INSCRIPTION ENTREPRISE</a></li> <!--En attendant que ca soit dans une popup -->
+      <% } %>
+    <li><a href="/About">A PROPOS</a></li>
+      </ul>
+  </div>
+</nav>
+
+<script>
+      // Get the modal
+    var modal = document.getElementById('myModal');
+
+    var form = document.getElementById('connectForm');
+
+    // Get the button that opens the modal
+    var btnStudent = document.getElementById("connectStudent");
+    var btnCompany = document.getElementById("connectCompany");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btnStudent.onclick = function() {
+        $( "#connectForm" ).attr("action", "/Student/Login");
+        $( "#login" ).attr("placeholder", "Login INSA");
+        modal.style.display = "block";
+    }
+
+    btnCompany.onclick = function() {
+        $( "#connectForm" ).attr("action", "/Company/AuthCompany");
+        $( "#login" ).attr("placeholder", "Email");
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>

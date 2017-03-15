@@ -1,0 +1,85 @@
+<h1>Partie admin</h1>
+
+<% if (req.session.isAdmin != true) { %>
+
+<form method="POST" action="/Admin/Login">
+  <input type="password" name="password"/>
+  <input type="submit" value="Se connecter"/>
+</form>
+
+<% } else {
+  var selecYes;
+  var selecNo;
+  var total = 0;
+%>
+
+  <h2>Liste des ventes</h2>
+
+  <table style="border-spacing: 5px; border-collapse: separate">
+    <tr>
+      <th>N°</th>
+      <th>Entreprise</th>
+      <th>Année</th>
+      <th style="width: 80px;">Forum</th>
+      <th style="width: 80px;">SJD</th>
+      <th style="width: 80px;">Pack premium</th>
+      <th>SJD sup.</th>
+      <th style="width: 60px;">Repas</th>
+      <th>Facture</th>
+      <th>A payé</th>
+    </tr>
+    <%sells.forEach(function(sell, index) {
+      if (sell.didPay) {
+        selectYes = 'selected'
+        selectNo = ''
+      } else {
+        selectNo = 'selected'
+        selectYes = ''
+      }
+
+      total = total + sell.forum * sell.forumPrice + sell.sjd * sell.sjdPrice + sell.premiumPack * sell.premiumPackPrice;
+      total = total + sell.moreSjd * sell.moreSjdPrice + sell.moreMeal * sell.mealPrice
+
+    %>
+      <tr>
+        <td><%=index%></td>
+        <td><a href="/Admin/CompanyInfo?siret=<%=sell.companySiret%>"><%=sell.companyName%></a></td>
+        <td><%=sell.year%></td>
+        <td><%=sell.forum ? 'oui' : '-'%> (<%=sell.forumPrice%>€)</td>
+        <td><%=sell.sjd ? 'oui' : '-'%> (<%=sell.sjdPrice%>€)</td>
+        <td><%=sell.premiumPack ? 'oui' : '-'%> (<%=sell.premiumPackPrice%>€)</td>
+        <td><%=sell.moreSjd%> (<%=sell.moreSjdPrice%>€)</td>
+        <td><%=sell.moreMeal%> (<%=sell.mealPrice%>€)</td>
+        <td>
+          <form id="downloadBill" method="post" action="/file/bills/download">
+            <input type="hidden" name="dl" value="<%=sell.year%>" />
+            <input type="hidden" name="siret" value="<%=sell.companySiret%>" />
+            <input type="submit" value="n°<%=sell.billNumber%>" />
+          </form>
+        </td>
+        <form method="post" action="/Admin/SetDidPay">
+          <td>
+            <select name="didPay" id="didPay">
+              <option value="true" <%=selectYes%>>Oui</option>
+              <option value="false" <%=selectNo%>>Non</option>
+            </select>
+          </td>
+          <td>
+            <input type="hidden" name="siret" value="<%=sell.companySiret%>" />
+            <input type="hidden" name="year" value="<%=sell.year%>" />
+            <input type="submit" value="save" />
+          </td>
+        </form>
+      </tr>
+    <% }) %>
+  </table>
+  <br />
+  <br />
+  <p>Total vendu : <b><%=total%>€</b></p>
+  <br />
+  <br />
+  <h2>Mails des entreprises</h2>
+  <p>Afin de facilement envoyer un message groupé aux entreprises inscrites vous pouvez utiliser les adresses suivantes :</p>
+  <p><%= companiesMail%></p>
+
+<% } %>

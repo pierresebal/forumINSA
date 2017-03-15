@@ -1,0 +1,62 @@
+<h2>Première connexion</h2>
+
+<p>
+  Ton CV pourra être consulté en ligne par les entreprises inscrites au forum.
+  Ton CV doit être en format <b>pdf</b> et ne pas dépasser 10Mo.
+</p>
+
+<table style="border-spacing: 10px; border-collapse: separate">
+  <tr>
+    <td>CV francophone</td>
+    <% if (typeof (frCVPath) != 'undefined' && frCVPath != "") { %>
+    <td>
+      <form id="downloadFormFr" method="post" action="/file/download">
+        <input type="hidden" name="dl" value="fr" />
+        <input type="submit" value="Télécharger" />
+      </form></td>
+    <% } else { %>
+      <form id="uploadFormFr"
+            enctype="multipart/form-data"
+            action="/file/uploadCV"
+            method="post">
+        <td>
+          <input type="hidden" name="language" value="fr"/>
+          <input type="hidden" name="redirect" value="first"/>
+          <input type="file" name="fr-cv" accept=".pdf"/>
+        </td>
+        <td>
+          <input type="submit" value="Envoyer"/>
+        </td>
+      </form>
+    <% } %>
+  </tr>
+  <!-- ------------------------------------------- -->
+  <tr>
+    <td>CV anglophone</td>
+    <% if (typeof (enCVPath) != 'undefined' && enCVPath != "") { %>
+    <td>
+      <form id="downloadFormEn" method="post" action="/file/download">
+        <input type="hidden" name="dl" value="en" />
+        <input type="submit" value="Télécharger" />
+      </form>
+
+    </td>
+    <% } else { %>
+      <form id="uploadFormEn"
+            enctype="multipart/form-data"
+            action="/file/uploadCV"
+            method="post">
+        <td>
+          <input type="hidden" name="language" value="en"/>
+          <input type="hidden" name="redirect" value="first"/>
+          <input type="file" name="en-cv" accept=".pdf"/>
+        </td>
+        <td>
+          <input type="submit" value="Envoyer"/>
+        </td>
+      </form>
+    <% } %>
+  </tr>
+</table>
+
+<a href="/" >Terminer</a>

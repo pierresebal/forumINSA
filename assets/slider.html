@@ -1,0 +1,114 @@
+<style>
+
+    .slider{
+        position: relative;
+        margin: auto;
+        width: 95vw;
+		height: 36.8367vw;
+	    max-width: 980px;
+		max-height: 380px;
+        background-color: blue;
+        display: block;
+    }
+
+    .slider-canvas{
+        overflow: hidden;
+        white-space: nowrap;
+        width: 100%;
+        height: 100%;
+    }
+
+    .slider-content {
+        position: absolute;
+        left: 0px;
+    }
+
+    #buttons {
+        position: absolute;
+        margin: auto;
+    }
+
+    .slider-content img{
+        background-color: blue;
+        width: 95vw;
+		height: 36.8367vw;
+	    max-width: 980px;
+		max-height: 380px;
+    }
+
+    .slider li{
+		width: 16px;
+		height: 16px;
+		border-radius: 8px;
+		border: 2px solid grey;
+		background-color: white;
+		display: inline-block;
+		cursor: pointer;
+		font-size: 0;
+	}
+
+    .slider ul {
+		padding: 0px;
+	}
+
+	.slider nav{
+		margin: auto;
+		text-align: center;
+	}
+
+</style>
+
+<div class="slider">
+    <div class="slider-canvas">
+        <div class="slider-content position-1">
+            <img id="img1" src="images/img1.jpg" class="img"/>
+            <img id="img2" src="images/img2.png" class="img"/>
+            <img id="img2" src="images/troll.png" class="img"/>
+        </div>
+    </div>
+	<nav id="buttons">
+		<ul>
+			<li id="bt1" class="bt" style="background-color: grey">img1</li>
+			<li id="bt2" class="bt" >img2</li>
+			<li id="bt3" class="bt" >img3</li>
+		</ul>
+	</nav>
+</div>
+
+<script>
+	var prev = 1;
+	var slider_width = $(".slider").width();
+	var slider_height = (slider_width / 2.5789);
+	var position = 0;
+	var delta = slider_width;
+	var btNb = 1;
+
+	$( '.bt' ).click(function(){
+		// Create image id
+		var img = "#" + $( this ).text();
+
+		// Extract the clicked button number
+		btNb = $( this ).attr("id").substring(2,3);
+
+		// Change button color
+		$( '.bt' ).css('background-color', 'white');
+		$( this ).css('background-color','grey');
+
+		move(btNb);
+	});
+
+	function move(btNb){
+		// Change position
+		$( '.slider-content' ).css("left",-((btNb-1)*slider_width)-2*(btNb-1));
+		$( '.bt' ).css('background-color', 'white');
+		$( "#bt" + btNb ).css('background-color','grey');
+		prev = position;
+	}
+
+	function autoplay(){
+		prev = prev % 3 + 1;
+		move(prev);
+	}
+
+	setInterval(autoplay, 8000);
+</script>

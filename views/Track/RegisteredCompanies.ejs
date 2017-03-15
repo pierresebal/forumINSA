@@ -1,0 +1,43 @@
+<h1>Partie suivi</h1>
+
+<% if (req.session.isTrack != true) { %>
+
+<form method="POST" action="/Track/Login">
+  <input type="password" name="password"/>
+  <input type="submit" value="Se connecter"/>
+</form>
+
+<% } else { %>
+
+<h2>Entreprises enregistrées sur le site</h2>
+<p>Ces entreprises sont inscrites sur le site du forum mais n'ont pas forcément passé commande.</p>
+
+<table style="border-spacing: 5px; border-collapse: separate">
+  <tr>
+    <th>Nom</th> <th>PME</th> <th>Siret</th> <th>Date d'inscrition</th> <th>Blacklistée</th> <th>Plus d'info</th>
+  </tr>
+  <% companies.forEach( function(company) { %>
+  <tr>
+    <td>
+      <%=company.companyName %>
+    </td>
+    <td>
+      <%=company.isPME %>
+    </td>
+    <td>
+      <%=company.siret %>
+    </td>
+    <td>
+      <%=company.createdAt %>
+    </td>
+    <td>
+      <%=company.blacklist %>
+    </td>
+    <td>
+      <a href="/Track/CompanyInfo?siret=<%=company.siret%>">Voir plus</a>
+    </td>
+  </tr>
+  <% }); %>
+</table>
+
+<% } %>

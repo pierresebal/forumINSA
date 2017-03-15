@@ -1,0 +1,95 @@
+<%  var AE = company.AE ? "checked" : ""
+var IR = company.IR ? "checked" : ""
+var GB = company.GB ? "checked" : ""
+var GP = company.GP ? "checked" : ""
+var GPE = company.GPE ? "checked" : ""
+var GC = company.GC ? "checked" : ""
+var GM = company.GM ? "checked" : ""
+var GMM = company.GMM ? "checked" : ""
+var description = company.description
+description = description.replace(/(?:\r\n|\r|\n)/g, '<br />');
+
+var inscription = ''
+if (sell.forum)
+  inscription = 'Forum uniquement'
+else if (sell.sjd)
+  inscription = 'SJD uniquement'
+else if (sell.premiumPack)
+  inscription = 'Forum et SJD'
+
+%>
+
+<h1><%=company.companyName%></h1>
+
+  <table class="pure-form " style="border-spacing: 15px; border-collapse: separate;">
+    <tr>
+      <td><b>Type d'inscription</b></td>
+      <td><%=inscription%></td>
+    </tr>
+    <tr>
+      <td><b>Nom</b></td>
+      <td><%=company.companyName%></td>
+    </tr>
+    <tr>
+      <td><b>Group</b></td>
+      <td><%=company.companyGroup%></td>
+    </tr>
+    <tr>
+      <td><b>Logo</b></td>
+      <% if (typeof company.logoPath != 'undefined' && company.logoPath != ''){ %>
+      <td><img src="/images/logos/<%=company.logoPath%>" style="width: 100px; height: auto" /></td>
+      <% } else { %>
+      <td>-</td>
+      <% } %>
+    </tr>
+    <tr>
+      <td><b>Description</b></td>
+      <td><%-description%></td>
+    </tr>
+    <tr>
+      <td><b>Site internet</b></td>
+      <td><a href="<%=company.websiteUrl%>" target="_blank"><%=company.websiteUrl%></a></td>
+    </tr>
+    <tr>
+      <td><b>Site de recrutement</b></td>
+      <td><a href="<%=company.careerUrl%>" target="_blank"><%=company.careerUrl%></a></td>
+    </tr>
+    <tr>
+      <td><b>Adresse postale</b></td>
+      <td>
+        <%=company.road%><br />
+        <% if (typeof complementaryInformation != 'undefined' && complementaryInformation != "") { %>
+          <%=company.complementaryInformation%><br />
+        <% } %>
+        <%=company.postCode%> <%=company.city%><br />
+        <%=company.country%>
+      </td>
+    </tr>
+  </table>
+
+  <h2>Intérêts</h2>
+  <fieldset style="border:0px">
+    <form  id="interests" method="post" action="/Company/setAUserInfo">
+      <table style="border-spacing: 10px; border-collapse: separate;">
+      <input type="hidden" name="data" value="z"/>
+        <tr>
+          <td><input type="checkbox" disabled="disabled" name="IR" id="IR" <%=IR%>/><label for="IR">Informatique et Réseaux</label></td>
+          <td><input type="checkbox" disabled="disabled" name="AE" id="AE" <%=AE%>/><label for="AE">Génie Automatique et Électronique</label></td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" disabled="disabled" name="GP" id="GP" <%=GP%>/><label for="GP">Génie Physique</label></td>
+          <td><input type="checkbox" disabled="disabled" name="GB" id="GB" <%=GB%>/><label for="GB">Génie Biochimique</label></td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" disabled="disabled" name="GPE" id="GPE" <%=GPE%>/><label for="GPE">Génie des Procédés</label></td>
+          <td><input type="checkbox" disabled="disabled" name="GC" id="GC" <%=GC%>/><label for="GC">Génie Civil</label></td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" disabled="disabled" name="GM" id="GM" <%=GM%>/><label for="GM">Génie Mécanique</label></td>
+          <td><input type="checkbox" disabled="disabled" name="GMM" id="GMM" <%=GMM%>/><label for="GMM">Génie Mathématiques et Modélisation</label></td>
+        </tr>
+      </table>
+    </form>
+  </fieldset>
+
+  </div>

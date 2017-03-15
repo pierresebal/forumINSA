@@ -1,0 +1,65 @@
+<h1>Inscription SJD</h1>
+
+<% if (true) { %>
+    <h2>Inscriptions fermées</h2>
+    <p>Les inscriptions sont maintenant fermées.<p>
+<% } else { %>
+  <p>
+    La journée de Speed Job Dating se compose de quatre sessions d’une heure chacune. Chaque session comporte entre 7 et 8 entretiens de 7 minutes pendant lesquels un recruteur échange avec un étudiant. Au bout de ces 7 minutes, un roulement est effectué afin que tous les étudiants du créneau aient l’opportunité de rencontrer tous les recruteurs de la session.<br />
+    Lors de votre inscription à un créneau, vous êtes dans l'obligation de rencontrer toutes les entreprises de ce créneau.
+  </p>
+
+  <h2>Sessions</h2>
+
+  <p>*pr = places restantes</p>
+
+  <% sessions.forEach((session, index) => { %>
+    <p>
+      <b>Session <%=session.sessionId%> (<%=session.hours%>)</b><br />
+
+      <% session.specialities.forEach((speciality) => {
+        var places = 8 - speciality.students.length
+        var first
+      %>
+      <% if (speciality.companies.length != 0) { %>
+        <b><%=speciality.name%></b> (<%=places + ' pr'%>):
+          <% first = true
+            speciality.companies.forEach((company) => {
+              if (first) {
+                first = false %>
+                <%=company%>
+              <% } else { %>
+                - <%=company%>
+              <% } %>
+          <% }) %>
+          <br />
+      <% }}) %>
+    </p>
+  <% }) %>
+
+  <h2>Inscription</h2>
+  <p>
+    Vous n'avez le droit de participer qu'à un seul créneau. Une fois l'inscription effectuée vous ne pourrez plus la modifier. Il est inutile de s'inscrire aux créneaux vides.<br />
+
+    <% if (student.sjdRegistered && req.session.login != "pnoel") { %>
+        <br />Vous êtes actuellement inscrit pour la <b>session <%= student.sjdSession%>, spécialité <%= student.sjdSpeciality%></b>.
+        <br />Vous serez prévenu par mail de la salle où il faudra vous rendre le jour J.
+    <% } else {%>
+      Je souhaite participer au créneau suivant :<br />
+      <form method="post" action="/Student/SjdInscription">
+        <select name="sessionId">
+          <% sessions.forEach((session, index) => { %>
+            <option value="<%=session.sessionId%>">Session <%=session.sessionId%></option>
+          <% }) %>
+        </select>
+        <select name="speciality">
+          <% specialities.forEach((speciality) => { %>
+            <option value="<%=speciality%>"><%=speciality%></option>
+          <% }) %>
+        </select>
+        <input type="submit" value="S'inscrire"/>
+      </form>
+    <% } %>
+
+  </p>
+<% } %>

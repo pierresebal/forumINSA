@@ -1,0 +1,56 @@
+<h1>Gestion SJD</h1>
+<h2>Description</h2>
+<p>
+  Afin de rencontrer des étudiants de plusieurs spécialités, et ainsi de pourvoir les différents besoins/intérêts de votre l'entreprise, il est possible de sélectionner des spécialités différentes lors de chaque session de SJD. En ce faisant, les étudiants rencontrés ne correspondront qu'à cette spécialité sélectionnée.
+
+<br />Ainsi si vous avez 2 sessions à votre disposition, vous serez répartis sur 2 créneaux horaires différents et dans les salles correspondant aux spécialités choisies.
+
+Vous serez prévenu par mail des horaires qui vous ont été attribués dans les 2 semaines précédent le forum.
+<br/>
+<br/>
+<p>Voici les spécialités existantes :</p>
+<table>
+  <tr>
+    <td><b>AE</b> (Automatique et Electronique)</td>
+    <td><b>GP</b> (Génie Physique)</td>
+  </tr>
+  <tr>
+    <td><b>GM</b> (Génie Mécanique)</td>
+    <td><b>GC</b> (Génie Civil)</td>
+  </tr>
+  <tr>
+    <td><b>GMM</b> (Génie Mathématique et Modélisation)</td>
+    <td><b>IR</b> (Informatique et Réseaux)</td>
+  </tr>
+  <tr>
+    <td><b>GPE</b> (Génie des Procédés et Environnement)</td>
+    <td><b>GB</b> (Génie Biochimique)</td>
+  </tr>
+</table>
+<br/>
+<br/>
+
+  <% if (specialities.length == 0) { %>
+    Actuellement vous n'avez choisi aucune spécialité.
+    Vous avez <%= sessionNb %> sessions disponibles. Veuillez choisir les spécialités qui vous intéressent pour chacune de vos sessions.
+  <% } else { %>
+    Actuellement vous avez choisi : <br />
+    <% specialities.forEach((speciality, i) => { %>
+      Session <%= i+1 %> : <%=speciality%><br />
+    <% }) %>
+  <% } %>
+  Vous pouvez mettre à jours vos choix jusqu'au 4 octobre 2016.<br/>
+</p>
+
+<h2>Modification des sessions</h2>
+<form action='/Company/AddSpecialities'>
+  <% for (var i=0; i<sessionNb; i++) { %>
+    <label>Session <%=i+1%></label>
+    <select name="<%= i %>">
+      <% possibleSpecialities.forEach(function(aSpeciality) { %>
+        <option value="<%= aSpeciality %>"><%= aSpeciality%></option>
+      <% }); %>
+    </select><br />
+  <% } %>
+  <input type="submit" value="Enregistrer" />
+</form>

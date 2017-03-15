@@ -1,0 +1,174 @@
+<style>
+
+
+	.slider{
+		width: 95vw;
+		height: 36.8367vw;
+	    max-width: 980px;
+		max-height: 380px;
+		margin: auto;
+		display: block;
+		position: relative;
+	}
+
+	.slider-content{
+		white-space: nowrap;
+		position: absolute;
+	}
+
+	.slider-window{
+		overflow: hidden;
+		width: 95vw;
+		height: 36.8367vw;
+	    max-width: 980px;
+		max-height: 380px;
+		position: relative;
+	}
+
+	.slider li{
+		width: 16px;
+		height: 16px;
+		border-radius: 8px;
+		border: 2px solid grey;
+		background-color: white;
+		display: inline-block;
+		cursor: pointer;
+		font-size: 0;
+	}
+
+	.slider ul {
+		padding: 0px;
+	}
+
+	.slider nav{
+		margin: auto;
+		text-align: center;
+	}
+
+	.position-1 {
+		left: 0px;
+		transition: left 2s;
+	}
+
+	.position-2 {
+		left: -980px;
+		transition: left 2s;
+	}
+
+	.position-3 {
+		left: -1960px;
+		transition: left 2s;
+	}
+
+	#buttons {
+		position: absolute;
+		margin: auto;
+		left: 0px;
+		right: 0px;
+		bottom: 0px;
+	}
+
+	.slider-content img{
+		background-color: blue;
+		width: 95vw;
+		height: 36.8367vw;
+	    max-width: 980px;
+		max-height: 380px;
+	}
+
+
+
+</style>
+
+
+
+<div class="content">
+	<h1>Accueil</h1>
+
+	<div class="slider">
+			<div class="slider-window">
+				<div class="slider-content position-1">
+					<img id="img1" src="images/img1.jpg" class="img"/>
+					<img id="img2" src="images/img2.png" class="img"/>
+				</div>
+			</div>
+		<nav id="buttons">
+			<ul>
+				<li id="bt1" class="bt" style="background-color: grey">img1</li>
+				<li id="bt2" class="bt" >img2</li>
+			</ul>
+		</nav>
+	</div>
+	<br/>
+
+	<p>Le Forum INSA Entreprises 2016 se déroulera le <b>mardi 18 octobre 2016</b> sur le campus de l’INSA Toulouse.
+		Il est un lieu d’échanges fructueux entre étudiants et recruteurs. Conçu et animé par les étudiants,
+		ce forum favorise l’insertion des futurs ingénieurs dans le monde professionnel qui les attend.</p>
+
+<h3>Au programme de cette journée :</h3>
+
+    <ul>
+		<li>Un forum réunissant plus de 75 entreprises représentant l’intégralité des spécialités présentes à l’INSA.</li>
+    	<li>Des sessions de Speed Job Dating permettant aux étudiants et professionnels de se rencontrer et d’échanger pendant 7 minutes.</li>
+    	<li>Un repas convivial réunissant uniquement les enseignants et les professionnels présents sur le forum.</li>
+	</ul>
+
+<h3>Sur ce site, vous trouverez :</h3>
+
+	<ul>
+    	<li>Les descriptions détaillées du Forum et du Speed Job Dating, ainsi que les modalités d’inscription.</li>
+    	<li>Des informations détaillées sur l‘INSA Toulouse.</li>
+    	<li>Un Espace Entreprise permettant aux professionnels de s’inscrire aux différentes activités de cette journée, et de consulter la CVthèque des étudiants.</li>
+    	<li>Un Espace Etudiants permettant aux élèves ingénieurs de s’inscrire au Speed Job Dating et de déposer leur CV dans la CVthèque.</li>
+	</ul>
+
+</div>
+
+<script>
+	var prev = 1;
+	var slider_width = $(".slider").width();
+	var slider_height = (slider_width / 2.5789);
+	var position = 0;
+	var delta = slider_width;
+	var btNb = 1;
+
+	var myTimer = setInterval(autoplay, 8000);
+
+	$( '.bt' ).click(function(){
+		// Create image id
+		var img = "#" + $( this ).text();
+
+		// Extract the clicked button number
+		btNb = $( this ).attr("id").substring(2,3);
+
+		// Change button color
+		$( '.bt' ).css('background-color', 'white');
+		$( this ).css('background-color','grey');
+
+		move(btNb);
+		clearInterval(myTimer);
+		myTimer = setInterval(autoplay, 8000);
+	});
+
+	function move(btNb){
+		// Change position
+		$( '.slider-content' ).css("left",-((btNb-1)*slider_width)-2*(btNb));
+		$( '.bt' ).css('background-color', 'white');
+		$( "#bt" + btNb ).css('background-color','grey');
+		prev = position;
+	}
+
+
+
+	$( window ).resize(function() {
+		slider_width = $(".slider").width();
+		move(btNb);
+	});
+
+	function autoplay(){
+		prev = prev % 3 + 1;
+		move(prev);
+	}
+
+
+</script>
