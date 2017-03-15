@@ -1,7 +1,6 @@
 # Include your project-specific ignores in this file
 # Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
 
-build
 node_modules
 ncp-debug.log
 npm-debug.log
@@ -9,5 +8,7 @@ npm-debug.log
 config/configFIE.js
 
 .idea               # Jetbrains editors
+.idea/*
 .vscode             # Visual Studio
+
 

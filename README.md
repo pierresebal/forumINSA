@@ -1,3 +1,17 @@
-#FIE
+# FIE
 
-TODO: explain how to make it run
+## Getting started
+### Required
+* MongoDB
+* SailsJS
+* NodeJS
+
+### Update dependancies
+```
+npm install
+```
+
+### Launch project
+```
+sails lift
+```
