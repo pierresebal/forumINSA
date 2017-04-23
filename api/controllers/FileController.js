@@ -24,6 +24,7 @@ module.exports = {
       return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Erreur lors de l'upload", ErrorDesc: "Votre CV n'est ni uploadé en anglais ni en français"})
     }
 
+    var uploadFile = req.file(file);
     var fileName = prefix + req.session.login + '.pdf'
 
     uploadFile.upload({dirname: '../../files/' + file, saveAs: fileName, maxBytes: 10000000}, (err, files) => {
