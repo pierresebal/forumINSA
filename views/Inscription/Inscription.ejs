@@ -27,7 +27,7 @@
 %>
 
 <h1>Création d'un compte entreprise</h1>
-<p>Créer un compte ne vous engage pas, il permet juste de vous créer un profil et d'accéder à la partie commande du site où vous pourrez consulter nos tarifs.</p>
+<p>Créer un compte ne vous engage pas, il permet juste de vous créer un profil sur le site et d'accéder à la partie commande où vous pourrez consulter nos tarifs et passer commande.</p>
 <form id="FormInscription" enctype="multipart/form-data" method="post" action="/Company/CreateCompany" class="pure-form pure-form-aligned" >
 
 
@@ -66,7 +66,7 @@
     <div class="pure-control-group">
       <label for="CompanyDescription">Description de l'entreprise</label>
       <textarea class="pure-input-1-3" rows="3" maxlength="500" value="<%=data_tab[5]%>" name="CompanyDescription" id="CompanyDescription" placeholder="Tapez ici la description de l'entreprise qui apparaitra dans la plaquette du forum et sur le catalogue en ligne."></textarea>
-      <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[5]%>" id="CompanyDescriptionErr" >0&lt;Nb de caractères &lt;500 (facultatif pour l'inscription)</p>
+      <p style="color:red;font-size:10px;display:<%=ErrInitStyleShow[5]%>" id="CompanyDescriptionErr" >0&lt;Nb de caractères &lt;500 (facultatif pour la création de compte)</p>
     </div>
 
     <div class="pure-control-group">
