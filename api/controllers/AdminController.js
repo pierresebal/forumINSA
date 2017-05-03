@@ -85,7 +85,7 @@ module.exports = {
       }
 
       var areOpened
-      if (req.param('inscriptions') === 1) {
+      if (req.param('inscriptions') === "1") {
         areOpened = true
       } else {
         areOpened = false

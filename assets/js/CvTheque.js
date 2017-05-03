@@ -4,20 +4,6 @@ var CriteriaBox =  React.createClass({
     //return {specialities: []};
     return {AE:false, GB:false, GPE:false, GMM:false, GM:false, GP:false, IR:false, AS:false, A1:false, A2:false, A3:false, A4:false, A5:false, All:false, frCV:false, enCV:false}
   },
-/*
-  componentDidMount : function() {
-    $.ajax({
-      url:'/Student/Specialities',
-      dataType: 'json',
-      cache: false,
-      success : function(specialities) {
-        this.setState({specialities: specialities});
-      }.bind(this),
-      error : function(xhr, status, err) {
-        console.error('/Student/Specialities', status, err.toString());
-      }.bind(this)
-    });
-  }, */
 
   handleCheckAE : function(e) {this.setState({AE:e.target.checked});},
   handleCheckGB : function(e) {this.setState({GB:e.target.checked});},
@@ -82,15 +68,6 @@ var CriteriaBox =  React.createClass({
 
 
   render : function() {
-    /* var criteriaList = this.state.specialities.map(function(speciality){
-      return (
-        <tr >
-          <td>
-            <input type="checkbox" name={speciality}/> <label>{speciality}</label>
-          </td>
-        </tr>
-      );
-    }); */
 
     return( //Todo : A automatiser
       <div className="CriteriaBox">

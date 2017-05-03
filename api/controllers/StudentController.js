@@ -284,7 +284,8 @@ module.exports = {
           console.log('error : ' + err)
           return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Les entreprises ne sont pas récupérées'})
         }
-        return res.view('StudentSpace/Companies', {layout: 'layout', companies: companies, specialities: specialities, selectedSpeciality: selectedSpeciality})
+        const actualYear = new Date().getFullYear()
+        return res.view('StudentSpace/Companies', {layout: 'layout', companies: companies, specialities: specialities, selectedSpeciality: selectedSpeciality, year: actualYear})
       })
     })
   },
