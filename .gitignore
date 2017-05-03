@@ -6,6 +6,10 @@ ncp-debug.log
 npm-debug.log
 .tmp
 config/configFIE.js
+assets/images/logos/*
+files/factures/*
+files/fr-cv/*
+files/en-cv/*
 
 .idea               # Jetbrains editors
 .idea/*
