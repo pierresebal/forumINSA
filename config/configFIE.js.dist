@@ -11,6 +11,6 @@ module.exports.configFIE = {
   FIEmailPassword: "",
   FIEmailSenderName: "Forum INSA Entreprises",
 
-  trackPassword: ""
+  trackPassword: "",
   adminPassword: ""
 }
