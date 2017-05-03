@@ -11,4 +11,9 @@ module.exports.configFIE = {
   FIEmailPassword : "FIEstaff2015",
   FIEmailSenderName : "Forum INSA Entreprises",
 
+  // Admin parameters
+  adminPassword : "adminOnlyTMTC",
+
+  // Track parameters
+  trackPassword : "suiviFIE2016"
 }
