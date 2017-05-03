@@ -305,7 +305,7 @@ module.exports.routes = {
    */
 
   '/Company/Inscription':{
-    view:'Inscription/Inscription',
+    view:'Inscription/InscriptionClosed',
     locals:{layout:'layout', title:'Inscription - FIE'}
   },
 

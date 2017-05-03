@@ -255,3 +255,11 @@ h2, h3 {
     width: 80%; /* Could be more or less, depending on screen size */
     max-width: 400px;
 }
+
+.announcement   {
+    background: #e42618;
+    margin: 1em 0;
+    padding: 0.3em 1em;
+    border-radius: 3px;
+    color: #fff;
+}

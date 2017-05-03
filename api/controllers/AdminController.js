@@ -439,6 +439,9 @@ module.exports = {
         })
       })
     })
-  }
+  },
 
+  editBill: function(req, res)  {
+
+  }
 }
