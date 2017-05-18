@@ -199,7 +199,7 @@ module.exports.routes = {
   },
 
   '/about':{
-    view:'About/tmp',
+    view:'About/Contact',
     locals:{layout:'layout', title:'A Propos - FIE'}
   },
 
@@ -305,7 +305,7 @@ module.exports.routes = {
    */
 
   '/Company/Inscription':{
-    view:'Inscription/InscriptionClosed',
+    view:'Inscription/Inscription',
     locals:{layout:'layout', title:'Inscription - FIE'}
   },
 
