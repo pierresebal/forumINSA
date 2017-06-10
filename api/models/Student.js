@@ -40,7 +40,7 @@ module.exports = {
         'Automatique, Électronique',
         'Génie Biochimique',
         'Génie des Procédés',
-        'Génie Mathématique et Modélisation',
+        'Génie Mathématique Appliqué',
         'Génie Civil',
         'Génie Mécanique',
         'Génie Physique',
