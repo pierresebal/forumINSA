@@ -540,15 +540,27 @@ module.exports = {
                     title: 'Date dépassée - FIE'
                 })
             }
-
+            var year = new Date().getFullYear();
             if (found.areInscriptionsOpened) {
-                var year = new Date().getFullYear();
+
+      var now = new Date()
+      if (found.inscriptionDeadline < now) {
+        return res.view('CompanySpace/DeadlinePassed', {layout: 'layout', deadline: found.inscriptionDeadline.toDateString(), title: 'Date dépassée - FIE'})
+      }
+      var year = new Date().getFullYear()
 
                 if (req.session.user.type == 'PME' || req.session.user.type == 'Start-up') {
                     YearSettings.findOne({year: year}).exec((err, record) => {
                         if (err) {
                             return err
                         }
+      if (found.areInscriptionsOpened) {
+
+        if (req.session.isPME) {
+          YearSettings.findOne({year: year}).exec((err, record) => {
+            if (err) {
+              return err
+            }
 
                         if (!record) {
                             return res.view('CompanySpace/NoInscriptions', {layout: 'layout'})
@@ -574,9 +586,9 @@ module.exports = {
                             return err
                         }
 
-                        if (!record) {
-                            return res.view('CompanySpace/NoInscriptions', {layout: 'layout'})
-                        }
+            if (!record) {
+              return res.view('CompanySpace/NoMoreInscriptions', {layout: 'layout', year: year})
+            }
 
                         return res.view('CompanySpace/Command', {
                             layout: 'layout',
@@ -594,7 +606,7 @@ module.exports = {
                     })
                 }
             } else {
-                return res.view('CompanySpace/NoInscriptions', {layout: 'layout'})
+                return res.view('CompanySpace/NoInscriptions', {layout: 'layout', year: year})
             }
         })
     },
