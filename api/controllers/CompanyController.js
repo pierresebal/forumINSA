@@ -541,71 +541,58 @@ module.exports = {
                 })
             }
             var year = new Date().getFullYear();
-            if (found.areInscriptionsOpened) {
 
-                var now = new Date()
-                if (found.inscriptionDeadline < now) {
-                    return res.view('CompanySpace/DeadlinePassed', {
+            if (req.session.user.type == 'PME' || req.session.user.type == 'Start-up') {
+
+                YearSettings.findOne({year: year}).exec((err, record) => {
+                    if (err) {
+                        return err
+                    }
+
+                    if (!record) {
+                        return res.view('CompanySpace/NoInscriptions', {layout: 'layout'})
+                    }
+
+                    return res.view('CompanySpace/Command', {
                         layout: 'layout',
+                        title: 'Commande - FIE',
+                        year: year,
+                        forumPrice: record.forumPricePME,
+                        sjdPrice: record.sjdPricePME,
+                        sjdSessionPrice: record.sjdSessionPricePME,
+                        premiumPrice: record.premiumPricePME,
+                        mealPrice: record.mealPrice,
                         deadline: found.inscriptionDeadline.toDateString(),
-                        title: 'Date dépassée - FIE'
+                        priceImgUrl: '/images/pme.png',
+                        reduit: true
                     })
-                }
-                var year = new Date().getFullYear();
-
-                if (req.session.user.type == 'PME' || req.session.user.type == 'Start-up') {
-
-                    YearSettings.findOne({year: year}).exec((err, record) => {
-                        if (err) {
-                            return err
-                        }
-
-                        if (!record) {
-                            return res.view('CompanySpace/NoInscriptions', {layout: 'layout'})
-                        }
-
-                        return res.view('CompanySpace/Command', {
-                            layout: 'layout',
-                            title: 'Commande - FIE',
-                            year: year,
-                            forumPrice: record.forumPricePME,
-                            sjdPrice: record.sjdPricePME,
-                            sjdSessionPrice: record.sjdSessionPricePME,
-                            premiumPrice: record.premiumPricePME,
-                            mealPrice: record.mealPrice,
-                            deadline: found.inscriptionDeadline.toDateString(),
-                            priceImgUrl: '/images/pme.png',
-                            isPME: true
-                        })
-                    })
-                } else {
-                    YearSettings.findOne({year: year}).exec((err, record) => {
-                        if (err) {
-                            return err
-                        }
-
-                        if (!record) {
-                            return res.view('CompanySpace/NoMoreInscriptions', {layout: 'layout', year: year})
-                        }
-
-                        return res.view('CompanySpace/Command', {
-                            layout: 'layout',
-                            title: 'Commande - FIE',
-                            year: year,
-                            forumPrice: record.forumPrice,
-                            sjdPrice: record.sjdPrice,
-                            sjdSessionPrice: record.sjdSessionPrice,
-                            premiumPrice: record.premiumPrice,
-                            mealPrice: record.mealPrice,
-                            deadline: found.inscriptionDeadline.toDateString(),
-                            priceImgUrl: '/images/regular.png',
-                            isPME: false
-                        })
-                    })
-                }
+                })
             } else {
-                return res.view('CompanySpace/NoInscriptions', {layout: 'layout', year: year})
+                YearSettings.findOne({year: year}).exec((err, record) => {
+                    if (err) {
+                        return err
+                    }
+
+                    if (!record) {
+                        return res.view('CompanySpace/NoMoreInscriptions', {layout: 'layout', year: year})
+                    }
+
+                    return res.view('CompanySpace/Command', {
+                        layout: 'layout',
+                        title: 'Commande - FIE',
+                        year: year,
+                        forumPrice: record.forumPrice,
+                        sjdPrice: record.sjdPrice,
+                        sjdSessionPrice: record.sjdSessionPrice,
+                        premiumPrice: record.premiumPrice,
+                        mealPrice: record.mealPrice,
+                        deadline: found.inscriptionDeadline.toDateString(),
+                        priceImgUrl: '/images/regular.png',
+                        reduit: false
+                    })
+                })
             }
+
         })
     },
 

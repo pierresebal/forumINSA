@@ -210,6 +210,15 @@ module.exports = {
             defaultsTo: false
         },
 
-
+        /**
+         * Check if company can book a Speed Job Dating or not.
+         * The declared fields in this function have to be filled
+         * @return: boolean
+         */
+        canBook: function() {
+            return this.firstName && this.lastName && this.position && this.phoneNumber && this.mailAddress         // contact
+                && this.bFirstName && this.bLastName && this.bPosition && this.bPhoneNumber && this.bMailAddress    // facturation
+                && this.logo && this.description && this.road && this.postCode && this.country && this.city;
+        }
     }
 };
