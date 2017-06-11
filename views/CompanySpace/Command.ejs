@@ -2,8 +2,8 @@
 
 <p>Vous avez jusqu'au <%=deadline%> pour vous inscrire.</p>
 <img src=<%=priceImgUrl%> style="display: block; width: 100%; margin: auto; padding-top: 30px; padding-bottom: 30px;"/>
-<%if (isPME)  { %>
-<p>En tant que PME vous bénéficiez de prix réduits.</p>
+<%if (reduit)  { %>
+<p>En tant que <%= req.session.user.type %> vous bénéficiez de prix réduits.</p>
 <% } %>
 
 <h2>Formulaire de commande</h2>
@@ -34,13 +34,17 @@
       <td><input id="sjdSessionCommand" type="number" name="numberSjdSession" value="0" min="0" max="10" required/></td>
     </tr>
     <tr>
-      <td><label for="moreMeal">Nombre de repas supplémentaires : <%=mealPrice%> €/repas </label></td>
+      <td><label for="moreMeal">Nombre de personne présentes le jour de l'évènement <sup>(1)</sup> : (<%=mealPrice%> €/repas )</label></td>
       <td><input id="moreMeal" type="number" name="moreMeal" value="0" min="0" max="10" required/></td>
     </tr>
   </table>
-
-  <input id="cgu" name="cgu" type="checkbox" required/><label for="cgu">Vous vous apprêter à valider votre commande. En cochant la case ci-avant vous vous engagez à régler le montant de la prestation choisie tel que décrit sur le site. Une modification de cet engagement sera possible uniquement sur demande et au plus tard deux semaines avant la tenue du forum.</label><br />
-
-  <input type="submit" value="Réserver"/>
+  <label for="cgu" class="pure-checkbox">
+    <input id="cgu" name="cgu" type="checkbox" required/>
+      Vous vous apprêter à valider votre commande. En cochant la case ci-avant vous vous engagez à régler le montant de la prestation choisie tel que décrit sur le site. Une modification de cet engagement sera possible uniquement sur demande et au plus tard un mois avant la tenue du forum.
+  </label><br />
+  <p>
+    <sup>(1)</sup> Merci de nous renseigner le nombre de personnes qui seront présentes le jour de l'événement pour des raisons de sécurité et d'organisation. Le prix correspond au frais de restauration, soit un repas traiteur et des collations toute la journée.
+  </p>
+  <input type="submit" value="Réserver" class="pure-button"/>
 
 </form>
