@@ -305,8 +305,8 @@ module.exports.routes = {
    */
 
   '/Company/Inscription':{
-    view:'Inscription/Inscription',
-    locals:{layout:'layout', title:'Inscription - FIE'}
+      controller:'CompanyController',
+      action:'CompanyInscription'
   },
 
 

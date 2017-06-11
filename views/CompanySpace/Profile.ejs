@@ -17,15 +17,6 @@
     }
 </style>
 
-<%
-if (typeof bMailAddress == 'undefined')
-  bMailAddress = '';
-
-if (typeof complementaryInformation == 'undefined')
-  complementaryInformation = '';
-
-%>
-
 <div class="content">
 <h1>Profil Entreprise</h1>
 <p>Vous pouvez ici modifier votre profil.<br />Pensez à mettre une description et un logo. Ils seront utilisés dans nos supports de communication.</p>
@@ -38,20 +29,20 @@ if (typeof complementaryInformation == 'undefined')
           <fieldset>
               <legend>Forum</legend>
 
-              <label for="firstName">Prénom : <%=firstName%></label>
-              <input class="pure-input-1" type="text" name="firstName" value="<%=firstName%>">
+              <label for="firstName">Prénom : <%=company.firstName%></label>
+              <input class="pure-input-1" type="text" name="firstName" value="<%=company.firstName%>">
 
-              <label for="lastName">Nom : <%=lastName%></label>
-              <input class="pure-input-1" type="text" name="lastName" value="<%=lastName%>">
+              <label for="lastName">Nom : <%=company.lastName%></label>
+              <input class="pure-input-1" type="text" name="lastName" value="<%=company.lastName%>">
 
-              <label for="position">Fonction : <%=position%></label>
-              <input class="pure-input-1" type="text" name="position" value="<%=position%>">
+              <label for="position">Fonction : <%=company.position%></label>
+              <input class="pure-input-1" type="text" name="position" value="<%=company.position%>">
 
-              <label for="phoneNumber">Téléphone : <%=phoneNumber%></label>
-              <input class="pure-input-1" type="text" name="phoneNumber" value="<%=phoneNumber%>">
+              <label for="phoneNumber">Téléphone : <%=company.phoneNumber%></label>
+              <input class="pure-input-1" type="text" name="phoneNumber" value="<%=company.phoneNumber%>">
 
-              <label for="mailAddress">Mail : <%=mailAddress%></label>
-              <input class="pure-input-1" type="text" name="mailAddress" value="<%=mailAddress%>">
+              <label for="mailAddress">Mail : <%= company.mailAddress %></label>
+              <input class="pure-input-1" type="text" name="mailAddress" value="<%= company.mailAddress %>">
 
               <br/>
               <button style="width: 100%;" type="submit" >Enregistrer</button>
@@ -65,20 +56,20 @@ if (typeof complementaryInformation == 'undefined')
           <fieldset>
               <legend>Facturation</legend>
 
-              <label for="bFirstName">Prénom : <%=bFirstName%></label>
-              <input class="pure-input-1" type="text" name="bFirstName" value="<%=bFirstName%>">
+              <label for="bFirstName">Prénom : <%= company.bFirstName %></label>
+              <input class="pure-input-1" type="text" name="bFirstName" value="<%= company.bFirstName %>">
 
-              <label for="bLastName">Nom : <%=bLastName%></label>
-              <input class="pure-input-1" type="text" name="bLastName" value="<%=bLastName%>">
+              <label for="bLastName">Nom : <%= company.bLastName %></label>
+              <input class="pure-input-1" type="text" name="bLastName" value="<%= company.bLastName %>">
 
-              <label for="bPosition">Fonction : <%=bPosition%></label>
-              <input class="pure-input-1" type="text" name="bPosition" value="<%=bPosition%>">
+              <label for="bPosition">Fonction : <%= company.bPosition%></label>
+              <input class="pure-input-1" type="text" name="bPosition" value="<%= company.bPosition %>">
 
-              <label for="bPhoneNumber">Téléphone : <%=bPhoneNumber%></label>
-              <input class="pure-input-1" type="text" name="bPhoneNumber" value="<%=bPhoneNumber%>">
+              <label for="bPhoneNumber">Téléphone : <%= company.bPhoneNumber %></label>
+              <input class="pure-input-1" type="text" name="bPhoneNumber" value="<%= company.bPhoneNumber %>">
 
-              <label for="bMailAddress">Mail : <%=bMailAddress%></label>
-              <input class="pure-input-1" type="text" name="bMailAddress" value="<%=bMailAddress%>">
+              <label for="bMailAddress">Mail : <%= typeof company.bMailAddress == 'undefined' ? '' : company.bMailAddress %></label>
+              <input class="pure-input-1" type="text" name="bMailAddress" value="<%= typeof company.bMailAddress == 'undefined' ? '' : company.bMailAddress %>">
 
               <br/>
               <button style="width: 100%;" type="submit" >Enregistrer</button>
@@ -112,23 +103,18 @@ if (typeof complementaryInformation == 'undefined')
 <table class="pure-form  pure-table-bordered" style="width: 100%">
   <tr>
     <td><h3>Siret</h3></td>
-    <td><%=siret%></td>
+    <td><%=company.siret%></td>
     <td>
-      <!-- <form id="siret" method="post" action="/Company/setAUserInfo">
-        <input type="hidden" name="data" value="k"/>
-        <input type="text" name="siret" value="<%=siret%>"/>
-        <input type="submit" value="Sauvegarder"/>
-      </form> -->
     </td>
     <td></td>
   </tr>
   <tr>
     <td><h3>Nom</h3></td>
-    <td><%=companyName%></td>
+    <td><%=company.companyName%></td>
     <form id="companyName" method="post" action="/Company/setAUserInfo">
         <td>
             <input type="hidden" name="data" value="l"/>
-            <input  type="text" name="companyName" value="<%=companyName%>"/>
+            <input  type="text" name="companyName" value="<%= company.companyName %>"/>
         </td>
         <td>
             <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
@@ -139,11 +125,11 @@ if (typeof complementaryInformation == 'undefined')
   </tr>
   <tr>
     <td><h3>Group</h3></td>
-    <td><%=companyGroup%></td>
+    <td><%=company.companyGroup%></td>
         <form id="companyGroup" method="post" action="/Company/setAUserInfo">
             <td>
                 <input type="hidden" name="data" value="m"/>
-                <input  type="text" name="companyGroup" value="<%=companyGroup%>"/>
+                <input  type="text" name="companyGroup" value="<%= company.companyGroup %>"/>
             </td>
             <td>
                 <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
@@ -151,10 +137,28 @@ if (typeof complementaryInformation == 'undefined')
             </td>
       </form>
   </tr>
+    <tr>
+        <td><h3>Status d'entreprise</h3></td>
+        <td><%= company.type %></td>
+        <form id="type" method="post" action="/Company/setAUserInfo">
+            <td>
+                <input  type="hidden" name="data" value="type"/>
+                <select id="type" name="type" class="pure-input-1-3" required>
+                    <% Company.definition.type.enum.forEach(function(type) { %>
+                    <option value="<%= type %>" <%= type == company.type ? 'selected': '' %> ><%= type %></option>
+                    <% }); %>
+                </select>
+            </td>
+            <td>
+                <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
+                </button>
+            </td>
+        </form>
+    </tr>
   <tr>
     <td><h3>Logo</h3></td>
     <% if (typeof logoPath != 'undefined' && logoPath != ''){ %>
-    <td><img src="/images/logos/<%=logoPath%>" style="width: 100px; height: auto" /></td>
+    <td><img src="/images/logos/<%= company.logoPath %>" style="width: 100px; height: auto" /></td>
     <% } else { %>
     <td>-</td>
     <% } %>
@@ -170,26 +174,25 @@ if (typeof complementaryInformation == 'undefined')
   </tr>
   <tr>
     <td><h3>Description</h3></td>
-    <td><%-description%></td>
+    <td><%- company.description%></td>
     <form id="description" method="post" action="/Company/setAUserInfo">
         <td>
             <input type="hidden" name="data" value="n"/>
-            <textarea  type="text" name="description"><%-description%></textarea>
+            <textarea  type="text" name="description"><%- company.description%></textarea>
             <p><i>*Balises HTML autorisées</i></p>
         </td>
         <td>
-            <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
-</button>
+            <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i></button>
         </td>
     </form>
   </tr>
   <tr>
     <td><h3>Site internet</h3></td>
-    <td><a href="<%=websiteUrl%>" target="_blank"><%=websiteUrl%></a></td>
+    <td><a href="<%= company.websiteUrl%>" target="_blank"><%= company.websiteUrl%></a></td>
     <form  id="websiteUrl" method="post" action="/Company/setAUserInfo">
         <td>
             <input type="hidden" name="data" value="o"/>
-            <input  type="text" name="websiteUrl" value="<%=websiteUrl%>"/>
+            <input  type="text" name="websiteUrl" value="<%= company.websiteUrl%>"/>
         </td>
         <td>
             <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
@@ -199,11 +202,11 @@ if (typeof complementaryInformation == 'undefined')
   </tr>
   <tr>
     <td><h3>Site de recrutement</h3></td>
-    <td><a href="<%=careerUrl%>" target="_blank"><%=careerUrl%></a></td>
+    <td><a href="<%= company.careerUrl%>" target="_blank"><%= company.careerUrl%></a></td>
     <form  id="careerUrl" method="post" action="/Company/setAUserInfo">
         <td>
             <input type="hidden" name="data" value="p"/>
-            <input  type="text" name="careerUrl" value="<%=careerUrl%>"/>
+            <input  type="text" name="careerUrl" value="<%= company.careerUrl%>"/>
         </td>
         <td>
         <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
@@ -214,21 +217,21 @@ if (typeof complementaryInformation == 'undefined')
   <tr>
     <td><h3>Adresse postale</h3></td>
     <td>
-      <%=road%><br />
-      <% if (typeof complementaryInformation != 'undefined' && complementaryInformation != "") { %>
-        <%=complementaryInformation%><br />
+      <%=company.road %><br />
+      <% if (typeof company.complementaryInformation != 'undefined' && company.complementaryInformation != "") { %>
+        <%= company.complementaryInformation %><br />
       <% } %>
-      <%=postCode%> <%=city%><br />
-      <%=country%>
+      <%= company.postCode %> <%= company.city %><br />
+      <%= company.country %>
     </td>
       <form  id="postAddress" method="post" action="/Company/setAUserInfo">
           <td>
         <input  type="hidden" name="data" value="q"/>
-        <input  type="text" name="road" value="<%=road%>" placeholder="N° et rue"/><br />
+        <input  type="text" name="road" value="<%= company.road %>" placeholder="N° et rue"/><br />
         <input  type="text" name="complementaryInformation" placeholder="Complément"/><br>
-        <input  type="text" name="postCode" value="<%=postCode%>" placeholder="Code postal"/><br />
-        <input  type="text" name="city" value="<%=city%>" placeholder="Ville"/><br />
-        <input  type="text" name="country" value="<%=country%>" placeholder="Pays"/>
+        <input  type="text" name="postCode" value="<%= company.postCode %>" placeholder="Code postal"/><br />
+        <input  type="text" name="city" value="<%= company.city %>" placeholder="Ville"/><br />
+        <input  type="text" name="country" value="<%= company.country %>" placeholder="Pays"/>
     </td>
     <td>
         <button  type="submit" ><i class="fa fa-check" aria-hidden="true"></i>
@@ -245,21 +248,21 @@ if (typeof complementaryInformation == 'undefined')
     <table>
     <input type="hidden" name="data" value="z"/>
       <tr>
-        <td><input type="checkbox" name="IR" id="IR" <%=IR%>/><label for="IR">Informatique et Réseaux</label></td>
-        <td><input type="checkbox" name="AE" id="AE" <%=AE%>/><label for="AE">Génie Automatique et Électronique</label></td>
+        <td><input type="checkbox" name="IR" id="IR" <%= company.IR? 'checked' : '' %>/><label for="IR">Informatique et Réseaux</label></td>
+        <td><input type="checkbox" name="AE" id="AE" <%= company.AE? 'checked' : '' %>/><label for="AE">Génie Automatique et Électronique</label></td>
         <td rowspan="4"><button  type="submit" >Enregistrer</button></td>
       </tr>
       <tr>
-        <td><input type="checkbox" name="GP" id="GP" <%=GP%>/><label for="GP">Génie Physique</label></td>
-        <td><input type="checkbox" name="GB" id="GB" <%=GB%>/><label for="GB">Génie Biochimique</label></td>
+        <td><input type="checkbox" name="GP" id="GP" <%= company.GP? 'checked' : '' %>/><label for="GP">Génie Physique</label></td>
+        <td><input type="checkbox" name="GB" id="GB" <%= company.GB? 'checked' : '' %>/><label for="GB">Génie Biochimique</label></td>
       </tr>
       <tr>
-        <td><input type="checkbox" name="GPE" id="GPE" <%=GPE%>/><label for="GPE">Génie des Procédés</label></td>
-        <td><input type="checkbox" name="GC" id="GC" <%=GC%>/><label for="GC">Génie Civil</label></td>
+        <td><input type="checkbox" name="GPE" id="GPE" <%= company.GPE? 'checked' : '' %>/><label for="GPE">Génie des Procédés</label></td>
+        <td><input type="checkbox" name="GC" id="GC" <%= company.GC? 'checked' : '' %>/><label for="GC">Génie Civil</label></td>
       </tr>
       <tr>
-        <td><input type="checkbox" name="GM" id="GM" <%=GM%>/><label for="GM">Génie Mécanique</label></td>
-        <td><input type="checkbox" name="GMM" id="GMM" <%=GMM%>/><label for="GMM">Génie Mathématiques et Modélisation</label></td>
+        <td><input type="checkbox" name="GM" id="GM" <%= company.GM? 'checked' : '' %>/><label for="GM">Génie Mécanique</label></td>
+        <td><input type="checkbox" name="GMM" id="GMM" <%= company.GMM? 'checked' : '' %>/><label for="GMM">Génie Mathématiques et Modélisation</label></td>
       </tr>
     </table>
   </form>
