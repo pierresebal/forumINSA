@@ -20,6 +20,12 @@
 <div class="content">
 <h1>Profil Entreprise</h1>
 <p>Vous pouvez ici modifier votre profil.<br />Pensez à mettre une description et un logo. Ils seront utilisés dans nos supports de communication.</p>
+    <% if (!canBook)    { %>
+        <div class="well-info">
+            Vous ne pouvez pas encore réserver un Speed Job Dating!!<br/>
+            Veuillez remplir les champs suivis par <sup style="color:#e42618;">*</sup>
+        </div>
+    <% } %>
 
 <h2>Contacts</h2>
 <div class="pure-g">
@@ -56,19 +62,19 @@
           <fieldset>
               <legend>Facturation</legend>
 
-              <label for="bFirstName">Prénom : <%= company.bFirstName %></label>
+              <label for="bFirstName">Prénom<sup class="text-danger">*</sup> : <%= company.bFirstName %></label>
               <input class="pure-input-1" type="text" name="bFirstName" value="<%= company.bFirstName %>">
 
-              <label for="bLastName">Nom : <%= company.bLastName %></label>
+              <label for="bLastName">Nom<sup class="text-danger">*</sup> : <%= company.bLastName %></label>
               <input class="pure-input-1" type="text" name="bLastName" value="<%= company.bLastName %>">
 
-              <label for="bPosition">Fonction : <%= company.bPosition%></label>
+              <label for="bPosition">Fonction<sup class="text-danger">*</sup> : <%= company.bPosition%></label>
               <input class="pure-input-1" type="text" name="bPosition" value="<%= company.bPosition %>">
 
-              <label for="bPhoneNumber">Téléphone : <%= company.bPhoneNumber %></label>
+              <label for="bPhoneNumber">Téléphone<sup class="text-danger">*</sup> : <%= company.bPhoneNumber %></label>
               <input class="pure-input-1" type="text" name="bPhoneNumber" value="<%= company.bPhoneNumber %>">
 
-              <label for="bMailAddress">Mail : <%= typeof company.bMailAddress == 'undefined' ? '' : company.bMailAddress %></label>
+              <label for="bMailAddress">Mail<sup class="text-danger">*</sup> : <%= typeof company.bMailAddress == 'undefined' ? '' : company.bMailAddress %></label>
               <input class="pure-input-1" type="text" name="bMailAddress" value="<%= typeof company.bMailAddress == 'undefined' ? '' : company.bMailAddress %>">
 
               <br/>
@@ -76,6 +82,8 @@
           </fieldset>
         </form>
     </div>
+    <div class="pure-u-md-1-8"></div>
+
 </div>
 
 <h2>Mot de passe</h2>
@@ -156,7 +164,7 @@
         </form>
     </tr>
   <tr>
-    <td><h3>Logo</h3></td>
+    <td><h3>Logo <sup class="text-danger">*</sup></h3></td>
     <% if (typeof logoPath != 'undefined' && logoPath != ''){ %>
     <td><img src="/images/logos/<%= company.logoPath %>" style="width: 100px; height: auto" /></td>
     <% } else { %>
@@ -173,7 +181,7 @@
       </form>
   </tr>
   <tr>
-    <td><h3>Description</h3></td>
+    <td><h3>Description <sup class="text-danger">*</sup></h3></td>
     <td><%- company.description%></td>
     <form id="description" method="post" action="/Company/setAUserInfo">
         <td>
@@ -215,7 +223,7 @@
     </form>
   </tr>
   <tr>
-    <td><h3>Adresse postale</h3></td>
+    <td><h3>Adresse postale<sup class="text-danger">*</sup></h3> </td>
     <td>
       <%=company.road %><br />
       <% if (typeof company.complementaryInformation != 'undefined' && company.complementaryInformation != "") { %>

@@ -105,8 +105,6 @@ h2, h3 {
     }
 }
 
-
-
 .custom-nav {
   font-size: 0.9em;
   text-align: center;
@@ -256,10 +254,39 @@ h2, h3 {
     max-width: 400px;
 }
 
-.announcement   {
+/* Text color
+==================*/
+.text-info  {
+    color: #fefefe;
+}
+
+.text-danger    {
+    color: #e42618;
+}
+
+/* Wells
+==================*/
+/* wells rouge */
+.well-info  {
+    background: #808080;
+    margin: 1em 0;
+    padding: 0.3em 1em;
+    border-radius: 3px;
+    color: #fff;
+}
+
+.well-info  *{
+    color: #fff;
+}
+
+.well-danger   {
     background: #e42618;
     margin: 1em 0;
     padding: 0.3em 1em;
     border-radius: 3px;
+    color: #fff;
+}
+
+.well-danger *  {
     color: #fff;
 }

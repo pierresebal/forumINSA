@@ -496,6 +496,7 @@ module.exports = {
                 return res.view('CompanySpace/Profile', {
                     layout: 'layout',
                     company: found,
+                    canBook: found.canBook()
                 })
             } else {
                 return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Votre compte n'a pas été trouvé."})
@@ -542,7 +543,13 @@ module.exports = {
             }
             var year = new Date().getFullYear();
 
-            if (req.session.user.type == 'PME' || req.session.user.type == 'Start-up') {
+            // check if company can book speed job dating or not
+            var company = req.session.user; //shortcut for actual company
+            var canBook = company.firstName && company.lastName && company.position && company.phoneNumber && company.mailAddress         // contact
+                && company.bFirstName && company.bLastName && company.bPosition && company.bPhoneNumber && company.bMailAddress    // facturation
+                && company.logo && company.description && company.road && company.postCode && company.country && company.city;
+
+            if (company.type == 'PME' || company.type == 'Start-up') {
 
                 YearSettings.findOne({year: year}).exec((err, record) => {
                     if (err) {
@@ -564,7 +571,8 @@ module.exports = {
                         mealPrice: record.mealPrice,
                         deadline: found.inscriptionDeadline.toDateString(),
                         priceImgUrl: '/images/pme.png',
-                        reduit: true
+                        reduit: true,
+                        canBook: canBook
                     })
                 })
             } else {
@@ -588,7 +596,8 @@ module.exports = {
                         mealPrice: record.mealPrice,
                         deadline: found.inscriptionDeadline.toDateString(),
                         priceImgUrl: '/images/regular.png',
-                        reduit: false
+                        reduit: false,
+                        canBook: canBook
                     })
                 })
             }
