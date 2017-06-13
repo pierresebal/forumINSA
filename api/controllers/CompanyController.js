@@ -547,7 +547,7 @@ module.exports = {
             var company = req.session.user; //shortcut for actual company
             var canBook = company.firstName && company.lastName && company.position && company.phoneNumber && company.mailAddress         // contact
                 && company.bFirstName && company.bLastName && company.bPosition && company.bPhoneNumber && company.bMailAddress    // facturation
-                && company.logo && company.description && company.road && company.postCode && company.country && company.city;
+                && company.logoPath && company.description && company.road && company.postCode && company.country && company.city;
 
             if (company.type == 'PME' || company.type == 'Start-up') {
 

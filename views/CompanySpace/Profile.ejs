@@ -165,7 +165,7 @@
     </tr>
   <tr>
     <td><h3>Logo <sup class="text-danger">*</sup></h3></td>
-    <% if (typeof logoPath != 'undefined' && logoPath != ''){ %>
+    <% if (typeof company.logoPath !== 'undefined' && company.logoPath !== ''){ %>
     <td><img src="/images/logos/<%= company.logoPath %>" style="width: 100px; height: auto" /></td>
     <% } else { %>
     <td>-</td>

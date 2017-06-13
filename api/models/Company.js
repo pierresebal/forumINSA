@@ -218,7 +218,7 @@ module.exports = {
         canBook: function() {
             return this.firstName && this.lastName && this.position && this.phoneNumber && this.mailAddress         // contact
                 && this.bFirstName && this.bLastName && this.bPosition && this.bPhoneNumber && this.bMailAddress    // facturation
-                && this.logo && this.description && this.road && this.postCode && this.country && this.city;
+                && this.logoPath && this.description && this.road && this.postCode && this.country && this.city;
         }
     }
 };
