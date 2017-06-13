@@ -119,6 +119,8 @@ module.exports = {
             return
           }
 
+          req.session.user = updated[0];
+
           setTimeout(() => {
             return res.redirect('/Company/Profile')
           }, 2000)

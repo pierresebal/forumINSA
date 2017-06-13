@@ -45,6 +45,11 @@
   <p>
     <sup>(1)</sup> Merci de nous renseigner le nombre de personnes qui seront présentes le jour de l'événement pour des raisons de sécurité et d'organisation. Le prix correspond au frais de restauration, soit un repas traiteur et des collations toute la journée.
   </p>
-  <input type="submit" value="Réserver" class="pure-button"/>
+    <% if (canBook) { %>
+    <input type="submit" value="Réserver" class="pure-button"/>
+    <% } else { %>
+      <input type="submit" value="Réserver" class="pure-button" disabled/>
+      <div class="well-danger">Certaines informations sont nécessaires pour la réservation, nous vous invitons de finir votre profil dans l'onglet "Espace Perso" > "Mon profil" </div>
+    <% } %>
 
 </form>
