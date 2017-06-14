@@ -533,7 +533,8 @@ module.exports = {
                 return err
             }
 
-            var now = new Date()
+            // check deadline
+            var now = new Date();
             if (found.inscriptionDeadline < now) {
                 return res.view('CompanySpace/DeadlinePassed', {
                     layout: 'layout',
@@ -541,7 +542,17 @@ module.exports = {
                     title: 'Date dépassée - FIE'
                 })
             }
+
             var year = new Date().getFullYear();
+
+            // check open close
+            if(!found.areInscriptionsOpened) {
+                return res.view('CompanySpace/NoInscriptions', {
+                    layout: 'layout',
+                    title: 'Réservation fermée - FIE',
+                    year: year
+                });
+            }
 
             // check if company can book speed job dating or not
             var company = req.session.user; //shortcut for actual company
@@ -549,15 +560,12 @@ module.exports = {
                 && company.bFirstName && company.bLastName && company.bPosition && company.bPhoneNumber && company.bMailAddress    // facturation
                 && company.logoPath && company.description && company.road && company.postCode && company.country && company.city;
 
+            // 2 views differents for 2 prices
             if (company.type == 'PME' || company.type == 'Start-up') {
 
                 YearSettings.findOne({year: year}).exec((err, record) => {
                     if (err) {
                         return err
-                    }
-
-                    if (!record) {
-                        return res.view('CompanySpace/NoInscriptions', {layout: 'layout'})
                     }
 
                     return res.view('CompanySpace/Command', {
@@ -579,10 +587,6 @@ module.exports = {
                 YearSettings.findOne({year: year}).exec((err, record) => {
                     if (err) {
                         return err
-                    }
-
-                    if (!record) {
-                        return res.view('CompanySpace/NoMoreInscriptions', {layout: 'layout', year: year})
                     }
 
                     return res.view('CompanySpace/Command', {
