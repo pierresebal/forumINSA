@@ -30,22 +30,9 @@ module.exports = {
 
                 return res.view('Admin/YearSettings', {
                     layout: 'layout',
-
                     year: year,
                     generalSettings: found,
                     yearSettings: record,
-/*
-                    inscriptionsAreOpen: found.areInscriptionsOpened,
-                    inscriptionDeadline: found.inscriptionDeadline,
-                    forumPrice: record.forumPrice,
-                    sjdPrice: record.sjdPrice,
-                    sjdSessionPrice: record.sjdSessionPrice,
-                    premiumPrice: record.premiumPrice,
-                    forumPricePME: record.forumPricePME,
-                    sjdPricePME: record.sjdPricePME,
-                    sjdSessionPricePME: record.sjdSessionPricePME,
-                    premiumPricePME: record.premiumPricePME,
-                    mealPrice: record.mealPrice*/
                 })
             })
         })
