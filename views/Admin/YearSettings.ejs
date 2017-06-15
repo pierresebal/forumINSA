@@ -1,17 +1,5 @@
 <h1>Partie admin</h1>
 
-<%
-  var inscriptionOpen;
-  if (inscriptionsAreOpen)
-    inscriptionOpen = 'ouvertes';
-  else
-    inscriptionOpen = 'fermées';
-
-  if (typeof inscriptionDeadline == 'undefined')
-    inscriptionDeadline = 'indéfinie';
-
-%>
-
 <% if (req.session.isAdmin != true) { %>
 
 <form method="POST" action="/Admin/Login">
@@ -26,24 +14,24 @@
 
 <h3>Changement pour l'année <%=year%></h3>
 <form method="post" action="/Admin/SetPrices">
-  <label>Nouveau prix pour un repas supplémentaire (actuel : <%=mealPrice%>€)</label> <input type="number" name="mealPrice"/><br />
+  <label>Nouveau prix pour un repas supplémentaire (actuel : <%= yearSettings.mealPrice %>€)</label> <input type="number" name="mealPrice"/><br />
   <h3>Pour les grandes entreprises</h3>
-  <label>Nouveau prix du forum (actuel : <%=forumPrice%>€)</label> <input type="number" name="forumPrice"/><br />
-  <label>Nouveau prix du SJD (actuel : <%=sjdPrice%>€)</label> <input type="number" name="sjdPrice"/><br />
-  <label>Nouveau prix d'une session supplémentaire au SJD (actuel : <%=sjdSessionPrice%>€)</label> <input type="number" name="sjdSessionPrice"/><br />
-  <label>Nouveau prix du pack premium (actuel : <%=premiumPrice%>€)</label> <input type="number" name="premiumPrice"/><br />
+  <label>Nouveau prix du forum (actuel : <%= yearSettings.forumPrice %>€)</label> <input type="number" name="forumPrice"/><br />
+  <label>Nouveau prix du SJD (actuel : <%= yearSettings.sjdPrice %>€)</label> <input type="number" name="sjdPrice"/><br />
+  <label>Nouveau prix d'une session supplémentaire au SJD (actuel : <%= yearSettings.sjdSessionPrice %>€)</label> <input type="number" name="sjdSessionPrice"/><br />
+  <label>Nouveau prix du pack premium (actuel : <%= yearSettings.premiumPrice %>€)</label> <input type="number" name="premiumPrice"/><br />
 
   <h3>Pour les PME</h3>
-  <label>Nouveau prix du forum (actuel : <%=forumPricePME%>€)</label> <input type="number" name="forumPricePME"/><br />
-  <label>Nouveau prix du SJD (actuel : <%=sjdPricePME%>€)</label> <input type="number" name="sjdPricePME"/><br />
-  <label>Nouveau prix d'une session supplémentaire au SJD (actuel : <%=sjdSessionPricePME%>€)</label> <input type="number" name="sjdSessionPricePME"/><br />
-  <label>Nouveau prix du pack premium (actuel : <%=premiumPricePME%>€)</label> <input type="number" name="premiumPricePME"/><br />
+  <label>Nouveau prix du forum (actuel : <%= yearSettings.forumPricePME %>€)</label> <input type="number" name="forumPricePME"/><br />
+  <label>Nouveau prix du SJD (actuel : <%= yearSettings.sjdPricePME %>€)</label> <input type="number" name="sjdPricePME"/><br />
+  <label>Nouveau prix d'une session supplémentaire au SJD (actuel : <%= yearSettings.sjdSessionPricePME %>€)</label> <input type="number" name="sjdSessionPricePME"/><br />
+  <label>Nouveau prix du pack premium (actuel : <%= yearSettings.premiumPricePME %>€)</label> <input type="number" name="premiumPricePME"/><br />
   <input type="submit" value="Envoyer"/>
 </form>
 
 <h3>Date limite d'inscription</h3>
 <p>
-  Actuellement la deadline est fixée à <b><%=inscriptionDeadline%></b>.<br />
+  Actuellement la deadline est fixée à <b><%= generalSettings.inscriptionDeadline %></b>.<br />
   Changer la deadline pour :
 </p>
 <form method="post" action="/Admin/setInscriptionDeadline">
@@ -53,13 +41,11 @@
 
 <h3>Ouvrir les inscriptions pour l'année <%=year%></h3>
 <form method="post" action="/Admin/setInscriptionOpen">
-  <p>Actuellement, les inscriptions sont <b><%=inscriptionOpen%></b>.<br />
+  <p>Actuellement, les inscriptions sont <b><%= generalSettings.areInscriptionsOpened? 'ouvertes' : 'fermées' %></b>.<br />
     Définir les inscriptions comme :</p>
-  <input type="radio" value="1" name="inscriptions"/><label>ouvertes</label><br />
-  <input type="radio" value="0" name="inscriptions" checked/><label>fermées</label><br />
+  <input type="radio" value="1" name="inscriptions" <%= generalSettings.areInscriptionsOpened ? 'checked' : '' %>/><label>ouvertes</label><br />
+  <input type="radio" value="0" name="inscriptions" <%= generalSettings.areInscriptionsOpened ? '' : 'checked' %>/><label>fermées</label><br />
   <input type="submit" value="Enregistrer"/>
 </form>
-
-
 
 <% } %>
