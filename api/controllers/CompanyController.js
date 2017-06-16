@@ -554,58 +554,61 @@ module.exports = {
                 });
             }
 
-            // check if company can book speed job dating or not
-            var company = req.session.user; //shortcut for actual company
-            var canBook = company.firstName && company.lastName && company.position && company.phoneNumber && company.mailAddress         // contact
-                && company.bFirstName && company.bLastName && company.bPosition && company.bPhoneNumber && company.bMailAddress    // facturation
-                && company.logoPath && company.description && company.road && company.postCode && company.country && company.city;
+            Company.findOne({mailAddress: req.session.user.mailAddress}).exec((err, record) =>    {
+                if (err) {
+                    return err
+                }
+                var company = record;
 
-            // 2 views differents for 2 prices
-            if (company.type == 'PME' || company.type == 'Start-up') {
 
-                YearSettings.findOne({year: year}).exec((err, record) => {
-                    if (err) {
-                        return err
-                    }
+                // 2 views differents for 2 prices
+                if (company.isBenefitPromotion()) {
+                    YearSettings.findOne({year: year}).exec((err, record) => {
+                        if (err) {
+                            console.log(err);
+                            return err;
+                        }
 
-                    return res.view('CompanySpace/Command', {
-                        layout: 'layout',
-                        title: 'Commande - FIE',
-                        year: year,
-                        forumPrice: record.forumPricePME,
-                        sjdPrice: record.sjdPricePME,
-                        sjdSessionPrice: record.sjdSessionPricePME,
-                        premiumPrice: record.premiumPricePME,
-                        mealPrice: record.mealPrice,
-                        deadline: found.inscriptionDeadline.toDateString(),
-                        priceImgUrl: '/images/pme.png',
-                        reduit: true,
-                        canBook: canBook
+                        return res.view('CompanySpace/Command', {
+                            layout: 'layout',
+                            title: 'Commande - FIE',
+                            year: year,
+                            forumPrice: record.forumPricePME,
+                            sjdPrice: record.sjdPricePME,
+                            sjdSessionPrice: record.sjdSessionPricePME,
+                            premiumPrice: record.premiumPricePME,
+                            mealPrice: record.mealPrice,
+                            deadline: found.inscriptionDeadline.toDateString(),
+                            priceImgUrl: '/images/pme.png',
+                            reduit: true,
+                            canBook: company.canBook()
+                        })
                     })
-                })
-            } else {
-                YearSettings.findOne({year: year}).exec((err, record) => {
-                    if (err) {
-                        return err
-                    }
+                } else {
+                    YearSettings.findOne({year: year}).exec((err, record) => {
+                        if (err) {
+                            console.log(err);
+                            return err;
+                        }
 
-                    return res.view('CompanySpace/Command', {
-                        layout: 'layout',
-                        title: 'Commande - FIE',
-                        year: year,
-                        forumPrice: record.forumPrice,
-                        sjdPrice: record.sjdPrice,
-                        sjdSessionPrice: record.sjdSessionPrice,
-                        premiumPrice: record.premiumPrice,
-                        mealPrice: record.mealPrice,
-                        deadline: found.inscriptionDeadline.toDateString(),
-                        priceImgUrl: '/images/regular.png',
-                        reduit: false,
-                        canBook: canBook
+                        return res.view('CompanySpace/Command', {
+                            layout: 'layout',
+                            title: 'Commande - FIE',
+                            year: year,
+                            forumPrice: record.forumPrice,
+                            sjdPrice: record.sjdPrice,
+                            sjdSessionPrice: record.sjdSessionPrice,
+                            premiumPrice: record.premiumPrice,
+                            mealPrice: record.mealPrice,
+                            deadline: found.inscriptionDeadline.toDateString(),
+                            priceImgUrl: '/images/regular.png',
+                            reduit: false,
+                            canBook: company.canBook()
+                        })
                     })
-                })
-            }
+                }
 
+            })
         })
     },
 
@@ -769,7 +772,7 @@ module.exports = {
                     country: country
                 }).exec((err, record) => {
                     if (err) {
-                        console.log(err)
+                        console.log(err);
                         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update postaddress.'})
                     }
 

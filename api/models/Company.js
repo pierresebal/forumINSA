@@ -152,12 +152,6 @@ module.exports = {
             required: true
         },
 
-        isPME: {
-            type: 'boolean',
-            required: true,
-            defaultsTo: true
-        },
-
         firstConnectionDone: {
             type: 'boolean',
             defaultsTo: false
@@ -219,6 +213,14 @@ module.exports = {
             return this.firstName && this.lastName && this.position && this.phoneNumber && this.mailAddress         // contact
                 && this.bFirstName && this.bLastName && this.bPosition && this.bPhoneNumber && this.bMailAddress    // facturation
                 && this.logoPath && this.description && this.road && this.postCode && this.country && this.city;
+        },
+
+        /**
+         * Define if type of company allows to benefit a reduction
+         * @return: boolean
+         */
+        isBenefitPromotion: function   ()   {
+            return this.type === 'PME' || this.type === 'Start-up';
         }
     }
 };
