@@ -144,10 +144,10 @@ module.exports = {
 
                                     var product, productPrice
                                     if (forum === true) {
-                                        product = 'Forum Stand taille unique (3 repas inclus)'
+                                        product = 'Forum Stand taille unique'
                                         productPrice = forumPrice
                                     } else if (sjd === true) {
-                                        product = 'Speed Job Dating (1 repas/recruteur inclu)'
+                                        product = 'Speed Job Dating'
                                         productPrice = sjdPrice
                                     } else if (premiumPack === true) {
                                         product = 'Pack premium (stand + sjd)'
