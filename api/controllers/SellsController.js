@@ -144,10 +144,10 @@ module.exports = {
 
                                     var product, productPrice
                                     if (forum === true) {
-                                        product = 'Forum Stand taille unique (3 repas inclus)'
+                                        product = 'Forum Stand taille unique'
                                         productPrice = forumPrice
                                     } else if (sjd === true) {
-                                        product = 'Speed Job Dating (1 repas/recruteur inclu)'
+                                        product = 'Speed Job Dating'
                                         productPrice = sjdPrice
                                     } else if (premiumPack === true) {
                                         product = 'Pack premium (stand + sjd)'
@@ -189,22 +189,22 @@ module.exports = {
                                             '\n\nNous vous confirmons que la commande de prestation pour le FIE a été prise en compte. Vous trouverez ci-joint la facture correspondante.' +
                                             '\n\nSi vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : contact@foruminsaentreprises.fr' +
                                             '\n\nDans le cas où le plan vigipirate serait maintenu, vous serez recontactés peu de temps avant le forum afin d\'enregistrer les noms de vos représentants. Une pièce d\'identité vous sera alors nécessaire.' +
-                                            '\n\nLe paiement doit être fait avant le 18 octobre 2016 par virement (RIB en pièce jointe) ou par chèque à l\'ordre du FORUM INSA ENTREPRISES et envoyé à l\'adresse :' +
+                                            '\n\nLe paiement doit être fait avant le 24 octobre 2017 par virement (RIB en pièce jointe) ou par chèque à l\'ordre du FORUM INSA ENTREPRISES et envoyé à l\'adresse :' +
                                             '\nAmicale - Forum INSA Entreprises' +
                                             '\n135 Avenue de rangueil,' +
                                             '\n31400 Toulouse FRANCE' +
-                                            '\n\nNous vous remercions pour votre participation et avons hâte de vous rencontrer le 18 octobre prochain !' +
-                                            "\n\nCordialement,\nL'équipe FIE 2016", // plaintext body
+                                            '\n\nNous vous remercions pour votre participation et avons hâte de vous rencontrer le 24 octobre prochain !' +
+                                            "\n\nCordialement,\nL'équipe FIE " + date.getFullYear(), // plaintext body
                                             messageHTML: '<br /><br />Bonjour,' +
                                             '<br /><br />Nous vous confirmons que la commande de prestation pour le FIE a été prise en compte. Vous trouverez ci-joint la facture correspondante.' +
                                             '<br /><br />Si vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : contact@foruminsaentreprises.fr' +
                                             "<br /><br />Dans le cas où le plan vigipirate serait maintenu, vous serez recontactés peu de temps avant le forum afin d'enregistrer les noms de vos représentants. Une pièce d'identité vous sera alors nécessaire." +
-                                            "<br /><br />Le paiement doit être fait avant le 18 octobre 2016 par virement (RIB en pièce jointe) ou par chèque à l'ordre du FORUM INSA ENTREPRISES et envoyé à l'adresse :" +
+                                            "<br /><br />Le paiement doit être fait avant le 24 octobre 2017 par virement (RIB en pièce jointe) ou par chèque à l'ordre du FORUM INSA ENTREPRISES et envoyé à l'adresse :" +
                                             '<br />Amicale - Forum INSA Entreprises' +
                                             '<br />135 Avenue de rangueil,' +
                                             '<br />31400 Toulouse FRANCE' +
-                                            '<br /><br />Nous vous remercions pour votre participation et avons hâte de vous rencontrer le 18 octobre prochain !' +
-                                            "<br /><br />Cordialement,<br />L'équipe FIE 2016",
+                                            '<br /><br />Nous vous remercions pour votre participation et avons hâte de vous rencontrer le 24 octobre prochain !' +
+                                            "<br /><br />Cordialement,<br />L'équipe FIE " + date.getFullYear(),
                                             attachments: [{filename: 'facture.pdf', filePath: 'files/factures/' + year + '/' + req.session.siret + '.pdf'}, {filename: 'RIB-FIE.pdf', filePath: 'files/facture_template/RIB-FIE.pdf'}]
                                         })
 

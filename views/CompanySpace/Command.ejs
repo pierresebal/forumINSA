@@ -15,15 +15,15 @@
 <form method="post" action="/Command/NewCommand">
   <table style="border-spacing: 10px; border-collapse: separate">
     <tr>
-      <td><label for="forumCommand">Forum (3 repas inclus) : <%=forumPrice%> € </label> </td>
+      <td><label for="forumCommand">Forum : <%=forumPrice%> € </label> </td>
       <td><input id="forum" value="forum" type="radio" name="Command" required checked/></td>
     </tr>
     <tr>
-      <td><label for="sjdCommand">SJD (2 sessions(2x8 candidats), 1 repas par recruteur inclus) : <%=sjdPrice%> € </label> </td>
+      <td><label for="sjdCommand">SJD (2 sessions (16 candidats)) : <%=sjdPrice%> € </label> </td>
       <td><input id="sjd" value="sjd" type="radio" name="Command"/></td>
     </tr>
     <tr>
-      <td><label for="premiumCommand">Forum + SJD (3 repas inclus) : <%=premiumPrice%> € </label> </td>
+      <td><label for="premiumCommand">Forum + SJD : <%=premiumPrice%> € </label> </td>
       <td><input id="premium" value="premium" type="radio" name="Command"/></td>
     </tr>
     <tr>
@@ -34,7 +34,7 @@
       <td><input id="sjdSessionCommand" type="number" name="numberSjdSession" value="0" min="0" max="10" required/></td>
     </tr>
     <tr>
-      <td><label for="moreMeal">Nombre de personne présentes le jour de l'évènement <sup>(1)</sup> : (<%=mealPrice%> €/repas )</label></td>
+      <td><label for="moreMeal">Nombre de personne présentes le jour de l'évènement <sup>(1)</sup> : (<%=mealPrice%> €/personne )</label></td>
       <td><input id="moreMeal" type="number" name="moreMeal" value="0" min="0" max="10" required/></td>
     </tr>
   </table>
