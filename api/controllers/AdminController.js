@@ -530,6 +530,13 @@ module.exports = {
         })
     },
 
+    allCompanies: function(req, res)    {
+        return res.view('Admin/CompanyData',  {
+            layout: 'layout',
+            title: 'FIE - Admin Companies'
+        })
+    },
+
     editBill: function (req, res) {
 
     }

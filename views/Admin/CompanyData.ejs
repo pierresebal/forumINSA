@@ -1,0 +1,24 @@
+<h1>Partie admin</h1>
+
+<% if (req.session.isAdmin != true) { %>
+
+<form method="POST" action="/Admin/Login">
+  <input type="password" name="password"/>
+  <input type="submit" value="Se connecter"/>
+</form>
+
+<% } else { %>
+    <%- partial('../templateDatatable/Company.ejs') %>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#datatable').DataTable( {
+                "ajax": {
+                    "url": "<%= sails.getUrlFor('CompanyController.apiCompany') %>",
+                    "dataSrc": "demo"
+                }
+            } );
+        } );
+    </script>
+<% } %>

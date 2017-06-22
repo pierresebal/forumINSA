@@ -19,26 +19,37 @@
  *   https://github.com/gruntjs/grunt-contrib-copy
  *
  */
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
-  grunt.config.set('copy', {
-    dev: {
-      files: [{
-        expand: true,
-        cwd: './assets',
-        src: ['**/*.!(coffee|less)'],
-        dest: '.tmp/public'
-      }]
-    },
-    build: {
-      files: [{
-        expand: true,
-        cwd: '.tmp/public',
-        src: ['**/*'],
-        dest: 'www'
-      }]
-    }
-  });
+    grunt.config.set('copy', {
+        dev: {
+            files: [{
+                expand: true,
+                cwd: './assets',
+                src: ['**/*.!(coffee|less)'],
+                dest: '.tmp/public'
+            }]
+        },
+        build: {
+            files: [{
+                expand: true,
+                cwd: '.tmp/public',
+                src: ['**/*'],
+                dest: 'www'
+            }]
+        },
 
-  grunt.loadNpmTasks('grunt-contrib-copy');
+        node_dependancy:    {       // custom: declare in here the external lib for the app
+            files:  [{
+                cwd: './node_modules/jquery/dist',
+                src: ['*'],
+                dest: '.tmp/public/js/jquery',
+                flattern: true,
+                expand: true
+            }]
+        }
+
+    });
+
+    grunt.loadNpmTasks('grunt-contrib-copy');
 };
