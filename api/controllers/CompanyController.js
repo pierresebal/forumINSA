@@ -928,25 +928,26 @@ module.exports = {
         })
     },
 
+    /** When we dev this function, sails is still 0.12.0,
+     * Waterline does not support the projection, we need to do this
+     */
     apiCompany: function(req, res)  {
-        // Company.find({}, {firstName:1}).limit(20).exec((err, companies) => {
-        //     if(err) {
-        //         return res.serverError();
-        //         console.log(err);
-        //     }
-        //
-        //     console.log('companies:', companies);
-        //     return res.json(200,companies);
-        // });
+        //TODO : make this cleaner in upper version
+        Company.native(function(err, Collection) {
+            if (err) {
+                return res.serverError();
+                console.log(err);
+            }
 
-        Company.native(err, Collection => {
-            Collection.find({}, {'firstName': 1}).exec((err, companies) => {
-                if (err) {
+            Collection.find(
+                {},
+                {'firstName': 1, 'lastName': 1, 'position': 1, 'mailAddress': 1, 'phoneNumber': 1, 'companyName': 1, 'companyGroup': 1 }
+                ).toArray((err2, companies) => {
+                if (err2) {
                     return res.serverError();
-                    console.log(err);
+                    console.log(err2);
                 }
 
-                console.log('companies:', companies);
                 return res.json(200, companies);
             });
         });
