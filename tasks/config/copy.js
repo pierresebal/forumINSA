@@ -46,6 +46,12 @@ module.exports = function (grunt) {
                 dest: '.tmp/public/js/jquery',
                 flattern: true,
                 expand: true
+            },  {
+                cwd: './node_modules/sweetalert2/dist',
+                src: ['*'],
+                dest: '.tmp/public/dependencies/sweetalert2',
+                flattern: true,
+                expand: true
             }]
         }
 

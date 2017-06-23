@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="<%=sails.getBaseUrl()%>/dependencies/sweetalert2/sweetalert2.min.css">
+<script src="<%=sails.getBaseUrl()%>/dependencies/sweetalert2/sweetalert2.min.js"></script>
+
 <h1>Réserver sa place</h1>
 
 <p>Vous avez jusqu'au <%=deadline%> pour vous inscrire.</p>
@@ -53,3 +56,16 @@
     <% } %>
 
 </form>
+<script>
+    $('#cgu').change(function()  {
+
+        if($('#moreMeal').val() <= 0)   {
+            swal({      // alert
+                title: 'Réservation échoué',
+                text: 'Veuillez nous renseigner le nombre de personne (au moins 1 représentant de l\'entreprise)',
+                type: 'error',
+                confirmButtonColor: "#e42618"
+            });
+        }
+    });
+</script>
