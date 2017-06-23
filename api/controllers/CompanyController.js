@@ -926,6 +926,30 @@ module.exports = {
                 res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Erreur lors de la génération de la TODOlist.'})
             }
         })
-    }
+    },
 
+    apiCompany: function(req, res)  {
+        // Company.find({}, {firstName:1}).limit(20).exec((err, companies) => {
+        //     if(err) {
+        //         return res.serverError();
+        //         console.log(err);
+        //     }
+        //
+        //     console.log('companies:', companies);
+        //     return res.json(200,companies);
+        // });
+
+        Company.native(err, Collection => {
+            Collection.find({}, {'firstName': 1}).exec((err, companies) => {
+                if (err) {
+                    return res.serverError();
+                    console.log(err);
+                }
+
+                console.log('companies:', companies);
+                return res.json(200, companies);
+            });
+        });
+
+    }
 }

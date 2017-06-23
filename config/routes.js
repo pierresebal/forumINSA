@@ -326,6 +326,15 @@ module.exports.routes = {
    ===========================================================================================================
    */
 
+  '/api/company': {
+      controller: 'CompanyController',
+      action: 'apiCompany'
+  },
+
+    '/Admin/Companies': {
+        controller: 'AdminController',
+        action: 'allCompanies'
+    },
 
   '/Company/CreateCompany':{
     controller:'CompanyController',
