@@ -14,14 +14,17 @@
 
 <h2>Entreprises enregistrées sur le site</h2>
 
-<table style="border-spacing: 10px; border-collapse: separate">
-  <tr>
-    <th>N°</th> <th>Nom</th> <th>PME</th> <th>Siret</th> <th>Inscrition</th> <th>Blacklistée</th> <th>Compte activé</th><th>Plus d'info</th>
-  </tr>
+<table id="datatable" class="display">
+    <thead>
+        <tr>
+            <th>N°</th> <th>Nom</th> <th>PME</th> <th>Siret</th> <th>Inscrition</th> <th>Blacklistée</th> <th>Compte activé</th><th>Plus d'info</th>
+        </tr>
+    </thead>
+    <tbody>
   <% companies.forEach( function(company, index) { %>
     <tr>
       <td>
-        <%=index %>)
+        <%=index %>
       </td>
       <td>
         <%=company.companyName %>
@@ -46,6 +49,19 @@
       </td>
     </tr>
   <% }); %>
-</table>
 
+    </tbody>
+</table>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/pdfmake-0.1.27/dt-1.10.15/af-2.2.0/b-1.3.1/b-colvis-1.3.1/b-html5-1.3.1/cr-1.3.3/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/autofill/2.2.0/css/autoFill.dataTables.min.css"/>
+<script>
+    $(document).ready(function() {
+
+        $('#datatable').DataTable({
+            dom: 'C<"clear">lfrtip'
+        });
+    } );
+</script>
 <% } %>
