@@ -8,15 +8,62 @@ var sha1 = require('sha1')
 
 module.exports = {
 
-    CompanyInscription: function (req, res) {
+    new: function (req, res) {
+        flash = _.clone(req.session.flash);
+        req.session.flash = {};
+
         return res.view('CompanySpace/Inscription', {
             layout: 'layout',
-            typesCompany: Company.definition.type.enum
-        })
+            typesCompany: Company.definition.type.enum,
+            flash: flash
+        });
     },
 
-    // CreateCompany: Function that create a new user Company into the DB and send him a confirmation email (with confirmation URL)
-    CreateCompany: function (req, res) {
+    create: function(req, res, next)    {
+        Company.create(req.params.all()).exec((err, company) =>  {
+           if(err)  {
+               console.log(err.details);
+               req.session.flash = {
+                   err: err.invalidAttributes
+               };
+               return res.redirect('/Company/new');
+           }
+
+
+            // We send an email with the function send email contained inside services/SendMail.js
+            // TODO: use mail template html
+            SendMail.sendEmail({
+                destAddress: req.param('UserEmail'),
+                objectS: "Message de confirmation de l'inscription",
+                messageS: '\n\nMadame/Monsieur ' + company.lastName + ', bonjour' +
+                "\n\nNous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
+                '\nhttps://' + sails.config.configFIE.FIEdomainName + "/Company/ActivateCompany?url=" + company.activationUrl + '&email=' + company.mailAddress +
+                "\n\nVous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
+                '\n\nNous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
+                "\n\nLe site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
+                '\n\nNous vous remercions de votre confiance et avons hâte de vous rencontrer le 18 octobre prochain.' +
+                "\nCordialement,\nL'équipe FIE 2016",
+                messageHTML: '<br /><br /><p>Madame/Monsieur ' + company.lastName + ', bonjour' +
+                "<br /><br />Nous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
+                '<br /><a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/ActivateCompany?url=' + company.activationUrl + '&email=' + company.mailAddress + '">Cliquez ici</a>' +
+                "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
+                '<br /><br />Nous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
+                "<br /><br />Le site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
+                '<br /><br />Nous vous remercions de votre confiance et avons hâte de vous rencontrer le 18 octobre prochain.</p>' +
+                "<p>Cordialement,<br />L'équipe FIE 2016</p>"
+            });
+
+            req.session.flash = {};
+            return res.view('Inscription/UserCreated', {
+                firstName: created.firstName,
+                layout: 'layout',
+                title: 'Inscription - FIE'
+            })
+        });
+    },
+
+    // create: Function that create a new user Company into the DB and send him a confirmation email (with confirmation URL)
+    createOld: function (req, res) {
         // var for redirecting decision
         var POSTerror = false
 

@@ -290,3 +290,10 @@ h2, h3 {
 .well-danger *  {
     color: #fff;
 }
+
+/* Form
+==================*/
+.form-error {
+    color:#e42618;
+    font-size:10px;
+}

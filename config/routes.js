@@ -304,12 +304,6 @@ module.exports.routes = {
    ===========================================================================================================
    */
 
-  '/Company/Inscription':{
-      controller:'CompanyController',
-      action:'CompanyInscription'
-  },
-
-
   '/Company/ResetPassPage':{
     view:'Connection_Password/ResetPassPage',
     locals:{layout:'layout', title:'Reinitialisation - FIE'}
@@ -336,9 +330,14 @@ module.exports.routes = {
         action: 'allCompanies'
     },
 
-  '/Company/CreateCompany':{
+    '/Company/new':{
+        controller:'CompanyController',
+        action:'new'
+    },
+
+  '/Company/create':{
     controller:'CompanyController',
-    action:'CreateCompany'
+    action:'create'
   },
 
   '/Company/AuthCompany':{
