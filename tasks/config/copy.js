@@ -41,12 +41,6 @@ module.exports = function (grunt) {
 
         node_dependancy:    {       // custom: declare in here the external lib for the app
             files:  [{
-                cwd: './node_modules/jquery/dist',
-                src: ['*'],
-                dest: '.tmp/public/js/jquery',
-                flattern: true,
-                expand: true
-            },  {
                 cwd: './node_modules/sweetalert2/dist',
                 src: ['*'],
                 dest: '.tmp/public/dependencies/sweetalert2',

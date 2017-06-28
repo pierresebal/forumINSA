@@ -69,6 +69,9 @@ module.exports.policies = {
     'addCompaniesToSjd':'adminAuth',
     'displayStudents':'adminAuth',
     'changeStudentSjd': 'adminAuth'
-  }
+  },
+
+   // flash policies
+  '*': 'flash'
 
 };

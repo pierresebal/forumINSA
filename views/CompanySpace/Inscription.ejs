@@ -1,39 +1,6 @@
-<%
-// We check if posterror tab exists (in case of previous submit)
-var MainMessageStyleShow = "none";
-var ErrInitStyleShow = ["none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none"];
-
-if (typeof data_tab == "undefined") {
-    data_tab = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
-}
-
-if (typeof POSTerror != "undefined") {
-    if (POSTerror) {
-        MainMessageStyleShow = "inline-block";
-    }
-}
-
-
-
-if (typeof posterr != "undefined") {
-    for (var i = 0; i <= 18; i++) {
-        console.log("test:" + posterr[i]);
-        if (posterr[i] == "true") {
-            ErrInitStyleShow[i] = "inline-block";
-        }
-    }
-}
-%>
 <h1>Création d'un compte entreprise</h1>
 <p>Créer un compte ne vous engage pas, il permet juste de vous créer un profil sur le site et d'accéder à la partiecommande où vous pourrez consulter nos tarifs et passer commande.</p>
-<%  if(flash && flash.err)   {
-        Object.keys(flash.err).forEach(function(error)  { %>
-    <div class="well-danger">
-        <%= error %>
-        <%- JSON.stringify(flash.err[error]) %>
-    </div>
-<%      })
-    } %>
+
 <form id="FormInscription" enctype="multipart/form-data" method="post" action="<%= sails.getUrlFor('CompanyController.create') %>"
       class="pure-form pure-form-aligned">
 
@@ -42,10 +9,12 @@ if (typeof posterr != "undefined") {
     <p>Ces informations permettront aux étudiants d'avoir plus d'informations sur votre entreprise lorsqu'ils
         consulteront le catalogue des entreprises sur le site et dans la plaquette du forum.</p>
 
-    <p style="color:red;font-size:12px;display:<%= MainMessageStyleShow %>">Veuillez corriger les erreurs dans les
-        champs ci-dessous</p>
-    <p style="color:red;font-size:12px;display:<%= MainMessageStyleShow %>">Les champs marqués d'une étoile sons
-        obligatoires</p>
+    <% if(flash.err)    { %>
+    <p style="color:red;font-size:12px%>">Veuillez corriger les erreurs dans les champs ci-dessous</p>
+    <p style="color:red;font-size:12px;">Les champs marqués d'une étoile sont obligatoires</p>
+    <% } %>
+
+
     <fieldset style="text-align: center;">
         <div class="pure-control-group">
             <label for="type">Quel type d'entreprise êtes-vous?<sup>*</sup> </label>
@@ -59,86 +28,114 @@ if (typeof posterr != "undefined") {
 
         <div class="pure-control-group">
             <label for="siret">Numéro de siret<sup>*</sup> </label>
-            <input class="pure-input-1-3" maxlength="17" value="<%= data_tab[1] %>" type="text" name="siret" id="siret" placeholder="siret" required pattern="[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{5}"/>
-            <p style="color:red;font-size:10px;display:<%= ErrInitStyleShow[1] %>" id="siretErr">Un N° de Siret comporte
-                14 chiffres (obligatoire)</p>
+            <input class="pure-input-1-3" maxlength="17" value="<%= company.siret %>" type="text" name="siret" id="siret" placeholder="siret" required pattern="[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{5}"/>
+            <% if(flash.err && flash.err['siret'])  { %>
+            <div class="form-error">
+                <p>Un N° de Siret comporte 14 chiffres (obligatoire)</p>
+            </div>
+            <% } %>
         </div>
 
         <div class="pure-control-group">
             <label for="companyName">Nom de l'entreprise<sup>*</sup> </label>
-            <input class="pure-input-1-3" maxlength="50" value="<%= data_tab[2] %>" type="text" name="companyName"
-                   id="companyName" placeholder="Nom de l'entreprise" required/>
-            <p style="color:red;font-size:10px;display:<%= ErrInitStyleShow[2] %>" id="CompanyNameErr">0&lt;Nb de
-                caractères &lt;50 (obligatoire)</p>
+            <input class="pure-input-1-3" maxlength="50" value="<%= company.companyName %>" type="text" name="companyName" id="companyName" placeholder="Nom de l'entreprise" required/>
+            <% if(flash.err && flash.err['companyName'])  { %>
+            <div class="form-error">
+                <p>0&lt;Nb de caractères &lt;50 (obligatoire)</p>
+            </div>
+            <% } %>
         </div>
 
         <div class="pure-control-group">
             <label for="companyGroup">Groupe de l'entreprise </label>
-            <input class="pure-input-1-3" maxlength="50" value="<%= data_tab[3] %>" type="text" name="companyGroup"
-                   id="companyGroup" placeholder="Nom du groupe"/>
-            <p style="color:red;font-size:10px;display:<%= ErrInitStyleShow[3] %>" id="CompanyGroupErr">0&lt;Nb de
-                caractères &lt;50 (obligatoire)</p>
+            <input class="pure-input-1-3" maxlength="50" value="<%= company.companyGroup %>" type="text" name="companyGroup" id="companyGroup" placeholder="Nom du groupe"/>
+            <% if(flash.err && flash.err['companyGroup'])  { %>
+            <div class="form-error">
+                <p>0&lt;Nb de caractères &lt;50 (obligatoire)</p>
+            </div>
+            <% } %>
         </div>
 
         <div class="pure-control-group">
             <label for="description">Description de l'entreprise</label>
-            <textarea class="pure-input-1-3" rows="3" maxlength="500" value="<%= data_tab[5] %>"
-                      name="description" id="description"
-                      placeholder="Tapez ici la description de l'entreprise qui apparaitra dans la plaquette du forum et sur le catalogue en ligne."></textarea>
-            <p style="color:red;font-size:10px;display:<%= ErrInitStyleShow[5] %>" id="CompanyDescriptionErr">0&lt;Nb de
-                caractères &lt;500 (facultatif pour la création de compte)</p>
+            <textarea class="pure-input-1-3" rows="3" maxlength="500" value="<%= company.description %>" name="description" id="description" placeholder="Tapez ici la description de l'entreprise qui apparaitra dans la plaquette du forum et sur le catalogue en ligne."></textarea>
+            <% if(flash.err && flash.err['description'])  { %>
+            <div class="form-error">
+                <p>0&lt;Nb de caractères &lt;500 (facultatif pour la création de compte)</p>
+            </div>
+            <% } %>
         </div>
 
         <div class="pure-control-group">
             <label for="websiteUrl">Site internet officiel</label>
-            <input class="pure-input-1-3" maxlength="200" value="<%= data_tab[6] %>" type="url" name="websiteUrl"
+            <input class="pure-input-1-3" maxlength="200" value="<%= company.websiteUrl %>" type="url" name="websiteUrl"
                    id="websiteUrl" placeholder="Ex: http://monentreprise.fr"/>
-            <% if(flash && flash.err && flash.err['websiteUrl'])  { %><div class="form-error"><p>Maximum 200 caractères(facultatif)</p></div><% } %>
+            <% if(flash && flash.err && flash.err['websiteUrl'])  { %>
+                <div class="form-error"><p>Maximum 200 caractères(facultatif)</p></div>
+            <% } %>
         </div>
 
         <div class="pure-control-group">
             <label for="careerUrl">Site de recrutement</label>
-            <input class="pure-input-1-3" maxlength="200" value="<%= data_tab[7] %>" type="url" name="careerUrl"
-                   id="careerUrl" placeholder="Ex: http://monentreprise.fr/recrutement"/>
-            <p style="color:red;font-size:10px;display:<%= ErrInitStyleShow[7] %>" id="CompanyCareerUrlErr">Maximum 200
-                caractères</p>
+            <input class="pure-input-1-3" maxlength="200" value="<%= company.careerUrl %>" type="url" name="careerUrl" id="careerUrl" placeholder="Ex: http://monentreprise.fr/recrutement"/>
+            <% if(flash.err && flash.err['careerUrl'])  { %>
+            <div class="form-error">
+                <p>Maximum 200 caractères</p>
+            </div>
+            <% } %>
         </div>
 
         <div class="pure-control-group">
             <label for="road">Adresse<sup>*</sup></label>
-            <input class="pure-input-1-3" maxlength="50" value="<%= data_tab[8] %>" type="text"
+            <input class="pure-input-1-3" maxlength="50" value="<%= company.road %>" type="text"
                    name="road" id="road" placeholder="Adresse" required/>
-            <p style="color:red;font-size:10px;display:<%= ErrInitStyleShow[8] %>" id="CompanyAddressRoadErr">Maximum 50
-                caractères</p>
+            <% if(flash.err && flash.err['road'])  { %>
+            <div class="form-error">
+                <p>Maximum 50 caractères</p>
+            </div>
+            <% } %>
         </div>
 
         <div class="pure-control-group">
             <label for="complementaryInformation">Complément</label>
-            <input class="pure-input-1-3" maxlength="50" value="<%= data_tab[9] %>" type="text" name="complementaryInformation" id="complementaryInformation" placeholder="Information complementaire"/>
-            <p style="color:red;font-size:10px;display:<%= ErrInitStyleShow[9] %>" id="complementaryInformationErr">
-                Maximum 50 caractères</p>
+            <input class="pure-input-1-3" maxlength="50" value="<%= company.complementaryInformation %>" type="text" name="complementaryInformation" id="complementaryInformation" placeholder="Information complementaire"/>
+            <% if(flash.err && flash.err['complementaryInformation'])  { %>
+            <div class="form-error">
+                <p>Maximum 50 caractères</p>
+            </div>
+            <% } %>
         </div>
 
         <div class="pure-control-group">
             <label for="postCode">Code Postal<sup>*</sup></label>
-            <input class="pure-input-1-3" maxlength="6" value="<%= data_tab[10] %>" type="text" name="postCode" id="postCode" placeholder="Code Postal" required/>
-            <p style="color:red;font-size:10px;display:<%= ErrInitStyleShow[1] %>" id="CompanyPostCodeErr">Maximum 6 caractères</p>
+            <input class="pure-input-1-3" maxlength="6" value="<%= company.postCode %>" type="text" name="postCode" id="postCode" placeholder="Code Postal" required/>
+            <% if(flash.err && flash.err['postCode'])  { %>
+            <div class="form-error">
+                <p>Maximum 6 caractères</p>
+            </div>
+            <% } %>
         </div>
 
         <!-- TODO: terminer d'ajouter les <p> pour les erreurs et refondre JScript de sécu client -->
 
         <div class="pure-control-group">
             <label for="city">Ville<sup>*</sup></label>
-            <input class="pure-input-1-3" maxlength="200" value="<%= data_tab[11] %>" type="text" name="city" id="city" placeholder="Ville" required/>
-            <p style="color:red;font-size:10px;display:<%= ErrInitStyleShow[11] %>" id="CompanyAddressCityErr">Ce champ
-                doit être rempli et contient au maximum 50 caractères</p>
+            <input class="pure-input-1-3" maxlength="200" value="<%= company.city %>" type="text" name="city" id="city" placeholder="Ville" required/>
+            <% if(flash.err && flash.err['city'])  { %>
+            <div class="form-error">
+                <p>Ce champ doit être rempli et contient au maximum 50 caractères</p>
+            </div>
+            <% } %>
         </div>
 
         <div class="pure-control-group">
             <label for="country">Pays<sup>*</sup></label>
-            <input class="pure-input-1-3" maxlength="50" value="<%= data_tab[12] %>" type="text" name="country" id="country" placeholder="Pays" required/>
-            <p style="color:red;font-size:10px;display:<%= ErrInitStyleShow[12] %>" id="CompanyAddressCountryErr"> Ce
-                champ doit être rempli et contient au maximum 50 caractères</p>
+            <input class="pure-input-1-3" maxlength="50" value="<%= company.country %>" type="text" name="country" id="country" placeholder="Pays" required/>
+            <% if(flash.err && flash.err['country'])  { %>
+            <div class="form-error">
+                <p>Ce champ doit être rempli et contient au maximum 50 caractères</p>
+            </div>
+            <% } %>
         </div>
 
     </fieldset>
@@ -149,37 +146,54 @@ if (typeof posterr != "undefined") {
     <fieldset style="text-align: center;">
         <div class="pure-control-group">
             <label for="firstName">Prénom<sup>*</sup></label>
-            <input class="pure-input-1-3" maxlength="50" value="<%= data_tab[13] %>" type="text" name="firstName" id="firstName" placeholder="Prénom" required/>
-            <p style="color:red;font-size:10px;display:<%= ErrInitStyleShow[13] %>" id="UserFirstNameErr">Ce champ doit
-                être complété et contenir moins de 20 caractères</p>
+            <input class="pure-input-1-3" maxlength="50" value="<%= company.firstName %>" type="text" name="firstName" id="firstName" placeholder="Prénom" required/>
+            <% if(flash.err && flash.err['firstName'])  { %>
+            <div class="form-error">
+                <p>Ce champ doit être rempli et contient au maximum 20 caractères</p>
+            </div>
+            <% } %>
         </div>
 
 
         <div class="pure-control-group">
             <label for="lastName">Nom<sup>*</sup></label>
-            <input class="pure-input-1-3" maxlength="50" value="<%= data_tab[14] %>" type="text" name="lastName" id="lastName" placeholder="Nom" required/>
-            <p style="color:red;font-size:10px;display:<%= ErrInitStyleShow[14] %>" id="UserLastNameErr">Ce champ doit être complété et contenir moins de 20 caractères</p>
+            <input class="pure-input-1-3" maxlength="50" value="<%= company.lastName %>" type="text" name="lastName" id="lastName" placeholder="Nom" required/>
+            <% if(flash.err && flash.err['lastName'])  { %>
+            <div class="form-error">
+                <p>Ce champ doit être rempli et contient au maximum 20 caractères</p>
+            </div>
+            <% } %>
         </div>
 
         <div class="pure-control-group">
             <label for="position">Fonction<sup>*</sup></label>
-            <input class="pure-input-1-3" maxlength="50" value="<%= data_tab[15] %>" type="text" name="position" id="position" placeholder="Fonction" required/>
-            <p style="color:red;font-size:10px;display:<%= ErrInitStyleShow[15] %>" id="PositionErr">Ce champ doit être rempli avec au maximum 50 caractères</p>
+            <input class="pure-input-1-3" maxlength="50" value="<%= company.position %>" type="text" name="position" id="position" placeholder="Fonction" required/>
+            <% if(flash.err && flash.err['position'])  { %>
+            <div class="form-error">
+                <p>Ce champ doit être rempli et contient au maximum 50 caractères</p>
+            </div>
+            <% } %>
         </div>
 
         <div class="pure-control-group">
             <label for="phoneNumber">Numéro de téléphone<sup>*</sup></label>
-            <input class="pure-input-1-3" maxlength="13" value="<%= data_tab[16] %>" type="tel" name="phoneNumber" id="phoneNumber" placeholder="Numéro de téléphone" required
+            <input class="pure-input-1-3" maxlength="13" value="<%= company.phoneNumber %>" type="number" name="phoneNumber" id="phoneNumber" placeholder="Numéro de téléphone" required
                    pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"/>
-            <p style="color:red;font-size:10px;display:<%= ErrInitStyleShow[16] %>" id="PhoneNumberErr"> Ce champ doit
-                être rempli par un numéro de téléphone et contient au maximum 13 caractères</p>
+            <% if(flash.err && flash.err['phoneNumber'])  { %>
+            <div class="form-error">
+                <p>Ce champ doit être rempli par un numéro de téléphone et contient au maximum 13 caractères</p>
+            </div>
+            <% } %>
         </div>
 
         <div class="pure-control-group">
             <label for="mailAddress">Addresse e-mail<sup>*</sup></label>
-            <input class="pure-input-1-3" maxlength="150" value="<%= data_tab[17] %>" type="email" name="mailAddress" id="mailAddress" placeholder="Email" required pattern="^\S+@(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6})$"/>
-            <p style="color:red;font-size:10px;display:<%= ErrInitStyleShow[17] %>" id="UserEmailErr"> Ce champ doit
-                être rempli et contient au maximum 50 caractères</p>
+            <input class="pure-input-1-3" maxlength="150" value="<%= company.mailAddress %>" type="email" name="mailAddress" id="mailAddress" placeholder="Email" required pattern="^\S+@(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6})$"/>
+            <% if(flash.err && flash.err['mailAddress'])  { %>
+            <div class="form-error">
+                <p>Ce champ doit être rempli et contient au maximum 50 caractères</p>
+            </div>
+            <% } %>
         </div>
 
         <div class="pure-control-group">
@@ -190,8 +204,9 @@ if (typeof posterr != "undefined") {
         <div class="pure-control-group">
             <label for="confirmpassword">Confirmez le mot de passe<sup>*</sup></label>
             <input class="pure-input-1-3" minlength="6" maxlength="50" type="password" name="confirmpassword" id="confirmpassword" placeholder="Confirm Password" required/><br/>
-            <p id="UserPasswordErr" style="color:red;font-size:10px;display:<%= ErrInitStyleShow[18] %>;">Les mots de
-                passe doivent être identiques et contenir entre 6 et 50 carac.</p>
+            <div class="form-error">
+                <p>Les mots de passe doivent être identiques et contenir entre 6 et 50 carac.</p>
+            </div>
         </div>
 
     </fieldset>
@@ -213,14 +228,12 @@ if (typeof posterr != "undefined") {
                 <th><input type="checkbox" name="GPE" id="GPE"/><label for="GPE">Génie des Procédés</label></th>
                 <th><input type="checkbox" name="GC" id="GC"/><label for="GC">Génie Civil</label></th>
                 <th><input type="checkbox" name="GM" id="GM"/><label for="GM">Génie Mécanique</label></th>
-                <th><input type="checkbox" name="GMM" id="GMM"/><label for="GMM">Génie Mathématiques et
-                        Modélisation</label></th>
+                <th><input type="checkbox" name="GMM" id="GMM"/><label for="GMM">Génie Mathématiques et Modélisation</label></th>
             </tr>
         </table>
 
         <div class="pure-controls">
-            <input id="ButtonSubmit" type="submit" class="pure-button pure-button-primary pure-input-1-3"
-                   value="Valider">
+            <input id="ButtonSubmit" type="submit" class="pure-button pure-button-primary pure-input-1-3" value="Valider">
         </div>
 
 

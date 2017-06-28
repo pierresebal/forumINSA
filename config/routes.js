@@ -335,7 +335,7 @@ module.exports.routes = {
         action:'new'
     },
 
-  '/Company/create':{
+  '/Company/create':    {
     controller:'CompanyController',
     action:'create'
   },

@@ -88,17 +88,13 @@
 	<div class="slider">
 			<div class="slider-window">
 				<div class="slider-content position-1">
-					<!--
 					<img id="img1" src="images/img1.jpg" class="img"/>
-					-->
 					<img id="img2" src="images/img2.png" class="img"/>
 				</div>
 			</div>
 		<nav id="buttons">
 			<ul>
-                <!--
 				<li id="bt1" class="bt" style="background-color: grey">img1</li>
-				-->
 				<li id="bt2" class="bt" >img2</li>
 			</ul>
 		</nav>
@@ -153,7 +149,7 @@
 		clearInterval(myTimer);
 		myTimer = setInterval(autoplay, 8000);
 	});
-/*  TODO decommentaire quand maj
+
 	function move(btNb){
 		// Change position
 		$( '.slider-content' ).css("left",-((btNb-1)*slider_width)-2*(btNb));
@@ -161,8 +157,6 @@
 		$( "#bt" + btNb ).css('background-color','grey');
 		prev = position;
 	}
-*/
-
 
 	$( window ).resize(function() {
 		slider_width = $(".slider").width();

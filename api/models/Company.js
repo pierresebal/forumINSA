@@ -37,19 +37,20 @@ module.exports = {
             type: 'email',
             required: true,
             unique: true,
-            regex:  '^\S+@(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6})$',
             maxLength: 150
         },
 
         phoneNumber: {
-            type: 'string',
-            regex:'^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$',
-            maxLength: 13,
+            type: 'number',
+            regex: /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/g,
+            maxLength: 17,
             defaultsTo: ''
         },
 
         password: {
-            type: "string",
+            type: 'string',
+            minLength: 6,
+            regex: /^[\S\s]{0,50}/,
             required: true,
         },
 
@@ -81,11 +82,12 @@ module.exports = {
 
         /* Company information */
         siret: {
-            type: 'string',
+            type: 'integer',
             required: true,
             unique: true,
-            regex: '[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{5}',
-            maxLength: 17
+            minLength: 14,
+            maxLength: 14,
+            regex: /[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{5}/
         },
 
         companyName: {
@@ -258,12 +260,19 @@ module.exports = {
         },
 
         // @Override
-        // toJson: function()  {
-        //     var clone = this.toObject();
-        //     delete clone.password;
-        //     delete clone._csrf;
-        //     return clone;
-        // }
+        toJson: function()  {
+            var clone = this.toObject();
+            delete clone.password;
+            delete clone._csrf;
+            return clone;
+        }
+    },
+
+    // instantiate a blank object
+    instantiate: function(params) {
+        return Object.assign({
+            firstName: '', lastName: '', position:'', mailAddress: '', phoneNumber: '', password: '', siret: '', companyName: '', companyGroup: '', description: '', websiteUrl: '', careerUrl: '', road: '', complementaryInformation: '', city: '', postCode: '', country: ''
+        }, params);
     },
 
     // lifecycle callback
@@ -273,6 +282,9 @@ module.exports = {
         for(spe of specitalities)   {
             data[spe] = data[spe] === 'on';
         }
+
+        // turn phone number into int
+        data.phoneNumber = parseInt(data.phoneNumber);
 
         // Création du lien d'activation (sha1 sur chrono courrant du serveur)
         var sha1 = require('sha1');
@@ -293,7 +305,7 @@ module.exports = {
 
         // encrypt password (must be done at the end)
         if(!data.password || data.password !== data.confirmpassword)
-            return next({err: ['Password doesn\'t match password confirmation.']});
+            return next({err: 'Password doesn\'t match password confirmation.'});
 
         bcrypt.hash(data.password, SALT_WORK_FACTOR, function(err, encryptedPassword) {
             if(err)     {

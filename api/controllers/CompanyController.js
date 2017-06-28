@@ -4,36 +4,41 @@
  * @description :: Server-side logic for managing Companies
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-var sha1 = require('sha1')
+var sha1 = require('sha1');
 
 module.exports = {
 
     new: function (req, res) {
-        flash = _.clone(req.session.flash);
-        req.session.flash = {};
+        var company = Company.instantiate(req.session.lastInput? _.clone(req.session.lastInput) : {});
+        if(req.session.lastInput)   delete req.session.lastInput;
 
         return res.view('CompanySpace/Inscription', {
             layout: 'layout',
             typesCompany: Company.definition.type.enum,
-            flash: flash
+            company: company
         });
     },
 
-    create: function(req, res, next)    {
+    create: function(req, res)    {
+        var lastInput = _.clone(req.params.all());
+
+        // TODO remake in server in order to enable unique validation
+
         Company.create(req.params.all()).exec((err, company) =>  {
            if(err)  {
-               console.log(err.details);
+               console.log(err);
                req.session.flash = {
                    err: err.invalidAttributes
                };
+
+               req.session.lastInput = lastInput;
                return res.redirect('/Company/new');
            }
-
 
             // We send an email with the function send email contained inside services/SendMail.js
             // TODO: use mail template html
             SendMail.sendEmail({
-                destAddress: req.param('UserEmail'),
+                destAddress: company.mailAddress,
                 objectS: "Message de confirmation de l'inscription",
                 messageS: '\n\nMadame/Monsieur ' + company.lastName + ', bonjour' +
                 "\n\nNous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
@@ -42,7 +47,7 @@ module.exports = {
                 '\n\nNous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
                 "\n\nLe site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
                 '\n\nNous vous remercions de votre confiance et avons hâte de vous rencontrer le 18 octobre prochain.' +
-                "\nCordialement,\nL'équipe FIE 2016",
+                "\nCordialement,\nL'équipe FIE 2017",
                 messageHTML: '<br /><br /><p>Madame/Monsieur ' + company.lastName + ', bonjour' +
                 "<br /><br />Nous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
                 '<br /><a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/ActivateCompany?url=' + company.activationUrl + '&email=' + company.mailAddress + '">Cliquez ici</a>' +
@@ -50,12 +55,11 @@ module.exports = {
                 '<br /><br />Nous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
                 "<br /><br />Le site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
                 '<br /><br />Nous vous remercions de votre confiance et avons hâte de vous rencontrer le 18 octobre prochain.</p>' +
-                "<p>Cordialement,<br />L'équipe FIE 2016</p>"
+                "<p>Cordialement,<br />L'équipe FIE 2017</p>"
             });
 
-            req.session.flash = {};
             return res.view('Inscription/UserCreated', {
-                firstName: created.firstName,
+                firstName: company.firstName,
                 layout: 'layout',
                 title: 'Inscription - FIE'
             })
@@ -320,7 +324,7 @@ module.exports = {
                                 '\n\nNous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
                                 "\n\nLe site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
                                 '\n\nNous vous remercions de votre confiance et avons hâte de vous rencontrer le 18 octobre prochain.' +
-                                "\nCordialement,\nL'équipe FIE 2016",
+                                "\nCordialement,\nL'équipe FIE 2017",
                                 messageHTML: '<br /><br /><p>Madame/Monsieur ' + req.param('UserLastName') + ', bonjour' +
                                 "<br /><br />Nous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
                                 '<br /><a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/ActivateCompany?url=' + ActivationUrl + '&email=' + req.param('UserEmail') + '">Cliquez ici</a>' +
@@ -328,7 +332,7 @@ module.exports = {
                                 '<br /><br />Nous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
                                 "<br /><br />Le site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
                                 '<br /><br />Nous vous remercions de votre confiance et avons hâte de vous rencontrer le 18 octobre prochain.</p>' +
-                                "<p>Cordialement,<br />L'équipe FIE 2016</p>"
+                                "<p>Cordialement,<br />L'équipe FIE 2017</p>"
                             })
 
                             // We show a positive result to the CompanySpace created
@@ -351,9 +355,93 @@ module.exports = {
     },
 
     // AuthentificateCompany: Check the email/password request sent by user and allow or not to set an Authentified User
-    AuthentificateCompany: function (req, res) {
-        console.log('User try to authentificate... Email: ' + req.param('login') + ' Password: ' + req.param('password'))
-        var sha1 = require('sha1')
+    AuthentificateCompany: function (req, res, cb) {
+
+        //Check for email and password in params. If none: send to signin view
+        if(!req.param('login') || !req.param('password'))   {
+            req.session.flash = {
+                err: [{login: 'Veuillez remplir email et le mot de passe'}]
+            };
+            console.log('not filled login or password');
+
+            return res.view('Connection_Password/Connection', {
+                layout: 'layout',
+                companyConnectionFailed: true,
+                title: 'Inscription - FIE'
+            });
+        }
+
+        Company.findOne({mailAddress: req.param('login')}).exec((err, company) =>   {
+            if(err) cb(err);
+
+            // account not exist
+            if(!company)    {
+                req.session.flash = {
+                    err: [{account: 'Le mail ' + req.param('mailAddress') + ' non trouvé'}]
+                };
+
+                return res.view('Connection_Password/Connection', {
+                    layout: 'layout',
+                    companyConnectionFailed: true,
+                    title: 'Inscription - FIE'
+                });
+            }
+
+            // not valid password
+            if(!company.verifyPassword(req.param('password')))   {
+                req.session.flash = {
+                    err: [{password: 'Mot de passe invalide'}]
+                };
+
+                return res.view('Connection_Password/Connection', {
+                    layout: 'layout',
+                    companyConnectionFailed: true,
+                    title: 'Inscription - FIE'
+                });
+            }
+
+            // not activated
+            if(company.active !== 1)    {
+                req.session.flash = {
+                    err: [{account: 'Mot de passe invalide'}]
+                };
+
+                return res.view('Connection_Password/Connection', {
+                    layout: 'layout',
+                    companyConnectionFailed: true,
+                    title: 'Inscription - FIE'
+                });
+            }
+
+            // login ok: update session
+            req.session.authenticated = true;
+            req.session.mailAddress = company.mailAddress;
+            req.session.sessionType = 'company';
+            req.session.connectionFailed = false;
+            req.session.siret = company.siret;
+            req.session.companyName = company.companyName;
+            req.session.firstName = company.firstName;
+            req.session.type = company.type;
+            req.session.descLength = company.description.length;
+            req.session.user = company;
+            console.log('not filled login or password');
+            // for first connection
+            if (!company.firstConnectionDone) {
+                Company.update({mailAddress: req.session.mailAddress}, {firstConnectionDone: true}).exec((err) => {
+                    if (err) {
+                        return err
+                    }
+                    return res.view('CompanySpace/FirstConnection', {layout: 'layout'})
+                })
+            }
+
+            if (typeof req.param('nexturl') === 'undefined')
+                return res.redirect('/');
+
+            return res.redirect(req.param('nexturl'));
+        });
+
+        /*
         // Looking for IDs in the database
         Company.findOne({
             mailAddress: req.param('login'),
@@ -414,6 +502,8 @@ module.exports = {
                 return res.view('500')
             }
         })
+          */
+
     },
 
     // Show space reserved to members (test page for authentification)
