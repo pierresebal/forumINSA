@@ -283,6 +283,10 @@ module.exports = {
             data[spe] = data[spe] === 'on';
         }
 
+        // check phone number
+        if(data.phoneNumber)
+            data.phoneNumber = parseInt(data.phoneNumber);
+
         // Création du lien d'activation (sha1 sur chrono courrant du serveur)
         var sha1 = require('sha1');
         var date = new Date();
