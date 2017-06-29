@@ -4,7 +4,7 @@
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
-var bcrypt = require('bcrypt'); // for password encryption
+var bcrypt = require('bcryptjs'); // for password encryption
 var SALT_WORK_FACTOR = 10;      // crypto key
 
 module.exports = {
