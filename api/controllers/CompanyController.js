@@ -23,7 +23,6 @@ module.exports = {
         var lastInput = _.clone(req.params.all());
 
         // TODO remake in server in order to enable unique validation
-
         Company.create(req.params.all()).exec((err, company) =>  {
            if(err)  {
                console.log(err);
@@ -357,8 +356,12 @@ module.exports = {
     // AuthentificateCompany: Check the email/password request sent by user and allow or not to set an Authentified User
     AuthentificateCompany: function (req, res, cb) {
 
+        console.log('[CompanyController.AuthentificateCompany]login: ', req.param('login'));
+        console.log('[CompanyController.AuthentificateCompany]password: ',req.param('password'));
+
         //Check for email and password in params. If none: send to signin view
         if(!req.param('login') || !req.param('password'))   {
+
             req.session.flash = {
                 err: [{login: 'Veuillez remplir email et le mot de passe'}]
             };
@@ -366,7 +369,7 @@ module.exports = {
 
             return res.view('Connection_Password/Connection', {
                 layout: 'layout',
-                companyConnectionFailed: true,
+                flash: req.session.flash,   // todo: use sails-hook-flash
                 title: 'Inscription - FIE'
             });
         }
@@ -380,9 +383,10 @@ module.exports = {
                     err: [{account: 'Le mail ' + req.param('mailAddress') + ' non trouvé'}]
                 };
 
+                console.log('account not found');
+
                 return res.view('Connection_Password/Connection', {
                     layout: 'layout',
-                    companyConnectionFailed: true,
                     title: 'Inscription - FIE'
                 });
             }
@@ -393,9 +397,10 @@ module.exports = {
                     err: [{password: 'Mot de passe invalide'}]
                 };
 
+                console.log('invalide password');
+
                 return res.view('Connection_Password/Connection', {
                     layout: 'layout',
-                    companyConnectionFailed: true,
                     title: 'Inscription - FIE'
                 });
             }
@@ -406,9 +411,10 @@ module.exports = {
                     err: [{account: 'Mot de passe invalide'}]
                 };
 
+                console.log('not active');
+
                 return res.view('Connection_Password/Connection', {
                     layout: 'layout',
-                    companyConnectionFailed: true,
                     title: 'Inscription - FIE'
                 });
             }
@@ -424,7 +430,7 @@ module.exports = {
             req.session.type = company.type;
             req.session.descLength = company.description.length;
             req.session.user = company;
-            console.log('not filled login or password');
+
             // for first connection
             if (!company.firstConnectionDone) {
                 Company.update({mailAddress: req.session.mailAddress}, {firstConnectionDone: true}).exec((err) => {
@@ -574,29 +580,44 @@ module.exports = {
     // This function need POST arg named "email" wich corespond to the attribute Email of the user who need to reset password
     InitPasswdCompany: function (req, res) {
         // Check if the user exists and we take his old password to create the new
-        Company.findOne({mailAddress: req.param('UserAuthEmail')}).exec((err, record) => {
+        Company.findOne({mailAddress: req.param('UserAuthEmail')}).exec((err, record, next) => {
             if (!err) {
                 // An user has been found in the DB
                 if (typeof record !== 'undefined') {
                     // We take the old pass to make a new one
-                    var oldPass = record.password
-                    var sha1 = require('sha1')
-                    var newPass = sha1(oldPass).substring(0, 8)
+                    var oldPass = record.password;
+                    var sha1 = require('sha1');
+                    var newPass = sha1(oldPass).substring(0, 8);
 
+                    console.log('new pass: ', newPass);
                     // We update the password in the DB
-                    Company.update({mailAddress: req.param('UserAuthEmail')}, {password: sha1(newPass)}).exec((err, updated) => {
-                        if (!err) {
-                            // We an email with the new password to the user
-                            SendMail.sendEmail({
-                                destAddress: req.param('UserAuthEmail'),
-                                objectS: 'FIE: Réinitialisation du mot de passe',
-                                messageS: "Bonjour,\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + newPass + "\nPour vous connecter, cliquez ici: " + sails.config.configFIE.FIEdomainName + "/CompanySpace/Connexion\nA très bientot !\nL'équipe du Forum INSA Entreprises.",
-                                messageHTML: "<p>Bonjour,</p><p>Vous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:" + newPass + "</p><p>Pour vous connecter:<a href='" + sails.config.configFIE.FIEdomainName + "'/CompanySpace/Connexion'>Cliquez ICI</a>.</p><p>A très bientot !</p><p>L'équipe du Forum INSA Entreprises.</p>",
-                                attachments: null
-                            })
+                    Company.update({mailAddress: req.param('UserAuthEmail')}, {newPassword: newPass }).exec((err, updated, next) =>   {
 
-                            return res.view('Connection_Password/ResetPassOK', {layout: 'layout'})
+                        if(err) {
+                            console.log(err);
+                            next(err);
                         }
+
+                        if(!updated)    {
+                            console.log('no update');
+                            return res.view('ErrorPage', {
+                                layout: 'layout',
+                                ErrorTitle: 'Erreur réinitialisation',
+                                ErrorDesc: 'Aucun utilisateur enregistré avec cet email...'
+                            })
+                        }
+
+                        // We an email with the new password to the user
+                        SendMail.sendEmail({
+                            destAddress: updated[0].mailAddress,
+                            objectS: 'FIE: Réinitialisation du mot de passe',
+                            messageS: "Bonjour,\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + newPass + "\nPour vous connecter, cliquez ici: " + sails.config.configFIE.FIEdomainName + "/CompanySpace/Connexion\nA très bientot !\nL'équipe du Forum INSA Entreprises.",
+                            messageHTML: "<p>Bonjour,</p><p>Vous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:" + newPass + "</p><p>Pour vous connecter:<a href='" + sails.config.configFIE.FIEdomainName + "'/CompanySpace/Connexion'>Cliquez ICI</a>.</p><p>A très bientot !</p><p>L'équipe du Forum INSA Entreprises.</p>",
+                            attachments: null
+                        });
+
+                        return res.view('Connection_Password/ResetPassOK', {layout: 'layout'});
+
                     })
                 } else { // No user was found in DB, we send an error message
                     return res.view('ErrorPage', {

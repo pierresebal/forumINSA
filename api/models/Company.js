@@ -283,9 +283,6 @@ module.exports = {
             data[spe] = data[spe] === 'on';
         }
 
-        // turn phone number into int
-        data.phoneNumber = parseInt(data.phoneNumber);
-
         // Création du lien d'activation (sha1 sur chrono courrant du serveur)
         var sha1 = require('sha1');
         var date = new Date();
@@ -321,16 +318,19 @@ module.exports = {
     },
 
     beforeUpdate: function(data, cb)    {
-        if (data.newpassword) {
-            bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
-                if (err) cb(err);
+        if (data.newPassword) {
+            console.log('[Comp]new pass: ', data.newPassword);
+            // bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
+            //     if (err) return cb(err);
 
-                bcrypt.hash(data.newpassword, salt, (err, encryptedPassword) => {
+                bcrypt.hash(data.newPassword, SALT_WORK_FACTOR, (err, encryptedPassword) => {
+                    if(err) return cb(err);
+
                     data.password = encryptedPassword;
                     return cb();
                 });
 
-            });
+            // });
         } else
             return cb();
     }
