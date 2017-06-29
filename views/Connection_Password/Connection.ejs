@@ -1,29 +1,35 @@
 <div class="content">
 
 <!--Connection block-->
+    <%
+
+    if (typeof nexturl == 'undefined' || nexturl == '' || nexturl == null) {
+        nexturl = '/';
+    }
+    %>
 
 <h1>Connexion</h1>
-
-<!--Errors to be precised-->
-<%if (typeof error !='undefined'){%>
-<p style="color:#ff2b23;"><%= error %></p>
-<%
-  }
-  if (typeof nexturl == 'undefined' || nexturl == '' || nexturl == null) {
-    nexturl = '/';
-  }
-%>
+    <% if(flash.err)    { %>
+        <p style="color:red;font-size:12px%>">Erreur d'authentification</p>
+    <% } %>
 
 <% if (!req.session.authenticated) { %>
 <div style="margin: auto">
 <!-- COMPANY-->
 <h2>Entreprises</h2>
+    <% if(flash.err && flash.err['account'])  { %>
+    <div class="form-error">
+        <p><%= flash.err['account'] %></p>
+    </div>
+    <% } %>
 
-<%if (typeof companyConnectionFailed != 'undefined' && companyConnectionFailed == true) { %>
-<p>Authentication failed. Is your login or password incorrect ?</p>
-<% } %>
-
+    <% if(flash.err && flash.err['password'])  { %>
+    <div class="form-error">
+        <p><%= flash.err['password'] %></p>
+    </div>
+    <% } %>
 <form style="text-algin: center;" class="form-group" method="post" action="/Company/AuthCompany">
+
   <input class="pure-input-1-3" type="email" placeholder="Email utilisateur" name="login" required/>
   <input class="pure-input-1-3" type="password" placeholder="Mot de passe" name="password" required/>
   <input class="pure-input-1-3" type="hidden" name="nexturl" value="<%=nexturl%>"/>

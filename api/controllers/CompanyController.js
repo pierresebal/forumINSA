@@ -4,19 +4,69 @@
  * @description :: Server-side logic for managing Companies
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-var sha1 = require('sha1')
+var sha1 = require('sha1');
 
 module.exports = {
 
-    CompanyInscription: function (req, res) {
+    new: function (req, res) {
+        var company = Company.instantiate(req.session.lastInput? _.clone(req.session.lastInput) : {});
+        if(req.session.lastInput)   delete req.session.lastInput;
+
         return res.view('CompanySpace/Inscription', {
             layout: 'layout',
-            typesCompany: Company.definition.type.enum
-        })
+            typesCompany: Company.definition.type.enum,
+            company: company
+        });
     },
 
-    // CreateCompany: Function that create a new user Company into the DB and send him a confirmation email (with confirmation URL)
-    CreateCompany: function (req, res) {
+    create: function(req, res)    {
+        var lastInput = _.clone(req.params.all());
+
+        // TODO remake in server in order to enable unique validation
+        Company.create(req.params.all()).exec((err, company) =>  {
+           if(err)  {
+               console.log(err);
+               req.session.flash = {
+                   err: err.invalidAttributes
+               };
+
+               req.session.lastInput = lastInput;
+               return res.redirect('/Company/new');
+           }
+
+            // We send an email with the function send email contained inside services/SendMail.js
+            // TODO: use mail template html
+            SendMail.sendEmail({
+                destAddress: company.mailAddress,
+                objectS: "Message de confirmation de l'inscription",
+                messageS: '\n\nMadame/Monsieur ' + company.lastName + ', bonjour' +
+                "\n\nNous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
+                '\nhttps://' + sails.config.configFIE.FIEdomainName + "/Company/ActivateCompany?url=" + company.activationUrl + '&email=' + company.mailAddress +
+                "\n\nVous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
+                '\n\nNous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
+                "\n\nLe site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
+                '\n\nNous vous remercions de votre confiance et avons hâte de vous rencontrer le 18 octobre prochain.' +
+                "\nCordialement,\nL'équipe FIE 2017",
+                messageHTML: '<br /><br /><p>Madame/Monsieur ' + company.lastName + ', bonjour' +
+                "<br /><br />Nous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
+                '<br /><a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/ActivateCompany?url=' + company.activationUrl + '&email=' + company.mailAddress + '">Cliquez ici</a>' +
+                "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
+                '<br /><br />Nous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
+                "<br /><br />Le site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
+                '<br /><br />Nous vous remercions de votre confiance et avons hâte de vous rencontrer le 18 octobre prochain.</p>' +
+                "<p>Cordialement,<br />L'équipe FIE 2017</p>"
+            });
+
+            return res.view('Inscription/UserCreated', {
+                firstName: company.firstName,
+                layout: 'layout',
+                title: 'Inscription - FIE'
+            })
+        });
+    },
+
+    // create: Function that create a new user Company into the DB and send him a confirmation email (with confirmation URL)
+    createOld: function (req, res) {
         // var for redirecting decision
         var POSTerror = false
 
@@ -273,7 +323,7 @@ module.exports = {
                                 '\n\nNous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
                                 "\n\nLe site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
                                 '\n\nNous vous remercions de votre confiance et avons hâte de vous rencontrer le 18 octobre prochain.' +
-                                "\nCordialement,\nL'équipe FIE 2016",
+                                "\nCordialement,\nL'équipe FIE 2017",
                                 messageHTML: '<br /><br /><p>Madame/Monsieur ' + req.param('UserLastName') + ', bonjour' +
                                 "<br /><br />Nous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
                                 '<br /><a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/ActivateCompany?url=' + ActivationUrl + '&email=' + req.param('UserEmail') + '">Cliquez ici</a>' +
@@ -281,7 +331,7 @@ module.exports = {
                                 '<br /><br />Nous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
                                 "<br /><br />Le site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
                                 '<br /><br />Nous vous remercions de votre confiance et avons hâte de vous rencontrer le 18 octobre prochain.</p>' +
-                                "<p>Cordialement,<br />L'équipe FIE 2016</p>"
+                                "<p>Cordialement,<br />L'équipe FIE 2017</p>"
                             })
 
                             // We show a positive result to the CompanySpace created
@@ -304,9 +354,100 @@ module.exports = {
     },
 
     // AuthentificateCompany: Check the email/password request sent by user and allow or not to set an Authentified User
-    AuthentificateCompany: function (req, res) {
-        console.log('User try to authentificate... Email: ' + req.param('login') + ' Password: ' + req.param('password'))
-        var sha1 = require('sha1')
+    AuthentificateCompany: function (req, res, cb) {
+
+        console.log('[CompanyController.AuthentificateCompany]login: ', req.param('login'));
+        console.log('[CompanyController.AuthentificateCompany]password: ',req.param('password'));
+
+        //Check for email and password in params. If none: send to signin view
+        if(!req.param('login') || !req.param('password'))   {
+
+            req.session.flash = {
+                err: [{login: 'Veuillez remplir email et le mot de passe'}]
+            };
+            console.log('not filled login or password');
+
+            return res.view('Connection_Password/Connection', {
+                layout: 'layout',
+                flash: req.session.flash,   // todo: use sails-hook-flash
+                title: 'Inscription - FIE'
+            });
+        }
+
+        Company.findOne({mailAddress: req.param('login')}).exec((err, company) =>   {
+            if(err) cb(err);
+
+            // account not exist
+            if(!company)    {
+                req.session.flash = {
+                    err: [{account: 'Le mail ' + req.param('mailAddress') + ' non trouvé'}]
+                };
+
+                console.log('account not found');
+
+                return res.view('Connection_Password/Connection', {
+                    layout: 'layout',
+                    title: 'Inscription - FIE'
+                });
+            }
+
+            // not valid password
+            if(!company.verifyPassword(req.param('password')))   {
+                req.session.flash = {
+                    err: [{password: 'Mot de passe invalide'}]
+                };
+
+                console.log('invalide password');
+
+                return res.view('Connection_Password/Connection', {
+                    layout: 'layout',
+                    title: 'Inscription - FIE'
+                });
+            }
+
+            // not activated
+            if(company.active !== 1)    {
+                req.session.flash = {
+                    err: [{account: 'Mot de passe invalide'}]
+                };
+
+                console.log('not active');
+
+                return res.view('Connection_Password/Connection', {
+                    layout: 'layout',
+                    title: 'Inscription - FIE'
+                });
+            }
+
+            // login ok: update session
+            req.session.authenticated = true;
+            req.session.mailAddress = company.mailAddress;
+            req.session.sessionType = 'company';
+            req.session.connectionFailed = false;
+            req.session.siret = company.siret;
+            req.session.companyName = company.companyName;
+            req.session.firstName = company.firstName;
+            req.session.type = company.type;
+            req.session.descLength = company.description.length;
+            req.session.user = company;
+
+            // for first connection
+            if (!company.firstConnectionDone) {
+                Company.update({mailAddress: req.session.mailAddress}, {firstConnectionDone: true}).exec((err) => {
+                    if (err) {
+                        return err
+                    }
+                    return res.view('CompanySpace/FirstConnection', {layout: 'layout'})
+                })
+            }
+
+            if (typeof req.param('nexturl') === 'undefined')
+                return res.redirect('/');
+
+            return res.redirect(req.param('nexturl'));
+        });
+
+        /*
         // Looking for IDs in the database
         Company.findOne({
             mailAddress: req.param('login'),
@@ -367,6 +508,8 @@ module.exports = {
                 return res.view('500')
             }
         })
+          */
+
     },
 
     // Show space reserved to members (test page for authentification)
@@ -437,29 +580,44 @@ module.exports = {
     // This function need POST arg named "email" wich corespond to the attribute Email of the user who need to reset password
     InitPasswdCompany: function (req, res) {
         // Check if the user exists and we take his old password to create the new
-        Company.findOne({mailAddress: req.param('UserAuthEmail')}).exec((err, record) => {
+        Company.findOne({mailAddress: req.param('UserAuthEmail')}).exec((err, record, next) => {
             if (!err) {
                 // An user has been found in the DB
                 if (typeof record !== 'undefined') {
                     // We take the old pass to make a new one
-                    var oldPass = record.password
-                    var sha1 = require('sha1')
-                    var newPass = sha1(oldPass).substring(0, 8)
+                    var oldPass = record.password;
+                    var sha1 = require('sha1');
+                    var newPass = sha1(oldPass).substring(0, 8);
 
+                    console.log('new pass: ', newPass);
                     // We update the password in the DB
-                    Company.update({mailAddress: req.param('UserAuthEmail')}, {password: sha1(newPass)}).exec((err, updated) => {
-                        if (!err) {
-                            // We an email with the new password to the user
-                            SendMail.sendEmail({
-                                destAddress: req.param('UserAuthEmail'),
-                                objectS: 'FIE: Réinitialisation du mot de passe',
-                                messageS: "Bonjour,\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + newPass + "\nPour vous connecter, cliquez ici: " + sails.config.configFIE.FIEdomainName + "/CompanySpace/Connexion\nA très bientot !\nL'équipe du Forum INSA Entreprises.",
-                                messageHTML: "<p>Bonjour,</p><p>Vous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:" + newPass + "</p><p>Pour vous connecter:<a href='" + sails.config.configFIE.FIEdomainName + "'/CompanySpace/Connexion'>Cliquez ICI</a>.</p><p>A très bientot !</p><p>L'équipe du Forum INSA Entreprises.</p>",
-                                attachments: null
-                            })
+                    Company.update({mailAddress: req.param('UserAuthEmail')}, {newPassword: newPass }).exec((err, updated, next) =>   {
 
-                            return res.view('Connection_Password/ResetPassOK', {layout: 'layout'})
+                        if(err) {
+                            console.log(err);
+                            next(err);
                         }
+
+                        if(!updated)    {
+                            console.log('no update');
+                            return res.view('ErrorPage', {
+                                layout: 'layout',
+                                ErrorTitle: 'Erreur réinitialisation',
+                                ErrorDesc: 'Aucun utilisateur enregistré avec cet email...'
+                            })
+                        }
+
+                        // We an email with the new password to the user
+                        SendMail.sendEmail({
+                            destAddress: updated[0].mailAddress,
+                            objectS: 'FIE: Réinitialisation du mot de passe',
+                            messageS: "Bonjour,\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + newPass + "\nPour vous connecter, cliquez ici: " + sails.config.configFIE.FIEdomainName + "/CompanySpace/Connexion\nA très bientot !\nL'équipe du Forum INSA Entreprises.",
+                            messageHTML: "<p>Bonjour,</p><p>Vous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:" + newPass + "</p><p>Pour vous connecter:<a href='" + sails.config.configFIE.FIEdomainName + "'/CompanySpace/Connexion'>Cliquez ICI</a>.</p><p>A très bientot !</p><p>L'équipe du Forum INSA Entreprises.</p>",
+                            attachments: null
+                        });
+
+                        return res.view('Connection_Password/ResetPassOK', {layout: 'layout'});
+
                     })
                 } else { // No user was found in DB, we send an error message
                     return res.view('ErrorPage', {

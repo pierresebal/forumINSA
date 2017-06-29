@@ -4,41 +4,54 @@
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
+var bcrypt = require('bcrypt'); // for password encryption
+var SALT_WORK_FACTOR = 10;      // crypto key
 
 module.exports = {
+
+    schema: true,
 
     attributes: {
 
         /* Contact Forum */
         firstName: {
             type: 'string',
+            maxLength: 50,
             required: true
         },
 
         lastName: {
             type: 'string',
+            maxLength: 50,
             required: true
         },
 
         position: { //Poste dans l'entreprise
             type: 'string',
+            minLength: 1,
+            maxLength: 50,
             defaultsTo: ''
         },
 
         mailAddress: {
             type: 'email',
             required: true,
-            unique: true
+            unique: true,
+            maxLength: 150
         },
 
         phoneNumber: {
-            type: 'string',
+            type: 'number',
+            regex: /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/g,
+            maxLength: 17,
             defaultsTo: ''
         },
 
         password: {
-            type: "string",
-            required: true
+            type: 'string',
+            minLength: 6,
+            regex: /^[\S\s]{0,50}/,
+            required: true,
         },
 
         /* Contact Facturation */
@@ -69,32 +82,42 @@ module.exports = {
 
         /* Company information */
         siret: {
-            type: 'string',
-            required: true
+            type: 'integer',
+            required: true,
+            unique: true,
+            minLength: 14,
+            maxLength: 14,
+            regex: /[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{5}/
         },
 
         companyName: {
             type: 'string',
-            required: true
+            required: true,
+            minLength: 1,
+            maxLength: 50
         },
 
         companyGroup: {
             type: 'string',
+            maxLength: 50,
             defaultsTo: ''
         },
 
         description: {
             type: 'string',
+            maxLength: 500,
             defaultsTo: 'Pas de description fournie.'
         },
 
         websiteUrl: {
             type: 'string',
+            maxLength: 200,
             defaultsTo: ''
         },
 
         careerUrl: {
             type: 'string',
+            maxLength: 200,
             defaultsTo: ''
         },
 
@@ -105,26 +128,31 @@ module.exports = {
 
         road: { //Both number and road
             type: 'string',
+            maxLength: 50,
             required: true
         },
 
         complementaryInformation: {
             type: 'string',
+            maxLength: 50,
             defaultsTo: ""
         },
 
         city: {
             type: 'string',
+            maxLength: 200,
             required: true
         },
 
         postCode: {
             type: 'string',
+            maxLength: 6,
             required: true
         },
 
         country: {
             type: 'string',
+            maxLength: 50,
             required: true
         },
 
@@ -205,6 +233,14 @@ module.exports = {
         },
 
         /**
+         * Check password
+         * @param password
+         */
+        verifyPassword: function(password)  {
+            return bcrypt.compareSync(password, this.password);
+        },
+
+        /**
          * Check if company can book a Speed Job Dating or not.
          * The declared fields in this function have to be filled
          * @return: boolean
@@ -219,8 +255,83 @@ module.exports = {
          * Define if type of company allows to benefit a reduction
          * @return: boolean
          */
-        isBenefitPromotion: function   ()   {
+        isBenefitPromotion: function()   {
             return this.type === 'PME' || this.type === 'Start-up';
+        },
+
+        // @Override
+        toJson: function()  {
+            var clone = this.toObject();
+            delete clone.password;
+            delete clone._csrf;
+            return clone;
         }
+    },
+
+    // instantiate a blank object
+    instantiate: function(params) {
+        return Object.assign({
+            firstName: '', lastName: '', position:'', mailAddress: '', phoneNumber: '', password: '', siret: '', companyName: '', companyGroup: '', description: '', websiteUrl: '', careerUrl: '', road: '', complementaryInformation: '', city: '', postCode: '', country: ''
+        }, params);
+    },
+
+    // lifecycle callback
+    beforeValidate: function(data, next)   {
+        // turn to boolean (need to cleaning this attribute)
+        specitalities = ['AE', 'GB', 'GP', 'GMM', 'GM', 'GPE', 'IR', 'GC'];
+        for(spe of specitalities)   {
+            data[spe] = data[spe] === 'on';
+        }
+
+        // Création du lien d'activation (sha1 sur chrono courrant du serveur)
+        var sha1 = require('sha1');
+        var date = new Date();
+
+        data.activationUrl = sha1(date.getTime());
+        next();
+    },
+
+    beforeCreate: function(data, next)    {
+
+        // format url
+        if (data.websiteUrl.charAt(4) !== ':' && data.websiteUrl.charAt(5) !== ':' && data.websiteUrl !== '')
+            data.websiteUrl = 'http://' + data.websiteUrl;
+
+        if (data.careerUrl.charAt(4) !== ':' && data.careerUrl.charAt(5) !== ':' && data.careerUrl !== '')
+            data.careerUrl = 'http://' + data.careerUrl;
+
+        // encrypt password (must be done at the end)
+        if(!data.password || data.password !== data.confirmpassword)
+            return next({err: 'Password doesn\'t match password confirmation.'});
+
+        bcrypt.hash(data.password, SALT_WORK_FACTOR, function(err, encryptedPassword) {
+            if(err)     {
+                console.log(err);
+                return next(err);
+            }
+
+            data.password = encryptedPassword;
+
+            next();
+        });
+
+    },
+
+    beforeUpdate: function(data, cb)    {
+        if (data.newPassword) {
+            console.log('[Comp]new pass: ', data.newPassword);
+            // bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
+            //     if (err) return cb(err);
+
+                bcrypt.hash(data.newPassword, SALT_WORK_FACTOR, (err, encryptedPassword) => {
+                    if(err) return cb(err);
+
+                    data.password = encryptedPassword;
+                    return cb();
+                });
+
+            // });
+        } else
+            return cb();
     }
 };

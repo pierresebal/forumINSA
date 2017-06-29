@@ -27,7 +27,6 @@ module.exports ={
     });
 
     var copie = mailparam.Bcc ? mailparam.Bcc : '';
-    console.log("Copie ::: " + copie)
 
     // setup e-mail data with unicode symbols
     var mailOptions = {
@@ -45,6 +44,8 @@ module.exports ={
       if(error) {
         console.log(error);
       }
+
+      console.log('[Sendmail] Mail sent from: '+sails.config.configFIE.FIEmailAddress + ' to: '+mailparam.destAddress);
       smtpTransport.close();
     });
 
