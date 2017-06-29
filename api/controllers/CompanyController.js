@@ -45,7 +45,7 @@ module.exports = {
                 "\n\nVous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
                 '\n\nNous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
                 "\n\nLe site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
-                '\n\nNous vous remercions de votre confiance et avons hâte de vous rencontrer le 18 octobre prochain.' +
+                '\n\nNous vous remercions de votre confiance et avons hâte de vous rencontrer le 24 octobre prochain.' +
                 "\nCordialement,\nL'équipe FIE 2017",
                 messageHTML: '<br /><br /><p>Madame/Monsieur ' + company.lastName + ', bonjour' +
                 "<br /><br />Nous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
@@ -53,7 +53,7 @@ module.exports = {
                 "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
                 '<br /><br />Nous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
                 "<br /><br />Le site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
-                '<br /><br />Nous vous remercions de votre confiance et avons hâte de vous rencontrer le 18 octobre prochain.</p>' +
+                '<br /><br />Nous vous remercions de votre confiance et avons hâte de vous rencontrer le 24 octobre prochain.</p>' +
                 "<p>Cordialement,<br />L'équipe FIE 2017</p>"
             });
 
@@ -322,7 +322,7 @@ module.exports = {
                                 "\n\nVous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
                                 '\n\nNous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
                                 "\n\nLe site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
-                                '\n\nNous vous remercions de votre confiance et avons hâte de vous rencontrer le 18 octobre prochain.' +
+                                '\n\nNous vous remercions de votre confiance et avons hâte de vous rencontrer le 24 octobre prochain.' +
                                 "\nCordialement,\nL'équipe FIE 2017",
                                 messageHTML: '<br /><br /><p>Madame/Monsieur ' + req.param('UserLastName') + ', bonjour' +
                                 "<br /><br />Nous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
@@ -330,7 +330,7 @@ module.exports = {
                                 "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
                                 '<br /><br />Nous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
                                 "<br /><br />Le site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
-                                '<br /><br />Nous vous remercions de votre confiance et avons hâte de vous rencontrer le 18 octobre prochain.</p>' +
+                                '<br /><br />Nous vous remercions de votre confiance et avons hâte de vous rencontrer le 24 octobre prochain.</p>' +
                                 "<p>Cordialement,<br />L'équipe FIE 2017</p>"
                             })
 
