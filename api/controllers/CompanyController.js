@@ -356,9 +356,6 @@ module.exports = {
     // AuthentificateCompany: Check the email/password request sent by user and allow or not to set an Authentified User
     AuthentificateCompany: function (req, res, cb) {
 
-        console.log('[CompanyController.AuthentificateCompany]login: ', req.param('login'));
-        console.log('[CompanyController.AuthentificateCompany]password: ',req.param('password'));
-
         //Check for email and password in params. If none: send to signin view
         if(!req.param('login') || !req.param('password'))   {
 
@@ -431,20 +428,24 @@ module.exports = {
             req.session.descLength = company.description.length;
             req.session.user = company;
 
+            console.log('Authentificate ok');
+
             // for first connection
             if (!company.firstConnectionDone) {
-                Company.update({mailAddress: req.session.mailAddress}, {firstConnectionDone: true}).exec((err) => {
+                Company.update({mailAddress: company.mailAddress}, {firstConnectionDone: true}).exec((err) => {
                     if (err) {
-                        return err
+                        return err;
                     }
-                    return res.view('CompanySpace/FirstConnection', {layout: 'layout'})
+                    return res.view('CompanySpace/FirstConnection', {layout: 'layout'});
                 })
+            }   else    {
+
+                if (typeof req.param('nexturl') === 'undefined')
+                    return res.redirect('/');
+
+                return res.redirect(req.param('nexturl'));
             }
 
-            if (typeof req.param('nexturl') === 'undefined')
-                return res.redirect('/');
-
-            return res.redirect(req.param('nexturl'));
         });
 
         /*
