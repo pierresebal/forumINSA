@@ -65,6 +65,8 @@
                 text: 'Veuillez nous renseigner le nombre de personne (au moins 1 représentant de l\'entreprise)',
                 type: 'error',
                 confirmButtonColor: "#e42618"
+            }).then(function()  {
+                $('#cgu').prop('checked',false);
             });
         }
     });

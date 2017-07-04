@@ -165,6 +165,7 @@ module.exports = {
     },
 
     displayACompany: function (req, res) {
+        console.log(req.params.all());
         Company.findOne({siret: req.param('siret')}).exec((err, company) => {
             if (err) {
                 console.log('error : ' + err)

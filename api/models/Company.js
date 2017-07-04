@@ -82,7 +82,7 @@ module.exports = {
 
         /* Company information */
         siret: {
-            type: 'integer',
+            type: 'numeric',
             required: true,
             unique: true,
             minLength: 14,
