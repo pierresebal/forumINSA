@@ -16,27 +16,19 @@ npm install
 sails lift
 ```
 
-### Auto restart project when code change
-Installer forever
-```
-sudo npm -g forever
-```
-
-Le projet va écrire en infinité au .tmp, pour l'éviter, créer fichier .foreverignore dont le contenu:
-```
-**/.tmp/**
-**/views/**
-**/assets/**
-```
-
-Lancer dans l'endroit du projet:
-```
-forever -w start app.js
-```
-
 ### Working with MongoDB
 (Window)
 Command Prompt
 ```
 "C:\Program Files\MongoDB\Server\3.4\bin\mongod.exe" --dbpath "d:\test\mongo db data"
 ```
+
+### Debug - Log file
+Log is like an app diary, helpful for developer for debugging.<br/>
+Tag convention:
+* Controller: sails.log.warn([Controller].[action]: [message]);
+* Service: sails.log.warn([ServiceName]: [message]);
+Level convention:
+* when error occur: sails.log.error(err);
+* Info for debug: sails.log.debug(err);
+* Info for realtime debug: sails.log.info(err);

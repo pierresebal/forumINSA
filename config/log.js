@@ -10,6 +10,40 @@
  * http://sailsjs.org/#!/documentation/concepts/Logging
  */
 
+// FIE: as sails doesn't support the log file, we use winston logger. (cf: http://sailsjs.com/documentation/reference/configuration/sails-config-log)
+// doc for winston transport: https://github.com/winstonjs/winston/blob/master/docs/transports.md
+const winston = require('winston');
+const fs = require('fs');
+const FIELogger = new winston.Logger();
+const LOGDIR = 'logs';
+const LOGNAME = 'app.log';
+
+//create log directory if not exist
+if(!fs.existsSync(LOGDIR)) {
+    fs.mkdirSync(LOGDIR);
+}
+
+
+// log to file
+FIELogger.add(winston.transports.File, {
+    filename: LOGDIR + '/' + LOGNAME, // FIE/logs/app.log
+    json: false,
+    exitOnError: false,
+    colorize: false,
+    timestamp: true,
+    maximize: 1000,
+    maxFile: 1,
+    level: 'info'
+});
+
+// log to console
+FIELogger.add(winston.transports.Console, {
+    level: 'info',
+    exitOnError: false,
+    timestamp: false,
+    colorize: true
+});
+
 module.exports.log = {
 
   /***************************************************************************
@@ -24,6 +58,7 @@ module.exports.log = {
   *                                                                          *
   ***************************************************************************/
 
-  // level: 'info'
-
+    custom: FIELogger,  // pass our custom logger
+    level: 'silly',
+    inspect: false      // captain's log so it doesn't prefix or stringify our meta data
 };

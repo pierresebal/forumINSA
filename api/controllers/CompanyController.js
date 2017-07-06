@@ -428,7 +428,8 @@ module.exports = {
             req.session.descLength = company.description.length;
             req.session.user = company;
 
-            console.log('Authentificate ok');
+            sails.log.debug('Company '+company.companyName+' is logging in');
+            sails.log.error('No error, just test');
 
             // for first connection
             if (!company.firstConnectionDone) {
@@ -649,7 +650,7 @@ module.exports = {
             }
 
             if (found) {
-                var description = found.description
+                var description = found.description;
                 description = description.replace(/(?:\r\n|\r|\n)/g, '<br />')
 
                 return res.view('CompanySpace/Profile', {

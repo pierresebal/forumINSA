@@ -10,8 +10,12 @@ assets/images/logos/*
 files/factures/*
 files/fr-cv/*
 files/en-cv/*
+logs
 
 .idea               # Jetbrains editors
 .idea/*
 .vscode             # Visual Studio
 .idea/
+api/models/Speciality.js
+app.log
+assets/images/form_choixdecours.pdf

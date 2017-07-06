@@ -7,7 +7,9 @@
         nexturl = '/';
     }
     %>
-
+<% if(!flash)   {
+    flash = {};
+} %>
 <h1>Connexion</h1>
     <% if(flash.err)    { %>
         <p style="color:red;font-size:12px%>">Erreur d'authentification</p>
