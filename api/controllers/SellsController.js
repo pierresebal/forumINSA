@@ -7,16 +7,18 @@
 
 module.exports = {
     addASell: function (req, res) {
-        var year = new Date().getFullYear()
-        var month = new Date().getMonth()
-        month++
+        var year = new Date().getFullYear();
+        var month = new Date().getMonth();
+        month++;
 
         if (req.param('cgu') !== 'on')
-            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Les conditions de ventes n\'ont pas été validées.'})
+            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Les conditions de ventes n\'ont pas été validées.'});
 
         Sells.findOne({companySiret: req.session.siret, year: year}).exec((err, sellAlready) => {
-            if (err)
+            if (err)    {
+                sails.log.error('[SellsController.addASell] error when find a sells: ' + err);
                 return err;
+            }
 
             if (sellAlready)
                 return res.view('ErrorPage', {
@@ -60,12 +62,12 @@ module.exports = {
 
                     Company.findOne({mailAddress: req.session.user.mailAddress}).exec((err, company) => {
                         if(err) {
-                            console.log(err);
+                            sails.log.error('[SellsController.addASell] error when find a company: ' + err);
                             return err;
                         }
 
                         if(!company)    {
-                            console.log('Company not found');
+                            sails.log.info('No company found');
                             return res.serverError();
                         }
 
@@ -86,6 +88,7 @@ module.exports = {
                     if (!(typeof req.param('moreMeal') === 'undefined' || req.param('moreMeal') === '' || Number(req.param('moreMeal') <= 0)) ){
                         moreMeal = Number(req.param('moreMeal'))
                     }
+
                     var mealPrice = found2.mealPrice;
 
                     GeneralSettings.findOne({id: 1}).exec((err, found) => {
@@ -94,7 +97,7 @@ module.exports = {
                         }
 
                         // Creation du numéro de facture entier
-                        var fullBillNumber = found.billNumberMonth * 1000000 + month * 10000 + year
+                        var fullBillNumber = found.billNumberMonth * 1000000 + month * 10000 + year;
 
                         /* Creation de la vente */
                         Sells.create({
@@ -115,12 +118,13 @@ module.exports = {
                             billNumber: fullBillNumber
                         }).exec((err, created) => {
                             if (err) {
-                                console.log('sells create err: ', err);
+                                sails.log.error('[SellsController.addASell] error when create sells: ' + err);
                                 return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Une erreur s\'est produite', ErrorDesc: '<a href="/Company/Command">Réessayez </a> ou contactez l\'équipe.'})
                             }
 
                             GeneralSettings.update({id: 1}, {billNumberMonth: found.billNumberMonth + 1}).exec((err, updated) => {
                                 if (err) {
+                                    sails.log.error('[SellsController.addASell] error when update GeneralSettings: ' + err);
                                     return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: "<a href=\"/Company/Command\">Réessayez </a> ou contactez l'équipe."})
                                 }
 
@@ -176,7 +180,7 @@ module.exports = {
 
                                     pdf.create(contenu, options).toFile('files/factures/' + year + '/' + req.session.siret + '.pdf', function afterwards(err) {
                                         if (err) {
-                                            console.log("Erreur :'( " + err)
+                                            sails.log.error('[SellsController.addASell] error when create pdf: ' + err);
                                             return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur a eu lieu lors de l'édition de la facture", ErrorDesc: "Contactez le webmaster à l'adresse contact@foruminsaentreprises.fr"})
                                         }
 
@@ -206,7 +210,7 @@ module.exports = {
                                             '<br /><br />Nous vous remercions pour votre participation et avons hâte de vous rencontrer le 24 octobre prochain !' +
                                             "<br /><br />Cordialement,<br />L'équipe FIE " + date.getFullYear(),
                                             attachments: [{filename: 'facture.pdf', filePath: 'files/factures/' + year + '/' + req.session.siret + '.pdf'}, {filename: 'RIB-FIE.pdf', filePath: 'files/facture_template/RIB-FIE.pdf'}]
-                                        })
+                                        });
 
                                         if (created.premiumPack || created.sjd) {
                                             Sjd.create({
@@ -217,13 +221,13 @@ module.exports = {
                                             })
                                                 .exec((err, record) => {
                                                     if (err) {
-                                                        console.log('err :' + err)
-                                                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Erreur lors de la création'})
+                                                        sails.log.error('[SellsController.addASell] error when create a sjd: ' + err);
+                                                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Erreur lors de la création'});
                                                     }
-                                                    return res.view('CompanySpace/CommandSent', {layout: 'layout'})
+                                                    return res.view('CompanySpace/CommandSent', {layout: 'layout'});
                                                 })
                                         } else {
-                                            return res.view('CompanySpace/CommandSent', {layout: 'layout'})
+                                            return res.view('CompanySpace/CommandSent', {layout: 'layout'});
                                         }
                                     })
                                 })

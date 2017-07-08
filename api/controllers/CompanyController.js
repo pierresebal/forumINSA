@@ -372,15 +372,18 @@ module.exports = {
         }
 
         Company.findOne({mailAddress: req.param('login')}).exec((err, company) =>   {
-            if(err) cb(err);
+            if(err) {
+                sails.log.error('[CompanyController.AuthentificateCompany] error when find company'+err);
+                cb(err);
+            }
 
             // account not exist
             if(!company)    {
                 req.session.flash = {
-                    err: [{account: 'Le mail ' + req.param('mailAddress') + ' non trouvé'}]
+                    err: [{account: 'Le mail ' + req.param('login') + ' non trouvé'}]
                 };
 
-                console.log('account not found');
+                sails.log.warn('[CompanyController.AuthentificateCompany] account with '+ req.params.all() +' not found.');
 
                 return res.view('Connection_Password/Connection', {
                     layout: 'layout',
@@ -394,7 +397,7 @@ module.exports = {
                     err: [{password: 'Mot de passe invalide'}]
                 };
 
-                console.log('invalide password');
+                sails.log.warn('[CompanyController.AuthentificateCompany] invalide password: '+ req.params.all());
 
                 return res.view('Connection_Password/Connection', {
                     layout: 'layout',
@@ -408,7 +411,7 @@ module.exports = {
                     err: [{account: 'Mot de passe invalide'}]
                 };
 
-                console.log('not active');
+                sails.log.warn('[CompanyController.AuthentificateCompany] Company '+ req.param('login') + ' not activated.');
 
                 return res.view('Connection_Password/Connection', {
                     layout: 'layout',
@@ -428,8 +431,7 @@ module.exports = {
             req.session.descLength = company.description.length;
             req.session.user = company;
 
-            sails.log.debug('Company '+company.companyName+' is logging in');
-            sails.log.error('No error, just test');
+            sails.log.info('[CompanyController.AuthentificateCompany] Company '+company.companyName+' is logging in');
 
             // for first connection
             if (!company.firstConnectionDone) {
