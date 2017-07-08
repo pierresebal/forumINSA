@@ -106,6 +106,10 @@
         <td><%=company.companyGroup%></td>
       </tr>
       <tr>
+        <td><h3>Statut</h3></td>
+        <td><%=company.type%></td>
+      </tr>
+      <tr>
         <td><h3>Logo</h3></td>
         <% if (typeof company.logoPath != 'undefined' && company.logoPath != ''){ %>
         <td><img src="/images/logos/<%=company.logoPath%>" style="width: 100px; height: auto" /></td>

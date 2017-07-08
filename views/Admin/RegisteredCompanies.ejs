@@ -17,7 +17,7 @@
 <table id="datatable" class="display">
     <thead>
         <tr>
-            <th>N°</th> <th>Nom</th> <th>PME</th> <th>Siret</th> <th>Inscrition</th> <th>Blacklistée</th> <th>Compte activé</th><th>Plus d'info</th>
+            <th>N°</th> <th>Nom</th> <th>Status</th> <th>Siret</th> <th>Inscrition</th> <th>Blacklistée</th> <th>Compte activé</th><th>Plus d'info</th>
         </tr>
     </thead>
     <tbody>
@@ -30,7 +30,7 @@
         <%=company.companyName %>
       </td>
       <td>
-        <%=company.isPME ? 'PME' : '-' %>
+          <%= company.type %>
       </td>
       <td>
         <%=company.siret %>
