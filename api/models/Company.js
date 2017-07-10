@@ -7,6 +7,17 @@
 var bcrypt = require('bcryptjs'); // for password encryption
 var SALT_WORK_FACTOR = 10;      // crypto key
 
+/**
+ * Encrypt password using bcryptjs
+ * @param password: pure password
+ * @param callback: function(err, encryptedPassword)
+ */
+function hashPassword(password, callback)   {
+    bcrypt.hash(password, SALT_WORK_FACTOR, function(err, encryptedPassword) {
+        callback(err, encryptedPassword);
+    });
+}
+
 module.exports = {
 
     schema: true,
@@ -308,9 +319,10 @@ module.exports = {
         if(!data.password || data.password !== data.confirmpassword)
             return next({err: 'Password doesn\'t match password confirmation.'});
 
-        bcrypt.hash(data.password, SALT_WORK_FACTOR, function(err, encryptedPassword) {
+        hashPassword(data.password, function(err, encryptedPassword)    {
             if(err)     {
-                console.log(err);
+                sails.log('[Company.beforeCreate] error: ')
+                sails.log.error(err);
                 return next(err);
             }
 
@@ -318,23 +330,16 @@ module.exports = {
 
             next();
         });
-
     },
 
     beforeUpdate: function(data, cb)    {
-        if (data.newPassword) {
-            console.log('[Comp]new pass: ', data.newPassword);
-            // bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
-            //     if (err) return cb(err);
+        if (data.password) {
+            hashPassword(data.password, (err, encryptedPassword) =>  {
+                if(err) return cb(err);
 
-                bcrypt.hash(data.newPassword, SALT_WORK_FACTOR, (err, encryptedPassword) => {
-                    if(err) return cb(err);
-
-                    data.password = encryptedPassword;
-                    return cb();
-                });
-
-            // });
+                data.password = encryptedPassword;
+                return cb();
+            });
         } else
             return cb();
     }

@@ -16,6 +16,10 @@ module.exports = function(req, res, next) {
     return next();
   }
   else {
-    return res.view('Connection_Password/Connection', {nexturl:req.originalUrl,error: "Vous devez être connecté comme entreprise pour acceder à cette page", layout: 'layout'});
+      errMessage = {account: 'Vous devez être connecté comme entreprise pour acceder à cette page'};
+    return res.view('Connection_Password/Connection', {
+        nexturl:req.originalUrl,
+        errMessage: errMessage,
+        layout: 'layout'});
   }
 };

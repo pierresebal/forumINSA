@@ -16,7 +16,8 @@ module.exports = {
 
         Sells.findOne({companySiret: req.session.siret, year: year}).exec((err, sellAlready) => {
             if (err)    {
-                sails.log.error('[SellsController.addASell] error when find a sells: ' + err);
+                sails.log.error('[SellsController.addASell] error when find a sells: ');
+                sails.log.error(err);
                 return err;
             }
 
@@ -62,7 +63,8 @@ module.exports = {
 
                     Company.findOne({mailAddress: req.session.user.mailAddress}).exec((err, company) => {
                         if(err) {
-                            sails.log.error('[SellsController.addASell] error when find a company: ' + err);
+                            sails.log.error('[SellsController.addASell] error when find a company: ');
+                            sails.log.error(err);
                             return err;
                         }
 
@@ -118,19 +120,23 @@ module.exports = {
                             billNumber: fullBillNumber
                         }).exec((err, created) => {
                             if (err) {
-                                sails.log.error('[SellsController.addASell] error when create sells: ' + err);
+                                sails.log.error('[SellsController.addASell] error when create sells: ');
+                                sails.log.error(err);
                                 return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Une erreur s\'est produite', ErrorDesc: '<a href="/Company/Command">Réessayez </a> ou contactez l\'équipe.'})
                             }
 
                             GeneralSettings.update({id: 1}, {billNumberMonth: found.billNumberMonth + 1}).exec((err, updated) => {
                                 if (err) {
-                                    sails.log.error('[SellsController.addASell] error when update GeneralSettings: ' + err);
+                                    sails.log.error('[SellsController.addASell] error when update GeneralSettings: ');
+                                    sails.log.error(err);
                                     return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: "<a href=\"/Company/Command\">Réessayez </a> ou contactez l'équipe."})
                                 }
 
                                 // Récupération des infos de l'entreprise pour remplir la facture
                                 Company.findOne({siret: req.session.siret}).exec((err, found3) => {
                                     if (err) {
+                                        sails.log.error('[SellsController.addASell] error when update GeneralSettings: ');
+                                        sails.log.error(err);
                                         return err
                                     }
 
@@ -180,7 +186,8 @@ module.exports = {
 
                                     pdf.create(contenu, options).toFile('files/factures/' + year + '/' + req.session.siret + '.pdf', function afterwards(err) {
                                         if (err) {
-                                            sails.log.error('[SellsController.addASell] error when create pdf: ' + err);
+                                            sails.log.error('[SellsController.addASell] error when create pdf: ');
+                                            sails.log.error(err);
                                             return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur a eu lieu lors de l'édition de la facture", ErrorDesc: "Contactez le webmaster à l'adresse contact@foruminsaentreprises.fr"})
                                         }
 
@@ -221,7 +228,8 @@ module.exports = {
                                             })
                                                 .exec((err, record) => {
                                                     if (err) {
-                                                        sails.log.error('[SellsController.addASell] error when create a sjd: ' + err);
+                                                        sails.log.error('[SellsController.addASell] error when create a sjd: ');
+                                                        sails.log.error(err);
                                                         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Erreur lors de la création'});
                                                     }
                                                     return res.view('CompanySpace/CommandSent', {layout: 'layout'});

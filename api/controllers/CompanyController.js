@@ -356,68 +356,52 @@ module.exports = {
     // AuthentificateCompany: Check the email/password request sent by user and allow or not to set an Authentified User
     AuthentificateCompany: function (req, res, cb) {
 
+        var errMessage = {}; // error message sent to Connection view
+
         //Check for email and password in params. If none: send to signin view
-        if(!req.param('login') || !req.param('password'))   {
+        if(!req.param('login') || !req.param('password')) {
 
-            req.session.flash = {
-                err: [{login: 'Veuillez remplir email et le mot de passe'}]
-            };
-            console.log('not filled login or password');
-
+            console.log(errMessage);
+            errMessage['login'] = 'Veuillez remplir email et le mot de passe';
             return res.view('Connection_Password/Connection', {
                 layout: 'layout',
-                flash: req.session.flash,   // todo: use sails-hook-flash
+                errMessage: errMessage,
+                nexturl : req.param('nexturl'),
                 title: 'Inscription - FIE'
             });
         }
 
-        Company.findOne({mailAddress: req.param('login')}).exec((err, company) =>   {
-            if(err) {
-                sails.log.error('[CompanyController.AuthentificateCompany] error when find company'+err);
-                cb(err);
+        Company.findOne({mailAddress: req.param('login')}).exec((err, company) => {
+            if (err) {
+                sails.log.error('[CompanyController.AuthentificateCompany] error when find company' + err);
+                return cb(err);
             }
 
             // account not exist
-            if(!company)    {
-                req.session.flash = {
-                    err: [{account: 'Le mail ' + req.param('login') + ' non trouvé'}]
-                };
-
-                sails.log.warn('[CompanyController.AuthentificateCompany] account with '+ req.params.all() +' not found.');
-
-                return res.view('Connection_Password/Connection', {
-                    layout: 'layout',
-                    title: 'Inscription - FIE'
-                });
+            if (!company) {
+                sails.log.warn('[CompanyController.AuthentificateCompany] account with ' + JSON.stringify(req.params.all()) + ' not found.');
+                errMessage['login'] = 'Le mail ' + req.param('login') + ' non trouvé';
             }
 
-            // not valid password
-            if(!company.verifyPassword(req.param('password')))   {
-                req.session.flash = {
-                    err: [{password: 'Mot de passe invalide'}]
-                };
-
-                sails.log.warn('[CompanyController.AuthentificateCompany] invalide password: '+ req.params.all());
-
-                return res.view('Connection_Password/Connection', {
-                    layout: 'layout',
-                    title: 'Inscription - FIE'
-                });
+            // invalid password
+            else if (!company.verifyPassword(req.param('password'))) {
+                sails.log.warn('[CompanyController.AuthentificateCompany] invalide password: ' + JSON.stringify(req.params.all()));
+                errMessage['password'] = 'Mot de passe invalide pour ' + req.param('login');
             }
 
             // not activated
-            if(company.active !== 1)    {
-                req.session.flash = {
-                    err: [{account: 'Mot de passe invalide'}]
-                };
+            else if (company.active !== 1) {
+                sails.log.warn('[CompanyController.AuthentificateCompany] Company ' + company.companyName + ' not activated.');
+                errMessage['account'] = 'Le compte '+company.companyName + ' n\'est pas activé, veuillez vérifier dans votre mail: '+company.mailAddress;
+            }
 
-                sails.log.warn('[CompanyController.AuthentificateCompany] Company '+ req.param('login') + ' not activated.');
-
+            if (!_.isEmpty(errMessage))
                 return res.view('Connection_Password/Connection', {
                     layout: 'layout',
+                    errMessage: errMessage,
+                    nexturl: req.param('nexturl'),
                     title: 'Inscription - FIE'
                 });
-            }
 
             // login ok: update session
             req.session.authenticated = true;
@@ -431,7 +415,7 @@ module.exports = {
             req.session.descLength = company.description.length;
             req.session.user = company;
 
-            sails.log.info('[CompanyController.AuthentificateCompany] Company '+company.companyName+' is logging in');
+            sails.log.info('[CompanyController.AuthentificateCompany] Company ' + company.companyName + ' is logging in');
 
             // for first connection
             if (!company.firstConnectionDone) {
@@ -441,16 +425,14 @@ module.exports = {
                     }
                     return res.view('CompanySpace/FirstConnection', {layout: 'layout'});
                 })
-            }   else    {
+            } else {
 
                 if (typeof req.param('nexturl') === 'undefined')
                     return res.redirect('/');
 
                 return res.redirect(req.param('nexturl'));
             }
-
         });
-
         /*
         // Looking for IDs in the database
         Company.findOne({
@@ -585,60 +567,62 @@ module.exports = {
     InitPasswdCompany: function (req, res) {
         // Check if the user exists and we take his old password to create the new
         Company.findOne({mailAddress: req.param('UserAuthEmail')}).exec((err, record, next) => {
-            if (!err) {
-                // An user has been found in the DB
-                if (typeof record !== 'undefined') {
-                    // We take the old pass to make a new one
-                    var oldPass = record.password;
-                    var sha1 = require('sha1');
-                    var newPass = sha1(oldPass).substring(0, 8);
 
-                    console.log('new pass: ', newPass);
-                    // We update the password in the DB
-                    Company.update({mailAddress: req.param('UserAuthEmail')}, {newPassword: newPass }).exec((err, updated, next) =>   {
-
-                        if(err) {
-                            console.log(err);
-                            next(err);
-                        }
-
-                        if(!updated)    {
-                            console.log('no update');
-                            return res.view('ErrorPage', {
-                                layout: 'layout',
-                                ErrorTitle: 'Erreur réinitialisation',
-                                ErrorDesc: 'Aucun utilisateur enregistré avec cet email...'
-                            })
-                        }
-
-                        // We an email with the new password to the user
-                        SendMail.sendEmail({
-                            destAddress: updated[0].mailAddress,
-                            objectS: 'FIE: Réinitialisation du mot de passe',
-                            messageS: "Bonjour,\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + newPass + "\nPour vous connecter, cliquez ici: " + sails.config.configFIE.FIEdomainName + "/CompanySpace/Connexion\nA très bientot !\nL'équipe du Forum INSA Entreprises.",
-                            messageHTML: "<p>Bonjour,</p><p>Vous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:" + newPass + "</p><p>Pour vous connecter:<a href='" + sails.config.configFIE.FIEdomainName + "'/CompanySpace/Connexion'>Cliquez ICI</a>.</p><p>A très bientot !</p><p>L'équipe du Forum INSA Entreprises.</p>",
-                            attachments: null
-                        });
-
-                        return res.view('Connection_Password/ResetPassOK', {layout: 'layout'});
-
-                    })
-                } else { // No user was found in DB, we send an error message
-                    return res.view('ErrorPage', {
-                        layout: 'layout',
-                        ErrorTitle: 'Erreur réinitialisation',
-                        ErrorDesc: 'Aucun utilisateur enregistré avec cet email...'
-                    })
-                }
-            } else {
-                // No user was found
+            if(err) {
+                sails.log.error('[CompanyController.InitPasswdCompany] error when find company: '+err);
                 return res.view('ErrorPage', {
                     layout: 'layout',
                     ErrorTitle: 'Erreur réinitialisation',
                     ErrorDesc: 'Une erreur inconnue est survenue durant la réinitialisation du mot de passe...'
                 })
             }
-        })
+
+            // An user has been found in the DB
+            if (typeof record !== 'undefined') {
+                // We take the old pass to make a new one
+                var oldPass = record.password;
+                var sha1 = require('sha1');
+                var newPass = sha1(oldPass).substring(0, 8);
+
+                sails.log.info('[CompanyController.InitPasswdCompany] Company '+req.param('UserAuthEmail')+' set new password: '+ newPass);
+
+                // We update the password in the DB
+                Company.update({mailAddress: req.param('UserAuthEmail')}, {newPassword: newPass }).exec((err, updated, next) =>   {
+
+                    if(err) {
+                        sails.log.error('[CompanyController.InitPasswdCompany] error when update Company: '+err);
+                        next(err);
+                    }
+
+                    if(!updated)    {
+                        sails.log.warn('[CompanyController.InitPasswdCompany] no update');
+                        return res.view('ErrorPage', {
+                            layout: 'layout',
+                            ErrorTitle: 'Erreur réinitialisation',
+                            ErrorDesc: 'Aucun utilisateur enregistré avec cet email...'
+                        })
+                    }
+
+                    // We an email with the new password to the user
+                    SendMail.sendEmail({
+                        destAddress: updated[0].mailAddress,
+                        objectS: 'FIE: Réinitialisation du mot de passe',
+                        messageS: "Bonjour,\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + newPass + "\nPour vous connecter, cliquez ici: " + sails.config.configFIE.FIEdomainName + "/CompanySpace/Connexion\nA très bientot !\nL'équipe du Forum INSA Entreprises.",
+                        messageHTML: "<p>Bonjour,</p><p>Vous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:" + newPass + "</p><p>Pour vous connecter:<a href='" + sails.config.configFIE.FIEdomainName + "'/CompanySpace/Connexion'>Cliquez ICI</a>.</p><p>A très bientot !</p><p>L'équipe du Forum INSA Entreprises.</p>",
+                        attachments: null
+                    });
+
+                    return res.view('Connection_Password/ResetPassOK', {layout: 'layout'});
+
+                })
+            } else { // No user was found in DB, we send an error message
+                return res.view('ErrorPage', {
+                    layout: 'layout',
+                    ErrorTitle: 'Erreur réinitialisation',
+                    ErrorDesc: 'Aucun utilisateur enregistré avec cet email...'
+                })
+            }
+        });
     },
 
     Profile: function (req, res) {
@@ -984,10 +968,67 @@ module.exports = {
         })
     },
 
-    changePassword: function (req, res) {
-        var OldPass = req.param('OldPassA')
-        var NewPassA = req.param('NewPassA')
-        var NewPassB = req.param('NewPassB')
+    changePassword: function(req, res, cb)  {
+        var password = req.param('password');
+        var newpassword = req.param('newpassword');
+        var confirmpassword = req.param('confirmpassword');
+
+        if(newpassword !== confirmpassword)  {
+            req.addFlash('password', 'La confirmation n\'est pas identique ');
+            return res.redirect(sails.getUrlFor('CompanyController.Profile'));
+        }
+
+        Company.findOne({mailAddress: req.session.user.mailAddress}).exec((err, company)    =>  {
+            if(err) {
+                sails.log.error('[CompanyController.changePassword] error when find company: ');
+                sails.log.error(err);
+                cb(err);
+            }
+
+            //company not found
+            if(!company)    {
+                sails.log.error('[CompanyController.changePassword] Company '+ req.session.user.mailAddress + ' in session not found in mongodb');
+                req.addFlash('password', 'Votre compte n\'existe pas dans notre base de donné');
+                return res.redirect(sails.getUrlFor('CompanyController.Profile'));
+
+            }
+
+            //password incorrect
+            if(!company.verifyPassword(password))  {
+                sails.log.error('[CompanyController.changePassword] Company '+ req.session.user.mailAddress + ' in session not found in mongodb');
+                req.addFlash('password', 'Mot de passe incorrect');
+                return res.redirect(sails.getUrlFor('CompanyController.Profile'));
+            }
+
+            // ok
+            Company.update({mailAddress: req.session.user.mailAddress}, {password: newpassword}).exec((err, update) =>   {
+
+                if(err) {
+                    sails.log.error('[CompanyController.changePassword] error when update company:');
+                    sails.log.error(err);
+                    return cb(err);
+                }
+
+                if(update.length === 0) {
+                    sails.log.warn('[CompanyController.changePassword] no update has been made.');
+                    req.addFlash('password', 'Aucune mise à jour a été faite');
+                }   else    {
+                    sails.log.info('[CompanyController.changePassword] Company '+ update.companyName + ' changed password to: ' + newpassword);
+                    req.addFlash('password-success', 'Mot de passe changé');
+                }
+
+                return res.redirect(sails.getUrlFor('CompanyController.Profile'));
+
+            });
+
+        });
+
+    },
+
+    changePasswordOld: function (req, res) {
+        var OldPass = req.param('OldPassA');
+        var NewPassA = req.param('NewPassA');
+        var NewPassB = req.param('NewPassB');
 
         if (NewPassA !== NewPassB) {
             return res.json({
