@@ -587,7 +587,7 @@ module.exports = {
                 sails.log.info('[CompanyController.InitPasswdCompany] Company '+req.param('UserAuthEmail')+' set new password: '+ newPass);
 
                 // We update the password in the DB
-                Company.update({mailAddress: req.param('UserAuthEmail')}, {newPassword: newPass }).exec((err, updated, next) =>   {
+                Company.update({mailAddress: req.param('UserAuthEmail')}, {password: newPass }).exec((err, updated, next) =>   {
 
                     if(err) {
                         sails.log.error('[CompanyController.InitPasswdCompany] error when update Company: '+err);
