@@ -926,20 +926,23 @@ module.exports = {
                 })
                 break
             case 'z':
-                Company.update({mailAddress: req.session.mailAddress}, {
-                    AE: (req.param('AE') === 'on').toString(),
-                    IR: (req.param('IR') === 'on').toString(),
-                    GB: (req.param('GB') === 'on').toString(),
-                    GP: (req.param('GP') === 'on').toString(),
-                    GPE: (req.param('GPE') === 'on').toString(),
-                    GC: (req.param('GC') === 'on').toString(),
-                    GM: (req.param('GM') === 'on').toString(),
-                    GMM: (req.param('GMM') === 'on').toString()
+
+                Company.update({mailAddress: req.session.mailAddress},  {
+                    AE: req.param('AE'),
+                    IR: req.param('IR'),
+                    GB: req.param('GB'),
+                    GP: req.param('GP'),
+                    GPE: req.param('GPE'),
+                    GC: req.param('GC'),
+                    GM: req.param('GM'),
+                    GMM: req.param('GMM')
                 }).exec((err, record) => {
                     if (err) {
-                        console.log(err)
+                        console.log(err);
                         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update postaddress.'})
                     }
+
+                    console.log('update: ', record);
 
                     return res.redirect('/Company/Profile')
                 })
