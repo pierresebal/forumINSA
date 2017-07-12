@@ -345,11 +345,6 @@ module.exports.routes = {
     action:'AuthentificateCompany'
   },
 
-  '/Company/MemberSpace':{
-    controller:'CompanyController',
-    action:"MemberHomeShow"
-  },
-
   '/Company/CompanyLogout':{
     controller:'CompanyController',
     action:'CompanyLogout'

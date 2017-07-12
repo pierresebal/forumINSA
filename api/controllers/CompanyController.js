@@ -498,12 +498,6 @@ module.exports = {
 
     },
 
-    // Show space reserved to members (test page for authentification)
-    MemberHomeShow: function (req, res) {
-        console.log('Showing member space...')
-        res.view('CompanySpace/CompanySpace', {layout: 'layout', title: 'Espace Perso - FIE'})
-    },
-
     // CompanyLogout: set session var as UnAuthentificated user
     CompanyLogout: function (req, res) {
         if (req.session.authenticated) {
