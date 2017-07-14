@@ -20,19 +20,19 @@
 module.exports.policies = {
 
   // Control for member access
-  CompanyController:{
-    MemberHomeShow:"CompanyAuth",
-    Profile:"CompanyAuth",
-    CvTheque:"CompanyAuth",
-    Command: "CompanyAuth",
-    CompanyLogout:"CompanyAuth",
-    setAUserInfo:"CompanyAuth",
-    displayBills:"CompanyAuth",
-    changePassword:"CompanyAuth",
-    TODOlist:"CompanyAuth",
-    displayVigipirate:"CompanyAuth",
-    addVigipirate:"CompanyAuth"
-  },
+    CompanyController:{
+        MemberHomeShow:"CompanyAuth",
+        update: 'CompanyAuth',
+        Profile:"CompanyAuth",
+        CvTheque:"CompanyAuth",
+        Command: "CompanyAuth",
+        CompanyLogout:"CompanyAuth",
+        displayBills:"CompanyAuth",
+        changePassword:"CompanyAuth",
+        TODOlist:"CompanyAuth",
+        displayVigipirate:"CompanyAuth",
+        addVigipirate:"CompanyAuth"
+    },
 
   StudentController:{
     StudentLogout:"StudentAuth",

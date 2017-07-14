@@ -753,7 +753,6 @@ module.exports = {
     },
 
     update: function(req, res, cb)  {
-
         Company.update({mailAddress: req.session.user.mailAddress}, req.params.all()).exec((err, updated)  =>  {
             if(err) {
                 sails.log.error('[CompanyController.update] error when update Company: ');
