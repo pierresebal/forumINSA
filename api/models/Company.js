@@ -298,6 +298,13 @@ module.exports = {
         if(data.phoneNumber)
             data.phoneNumber = parseInt(data.phoneNumber);
 
+        // format url
+        if (data.websiteUrl && data.websiteUrl.charAt(4) !== ':' && data.websiteUrl.charAt(5) !== ':' && data.websiteUrl !== '')
+            data.websiteUrl = 'http://' + data.websiteUrl;
+
+        if (data.careerUrl && data.careerUrl.charAt(4) !== ':' && data.careerUrl.charAt(5) !== ':' && data.careerUrl !== '')
+            data.careerUrl = 'http://' + data.careerUrl;
+
         // Création du lien d'activation (sha1 sur chrono courrant du serveur)
         var sha1 = require('sha1');
         var date = new Date();
@@ -307,13 +314,6 @@ module.exports = {
     },
 
     beforeCreate: function(data, next)    {
-
-        // format url
-        if (data.websiteUrl.charAt(4) !== ':' && data.websiteUrl.charAt(5) !== ':' && data.websiteUrl !== '')
-            data.websiteUrl = 'http://' + data.websiteUrl;
-
-        if (data.careerUrl.charAt(4) !== ':' && data.careerUrl.charAt(5) !== ':' && data.careerUrl !== '')
-            data.careerUrl = 'http://' + data.careerUrl;
 
         // encrypt password (must be done at the end)
         if(!data.password || data.password !== data.confirmpassword)

@@ -375,9 +375,9 @@ module.exports.routes = {
     action:'Command'
   },
 
-  '/Company/setAUserInfo':{
+  '/Company/update':{
     controller:'CompanyController',
-    action:'setAUserInfo'
+    action:'update'
   },
 
   /* COMMANDES */

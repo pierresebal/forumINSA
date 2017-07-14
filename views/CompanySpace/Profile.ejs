@@ -29,9 +29,9 @@
 
 <h2>Contacts</h2>
 <div class="pure-g">
+
     <div class="pure-u-1 pure-u-md-1-4">
-        <form class="pure-form pure-form-stacked" method="post" action="/Company/setAUserInfo">
-          <input type="hidden" name="data" value="a"/>
+        <form class="pure-form pure-form-stacked" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
           <fieldset>
               <legend>Forum</legend>
 
@@ -57,8 +57,7 @@
     </div>
     <div class="pure-u-md-1-8"></div>
     <div class="pure-u-1 pure-u-md-1-4">
-        <form class="pure-form pure-form-stacked" method="post" action="/Company/setAUserInfo">
-          <input type="hidden" name="data" value="f"/>
+        <form class="pure-form pure-form-stacked" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
           <fieldset>
               <legend>Facturation</legend>
 
@@ -135,9 +134,8 @@
   <tr>
     <td><h3>Nom</h3></td>
     <td><%=company.companyName%></td>
-    <form id="companyName" method="post" action="/Company/setAUserInfo">
+    <form id="companyName" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
         <td>
-            <input type="hidden" name="data" value="l"/>
             <input  type="text" name="companyName" value="<%= company.companyName %>"/>
         </td>
         <td>
@@ -150,9 +148,8 @@
   <tr>
     <td><h3>Group</h3></td>
     <td><%=company.companyGroup%></td>
-        <form id="companyGroup" method="post" action="/Company/setAUserInfo">
+        <form id="companyGroup" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
             <td>
-                <input type="hidden" name="data" value="m"/>
                 <input  type="text" name="companyGroup" value="<%= company.companyGroup %>"/>
             </td>
             <td>
@@ -182,9 +179,8 @@
   <tr>
     <td><h3>Description <sup class="text-danger">*</sup></h3></td>
     <td><%- company.description%></td>
-    <form id="description" method="post" action="/Company/setAUserInfo">
+    <form id="description" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
         <td>
-            <input type="hidden" name="data" value="n"/>
             <textarea  type="text" name="description"><%- company.description%></textarea>
             <p><i>*Balises HTML autorisées</i></p>
         </td>
@@ -196,9 +192,8 @@
   <tr>
     <td><h3>Site internet</h3></td>
     <td><a href="<%= company.websiteUrl%>" target="_blank"><%= company.websiteUrl%></a></td>
-    <form  id="websiteUrl" method="post" action="/Company/setAUserInfo">
+    <form  id="websiteUrl" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
         <td>
-            <input type="hidden" name="data" value="o"/>
             <input  type="text" name="websiteUrl" value="<%= company.websiteUrl%>"/>
         </td>
         <td>
@@ -210,9 +205,8 @@
   <tr>
     <td><h3>Site de recrutement</h3></td>
     <td><a href="<%= company.careerUrl%>" target="_blank"><%= company.careerUrl%></a></td>
-    <form  id="careerUrl" method="post" action="/Company/setAUserInfo">
+    <form  id="careerUrl" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
         <td>
-            <input type="hidden" name="data" value="p"/>
             <input  type="text" name="careerUrl" value="<%= company.careerUrl%>"/>
         </td>
         <td>
@@ -231,9 +225,8 @@
       <%= company.postCode %> <%= company.city %><br />
       <%= company.country %>
     </td>
-      <form  id="postAddress" method="post" action="/Company/setAUserInfo">
+      <form  id="postAddress" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
           <td>
-        <input  type="hidden" name="data" value="q"/>
         <input  type="text" name="road" value="<%= company.road %>" placeholder="N° et rue"/><br />
         <input  type="text" name="complementaryInformation" placeholder="Complément"/><br>
         <input  type="text" name="postCode" value="<%= company.postCode %>" placeholder="Code postal"/><br />
@@ -251,9 +244,8 @@
 <h2>Intérêts</h2>
 <p>Quels sont les profils d'étudiants qui vous intéressent ?</p>
 <fieldset style="border:0px">
-  <form  id="interests" method="post" action="/Company/setAUserInfo">
+  <form  id="interests" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
     <table>
-    <input type="hidden" name="data" value="z"/>
       <tr>
         <td><input type="checkbox" name="IR" id="IR" <%= company.IR? 'checked' : '' %>/><label for="IR">Informatique et Réseaux</label></td>
         <td><input type="checkbox" name="AE" id="AE" <%= company.AE? 'checked' : '' %>/><label for="AE">Génie Automatique et Électronique</label></td>

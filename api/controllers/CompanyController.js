@@ -620,7 +620,7 @@ module.exports = {
     },
 
     Profile: function (req, res) {
-        Company.findOne({mailAddress: req.session.mailAddress}).exec((err, found) => {
+        Company.findOne({mailAddress: req.session.user.mailAddress}).exec((err, found) => {
             if (err) {
                 return res.view('ErrorPage', {
                     layout: 'layout',
@@ -752,208 +752,28 @@ module.exports = {
         })
     },
 
-    // Modifie une information de l'utilisateur
-    setAUserInfo: function (req, res) {
-        if (!req.param('data')) {
-            return res.redirect('/Company/Profile')
-        }
+    update: function(req, res, cb)  {
 
-        var data = req.param('data') // Type d'info à modifier
-        switch (data) {
-            case 'a':
-                var firstName = req.param('firstName');
-                var lastName = req.param('lastName');
-                var position = req.param('position');
-                var phoneNumber = req.param('phoneNumber');
-                var mailAddress = req.param('mailAddress');
+        Company.update({mailAddress: req.session.user.mailAddress}, req.params.all()).exec((err, updated)  =>  {
+            if(err) {
+                sails.log.error('[CompanyController.update] error when update Company: ');
+                sails.log.error(err);
+                return cb(err);
+            }
 
-                Company.findOne({mailAddress: mailAddress}).exec((err, found) => {
-                    if (err) {
-                        return res.view('ErrorPage', {
-                            layout: 'layout',
-                            ErrorTitle: 'problème pour trouver si adresse déjà existante.'
-                        })
-                    }
+            if(!updated || updated.length === 0)    {
+                sails.log.warn('[CompanyController.update] no update has been made for '+ req.session.user.companyName);
+                req.addFlash('global','Aucune modification a été sauvegardée');
 
-                    if (!found || found.mailAddress === req.session.mailAddress) {
-                        Company.update({mailAddress: req.session.mailAddress}, {
-                            firstName: firstName,
-                            lastName: lastName,
-                            position: position,
-                            phoneNumber: phoneNumber,
-                            mailAddress: mailAddress,
-                        }).exec((err, record) => {
-                            if (err) {
-                                console.log(err);
-                                return res.view('ErrorPage', {
-                                    layout: 'layout',
-                                    ErrorTitle: 'Problème lors de la mise à jour',
-                                    ErrorDesc: 'Votre adresse mail est-elle valide ?'
-                                })
-                            }
+            }   else    {
+                req.session.user = updated[0];
+                sails.log.info('[CompanyController.update] Company ' + req.session.user.companyName + ' has updated their profile');
+                req.addFlash('global', 'Modification sauvegardée avec succès');
+            }
 
-                            req.session.mailAddress = record['0'].mailAddress
-                            req.session.firstName = record['0'].firstName
-                            return res.redirect('/Company/Profile')
-                        })
-                    } else {
-                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Cette adresse existe déjà.'})
-                    }
-                })
-                break
+            return  res.redirect(sails.getUrlFor('CompanyController.Profile'));
 
-            case 'f':
-                var bFirstName = req.param('bFirstName')
-                var bLastName = req.param('bLastName')
-                var bPosition = req.param('bPosition')
-                var bPhoneNumber = req.param('bPhoneNumber')
-                var bMailAddress = req.param('bMailAddress')
-
-                // Todo: Verification de firstName
-                Company.update({mailAddress: req.session.mailAddress}, {
-                    bFirstName: bFirstName,
-                    bLastName: bLastName,
-                    bPosition: bPosition,
-                    bPhoneNumber: bPhoneNumber,
-                    bMailAddress: bMailAddress
-                }).exec((err, record) => {
-                    if (err) {
-                        return res.view('ErrorPage', {
-                            layout: 'layout',
-                            ErrorTitle: 'Problème lors de la mise à jour',
-                            ErrorDesc: "L'adresse mail est-elle valide ?"
-                        })
-                    }
-                    return res.redirect('/Company/Profile')
-                })
-                break
-
-            case 'l':
-                var companyName = req.param('companyName')
-                // Todo: Verification de companyName
-                Company.update({mailAddress: req.session.mailAddress}, {companyName: companyName}).exec((err, record) => {
-                    if (err) {
-                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update companyName.'})
-                    }
-                    return res.redirect('/Company/Profile')
-                })
-                break
-
-            case 'm':
-                var companyGroup = req.param('companyGroup')
-                // Todo: Verification de companyGroup
-                Company.update({mailAddress: req.session.mailAddress}, {companyGroup: companyGroup}).exec((err, record) => {
-                    if (err) {
-                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update companyGroup.'})
-                    }
-
-                    return res.redirect('/Company/Profile')
-                })
-                break
-
-            case 'n':
-                var description = req.param('description')
-                // Todo: Verification de description
-                Company.update({mailAddress: req.session.mailAddress}, {description: description}).exec((err, record) => {
-                    if (err) {
-                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update description.'})
-                    }
-
-                    req.session.descLength = description.length
-                    return res.redirect('/Company/Profile')
-                })
-                break
-
-            case 'o':
-                var websiteUrl = req.param('websiteUrl')
-                if (websiteUrl.charAt(4) !== ':' && websiteUrl.charAt(5) !== ':' && websiteUrl !== '') {
-                    websiteUrl = 'http://' + websiteUrl
-                }
-
-                // Todo: Verification de websiteUrl
-                Company.update({mailAddress: req.session.mailAddress}, {websiteUrl: websiteUrl}).exec((err, record) => {
-                    if (err) {
-                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update websiteUrl.'})
-                    }
-
-                    return res.redirect('/Company/Profile')
-                })
-                break
-
-            case 'p':
-                var careerUrl = req.param('careerUrl')
-
-                if (careerUrl.charAt(4) !== ':' && careerUrl.charAt(5) !== ':' && careerUrl !== '') {
-                    careerUrl = 'http://' + careerUrl
-                }
-
-                // Todo: Verification de careerUrl
-                Company.update({mailAddress: req.session.mailAddress}, {careerUrl: careerUrl}).exec((err, record) => {
-                    if (err) {
-                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update careerUrl.'})
-                    }
-
-                    return res.redirect('/Company/Profile')
-                })
-                break
-
-            case 'q':
-                var road = req.param('road')
-                var complementaryInformation = req.param('complementaryInformation')
-                var postCode = req.param('postCode')
-                var city = req.param('city')
-                var country = req.param('country')
-                // Todo: Verification de firstName
-                Company.update({mailAddress: req.session.mailAddress}, {
-                    road: road,
-                    complementaryInformation: complementaryInformation,
-                    postCode: postCode,
-                    city: city,
-                    country: country
-                }).exec((err, record) => {
-                    if (err) {
-                        console.log(err);
-                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update postaddress.'})
-                    }
-
-                    return res.redirect('/Company/Profile')
-                })
-                break
-            case 'z':
-
-                Company.update({mailAddress: req.session.mailAddress},  {
-                    AE: req.param('AE'),
-                    IR: req.param('IR'),
-                    GB: req.param('GB'),
-                    GP: req.param('GP'),
-                    GPE: req.param('GPE'),
-                    GC: req.param('GC'),
-                    GM: req.param('GM'),
-                    GMM: req.param('GMM')
-                }).exec((err, record) => {
-                    if (err) {
-                        console.log(err);
-                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update postaddress.'})
-                    }
-
-                    console.log('update: ', record);
-
-                    return res.redirect('/Company/Profile')
-                })
-                break;
-            case 'type' :
-                var type = req.param('type');
-                Company.update({mailAddress: req.session.mailAddress}, {type: type}).exec((err, record) => {
-                    if (err) {
-                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update description.'})
-                    }
-                    req.session.user = record[0];
-                    return res.redirect('/Company/Profile')
-                })
-                break
-            default:
-                console.log('Type de data inconnu', data);
-        }
+        });
     },
 
     displayBills: function (req, res) {
