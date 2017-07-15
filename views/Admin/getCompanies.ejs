@@ -15,12 +15,24 @@
                 columns: [
                     { 'data': "companyName" },
                     { 'data': "type" },
-                    { 'data': "createdAt" },
-                    { 'data': "blacklist" },
-                    { 'data': "active" },
+                    { 'data': "createdAt",
+                        'render' : function(data, type, full, meta) {
+                            return new Date(data).toLocaleDateString();
+                        }
+                    },
+                    { 'data': "blacklist",
+                        'render': function(data)    {
+                            return data ? 'oui' : '-';
+                        }
+                    },
+                    { 'data': "active",
+                        'render': function(data)    {
+                            return data ? 'oui' : '-';
+                        }
+                    },
                     { 'data': "siret",
                         'render': function(data, type, full, meta)  {
-                        return '<a class="btn btn-info" href="/Admin/company/' +data+'">Voir plus</a>'
+                            return '<a class="btn btn-info" href="/Admin/company/' +data+'">Voir plus</a>';
                     }
                     }
                 ]
