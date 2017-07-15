@@ -1,13 +1,5 @@
 <h1>Partie admin</h1>
 
-<% if (req.session.isAdmin != true) { %>
-
-<form method="POST" action="/Admin/Login">
-  <input type="password" name="password"/>
-  <input type="submit" value="Se connecter"/>
-</form>
-
-<% } else { %>
     <%- partial('../templateDatatable/Company.ejs') %>
 
 
@@ -28,15 +20,10 @@
                     { 'data': "active" },
                     { 'data': "siret",
                         'render': function(data, type, full, meta)  {
-                        return '<a href="/Admin/company/' +data+'">Voir plus</a>'
+                        return '<a class="btn btn-info" href="/Admin/company/' +data+'">Voir plus</a>'
                     }
                     }
                 ]
             } );
         } );
-
-        $('#datatable').on('click', '.data-info', function()    {
-           var data = table.row( $(this).parents('tr') ).data();
-        });
     </script>
-<% } %>

@@ -75,11 +75,6 @@ module.exports.routes = {
         action: 'displayCompanies'
     },
 
-    '/Admin/CompanyInfo': {
-        controller: 'AdminController',
-        action: 'displayACompany'
-    },
-
     '/Admin/Sells': {
         controller: 'AdminController',
         action: 'displaySells'
@@ -133,6 +128,21 @@ module.exports.routes = {
     '/Admin/changeStudentSjd': {
         controller: 'AdminController',
         action: 'changeStudentSjd'
+    },
+
+    '/admin/api/company': {
+        controller: 'AdminController',
+        action: 'apiCompany'
+    },
+
+    '/admin/companies': {
+        controller: 'AdminController',
+        action: 'getCompanies'
+    },
+
+    '/admin/company/:siret': {
+        controller: 'AdminController',
+        action: 'getCompany'
     },
 
     '/Track': {
@@ -312,22 +322,6 @@ module.exports.routes = {
      ======================================== ROUTES TO COMPANY'S CONTROLLERS ==================================
      ===========================================================================================================
      */
-
-    '/admin/api/company': {
-        controller: 'AdminController',
-        action: 'apiCompany'
-    },
-
-    '/admin/Companies': {
-        controller: 'AdminController',
-        action: 'getCompanies'
-    },
-
-    '/admin/company/:siret': {
-        controller: 'AdminController',
-        action: 'getCompany'
-    },
-
 
     '/Company/new': {
         controller: 'CompanyController',
