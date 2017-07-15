@@ -22,434 +22,433 @@
 
 module.exports.routes = {
 
-  /***************************************************************************
-  *                                                                          *
-  * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
-  * etc. depending on your default view engine) your home page.              *
-  *                                                                          *
-  * (Alternatively, remove this and add an `index.html` file in your         *
-  * `assets` directory)                                                      *
-  *                                                                          *
-  ***************************************************************************/
+    /***************************************************************************
+     *                                                                          *
+     * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
+     * etc. depending on your default view engine) your home page.              *
+     *                                                                          *
+     * (Alternatively, remove this and add an `index.html` file in your         *
+     * `assets` directory)                                                      *
+     *                                                                          *
+     ***************************************************************************/
 
 
 
-  '/': {
-    view: 'Homepage/Homepage',
-    locals:{layout:'layout', title:'Accueil - FIE'}
-  },
+    '/': {
+        view: 'Homepage/Homepage',
+        locals: {layout: 'layout', title: 'Accueil - FIE'}
+    },
 
-/*
-  '/' : {
-    view: 'construction',
-    locals:{}
-},*/
+    /*
+     '/' : {
+     view: 'construction',
+     locals:{}
+     },*/
 
-  '/Admin': {
-    view: 'Admin/Admin',
-    locals:{layout:'layout', title:'Admin - FIE'}
-  },
+    '/Admin': {
+        view: 'Admin/Admin',
+        locals: {layout: 'layout', title: 'Admin - FIE'}
+    },
 
-  '/Admin/Login': {
-    controller: 'AdminController',
-    action: 'adminLogin'
-  },
-
-  '/Admin/YearSettings' :{
-    controller: 'AdminController',
-    action: 'displayYearSettings'
-  },
-
-  '/Admin/SetPrices' :{
-    controller:'AdminController',
-    action: 'setPrices'
-  },
-
-  '/Admin/setInscriptionOpen':{
-    controller:'AdminController',
-    action:'setInscriptionOpen'
-  },
-
-  '/Admin/RegisteredCompanies': {
-    controller: 'AdminController',
-    action: 'displayCompanies'
-  },
-
-  '/Admin/CompanyInfo': {
-    controller: 'AdminController',
-    action: 'displayACompany'
-  },
-
-  '/Admin/Sells': {
-    controller: 'AdminController',
-    action: 'displaySells'
-  },
-
-  '/Admin/SetDidPay': {
-    controller: 'AdminController',
-    action: 'setDidPay'
-  },
-
-  '/Admin/ParticipatingStudents': {
-    controller: 'AdminController',
-    action: 'displayParticipatingStudents'
-  },
-
-  '/Admin/SjdSessionInitialization': {
-    controller: 'AdminController',
-    action: 'initializeSjdSessions'
-  },
-
-  '/Admin/SjdSessions': {
-    controller: 'AdminController',
-    action: 'displaySjdSessions'
-  },
-
-  '/Admin/SjdParticipants': {
-    controller: 'AdminController',
-    action: 'displaySjdParticipants'
-  },
-
-  '/Admin/addCompaniesToSjd': {
-    controller: 'AdminController',
-    action: 'addCompaniesToSjd'
-  },
-
-  '/Admin/ParticipatingCompanies': {
-    controller: 'AdminController',
-    action: 'displayParticipatingCompanies'
-  },
-
-  '/Admin/CheckList':{
-    controller:'AdminController',
-    action:'checkTasks'
-  },
-
-  '/Admin/RegisteredStudents': {
-    controller: 'AdminController',
-    action: 'displayStudents'
-  },
-
-  '/Admin/changeStudentSjd': {
-    controller: 'AdminController',
-    action: 'changeStudentSjd'
-  },
-
-  '/Track': {
-    view: 'Track/Homepage',
-    locals:{layout:'layout', title:'Suivi - FIE'}
-  },
-
-  '/Track/Login': {
-    controller: 'TrackController',
-    action: 'trackLogin'
-  },
-
-  '/Track/YearSettings' :{
-    controller: 'TrackController',
-    action: 'displayYearSettings'
-  },
-
-  '/Track/RegisteredCompanies': {
-    controller: 'TrackController',
-    action: 'displayCompanies'
-  },
-
-  '/Track/CompanyInfo': {
-    controller: 'TrackController',
-    action: 'displayACompany'
-  },
-
-  '/Track/Sells': {
-    controller: 'TrackController',
-    action: 'displaySells'
-  },
-
-
-
-
-  /***************************************************************************
-  *                                                                          *
-  * Custom routes here...                                                    *
-  *                                                                          *
-  * If a request to a URL doesn't match any of the custom routes above, it   *
-  * is matched against Sails route blueprints. See `config/blueprints.js`    *
-  * for configuration options and examples.                                  *
-  *                                                                          *
-  ***************************************************************************/
-
-  '/Connection':{
-    view:'Connection_Password/Connection',
-    locals:{layout:'layout', title:'Connexion - FIE'}
-  },
-
-  '/INSA':{
-    view:'Insa/InsaDescription',
-    locals:{layout:'layout', title:'INSA - FIE'}
-  },
-
-  '/Forum':{
-    view:'Forum/forumDescription',
-    locals:{layout:'layout', title:'Forum - FIE'}
-  },
-
-  '/SJD':{
-    view:'SpeedJobDating/SJDDescription',
-    locals:{layout:'layout', title:'Speed Job Dating - FIE'}
-  },
-
-  '/about':{
-    view:'About/Contact',
-    locals:{layout:'layout', title:'A Propos - FIE'}
-  },
-
-  '/file/uploadCV':{
-    controller: 'FileController',
-    action: 'uploadCV'
-  },
-
-  '/file/uploadLogo':{
-    controller: 'FileController',
-    action: 'uploadLogo'
-  },
-
-  '/file/download':{
-    controller: 'FileController',
-    action: 'download'
-  },
-
-  '/file/bills/download':{
-    controller: 'FileController',
-    action: 'downloadBill'
-  },
-
-  /*
-   ===========================================================================================================
-   ============================================== STUDENT'S VIEWS=============================================
-   ===========================================================================================================
-   */
-
-  '/Student/StudentSpace':{
-    view:'StudentSpace/StudentSpace',
-    locals:{layout:'layout', title:'Espace Perso - FIE'}
-  },
-
-  '/Student/Specialities':{
-    controller: 'StudentController',
-    action: 'getSpecialities'
-  },
-
-  '/Student/Students':{
-    controller: 'StudentController',
-    action : 'getStudents'
-  },
-
-  /*
-   ===========================================================================================================
-   ============================================== STUDENT'S CONTROLLERS=======================================
-   ===========================================================================================================
-   */
-
-
-  '/Student/Login': {
-    controller: 'StudentController',
-    action: 'login'
-  },
-
-  '/Student/StudentLogout':{
-    controller:'StudentController',
-    action:'StudentLogout'
-  },
-
-  '/Student/Profile':{
-    controller: 'StudentController',
-    action: 'profile'
-  },
-
-  // Modification profile
-
-  '/Student/setAUserInfo':{
-    controller: 'StudentController',
-    action: 'setAUserInfo'
-  },
-
-  '/Student/setAllInfo':{
-    controller: 'StudentController',
-    action: 'setAllInfo'
-  },
-
-  '/Student/Companies':{
-    controller: 'StudentController',
-    action: 'companies'
-  },
-
-  '/Student/SJD':{
-    controller: 'StudentController',
-    action: 'sjd'
-  },
-
-  '/Student/CompanyInfo': {
-    controller: 'StudentController',
-    action: 'displayACompany'
-  },
-
-  '/Student/SjdInscription': {
-    controller: 'StudentController',
-    action: 'sjdInscription'
-  },
-
-  /*
-   ===========================================================================================================
-   ============================================== COMPANY'S VIEWS ============================================
-   ===========================================================================================================
-   */
-
-  '/Company/ResetPassPage':{
-    view:'Connection_Password/ResetPassPage',
-    locals:{layout:'layout', title:'Reinitialisation - FIE'}
-  },
-
-  '/Company/CompanySpace':{
-    view:'CompanySpace/CompanySpace',
-    locals:{layout:'layout', title:'Espace Perso - FIE'}
-  },
-
-  /*
-   ===========================================================================================================
-   ======================================== ROUTES TO COMPANY'S CONTROLLERS ==================================
-   ===========================================================================================================
-   */
-
-  '/api/company': {
-      controller: 'CompanyController',
-      action: 'apiCompany'
-  },
-
-    '/Admin/Companies': {
+    '/Admin/Login': {
         controller: 'AdminController',
-        action: 'allCompanies'
+        action: 'adminLogin'
     },
 
-    '/Company/new':{
-        controller:'CompanyController',
-        action:'new'
+    '/Admin/YearSettings': {
+        controller: 'AdminController',
+        action: 'displayYearSettings'
     },
 
-  '/Company/create':    {
-    controller:'CompanyController',
-    action:'create'
-  },
+    '/Admin/SetPrices': {
+        controller: 'AdminController',
+        action: 'setPrices'
+    },
 
-  '/Company/AuthCompany':{
-    controller:'CompanyController',
-    action:'AuthentificateCompany'
-  },
+    '/Admin/setInscriptionOpen': {
+        controller: 'AdminController',
+        action: 'setInscriptionOpen'
+    },
 
-  '/Company/CompanyLogout':{
-    controller:'CompanyController',
-    action:'CompanyLogout'
-  },
+    '/Admin/RegisteredCompanies': {
+        controller: 'AdminController',
+        action: 'displayCompanies'
+    },
 
-  '/Company/ActivateCompany':{
-    controller:'CompanyController',
-    action:'ActivateCompany'
-  },
+    '/Admin/CompanyInfo': {
+        controller: 'AdminController',
+        action: 'displayACompany'
+    },
 
-  '/Company/ResetPass':{
-    controller:'CompanyController',
-    action:'InitPasswdCompany'
-  },
+    '/Admin/Sells': {
+        controller: 'AdminController',
+        action: 'displaySells'
+    },
 
-  '/Company/Profile':{
-    controller:'CompanyController',
-    action:'Profile'
-  },
+    '/Admin/SetDidPay': {
+        controller: 'AdminController',
+        action: 'setDidPay'
+    },
 
-  '/Company/CvTheque':{
-    controller:'CompanyController',
-    action:'CvTheque'
-  },
+    '/Admin/ParticipatingStudents': {
+        controller: 'AdminController',
+        action: 'displayParticipatingStudents'
+    },
 
-  '/Company/Command':{
-    controller:'CompanyController',
-    action:'Command'
-  },
+    '/Admin/SjdSessionInitialization': {
+        controller: 'AdminController',
+        action: 'initializeSjdSessions'
+    },
 
-  '/Company/update':{
-    controller:'CompanyController',
-    action:'update'
-  },
+    '/Admin/SjdSessions': {
+        controller: 'AdminController',
+        action: 'displaySjdSessions'
+    },
 
-  /* COMMANDES */
-  '/Command/NewCommand':{
-    controller:'SellsController',
-    action:'addASell'
-  },
+    '/Admin/SjdParticipants': {
+        controller: 'AdminController',
+        action: 'displaySjdParticipants'
+    },
 
-  '/Company/Bills':{
-    controller:'CompanyController',
-    action: 'displayBills'
-  },
+    '/Admin/addCompaniesToSjd': {
+        controller: 'AdminController',
+        action: 'addCompaniesToSjd'
+    },
 
-  '/Admin/setInscriptionDeadline':{
-    controller: 'AdminController',
-    action : 'setInscriptionDeadline'
-  },
+    '/Admin/ParticipatingCompanies': {
+        controller: 'AdminController',
+        action: 'displayParticipatingCompanies'
+    },
 
-  '/Company/ChangePassword':{
-    controller:'CompanyController',
-    action:'changePassword'
-  },
+    '/Admin/CheckList': {
+        controller: 'AdminController',
+        action: 'checkTasks'
+    },
 
-  '/Company/VigipirateRegistration': {
-    controller: 'CompanyController',
-    action: 'addVigipirate'
-  },
+    '/Admin/RegisteredStudents': {
+        controller: 'AdminController',
+        action: 'displayStudents'
+    },
 
-  '/Company/Vigipirate': {
-    controller: 'CompanyController',
-    action: 'displayVigipirate'
-  },
+    '/Admin/changeStudentSjd': {
+        controller: 'AdminController',
+        action: 'changeStudentSjd'
+    },
 
-  '/Company': {
-    controller: 'CompanyController',
-    action: 'TODOlist'
-  },
+    '/Track': {
+        view: 'Track/Homepage',
+        locals: {layout: 'layout', title: 'Suivi - FIE'}
+    },
 
-  /*
-   ===========================================================================================================
-   ======================================== PARTICIPATING STUDENTS ==================================
-   ===========================================================================================================
-   */
+    '/Track/Login': {
+        controller: 'TrackController',
+        action: 'trackLogin'
+    },
 
-   '/Participation/Login': {
-     controller: 'ParticipatingStudentController',
-     action: 'login'
-   },
+    '/Track/YearSettings': {
+        controller: 'TrackController',
+        action: 'displayYearSettings'
+    },
 
-   '/Participation': {
-     view: 'StudentParticipation/Participation',
-     locals: {layout: 'layout'}
-   },
+    '/Track/RegisteredCompanies': {
+        controller: 'TrackController',
+        action: 'displayCompanies'
+    },
 
-   /*
-    ===========================================================================================================
-    ======================================== SJD ==================================
-    ===========================================================================================================
-    */
+    '/Track/CompanyInfo': {
+        controller: 'TrackController',
+        action: 'displayACompany'
+    },
 
-   '/Company/AddSpecialities': {
-     controller: 'SjdController',
-     action: 'AddSpecialities'
-   },
+    '/Track/Sells': {
+        controller: 'TrackController',
+        action: 'displaySells'
+    },
 
-   '/Company/ManageSjd': {
-     controller: 'SjdController',
-     action: 'showSjdCompanyInscription'
-   }
-   /*
-   '/Admin/InitializeSjd': {
+
+    /***************************************************************************
+     *                                                                          *
+     * Custom routes here...                                                    *
+     *                                                                          *
+     * If a request to a URL doesn't match any of the custom routes above, it   *
+     * is matched against Sails route blueprints. See `config/blueprints.js`    *
+     * for configuration options and examples.                                  *
+     *                                                                          *
+     ***************************************************************************/
+
+    '/Connection': {
+        view: 'Connection_Password/Connection',
+        locals: {layout: 'layout', title: 'Connexion - FIE'}
+    },
+
+    '/INSA': {
+        view: 'Insa/InsaDescription',
+        locals: {layout: 'layout', title: 'INSA - FIE'}
+    },
+
+    '/Forum': {
+        view: 'Forum/forumDescription',
+        locals: {layout: 'layout', title: 'Forum - FIE'}
+    },
+
+    '/SJD': {
+        view: 'SpeedJobDating/SJDDescription',
+        locals: {layout: 'layout', title: 'Speed Job Dating - FIE'}
+    },
+
+    '/about': {
+        view: 'About/Contact',
+        locals: {layout: 'layout', title: 'A Propos - FIE'}
+    },
+
+    '/file/uploadCV': {
+        controller: 'FileController',
+        action: 'uploadCV'
+    },
+
+    '/file/uploadLogo': {
+        controller: 'FileController',
+        action: 'uploadLogo'
+    },
+
+    '/file/download': {
+        controller: 'FileController',
+        action: 'download'
+    },
+
+    '/file/bills/download': {
+        controller: 'FileController',
+        action: 'downloadBill'
+    },
+
+    /*
+     ===========================================================================================================
+     ============================================== STUDENT'S VIEWS=============================================
+     ===========================================================================================================
+     */
+
+    '/Student/StudentSpace': {
+        view: 'StudentSpace/StudentSpace',
+        locals: {layout: 'layout', title: 'Espace Perso - FIE'}
+    },
+
+    '/Student/Specialities': {
+        controller: 'StudentController',
+        action: 'getSpecialities'
+    },
+
+    '/Student/Students': {
+        controller: 'StudentController',
+        action: 'getStudents'
+    },
+
+    /*
+     ===========================================================================================================
+     ============================================== STUDENT'S CONTROLLERS=======================================
+     ===========================================================================================================
+     */
+
+
+    '/Student/Login': {
+        controller: 'StudentController',
+        action: 'login'
+    },
+
+    '/Student/StudentLogout': {
+        controller: 'StudentController',
+        action: 'StudentLogout'
+    },
+
+    '/Student/Profile': {
+        controller: 'StudentController',
+        action: 'profile'
+    },
+
+    // Modification profile
+
+    '/Student/setAUserInfo': {
+        controller: 'StudentController',
+        action: 'setAUserInfo'
+    },
+
+    '/Student/setAllInfo': {
+        controller: 'StudentController',
+        action: 'setAllInfo'
+    },
+
+    '/Student/Companies': {
+        controller: 'StudentController',
+        action: 'companies'
+    },
+
+    '/Student/SJD': {
+        controller: 'StudentController',
+        action: 'sjd'
+    },
+
+    '/Student/CompanyInfo': {
+        controller: 'StudentController',
+        action: 'displayACompany'
+    },
+
+    '/Student/SjdInscription': {
+        controller: 'StudentController',
+        action: 'sjdInscription'
+    },
+
+    /*
+     ===========================================================================================================
+     ============================================== COMPANY'S VIEWS ============================================
+     ===========================================================================================================
+     */
+
+    '/Company/ResetPassPage': {
+        view: 'Connection_Password/ResetPassPage',
+        locals: {layout: 'layout', title: 'Reinitialisation - FIE'}
+    },
+
+    /*
+     ===========================================================================================================
+     ======================================== ROUTES TO COMPANY'S CONTROLLERS ==================================
+     ===========================================================================================================
+     */
+
+    '/admin/api/company': {
+        controller: 'AdminController',
+        action: 'apiCompany'
+    },
+
+    '/admin/Companies': {
+        controller: 'AdminController',
+        action: 'getCompanies'
+    },
+
+    '/admin/company/:siret': {
+        controller: 'AdminController',
+        action: 'getCompany'
+    },
+
+
+    '/Company/new': {
+        controller: 'CompanyController',
+        action: 'new'
+    },
+
+    '/Company/create': {
+        controller: 'CompanyController',
+        action: 'create'
+    },
+
+    '/Company/AuthCompany': {
+        controller: 'CompanyController',
+        action: 'AuthentificateCompany'
+    },
+
+    '/Company/CompanyLogout': {
+        controller: 'CompanyController',
+        action: 'CompanyLogout'
+    },
+
+    '/Company/ActivateCompany': {
+        controller: 'CompanyController',
+        action: 'ActivateCompany'
+    },
+
+    '/Company/ResetPass': {
+        controller: 'CompanyController',
+        action: 'InitPasswdCompany'
+    },
+
+    '/Company/Profile': {
+        controller: 'CompanyController',
+        action: 'Profile'
+    },
+
+    '/Company/CvTheque': {
+        controller: 'CompanyController',
+        action: 'CvTheque'
+    },
+
+    '/Company/Command': {
+        controller: 'CompanyController',
+        action: 'Command'
+    },
+
+    '/Company/update': {
+        controller: 'CompanyController',
+        action: 'update'
+    },
+
+    /* COMMANDES */
+    '/Command/NewCommand': {
+        controller: 'SellsController',
+        action: 'addASell'
+    },
+
+    '/Company/Bills': {
+        controller: 'CompanyController',
+        action: 'displayBills'
+    },
+
+    '/Admin/setInscriptionDeadline': {
+        controller: 'AdminController',
+        action: 'setInscriptionDeadline'
+    },
+
+    '/Company/ChangePassword': {
+        controller: 'CompanyController',
+        action: 'changePassword'
+    },
+
+    '/Company/VigipirateRegistration': {
+        controller: 'CompanyController',
+        action: 'addVigipirate'
+    },
+
+    '/Company/Vigipirate': {
+        controller: 'CompanyController',
+        action: 'displayVigipirate'
+    },
+
+    '/Company': {
+        controller: 'CompanyController',
+        action: 'TODOlist'
+    },
+
+    /*
+     ===========================================================================================================
+     ======================================== PARTICIPATING STUDENTS ==================================
+     ===========================================================================================================
+     */
+
+    '/Participation/Login': {
+        controller: 'ParticipatingStudentController',
+        action: 'login'
+    },
+
+    '/Participation': {
+        view: 'StudentParticipation/Participation',
+        locals: {layout: 'layout'}
+    },
+
+    /*
+     ===========================================================================================================
+     ======================================== SJD ==================================
+     ===========================================================================================================
+     */
+
+    '/Company/AddSpecialities': {
+        controller: 'SjdController',
+        action: 'AddSpecialities'
+    },
+
+    '/Company/ManageSjd': {
+        controller: 'SjdController',
+        action: 'showSjdCompanyInscription'
+    }
+    /*
+     '/Admin/InitializeSjd': {
      controller: 'SjdController',
      action: 'initialize'
-   } */
+     } */
 };

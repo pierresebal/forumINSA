@@ -54,24 +54,7 @@ module.exports.policies = {
   },
 
   AdminController:{
-    'displayYearSettings':'adminAuth',
-    'setPrices':'adminAuth',
-    'setInscriptionOpen':'adminAuth',
-    'setInscriptionDeadline':'adminAuth',
-    'displayCompanies':'adminAuth',
-    'checkTasks':'adminAuth',
-    'displayACompany':'adminAuth',
-    'displaySells':'adminAuth',
-    'displayParticipatingStudents':'adminAuth',
-    'displaySjdParticipants':'adminAuth',
-    'initializeSjdSessions':'adminAuth',
-    'displaySjdSessions':'adminAuth',
-    'addCompaniesToSjd':'adminAuth',
-    'displayStudents':'adminAuth',
-    'changeStudentSjd': 'adminAuth'
-  },
-
-   // flash policies
-  '*': 'flash'
-
+      '*':'adminAuth',
+      'adminLogin': true
+  }
 };

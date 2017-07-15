@@ -8,6 +8,9 @@ var sha1 = require('sha1');
 
 module.exports = {
 
+    /**
+     * Give the inscription form for user
+     */
     new: function (req, res) {
         var company = Company.instantiate(req.session.lastInput? _.clone(req.session.lastInput) : {});
         if(req.session.lastInput)   delete req.session.lastInput;
@@ -19,16 +22,23 @@ module.exports = {
         });
     },
 
+    /**
+     * Create a new company
+     */
     create: function(req, res)    {
         var lastInput = _.clone(req.params.all());
 
-        // TODO remake in server in order to enable unique validation
         Company.create(req.params.all()).exec((err, company) =>  {
            if(err)  {
-               console.log(err);
-               req.session.flash = {
-                   err: err.invalidAttributes
-               };
+
+               req.addFlash('error', true);
+
+               // get error message from validator. (cf locale/*.json)
+               for(var attribute of Object.keys(err.invalidAttributes))  {
+                   for(var error of err.Errors[attribute])    {
+                       req.addFlash(attribute, error.message);
+                   }
+               }
 
                req.session.lastInput = lastInput;
                return res.redirect('/Company/new');
@@ -63,294 +73,6 @@ module.exports = {
                 title: 'Inscription - FIE'
             })
         });
-    },
-
-    // create: Function that create a new user Company into the DB and send him a confirmation email (with confirmation URL)
-    createOld: function (req, res) {
-        // var for redirecting decision
-        var POSTerror = false
-
-        // Creation of a table with all fields form POST form
-        // The fields are in the same order as in the file Inscription.ejs
-        var dataTab = [
-            req.param('type'),
-            req.param('Siret'),
-            req.param('CompanyName'),
-            req.param('CompanyGroup'),
-            'none', // Field for the logo of the company, we don't harvest any data from this
-            req.param('CompanyDescription'),
-            req.param('CompanyWebsiteUrl'),
-            req.param('CompanyCareerUrl'),
-            req.param('CompanyAddressRoad'),
-            req.param('complementaryInformation'),
-            req.param('CompanyPostCode'),
-            req.param('CompanyAddressCity'),
-            req.param('CompanyAddressCountry'),
-            req.param('UserFirstName'),
-            req.param('UserLastName'),
-            req.param('Position'),
-            req.param('PhoneNumber'),
-            req.param('UserEmail'),
-            req.param('UserPassword')
-        ]
-
-        // Check for errors.
-        var posterr = [
-            'false',
-            'false',
-            'false',
-            'false',
-            'false',
-            'false',
-            'false',
-            'false',
-            'false',
-            'false',
-            'false',
-            'false',
-            'false',
-            'false',
-            'false',
-            'false',
-            'false',
-            'false',
-            'false'
-        ]
-
-        // Check for mandatory fields completion
-        // Mandatory fields exists
-        if (typeof req.param('type') !== 'undefined' &&
-            typeof req.param('Siret') !== 'undefined' &&
-            typeof req.param('CompanyName') !== 'undefined' &&
-            typeof req.param('CompanyAddressRoad') !== 'undefined' &&
-            typeof req.param('CompanyPostCode') !== 'undefined' &&
-            typeof req.param('CompanyAddressCity') !== 'undefined' &&
-            typeof req.param('CompanyAddressCountry') !== 'undefined' &&
-            typeof req.param('UserFirstName') !== 'undefined' &&
-            typeof req.param('UserLastName') !== 'undefined' &&
-            typeof req.param('Position') !== 'undefined' &&
-            typeof req.param('PhoneNumber') !== 'undefined' &&
-            typeof req.param('UserEmail') !== 'undefined' &&
-            typeof req.param('UserPassword') !== 'undefined') {
-            // Check for the length and content of fields
-
-            // Table with regex objects used to check the dataTab
-            // 'none' means that no rules are applied
-            var Regex = require('regex')
-            var regexTab = [
-                'none', //type TODO check if the validations works itself
-                new Regex('[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{5}'), // Siret
-                'none', // company Name
-                'none', // Company Group
-                'none', // Company logo
-                'none', // Company Description
-                'none',
-                'none',
-                // new Regex("(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})"), // Url
-                // new Regex("(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})"), // Url
-                new Regex('#[a-z]#'), // Adresse (route)
-                'none', // Adresse (complement)
-                // new Regex("([A-Z]+[A-Z]?\-)?[0-9]{1,2} ?[0-9]{3}"), // Postal Code
-                'none',
-                'none', // City
-                'none', // Country
-                'none', // User name
-                'none', // User name
-                'none', // POsition
-                new Regex('^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$'), // Phone number
-                new Regex('^\S+@(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6})$'), // Mail
-                new Regex('^[\S\s]{0,50}') // Password
-            ]
-
-            // Table with min length
-            // Set here the maximum length of each fields
-            var minLengthTab = [
-                0, // type
-                0, // siret
-                1, // CompanyName'
-                0, // CompanyGroup
-                0, //  CompanyLogo
-                0, // CompanyDescription
-                0, // CompanyWebsiteUrl
-                0, // CompanyCareerUrl
-                0, // CompanyAddressRoad
-                0, // complementaryInformation
-                0, // CompanyAddressPostalCode
-                0, // CompanyAddressCity
-                0, // CompanyAddressCountry
-                0, // UserFirstName
-                0, // UserLastName
-                1, // Position
-                0, // phoneNumber
-                0, // UserMail
-                6 // UserPassword
-            ]
-
-            // Table with max length
-            // Set here the max length of each fields
-            var maxLengthTab = [
-                100, // type
-                17, // siret
-                50, // CompanyName'
-                50, // CompanyGroup
-                50, //  CompanyLogo
-                500, // CompanyDescription
-                200, // CompanyWebsiteUrl
-                200, // CompanyCareerUrl
-                50, // CompanyAddressRoad
-                50, // complementaryInformation
-                6, // CompanyAddressPostalCode
-                200, // CompanyAddressCity
-                50, // CompanyAddressCountry
-                50, // UserFirstName
-                50, // UserLastName
-                50, // Position
-                13, // phoneNumber
-                150, // UserMail
-                500 // UserPassword
-            ]
-
-            for (var i = 0; i <= 18; i++) {
-                // We check the field i
-                if (typeof dataTab[i] !== 'undefined') {
-                    // Validation of length
-                    if (dataTab[i].length >= minLengthTab[i] && dataTab[i].length <= maxLengthTab[i]) {
-                        if (typeof dataTab[i] !== 'string') {
-                            // Validation of entry by regular expressions
-                            if (!regexTab[i].test(dataTab[i])) {
-                                // Field not validated
-                                POSTerror = true
-                                posterr[i] = 'true'
-                            }
-                        }
-                    } else {
-                        POSTerror = true
-                        posterr[i] = 'true'
-                        console.log('error')
-                    }
-                }
-                // We skip to the next field
-            }
-        } else { // Mandatory fields seems to not exist
-            console.log('il manque des champs obligatoires: ' + posterr + ' || ' + dataTab)
-            POSTerror = true
-        }
-
-        // En cas d'erreur rencontrée, on affiche une page d'erreur
-        if (POSTerror) {
-            return res.view('Inscription/Inscription', {
-                layout: 'layout',
-                POSTerror: POSTerror,
-                posterr: posterr,
-                dataTab: dataTab
-            })
-        }
-
-        // On regarde qu'il n'y a pas d'entrerpise avec le même email déja enregistrées
-        Company.findOne({mailAddress: req.param('UserEmail')}).exec((err, record) => {
-            // La recherche n'a pas posé de problèmes
-            if (!err) {
-                // Entreprise trouvée => On retourne une erreur à l'inscription
-                if (typeof record !== 'undefined') {
-                    console.log('A company with the same mailAddress was found ...User result:' + record.mailAddress)
-                    console.log('Impossible to create a new user, the email is already used...')
-                    return res.view('Inscription/CompanyNotCreated', {
-                        layout: 'layout',
-                        Email: record.mailAddress,
-                        title: 'Erreur - FIE'
-                    })
-                } else { // Pas d'entrepise trouvée => Ajout ds la BDD
-                    if (err) return res.serverError(err)
-
-                    // Création du lien d'activation (sha1 sur chrono courrant du serveur)
-                    var sha1 = require('sha1')
-                    var date = new Date()
-                    var ActivationUrl = sha1(date.getTime())
-                    var websiteUrl = req.param('CompanyWebsiteUrl')
-                    var careerUrl = req.param('CompanyCareerUrl')
-
-                    if (websiteUrl.charAt(4) !== ':' && websiteUrl.charAt(5) !== ':' && websiteUrl !== '') {
-                        websiteUrl = 'http://' + websiteUrl
-                    }
-
-                    if (careerUrl.charAt(4) !== ':' && careerUrl.charAt(5) !== ':' && careerUrl !== '') {
-                        careerUrl = 'http://' + careerUrl
-                    }
-
-                    // Ajout de l'entreprise dans la BDD
-                    Company.create({
-                        firstName: req.param('UserFirstName'),
-                        lastName: req.param('UserLastName'),
-                        position: req.param('Position'),
-                        phoneNumber: req.param('PhoneNumber'),
-                        mailAddress: req.param('UserEmail'),
-                        password: req.param('UserPassword'),
-                        siret: req.param('Siret'),
-                        companyName: req.param('CompanyName'),
-                        companyGroup: req.param('CompanyGroup'),
-                        description: req.param('CompanyDescription'),
-                        websiteUrl: websiteUrl,
-                        careerUrl: careerUrl,
-                        road: req.param('CompanyAddressRoad'),
-                        complementaryInformation: req.param('complementaryInformation'),
-                        city: req.param('CompanyAddressCity'),
-                        postCode: req.param('CompanyPostCode'),
-                        country: req.param('CompanyAddressCountry'),
-                        logoPath: req.param('Siret') + '.png',
-                        type: req.param('type'),
-                        AE: (req.param('AE') === 'on'),
-                        IR: (req.param('IR') === 'on'),
-                        GB: (req.param('GB') === 'on'),
-                        GP: (req.param('GP') === 'on'),
-                        GPE: (req.param('GPE') === 'on'),
-                        GC: (req.param('GC') === 'on'),
-                        GM: (req.param('GM') === 'on'),
-                        GMM: (req.param('GMM') === 'on'),
-                        active: 0,
-                        activationUrl: ActivationUrl
-                    }, (err, created) => {
-                        if (!err) {
-                            console.log('[INFO] User created ) : ' + created.firstName + ' ' + created.lastName)
-
-                            // We send an email with the function send email contained inside services/SendMail.js
-                            SendMail.sendEmail({
-                                destAddress: req.param('UserEmail'),
-                                objectS: "Message de confirmation de l'inscription",
-                                messageS: '\n\nMadame/Monsieur ' + req.param('UserLastName') + ', bonjour' +
-                                "\n\nNous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
-                                '\nhttps://' + sails.config.configFIE.FIEdomainName + "/Company/ActivateCompany?url=" + ActivationUrl + '&email=' + req.param('UserEmail') +
-                                "\n\nVous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
-                                '\n\nNous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
-                                "\n\nLe site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
-                                '\n\nNous vous remercions de votre confiance et avons hâte de vous rencontrer le 24 octobre prochain.' +
-                                "\nCordialement,\nL'équipe FIE 2017",
-                                messageHTML: '<br /><br /><p>Madame/Monsieur ' + req.param('UserLastName') + ', bonjour' +
-                                "<br /><br />Nous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
-                                '<br /><a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/ActivateCompany?url=' + ActivationUrl + '&email=' + req.param('UserEmail') + '">Cliquez ici</a>' +
-                                "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
-                                '<br /><br />Nous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
-                                "<br /><br />Le site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
-                                '<br /><br />Nous vous remercions de votre confiance et avons hâte de vous rencontrer le 24 octobre prochain.</p>' +
-                                "<p>Cordialement,<br />L'équipe FIE 2017</p>"
-                            })
-
-                            // We show a positive result to the CompanySpace created
-                            console.log('Company created: ' + req.param('UserEmail'))
-                            return res.view('Inscription/UserCreated', {
-                                firstName: created.firstName,
-                                layout: 'layout',
-                                title: 'Inscription - FIE'
-                            })
-                        } else {
-                            console.log('Error while creating a new CompanySpace. Error: ' + err)
-                            return res.view('404', {error: err})
-                        }
-                    })
-                }
-            } else { // La recherche d'une Cie a posé un problème
-                console.log('A problem occured during search for existing companies. Error: ' + err)
-            }
-        })
     },
 
     // AuthentificateCompany: Check the email/password request sent by user and allow or not to set an Authentified User
@@ -947,29 +669,4 @@ module.exports = {
         })
     },
 
-    /** When we dev this function, sails is still 0.12.0,
-     * Waterline does not support the projection, we need to do this
-     */
-    apiCompany: function(req, res)  {
-        //TODO : make this cleaner in upper version
-        Company.native(function(err, Collection) {
-            if (err) {
-                return res.serverError();
-                console.log(err);
-            }
-
-            Collection.find(
-                {},
-                {'firstName': 1, 'lastName': 1, 'position': 1, 'mailAddress': 1, 'phoneNumber': 1, 'companyName': 1, 'companyGroup': 1 }
-                ).toArray((err2, companies) => {
-                if (err2) {
-                    return res.serverError();
-                    console.log(err2);
-                }
-
-                return res.json(200, companies);
-            });
-        });
-
-    }
 }

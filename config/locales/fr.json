@@ -1,4 +1,25 @@
 {
 	"Welcome": "Bienvenue",
-	"A brand new app.": "Une toute nouvelle application."
+	"A brand new app.": "Une toute nouvelle application.",
+
+	"company.mailAddress.unique" : "Cet mail a été déjà pris",
+	"company.mailAddress.required" : "Veuillez entrer votre email",
+	"company.mailAddress.email" : "Veuillez entrer une adresse mail valide",
+	"company.firstName.required": "Ce champs est obligatoire",
+	"company.lastName.required": "Ce champs est obligatoire",
+	"company.password.minLength": "Mot de passe longeur au moins 6 caractères",
+	"company.password.required": "Veuillez choisir votre mot de passe",
+	"company.siret.numeric": "Siret n'est qu'une valeur numérique",
+	"company.siret.required": "Veuillez nous renseigner votre numéro de siret",
+	"company.siret.minLength": "Numéro de siret doit être 14 caractères",
+	"company.siret.maxLength": "Numéro de siret doit être 14 caractères",
+	"company.companyName.required": "Ce champs est obligatoire",
+	"company.companyName.minLength": "Le nom d'entreprise doit être au moins 1 caractère",
+	"company.companyName.maxLength": "Le nom d'entreprise doit être au moins 50 caractères",
+	"company.road.required": "Ce champs est obligatoire",
+	"company.city.required" : "Ce champs est obligatoire",
+	"company.country.required":	"Ce champs est obligatoire",
+	"company.postCode.required":	"Ce champs est obligatoire",
+	"company.type.required":	"Veuillez choisir le status d'entreprise parmi la liste déroulante",
+	"company.type.in":	"Veuillez choisir le status d'entreprise parmi la liste déroulante"
 }

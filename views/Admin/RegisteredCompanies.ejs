@@ -36,7 +36,7 @@
         <%=company.siret %>
       </td>
       <td>
-        <%=company.createdAt.toDateString() %>
+        <%= company.createdAt.toDateString() %>
       </td>
       <td>
         <%=company.blacklist ? 'oui' : '-' %>

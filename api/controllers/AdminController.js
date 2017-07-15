@@ -530,11 +530,88 @@ module.exports = {
         })
     },
 
-    allCompanies: function(req, res)    {
+    getCompany: function(req, res)  {
+        Company.findOne(req.allParams()).exec((err, company) => {
+            if(err)  {
+                sails.log.error('[AdminController.getCompany] an error occured when find a company :');
+                sails.log.error(err);
+                return res.serverError();
+            }
+
+            if(!company) {
+                return res.view('ErrorPage', {
+                    layout: 'layout',
+                    ErrorTitle: "L'entreprise au siret " + req.param('siret') + " n'existe pas."
+                });
+            }
+
+            Sells.find(req.allParams()).exec((err, sells) => {
+                if(err)  {
+                    sails.log.error('[AdminController.getCompany] an error occured when find a sell:');
+                    sails.log.error(err);
+                    return res.serverError();
+                }
+
+                let sellsExist = sells.length > 0;
+
+                return res.view('Admin/CompanyInfo', {
+                    layout: 'layout',
+                    company: company,
+                    sells: sells,
+                    sellsExist: sellsExist
+                });
+            })
+        });
+    },
+
+    //datatables
+    getCompanies: function(req, res)    {
         return res.view('Admin/CompanyData',  {
             layout: 'layout',
             title: 'FIE - Admin Companies'
         })
+    },
+
+    // api request give json response
+
+    apiCompany: function(req, res)  {
+
+        Company.find({}, {select: ['siret', 'companyName', 'type', 'createdAt', 'blacklist', 'active']})
+            .exec((err, companies)  =>  {
+                if(err) {
+                    sails.log.error('[CompanyController.apiCompany] error when find all companies:');
+                    sails.log.error(err);
+                    return res.serverError();
+                }
+
+                return res.json(200, companies);
+            });
+
+    },
+
+    // not used for instance
+    apiCompanyFeature: function(req, res)    {
+        let columns = {
+            'firstname': 'First Name',
+            'lastName' : 'Last Name',
+            'mailAddress': 'Mail',
+            'phoneNumber': 'PhoneNumber'
+        };
+        DatatablesService.getGenerator(columns, (datatables) =>  {
+            if(!datatables)  {
+                console.log('hello 5');
+                return res.json(500);
+            }
+
+            console.log('hello 3');
+            Company.find({}, datatables.dtProjection()).exec((err, companies)    =>  {
+                if(err) {
+                    return res.json(500, err);
+                }
+                console.log('hello 4');
+                return res.json(200, companies);
+            });
+        });
     },
 
     editBill: function (req, res) {
