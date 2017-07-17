@@ -1,0 +1,53 @@
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="/images/adminLTE/user2-160x160.jpg" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+                <p>Admin FIE</p>
+                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+        </div>
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Search...(in dev)">
+                <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">Modules</li>
+
+            <li class="active"><a href="/AdminLTE"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+            <li><a href="/Admin/YearSettings"><i class="fa fa-cogs"></i> <span>Paramètres généraux</span></a></li>
+            <li><a href="<%= sails.getUrlFor('AdminController.getCompanies') %>"><i class="fa fa-industry"></i> <span>Entreprises inscrites</span></a></li>
+            <li><a href="/Admin/RegisteredStudents"><i class="fa fa-users"></i> <span>Etudiants inscrits</span></a></li>
+            <li><a href="/Admin/Sells"><i class="fa fa-money"></i> <span>Ventes</span></a></li>
+            <li><a href="/Admin/SjdParticipants"><i class="fa fa-money"></i> <span>Voir entreprises SJD</span></a></li>
+            <li><a href="/Admin/SjdSessions"><i class="fa fa-money"></i> <span>Gérer les sessions SJD</span></a></li>
+            <li><a href="/Admin/CheckList"><i class="fa fa-money"></i> <span>Vérifier les actions à faire</span></a></li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-table"></i> <span>Vigipirate</span>
+                    <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="/Admin/ParticipatingStudents"><i class="fa fa-circle-o"></i> Etudiants</a></li>
+                    <li><a href="/Admin/ParticipatingCompanies"><i class="fa fa-circle-o"></i> Entreprises</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

@@ -8,6 +8,7 @@
     "babel-core": "6.7.4",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^3.3.7",
+    "bootstrap-datepicker": "^1.7.1",
     "bootstrap-daterangepicker": "^2.1.25",
     "classnames": "2.1.5",
     "ejs": "^2.4.1",

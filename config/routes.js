@@ -447,10 +447,15 @@ module.exports.routes = {
      ===========================================================================================================
      */
 
-     '/AdminLTE':   {
-         controller: 'AdminLTEController',
-         action: 'home'
-     }
+    '/AdminLTE': {
+        controller: 'AdminLTEController',
+        action: 'home'
+    },
+
+    '/AdminLTE/login':  {
+        controller: 'AdminLTEController',
+        action: 'login'
+    }
 
     /*
      '/Admin/InitializeSjd': {
