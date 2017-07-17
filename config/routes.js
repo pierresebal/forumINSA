@@ -25,7 +25,7 @@ module.exports.routes = {
     /***************************************************************************
      *                                                                          *
      * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
-     * etc. depending on your default view engine) your home page.              *
+     * etc. depending on your default view engine) your home pages.              *
      *                                                                          *
      * (Alternatively, remove this and add an `index.html` file in your         *
      * `assets` directory)                                                      *
@@ -439,7 +439,19 @@ module.exports.routes = {
     '/Company/ManageSjd': {
         controller: 'SjdController',
         action: 'showSjdCompanyInscription'
-    }
+    },
+
+    /*
+     ===========================================================================================================
+     ============================================== ADMIN LTE ==================================================
+     ===========================================================================================================
+     */
+
+     '/AdminLTE':   {
+         controller: 'AdminLTEController',
+         action: 'home'
+     }
+
     /*
      '/Admin/InitializeSjd': {
      controller: 'SjdController',

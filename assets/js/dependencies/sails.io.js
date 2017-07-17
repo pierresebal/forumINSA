@@ -392,7 +392,7 @@ message:4,upgrade:5,noop:6},s=i(r),t={type:"error",data:"parser error"},u=a("blo
       }
       // Otherwise, this is a web browser:
       else {
-        throw new Error('The socket.io client (`io`) has already been augmented into a Sails socket SDK instance.  Usually, this means you are bringing `sails.io.js` onto the page more than once.');
+        throw new Error('The socket.io client (`io`) has already been augmented into a Sails socket SDK instance.  Usually, this means you are bringing `sails.io.js` onto the pages more than once.');
       }
     }
 

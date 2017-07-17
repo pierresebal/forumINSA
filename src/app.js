@@ -66,7 +66,7 @@ function run() {
     render(currentState);
   });
 
-  // Save the page scroll position into the current location's state
+  // Save the pages scroll position into the current location's state
   const supportPageOffset = window.pageXOffset !== undefined;
   const isCSS1Compat = ((document.compatMode || '') === 'CSS1Compat');
   const setPageOffset = () => {
@@ -90,7 +90,7 @@ function run() {
 }
 
 // Run the application when both DOM is ready
-// and page content is loaded
+// and pages content is loaded
 if (window.addEventListener) {
   window.addEventListener('DOMContentLoaded', run);
 } else {

@@ -49,7 +49,7 @@ export default task('start', async () => {
     },
 
     // no need to watch '*.js' here, webpack will take care of it for us,
-    // including full page reloads if HMR won't work
+    // including full pages reloads if HMR won't work
     files: [
       'build/public/**/*.css',
       'build/public/**/*.html',

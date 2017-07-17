@@ -9,7 +9,7 @@ var path = require('path')
 module.exports = {
   uploadCV: function (req, res) {
     if (req.method === 'GET') {
-      return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Access denied', ErrorDesc: 'Vous ne pouvez pas accéder à cette page de cette façon'})
+      return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Access denied', ErrorDesc: 'Vous ne pouvez pas accéder à cette pages de cette façon'})
     }
     var file, prefix
 
@@ -103,7 +103,7 @@ module.exports = {
 
   uploadLogo: function (req, res) {
     if (req.method === 'GET') {
-      return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Access denied', ErrorDesc: 'Vous ne pouvez pas accéder à cette page de cette façon'})
+      return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Access denied', ErrorDesc: 'Vous ne pouvez pas accéder à cette pages de cette façon'})
     }
 
     var uploadFile = req.file('logo')

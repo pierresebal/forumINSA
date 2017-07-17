@@ -29,7 +29,7 @@ module.exports = {
                 return res.view('StudentParticipation/Validated', {layout: 'layout', firstName: created.firstName})
               })
             } else {
-              return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Inscription déjà effectuée', ErrorDesc: 'Vous êtes déjà inscrit. Si vous voulez vous désinscrire envoyez un mail à <b>contact@foruminsaentreprises.fr</b>.<br />Pour gérer votre profil étudiant, connectez vous en cliquant sur "Etudiant" en haut à droite de la page.'})
+              return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Inscription déjà effectuée', ErrorDesc: 'Vous êtes déjà inscrit. Si vous voulez vous désinscrire envoyez un mail à <b>contact@foruminsaentreprises.fr</b>.<br />Pour gérer votre profil étudiant, connectez vous en cliquant sur "Etudiant" en haut à droite de la pages.'})
             }
           })
         } else { // Personne non reconnue par le ldap
