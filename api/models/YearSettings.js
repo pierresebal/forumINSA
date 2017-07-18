@@ -7,67 +7,69 @@
 
 module.exports = {
 
-  attributes: {
+    attributes: {
 
-    year:{
-      type:'Integer',
-      unique:true
-    },
+        year: {
+            type: 'Integer',
+            primaryKey: true,
+            unique: true,
+            defaultsTo: function() {return new Date().getFullYear();}
+        },
 
-    mealPrice:{
-      type:'Integer',
-      required:true,
-      defaultsTo:15
-    },
+        mealPrice: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 15
+        },
 
-    forumPrice:{
-      type:'Integer',
-      required:true,
-      defaultsTo:400
-    },
+        forumPrice: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 400
+        },
 
-    sjdPrice:{
-      type:'Integer',
-      required:true,
-      defaultsTo:200
-    },
+        sjdPrice: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 200
+        },
 
-    sjdSessionPrice:{
-      type:'Integer',
-      required:true,
-      defaultsTo:50
-    },
+        sjdSessionPrice: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 50
+        },
 
-    premiumPrice:{
-      type:'Integer',
-      required:true,
-      defaultsTo:500
-    },
+        premiumPrice: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 500
+        },
 
-    //PME
-    forumPricePME:{
-      type:'Integer',
-      required:true,
-      defaultsTo:280
-    },
+        //PME
+        forumPricePME: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 280
+        },
 
-    sjdPricePME:{
-      type:'Integer',
-      required:true,
-      defaultsTo:140
-    },
+        sjdPricePME: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 140
+        },
 
-    sjdSessionPricePME:{
-      type:'Integer',
-      required:true,
-      defaultsTo:50
-    },
+        sjdSessionPricePME: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 50
+        },
 
-    premiumPricePME:{
-      type:'Integer',
-      required:true,
-      defaultsTo:350
-    },
-  }
+        premiumPricePME: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 350
+        },
+    }
 };
 

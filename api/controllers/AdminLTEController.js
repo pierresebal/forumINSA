@@ -53,9 +53,34 @@ module.exports = {
 
 
     /**
-     * `AdminLTEController.settings()`
+     * `AdminLTEController.getSettings()`
      */
-    settings: function (req, res) {
+    getSettings: function (req, res, cb) {
+
+        GeneralSettings.findOrCreate({id: 1}, {id: 1}).exec((err, found) => {
+            if (err) {
+                sails.log.error('[AdminLTEController.getSettings] error when do findOrCreate: ', err);
+                return cb(err);
+            }
+
+            var year = new Date().getFullYear();
+            YearSettings.findOrCreate({year: year}, {year: year}).exec((err, record) => {
+                if (err) {
+                    console.log(err);
+                    return err
+                }
+
+                console.log('year settings: ', record);
+
+                return res.view('Admin/YearSettings', {
+                    layout: 'layout',
+                    year: year,
+                    generalSettings: found,
+                    yearSettings: record,
+                })
+            })
+        })
+
         return res.json({
             todo: 'settings() is not implemented yet!'
         });

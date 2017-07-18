@@ -17,16 +17,25 @@ module.exports = {
     },
 
     displayYearSettings: function (req, res) {
-        GeneralSettings.findOrCreate({id: 1}).exec((err, found) => {
+
+        console.log('displayYearSettings');
+
+        GeneralSettings.findOrCreate({id: 1}, {id: 1}).exec((err, found) => {
             if (err) {
+                console.log(err);
                 return err
             }
 
-            var year = new Date().getFullYear()
-            YearSettings.findOrCreate({year: year}).exec((err, record) => {
+            console.log('general settings: ', found);
+
+            var year = new Date().getFullYear();
+            YearSettings.findOrCreate({year: year}, {year: year}).exec((err, record) => {
                 if (err) {
+                    console.log(err);
                     return err
                 }
+
+                console.log('year settings: ', record);
 
                 return res.view('Admin/YearSettings', {
                     layout: 'layout',
@@ -41,13 +50,16 @@ module.exports = {
     setPrices: function (req, res) {
         var year = new Date().getFullYear();
 
-        YearSettings.findOrCreate({year: year}).exec((err, records) => {
+        console.log('setPrices');
+
+        YearSettings.findOne({year: year}).exec((err, settings) => {
             if (err) {
                 console.log('year not found and not created')
                 return
             }
+            console.log('settings1: ', settings);
 
-            YearSettings.update({year: records.year}, {
+            YearSettings.update({year: settings.year}, {
                 forumPrice: req.param('forumPrice'),
                 sjdPrice: req.param('sjdPrice'),
                 premiumPrice: req.param('premiumPrice'),
@@ -66,14 +78,14 @@ module.exports = {
                     })
                 }
 
-                console.log("Modifications faites pour l'année " + records.year + ' ajouté !')
+                console.log("Modifications faites pour l'année " + settings.year + ' ajouté !')
                 return res.redirect('/Admin/YearSettings')
             })
         })
     },
 
     setInscriptionOpen: function (req, res) {
-        GeneralSettings.findOrCreate({id: 1}).exec((err, found) => {
+        GeneralSettings.findOrCreate({id: 1}, {id: 1}).exec((err, found) => {
             if (err) {
                 return err
             }

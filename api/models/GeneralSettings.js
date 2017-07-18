@@ -12,6 +12,7 @@ module.exports = {
     id : {
       type:'integer',
       unique:true,
+        primaryKey: true,
       defaultsTo:1
     },
 
