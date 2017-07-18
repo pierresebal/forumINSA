@@ -390,7 +390,7 @@ module.exports = {
 
     Command: function (req, res) {
         // Inscription ouverte ?
-        GeneralSettings.findOrCreate({id: 1}).exec((err, found) => {
+        GeneralSettings.findOrCreate({id: 1}, {id: 1}).exec((err, found) => {
             if (err) {
                 return err
             }
