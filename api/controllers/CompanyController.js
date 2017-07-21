@@ -547,7 +547,7 @@ module.exports = {
                     return cb(err);
                 }
 
-                if(update.length === 0) {
+                if(!update || update.length === 0) {
                     sails.log.warn('[CompanyController.changePassword] no update has been made.');
                     req.addFlash('password', 'Aucune mise à jour a été faite');
                 }   else    {

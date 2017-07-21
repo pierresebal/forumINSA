@@ -544,7 +544,7 @@ module.exports = {
     //datatables -----------
     getCompanies: function(req, res)    {
         return res.view('Admin/getCompanies',  {
-            layout: 'layout',
+            layout: 'Layout/AdminLTE',
             title: 'FIE - Admin Companies'
         })
     },
