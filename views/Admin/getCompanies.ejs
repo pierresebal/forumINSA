@@ -45,7 +45,7 @@
                     }
                     }
                 ],
-                initComplete: function(settings, json)  {
+                drawCallback: function(settings, json)  {
                     $('input[name="checkbox-switch"]').bootstrapSwitch({
                         onColor: 'success',
                         onText: 'Oui',
@@ -62,7 +62,6 @@
                                     active: state
                                 }
                             })
-                            console.log(data.id);
                         }
                     });
                 }
