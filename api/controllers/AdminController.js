@@ -571,23 +571,21 @@ module.exports = {
         let params = req.allParams();
         delete params.id;
 
-        console.log('id: ', id);
-        console.log('params: ', params);
-
-        Company.update({id: id}, params).exec((err, company)  =>  {
+        Company.update({id: id}, params).exec((err, companies)  =>  {
 
             if(err) {
                 sails.log.error('[AdminController.apiUpdateCompany] error when update company: ' + err);
                 return res.json(500, err);
             }
 
-            if(!company || company.length === 0) {
+            if(!companies || companies.length === 0) {
                 sails.log.warn('[AdminController.apiUpdateCompany] no company has been updated, querry: ', req.allParams());
                 return res.json(500, {msg: 'no company updated'});
             }
 
-            sails.log.info('[AdminController.apiUpdateCompany] updated Company '+ company.companyName);
-            return res.json(200, {msg: company.companyName + ' has been updated!'});
+            sails.log.info('[AdminController.apiUpdateCompany] updated Company '+ companies[0].companyName);
+            return res.json(200, {msg: 'Company ' + companies[0].companyName + ' has updated info !'});
+
         });
     },
 

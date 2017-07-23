@@ -130,6 +130,12 @@ module.exports = function (grunt) {
                 dest: '.tmp/public/dependencies/bootstrap-switch',
                 flattern: true,
                 expand: true
+            }, {
+                cwd: './node_modules/toastr/build',
+                src: ['**/*.js', '**/*.css' ],
+                dest: '.tmp/public/dependencies/toastr',
+                flattern: true,
+                expand: true
             },  {
                 cwd: './node_modules/font-awesome',
                 src: ['**/*'],

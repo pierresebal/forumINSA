@@ -47,6 +47,7 @@
     "source-map-support": "0.3.2",
     "superagent": "1.4.0",
     "sweetalert2": "^6.6.5",
+    "toastr": "^2.1.2",
     "wkhtmltopdf": "^0.3.0"
   },
   "devDependencies": {

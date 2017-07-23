@@ -11,61 +11,72 @@
 </section>
 
 <link href="/dependencies/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
+<link href="/dependencies/toastr/toastr.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-2.2.4/pdfmake-0.1.27/dt-1.10.15/af-2.2.0/b-1.3.1/b-colvis-1.3.1/b-html5-1.3.1/cr-1.3.3/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.css"/>
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/pdfmake-0.1.27/dt-1.10.15/af-2.2.0/b-1.3.1/b-colvis-1.3.1/b-html5-1.3.1/cr-1.3.3/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.js"></script>
 <script src="/dependencies/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="/dependencies/toastr/toastr.min.js"></script>
 <script>
-        $(document).ready(function() {
-            var datatable = $('#datatable').DataTable( {
-                ajax: {
-                    'url': "<%= sails.getUrlFor('AdminController.apiGetAllCompany') %>",
-                    'dataSrc': ''
-                },
-                columns: [
-                    { 'data': "companyName" },
-                    { 'data': "type" },
-                    { 'data': "createdAt",
-                        'render' : function(data, type, full, meta) {
-                            return new Date(data).toLocaleDateString();
-                        }
-                    },
-                    { 'data': "blacklist",
-                        'render': function(data)    {
-                            return data ? 'oui' : '-';
-                        }
-                    },
-                    { 'data': "active",
-                        'render': function(data)    {
-                            return '<input type="checkbox" name="checkbox-switch" ' + (data ? ' checked>' : '>');
-                        }
-                    },
-                    { 'data': "siret",
-                        'render': function(data, type, full, meta)  {
-                            return '<a class="btn btn-info" href="/Admin/company/' +data+'">Voir plus</a>';
-                    }
-                    }
-                ],
-                drawCallback: function(settings, json)  {
-                    $('input[name="checkbox-switch"]').bootstrapSwitch({
-                        onColor: 'success',
-                        onText: 'Oui',
-                        offColor: 'danger',
-                        offText: 'Non',
-                        labelWidth: 0,
-                        onSwitchChange: function(event, state)  {
-                            var data = datatable.row( $(this).parents('tr') ).data();
-                            $.ajax({
-                                url: '<%= sails.getUrlFor("AdminController.apiUpdateCompany") %>',
-                                type: 'POST',
-                                data:   {
-                                    id: data.id,
-                                    active: state
-                                }
-                            })
+$(document).ready(function() {
+    var datatable = $('#datatable').DataTable( {
+        ajax: {
+            'url': "<%= sails.getUrlFor('AdminController.apiGetAllCompany') %>",
+            'dataSrc': ''
+        },
+        columns: [
+            { 'data': "companyName" },
+            { 'data': "type" },
+            { 'data': "createdAt",
+                'render' : function(data, type, full, meta) {
+                    return new Date(data).toLocaleDateString();
+                }
+            },
+            { 'data': "blacklist",
+                'render': function(data)    {
+                    return data ? 'oui' : '-';
+                }
+            },
+            { 'data': "active",
+                'render': function(data)    {
+                    return '<input type="checkbox" name="checkbox-switch" ' + (data ? ' checked>' : '>');
+                }
+            },
+            { 'data': "siret",
+                'render': function(data, type, full, meta)  {
+                    return '<a class="btn btn-info" href="/Admin/company/' +data+'">Voir plus</a>';
+            }
+            }
+        ],
+        drawCallback: function(settings, json)  {
+            $('input[name="checkbox-switch"]').bootstrapSwitch({
+                onColor: 'success',
+                onText: 'Oui',
+                offColor: 'danger',
+                offText: 'Non',
+                labelWidth: 0,
+                onSwitchChange: function(event, state)  {
+                    var data = datatable.row( $(this).parents('tr') ).data();
+                    $.ajax({
+                        url: '<%= sails.getUrlFor("AdminController.apiUpdateCompany") %>',
+                        type: 'POST',
+                        data:   {
+                            id: data.id,
+                            active: state
+                        },
+                        success: function(data, status, xhr)    {
+                            toastr.success(data.msg);
+                        },
+                        error: function(jqXHR, status, err) {
+                            if(jqXHR.responseJSON.msg)
+                                toastr.warning(jqXHR.responseJSON.msg);
+                            else
+                                toastr.error(err);
                         }
                     });
                 }
+            });
+        }
 
-            } );
-        } );
-    </script>
+    } );
+} );
+</script>
