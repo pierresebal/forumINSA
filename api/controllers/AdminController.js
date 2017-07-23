@@ -551,7 +551,7 @@ module.exports = {
 
     // api request give json response ---------
 
-    apiCompany: function(req, res)  {
+    apiGetAllCompany: function(req, res)  {
 
         Company.find({}, {select: ['siret', 'companyName', 'type', 'createdAt', 'blacklist', 'active']})
             .exec((err, companies)  =>  {
@@ -564,6 +564,31 @@ module.exports = {
                 return res.json(200, companies);
             });
 
+    },
+
+    apiUpdateCompany: function(req, res)    {
+        let id = req.param('id');
+        let params = req.allParams();
+        delete params.id;
+
+        console.log('id: ', id);
+        console.log('params: ', params);
+
+        Company.update({id: id}, params).exec((err, company)  =>  {
+
+            if(err) {
+                sails.log.error('[AdminController.apiUpdateCompany] error when update company: ' + err);
+                return res.json(500, err);
+            }
+
+            if(!company || company.length === 0) {
+                sails.log.warn('[AdminController.apiUpdateCompany] no company has been updated, querry: ', req.allParams());
+                return res.json(500, {msg: 'no company updated'});
+            }
+
+            sails.log.info('[AdminController.apiUpdateCompany] updated Company '+ company.companyName);
+            return res.json(200, {msg: company.companyName + ' has been updated!'});
+        });
     },
 
     // not used for instance

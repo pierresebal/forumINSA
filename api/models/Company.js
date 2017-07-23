@@ -175,9 +175,9 @@ module.exports = {
         },
 
         active: {
-            type: "integer",
+            type: "boolean",
             required: true,
-            defaultsTo: 0
+            defaultsTo: false
         },
 
         activationUrl: {

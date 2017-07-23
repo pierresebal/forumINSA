@@ -125,6 +125,12 @@ module.exports = function (grunt) {
                 flattern: true,
                 expand: true
             },  {
+                cwd: './node_modules/bootstrap-switch/dist',
+                src: ['**/*.js', 'css/bootstrap3/*.css' ],
+                dest: '.tmp/public/dependencies/bootstrap-switch',
+                flattern: true,
+                expand: true
+            },  {
                 cwd: './node_modules/font-awesome',
                 src: ['**/*'],
                 dest: '.tmp/public/dependencies/font-awesome',

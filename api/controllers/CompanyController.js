@@ -112,7 +112,7 @@ module.exports = {
             }
 
             // not activated
-            else if (company.active !== 1) {
+            else if (!company.active) {
                 sails.log.warn('[CompanyController.AuthentificateCompany] Company ' + company.companyName + ' not activated.');
                 errMessage['account'] = 'Le compte '+company.companyName + ' n\'est pas activé, veuillez vérifier dans votre mail: '+company.mailAddress;
             }
@@ -475,6 +475,8 @@ module.exports = {
     },
 
     update: function(req, res, cb)  {
+
+        //TODO: retire forbidden attribute from params (ex: password, id, etc.)
         Company.update({mailAddress: req.session.user.mailAddress}, req.params.all()).exec((err, updated)  =>  {
             if(err) {
                 sails.log.error('[CompanyController.update] error when update Company: ');

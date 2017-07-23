@@ -130,11 +130,6 @@ module.exports.routes = {
         action: 'changeStudentSjd'
     },
 
-    '/admin/api/company': {
-        controller: 'AdminController',
-        action: 'apiCompany'
-    },
-
     '/admin/companies': {
         controller: 'AdminController',
         action: 'getCompanies'
@@ -144,6 +139,19 @@ module.exports.routes = {
         controller: 'AdminController',
         action: 'getCompany'
     },
+
+    /*-------------  Admin api ------------------*/
+    '/admin/api/company': {
+        controller: 'AdminController',
+        action: 'apiGetAllCompany'
+    },
+
+    '/admin/api/company/update':    {
+        controller: 'AdminController',
+        action: 'apiUpdateCompany'
+    },
+
+    /*-----------  End Admin api ----------------*/
 
     '/Track': {
         view: 'Track/Homepage',
