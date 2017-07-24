@@ -33,16 +33,6 @@ module.exports = {
         });
     },
 
-    adminLogin: function (req, res) {
-        if (req.param('password') === sails.config.configFIE.adminPassword) {
-            req.session.isAdmin = true
-        } else {
-            req.session.isAdmin = false
-        }
-
-        return res.redirect('/Admin')
-    },
-
     displayYearSettings: function (req, res) {
 
         console.log('displayYearSettings');
@@ -535,6 +525,8 @@ module.exports = {
     },
 
     getCompany: function(req, res)  {
+        // find company by id and show it
+
         Company.findOne(req.allParams()).exec((err, company) => {
             if(err)  {
                 sails.log.error('[AdminController.getCompany] an error occured when find a company :');
@@ -549,7 +541,7 @@ module.exports = {
                 });
             }
 
-            Sells.find(req.allParams()).exec((err, sells) => {
+            Sells.find({companySiret: company.siret}).exec((err, sells) => {
                 if(err)  {
                     sails.log.error('[AdminController.getCompany] an error occured when find a sell:');
                     sails.log.error(err);
@@ -579,12 +571,11 @@ module.exports = {
     // api request give json response ---------
 
     apiGetAllCompany: function(req, res)  {
+        // give all companies in json
 
-        Company.find({}, {select: ['siret', 'companyName', 'type', 'createdAt', 'blacklist', 'active']})
-            .exec((err, companies)  =>  {
+        Company.find({}).exec((err, companies)  =>  {
                 if(err) {
-                    sails.log.error('[CompanyController.apiCompany] error when find all companies:');
-                    sails.log.error(err);
+                    sails.log.error('[CompanyController.apiCompany] error when find all companies:', err);
                     return res.serverError();
                 }
 
