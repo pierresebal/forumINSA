@@ -48,9 +48,9 @@ module.exports = {
             // TODO: use mail template html
             SendMail.sendEmail({
                 destAddress: company.mailAddress,
-                objectS: "Message de confirmation de l'inscription",
+                objectS: "Confirmation de la création de votre compte",
                 messageS: '\n\nMadame/Monsieur ' + company.lastName + ', bonjour' +
-                "\n\nNous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
+                "\n\nNous vous confirmons par l’envoi de ce mail que vous avez créé un compte pour votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
                 '\nhttps://' + sails.config.configFIE.FIEdomainName + "/Company/ActivateCompany?url=" + company.activationUrl + '&email=' + company.mailAddress +
                 "\n\nVous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
                 '\n\nNous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
@@ -58,7 +58,7 @@ module.exports = {
                 '\n\nNous vous remercions de votre confiance et avons hâte de vous rencontrer le 24 octobre prochain.' +
                 "\nCordialement,\nL'équipe FIE 2017",
                 messageHTML: '<br /><br /><p>Madame/Monsieur ' + company.lastName + ', bonjour' +
-                "<br /><br />Nous vous confirmons par l’envoi de ce mail que vous avez bien inscrit votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
+                "<br /><br />Nous vous confirmons par l’envoi de ce mail que vous avez créé un compte pour votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
                 '<br /><a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/ActivateCompany?url=' + company.activationUrl + '&email=' + company.mailAddress + '">Cliquez ici</a>' +
                 "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
                 '<br /><br />Nous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
@@ -70,7 +70,7 @@ module.exports = {
             return res.view('Inscription/UserCreated', {
                 firstName: company.firstName,
                 layout: 'layout',
-                title: 'Inscription - FIE'
+                title: 'Création d\'un compte entreprise'
             })
         });
     },
