@@ -47,7 +47,7 @@
     %>
       <tr>
         <td><%=index%></td>
-        <td><a href="/Admin/company/<%= sell.companySiret %>"><%= sell.companyName %></a></td>
+        <td><a href="/Admin/CompanyInfo?siret=<%=sell.companySiret%>"><%=sell.companyName%></a></td>
         <td><%=sell.year%></td>
         <td><%=sell.forum ? 'oui' : '-'%> (<%=sell.forumPrice%>€)</td>
         <td><%=sell.sjd ? 'oui' : '-'%> (<%=sell.sjdPrice%>€)</td>
