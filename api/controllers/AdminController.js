@@ -6,6 +6,33 @@
  */
 
 module.exports = {
+
+    home: function (req, res) {
+        return res.view('AdminLTE/home', {
+            layout: 'Layout/AdminLTE'
+        })
+    },
+
+    login: function (req, res) {
+
+        if (req.param('password') === sails.config.configFIE.adminPassword) {
+            req.session.isAdmin = true;
+            // if user has url to go
+            if (req.session.cbUrl) {
+                let next = _.clone(req.session.cbUrl);
+                delete req.session.cbUrl;
+                return res.redirect(next);
+            }
+
+            return res.redirect(sails.getUrlFor('AdminController.home'));
+        }
+
+        req.session.isAdmin = false;
+        return res.view('AdminLTE/login', {
+            layout: false
+        });
+    },
+
     adminLogin: function (req, res) {
         if (req.param('password') === sails.config.configFIE.adminPassword) {
             req.session.isAdmin = true

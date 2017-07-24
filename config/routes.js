@@ -45,14 +45,14 @@ module.exports.routes = {
      locals:{}
      },*/
 
-    '/Admin': {
-        view: 'Admin/Admin',
-        locals: {layout: 'layout', title: 'Admin - FIE'}
+    '/admin': {
+        controller: 'AdminController',
+        action: 'home'
     },
 
-    '/Admin/Login': {
+    '/admin/login': {
         controller: 'AdminController',
-        action: 'adminLogin'
+        action: 'login'
     },
 
     '/Admin/YearSettings': {
@@ -447,22 +447,6 @@ module.exports.routes = {
     '/Company/ManageSjd': {
         controller: 'SjdController',
         action: 'showSjdCompanyInscription'
-    },
-
-    /*
-     ===========================================================================================================
-     ============================================== ADMIN LTE ==================================================
-     ===========================================================================================================
-     */
-
-    '/AdminLTE': {
-        controller: 'AdminLTEController',
-        action: 'home'
-    },
-
-    '/AdminLTE/login':  {
-        controller: 'AdminLTEController',
-        action: 'login'
     }
 
     /*

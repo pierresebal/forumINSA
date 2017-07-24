@@ -55,11 +55,6 @@ module.exports.policies = {
 
   AdminController:{
       '*':'adminAuth',
-      'adminLogin': true
-  },
-
-    AdminLTEController: {
-        '*': 'isAdmin',
-        'login': true
-    }
+      'login': true
+  }
 };
