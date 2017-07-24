@@ -562,9 +562,14 @@ module.exports = {
 
     //datatables -----------
     getCompanies: function(req, res)    {
-        return res.view('Admin/getCompanies',  {
-            layout: 'Layout/AdminLTE',
-            title: 'FIE - Admin Companies'
+        return res.view('AdminLTE/getCompanies',  {
+            layout: 'Layout/AdminLTE'
+        })
+    },
+
+    getSells: function(req, res)    {
+        return res.view('AdminLTE/getSells',  {
+            layout: 'Layout/AdminLTE'
         })
     },
 
@@ -574,13 +579,13 @@ module.exports = {
         // give all companies in json
 
         Company.find({}).exec((err, companies)  =>  {
-                if(err) {
-                    sails.log.error('[CompanyController.apiCompany] error when find all companies:', err);
-                    return res.serverError();
-                }
+            if(err) {
+                sails.log.error('[CompanyController.apiCompany] error when find all companies:', err);
+                return res.json(500, err);
+            }
 
-                return res.json(200, companies);
-            });
+            return res.json(200, companies);
+        });
 
     },
 
@@ -603,6 +608,40 @@ module.exports = {
 
             sails.log.info('[AdminController.apiUpdateCompany] updated Company '+ companies[0].companyName);
             return res.json(200, {msg: 'Company ' + companies[0].companyName + ' has updated info !'});
+
+        });
+    },
+
+    apiGetAllSells: function(req, res)  {
+        Sells.find({}).exec((err, sells) => {
+            if(err) {
+                sails.log.error('[AdminController.apiGetAllSells] error when find all sells :', err);
+                return res.json(500, err);
+            }
+
+            return res.json(200, sells);
+        })
+    },
+
+    apiUpdateSells: function(req, res)  {
+        let id = req.param('id');
+        let params = req.allParams();
+        delete params.id;
+
+        Sells.update({id: id}, params).exec((err, sells)  =>  {
+
+            if(err) {
+                sails.log.error('[AdminController.apiUpdateSells] error when update sells: ' + err);
+                return res.json(500, err);
+            }
+
+            if(!sells || sells.length === 0) {
+                sails.log.warn('[AdminController.apiUpdateSells] no sells has been updated, querry: ', req.allParams());
+                return res.json(500, {msg: 'no sells updated'});
+            }
+
+            sails.log.info('[AdminController.apiUpdateSells] updated Sells number '+ sells[0].billNumber);
+            return res.json(200, {msg: 'Sell ' + sells[0].billNumber + ' has been updated successfully!'});
 
         });
     },

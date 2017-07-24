@@ -30,13 +30,13 @@
             <li><a href="/Admin/YearSettings"><i class="fa fa-cogs"></i> <span>Paramètres généraux</span></a></li>
             <li><a href="<%= sails.getUrlFor('AdminController.getCompanies') %>"><i class="fa fa-industry"></i> <span>Entreprises inscrites</span></a></li>
             <li><a href="/Admin/RegisteredStudents"><i class="fa fa-users"></i> <span>Etudiants inscrits</span></a></li>
-            <li><a href="/Admin/Sells"><i class="fa fa-money"></i> <span>Ventes</span></a></li>
-            <li><a href="/Admin/SjdParticipants"><i class="fa fa-money"></i> <span>Voir entreprises SJD</span></a></li>
-            <li><a href="/Admin/SjdSessions"><i class="fa fa-money"></i> <span>Gérer les sessions SJD</span></a></li>
-            <li><a href="/Admin/CheckList"><i class="fa fa-money"></i> <span>Vérifier les actions à faire</span></a></li>
+            <li><a href="<%= sails.getUrlFor('AdminController.getSells') %>"><i class="fa fa-money"></i> <span>Ventes</span></a></li>
+            <li><a href="/Admin/SjdParticipants"><i class="fa fa-suitcase"></i> <span>Voir entreprises SJD</span></a></li>
+            <li><a href="/Admin/SjdSessions"><i class="fa fa-street-view"></i> <span>Gérer les sessions SJD</span></a></li>
+            <li><a href="/Admin/CheckList"><i class="fa fa-check-square-o"></i> <span>Vérifier les actions à faire</span></a></li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-table"></i> <span>Vigipirate</span>
+                    <i class="fa fa-assistive-listening-systems"></i> <span>Vigipirate</span>
                     <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

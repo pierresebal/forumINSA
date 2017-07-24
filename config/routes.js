@@ -75,11 +75,6 @@ module.exports.routes = {
         action: 'displayCompanies'
     },
 
-    '/Admin/Sells': {
-        controller: 'AdminController',
-        action: 'displaySells'
-    },
-
     '/Admin/SetDidPay': {
         controller: 'AdminController',
         action: 'setDidPay'
@@ -130,6 +125,8 @@ module.exports.routes = {
         action: 'changeStudentSjd'
     },
 
+    /*-------------  Admin datatables ------------------*/
+
     '/admin/companies': {
         controller: 'AdminController',
         action: 'getCompanies'
@@ -140,15 +137,32 @@ module.exports.routes = {
         action: 'getCompany'
     },
 
+    '/admin/sells': {
+        controller: 'AdminController',
+        action: 'getSells'
+    },
+
+    /*-----------  End Admin datatables ----------------*/
+
     /*-------------  Admin api ------------------*/
     '/admin/api/company': {
         controller: 'AdminController',
         action: 'apiGetAllCompany'
     },
 
-    '/admin/api/company/update':    {
+    'POST /admin/api/company/update':    {
         controller: 'AdminController',
         action: 'apiUpdateCompany'
+    },
+
+    '/admin/api/sells': {
+        controller: 'AdminController',
+        action: 'apiGetAllSells'
+    },
+
+    'POST /admin/api/sells/update':    {
+        controller: 'AdminController',
+        action: 'apiUpdateSells'
     },
 
     /*-----------  End Admin api ----------------*/

@@ -1,0 +1,123 @@
+<section class="content-header">
+    <h1>Gestion des ventes</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Ventes</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Ventes</h3>
+                </div>
+                <div class="box-body">
+                    <%- partial('templateDatatable/Sell.ejs') %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<link href="/dependencies/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
+<link href="/dependencies/toastr/toastr.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/af-2.2.0/b-1.3.1/b-colvis-1.3.1/b-print-1.3.1/cr-1.3.3/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/af-2.2.0/b-1.3.1/b-colvis-1.3.1/b-print-1.3.1/cr-1.3.3/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.js"></script>
+<script src="/dependencies/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="/dependencies/toastr/toastr.min.js"></script>
+<script>
+$(document).ready(function() {
+    var datatable = $('#datatable').DataTable( {
+        responsive: true,
+        ajax: {
+            'url': "<%= sails.getUrlFor('AdminController.apiGetAllSells') %>",
+            'dataSrc': ''
+        },
+        columns: [
+            { 'data': "companyName" },
+            { 'data': "year" },
+            { 'data': "forum",
+                'render' : function(data, type, full, meta) {
+                    if(!data)
+                        return '-';
+                    return full.forumPrice;
+                }
+            },
+            { 'data': "sjd",
+                'render' : function(data, type, full, meta) {
+                    if(!data)
+                        return '-';
+                    return full.sjdPrice;
+                }
+            },
+            { 'data': "premiumPack",
+                'render' : function(data, type, full, meta) {
+                    if(!data)
+                        return '-';
+                    return full.premiumPackPrice;
+                }
+            },
+            { 'data': "moreSjd",
+                'render' : function(data, type, full, meta) {
+                    if(!data)
+                        return '-';
+                    return full.moreSjdPrice;
+                }
+            },
+            { 'data': "moreMeal",
+                'render' : function(data, type, full, meta) {
+                    if(!data)
+                        return '-';
+                    return full.mealPrice;
+                }
+            },
+            { 'data': "billNumber",
+                'render' : function(data, type, full, meta) {
+                    return'<form id="downloadBill" method="post" action="/file/bills/download">' +
+                        '<input type="hidden" name="dl" value="'+ full.year +'" />' +
+                        '<input type="hidden" name="siret" value="'+ full.companySiret +'" />' +
+                        '<input type="submit" class="btn btn-primary" value="n°'+ data +'" />' +
+                        '</form>';
+                }
+            },
+            { 'data': "didPay",
+                'render': function(data)    {
+                    return '<input type="checkbox" name="checkbox-switch" ' + (data ? ' checked>' : '>');
+                }
+            }
+        ],
+        drawCallback: function(settings, json)  {
+            $('input[name="checkbox-switch"]').bootstrapSwitch({
+                onColor: 'success',
+                onText: 'Oui',
+                offColor: 'danger',
+                offText: 'Non',
+                labelWidth: 0,
+                onSwitchChange: function(event, state)  {
+                    var data = datatable.row( $(this).parents('tr') ).data();
+                    $.ajax({
+                        url: '<%= sails.getUrlFor("AdminController.apiUpdateSells") %>',
+                        type: 'POST',
+                        data:   {
+                            id: data.id,
+                            didPay: state
+                        },
+                        success: function(data, status, xhr)    {
+                            toastr.success(data.msg);
+                        },
+                        error: function(jqXHR, status, err) {
+                            if(jqXHR.responseJSON.msg)
+                                toastr.warning(jqXHR.responseJSON.msg);
+                            else
+                                toastr.error(err);
+                        }
+                    });
+                }
+            });
+        }
+
+    } );
+} );
+</script>
