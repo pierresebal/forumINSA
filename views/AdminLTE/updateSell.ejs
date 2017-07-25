@@ -1,0 +1,104 @@
+<section class="content-header">
+    <h1>Gestion des ventes</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Ventes</a></li>
+        <li><a href="#">Modifier vente</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Vente id <%= sell.id %></h3>
+                </div>
+                <form role="form" class="form-horizontal" method="POST" action="/admin/sell/<%= sell.id %>">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="year" class="col-sm-2 control-label">year</label>
+                            <div class="col-sm-10">
+                                <input type="number" name="year" class="form-control" placeholder="Année" value="<%= sell.year%>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="year" class="col-sm-2 control-label">Numéro siret</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="companySiret" class="form-control" placeholder="Numéro siret" value="<%= sell.companySiret%>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="year" class="col-sm-2 control-label">Nom d'entreprise</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="companyName" class="form-control" placeholder="Nom d'entreprise" value="<%= sell.companyName%>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="forum" <% if(sell.forum)  { %> checked <% } %> >
+                                        Forum: <%= sell.forumPrice %>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="sjd" <% if(sell.sjd)  { %> checked <% } %> >
+                                        SJD: <%= sell.sjdPrice %>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="premiumPack" <% if(sell.premiumPack)  { %> checked <% } %> >
+                                        Premium Pack: <%= sell.premiumPackPrice %>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="year" class="col-sm-5 control-label">Nombre de sjd supplémentaire</label>
+                            <div class="col-sm-7">
+                                <input type="number" name="moreSjd" class="form-control" placeholder="nb sup" value="<%= sell.moreSjd %>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="year" class="col-sm-5 control-label">Prix supp par session</label>
+                            <div class="col-sm-7">
+                                <input type="number" name="moreSjdPrice" class="form-control" placeholder="prix" value="<%= sell.moreSjdPrice %>" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="year" class="col-sm-2 control-label">Repas</label>
+                            <div class="col-sm-10">
+                                <input type="number" name="moreMeal" class="form-control" placeholder="nb repas" value="<%= sell.moreMeal %>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mealPrice" class="col-sm-2 control-label">Prix repas</label>
+                            <div class="col-sm-10">
+                                <input type="number" name="mealPrice" class="form-control" placeholder="prix repas" value="<%= sell.mealPrice %>" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mealPrice" class="col-sm-2 control-label">Bill number</label>
+                            <div class="col-sm-10">
+                                <input type="number" name="mealPrice" class="form-control" placeholder="number" value="<%= sell.billNumber %>" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="box-footer">
+                        <button type="reset" class="btn btn-success pull-right">Réinitialiser</button>
+                        <button type="submit" class="btn btn-info pull-right">Sauvegarder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

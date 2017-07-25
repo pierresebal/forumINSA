@@ -8,6 +8,7 @@
 module.exports = {
 
     attributes: {
+
         year: {
             type: 'Integer',
             required: true
@@ -79,5 +80,17 @@ module.exports = {
             type: 'boolean',
             defaultsTo: false
         }
+    },
+
+    // lifecycle callback
+    beforeValidate: (data, next) => {
+        //convert to boolean
+        let booleanAttribute = ['forum', 'sjd', 'premiumPack']
+
+        for(att of booleanAttribute)
+            if(typeof data[att] !== 'boolean')
+                data[att] = data[att] === 'on';
+
+        next();
     }
 };

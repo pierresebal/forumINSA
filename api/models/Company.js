@@ -291,7 +291,8 @@ module.exports = {
         // turn to boolean (need to cleaning this attribute)
         specitalities = ['AE', 'GB', 'GP', 'GMM', 'GM', 'GPE', 'IR', 'GC'];
         for(spe of specitalities)   {
-            data[spe] = data[spe] === 'on';
+            if(typeof data[spe] !== 'boolean')
+                data[spe] = data[spe] === 'on'; // convert to boolean
         }
 
         // check phone number

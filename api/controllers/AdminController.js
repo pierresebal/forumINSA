@@ -560,6 +560,100 @@ module.exports = {
         });
     },
 
+    // TODO not finished yet
+    createSell: function(req, res)    {
+
+        Company.find({select: ['siret']}).exec((err, companies) => {
+
+            if(!req.allParams())
+
+                // TODO view not finished yet
+                res.view('AdminLTE/createSell', {
+                    layout: 'Layout/AdminLTE',
+                    companies: companies,        // only list of siret
+                    errors: false
+                });
+
+            Sells.create(req.allParams()).exec((err, sell) => {
+
+                if(err) {
+                    sails.log.error('[AdminController.createSell] error when create sell :', err);
+
+                    let errors = {};
+                    // get error message from validator. (cf locale/*.json)
+                    for(let attribute of Object.keys(err.invalidAttributes))  {
+                        for(let error of err.Errors[attribute])    {
+                            errors[attribute] = error.message;
+                        }
+                    }
+
+                    return res.view('AdminLTE/createSell', {
+                        layout: 'Layout/AdminLTE',
+                        companies: companies,        // only list of siret
+                        errors: errors
+                    });
+                }
+
+                if(!sell)   {
+                    sails.log.warn('[AdminController.createSell] no sell has been created :');
+                    req.addFlash('danger', 'No sell has been created<br/> may be an error has been occured!');
+                    return res.redirect(sails.getUrlFor('AdminController.getSells'));
+                }
+
+                req.addFlash('success', 'Sell created with bill n° '+ sell.billNumber);
+                return res.redirect(sails.getUrlFor('AdminController.getSells'));
+            });
+        });
+
+    },
+
+    updateSell: function(req, res, cb)  {
+
+        if(!req.param('id'))    {
+            sails.log.error('[AdminController.updateSell] id param not found');
+            return res.serverError();
+
+        }   else if(!req.body)   {
+
+            Sells.findOne({id: req.param('id')}).exec((err, sell) => {
+                if(err) {
+                    return cb(err);
+                }
+
+                return res.view('AdminLTE/updateSell', {
+                    layout: 'Layout/AdminLTE',
+                    sell: sell
+                })
+            });
+
+        }   else    {
+
+            // handle query
+            let params = req.allParams();
+            delete params.id;
+
+            Sells.update({id: req.param('id')}, params).exec((err, sells) => {
+                if(err) {
+                    sails.log.error('[AdminController.updateSell] error when update a sell: ', err);
+                    return cb(err);
+                }
+
+                if(!sells || sells.length === 0)    {
+                    sails.log.warn('[AdminController.updateSell] sell id '+ req.param('id') +' has not been updated, query: ', params);
+                    req.addFlash('warning', 'Sell id '+ req.param('id') +' has not been updated');
+                }   else    {
+                    sails.log.info('[AdminController.updateSell] sell id '+ req.param('id') +' has been updated');
+                    req.addFlash('success', 'Sell id '+ req.param('id') +' has been updated');
+                }
+
+                return res.redirect(sails.getUrlFor('AdminController.getSells'));
+
+            });
+        }
+
+
+    },
+
     //datatables -----------
     getCompanies: function(req, res)    {
         return res.view('AdminLTE/getCompanies',  {

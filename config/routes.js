@@ -75,11 +75,6 @@ module.exports.routes = {
         action: 'displayCompanies'
     },
 
-    '/Admin/SetDidPay': {
-        controller: 'AdminController',
-        action: 'setDidPay'
-    },
-
     '/Admin/ParticipatingStudents': {
         controller: 'AdminController',
         action: 'displayParticipatingStudents'
@@ -140,6 +135,11 @@ module.exports.routes = {
     '/admin/sells': {
         controller: 'AdminController',
         action: 'getSells'
+    },
+
+    '/admin/sell/:id': {
+        controller: 'AdminController',
+        action: 'updateSell'
     },
 
     /*-----------  End Admin datatables ----------------*/
