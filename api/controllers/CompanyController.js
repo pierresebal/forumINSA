@@ -342,7 +342,7 @@ module.exports = {
     },
 
     Profile: function (req, res) {
-        Company.findOne({mailAddress: req.session.user.mailAddress}).exec((err, found) => {
+        Company.findOne({mailAddress: req.session.user.mailAddress}).exec((err, company) => {
             if (err) {
                 return res.view('ErrorPage', {
                     layout: 'layout',
@@ -351,18 +351,25 @@ module.exports = {
                 })
             }
 
-            if (found) {
-                var description = found.description;
-                description = description.replace(/(?:\r\n|\r|\n)/g, '<br />')
-
-                return res.view('CompanySpace/Profile', {
-                    layout: 'layout',
-                    company: found,
-                    canBook: found.canBook()
-                })
-            } else {
+            if(!company)    {
+                sails.log.error('[CompanyController.Profile] no company found with mail ', req.sessions.user.mailAddress);
                 return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Votre compte n'a pas été trouvé."})
             }
+
+            // merge company with the last input value
+            if(req.session.lastInput)   {
+                Object.assign(company, req.session.lastInput);
+                delete req.session.lastInput;
+            }
+            delete req.session.lastInput;
+
+            company.description = company.description.replace(/(?:\r\n|\r|\n)/g, '<br />');
+
+            return res.view('CompanySpace/Profile', {
+                layout: 'layout',
+                company: company,
+                canBook: company.canBook()
+            })
         })
     },
 
@@ -476,15 +483,32 @@ module.exports = {
 
     update: function(req, res, cb)  {
 
-        //TODO: retire forbidden attribute from params (ex: password, id, etc.)
-        Company.update({mailAddress: req.session.user.mailAddress}, req.params.all()).exec((err, updated)  =>  {
+        // retrieve forbidden attribute
+        let params = req.params.all();
+        if(params.password) delete params.password;
+        if(params.type) delete params.type;
+        if(params.active) delete params.active;
+
+        // update
+        Company.update({mailAddress: req.session.user.mailAddress}, params).exec((err, updated)  =>  {
             if(err) {
-                sails.log.error('[CompanyController.update] error when update Company: ');
-                sails.log.error(err);
-                return cb(err);
+                sails.log.error('[CompanyController.update] error when update Company: ', err);
+
+                // get error message from validator. (cf locale/*.json)
+                for(var attribute of Object.keys(err.invalidAttributes))  {
+                    for(var error of err.Errors[attribute])    {
+                        req.addFlash(attribute, error.message);
+                    }
+                }
+
+                req.session.lastInput = params;
+
+                return res.redirect(sails.getUrlFor('CompanyController.Profile'));
             }
 
             if(!updated || updated.length === 0)    {
+                console.log('err: ', err);
+                console.log('updated: ', updated);
                 sails.log.warn('[CompanyController.update] no update has been made for '+ req.session.user.companyName);
                 req.addFlash('global','Aucune modification a été sauvegardée');
 

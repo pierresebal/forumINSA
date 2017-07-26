@@ -322,8 +322,7 @@ module.exports = {
 
         hashPassword(data.password, function(err, encryptedPassword)    {
             if(err)     {
-                sails.log.error('[Company.beforeCreate] error: ');
-                sails.log.error(err);
+                sails.log.error('[Company.beforeCreate] error: ', err);
                 return next(err);
             }
 

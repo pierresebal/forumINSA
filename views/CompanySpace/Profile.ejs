@@ -37,18 +37,43 @@
 
               <label for="firstName">Prénom : <%=company.firstName%></label>
               <input class="pure-input-1" type="text" name="firstName" value="<%=company.firstName%>">
+              <% flash.get('firstName').forEach(function (message) { %>
+              <div class="form-error">
+                  <%= message %>
+              </div>
+              <% }) %>
 
               <label for="lastName">Nom : <%=company.lastName%></label>
               <input class="pure-input-1" type="text" name="lastName" value="<%=company.lastName%>">
+              <% flash.get('lastName').forEach(function (message) { %>
+              <div class="form-error">
+                  <%= message %>
+              </div>
+              <% }) %>
 
               <label for="position">Fonction : <%=company.position%></label>
               <input class="pure-input-1" type="text" name="position" value="<%=company.position%>">
+              <% flash.get('position').forEach(function (message) { %>
+              <div class="form-error">
+                  <%= message %>
+              </div>
+              <% }) %>
 
               <label for="phoneNumber">Téléphone : <%=company.phoneNumber%></label>
               <input class="pure-input-1" type="text" name="phoneNumber" value="<%=company.phoneNumber%>">
+              <% flash.get('phoneNumber').forEach(function (message) { %>
+              <div class="form-error">
+                  <%= message %>
+              </div>
+              <% }) %>
 
               <label for="mailAddress">Mail : <%= company.mailAddress %></label>
               <input class="pure-input-1" type="text" name="mailAddress" value="<%= company.mailAddress %>">
+              <% flash.get('mailAddress').forEach(function (message) { %>
+              <div class="form-error">
+                  <%= message %>
+              </div>
+              <% }) %>
 
               <br/>
               <button style="width: 100%;" type="submit" >Enregistrer</button>
@@ -63,18 +88,43 @@
 
               <label for="bFirstName">Prénom<sup class="text-danger">*</sup> : <%= company.bFirstName %></label>
               <input class="pure-input-1" type="text" name="bFirstName" value="<%= company.bFirstName %>">
+              <% flash.get('bFirstName').forEach(function (message) { %>
+              <div class="form-error">
+                  <%= message %>
+              </div>
+              <% }) %>
 
               <label for="bLastName">Nom<sup class="text-danger">*</sup> : <%= company.bLastName %></label>
               <input class="pure-input-1" type="text" name="bLastName" value="<%= company.bLastName %>">
+              <% flash.get('bLastName').forEach(function (message) { %>
+              <div class="form-error">
+                  <%= message %>
+              </div>
+              <% }) %>
 
               <label for="bPosition">Fonction<sup class="text-danger">*</sup> : <%= company.bPosition%></label>
               <input class="pure-input-1" type="text" name="bPosition" value="<%= company.bPosition %>">
+              <% flash.get('bPosition').forEach(function (message) { %>
+              <div class="form-error">
+                  <%= message %>
+              </div>
+              <% }) %>
 
               <label for="bPhoneNumber">Téléphone<sup class="text-danger">*</sup> : <%= company.bPhoneNumber %></label>
               <input class="pure-input-1" type="text" name="bPhoneNumber" value="<%= company.bPhoneNumber %>">
+              <% flash.get('bPhoneNumber').forEach(function (message) { %>
+              <div class="form-error">
+                  <%= message %>
+              </div>
+              <% }) %>
 
               <label for="bMailAddress">Mail<sup class="text-danger">*</sup> : <%= typeof company.bMailAddress == 'undefined' ? '' : company.bMailAddress %></label>
               <input class="pure-input-1" type="text" name="bMailAddress" value="<%= typeof company.bMailAddress == 'undefined' ? '' : company.bMailAddress %>">
+              <% flash.get('bMailAddress').forEach(function (message) { %>
+              <div class="form-error">
+                  <%= message %>
+              </div>
+              <% }) %>
 
               <br/>
               <button style="width: 100%;" type="submit" >Enregistrer</button>
@@ -138,6 +188,11 @@
         <td>
             <input  type="text" name="companyName" value="<%= company.companyName %>"/>
         </td>
+        <% flash.get('companyName').forEach(function (message) { %>
+        <div class="form-error">
+            <%= message %>
+        </div>
+        <% }) %>
         <td>
             <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
 </button>
@@ -151,6 +206,11 @@
         <form id="companyGroup" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
             <td>
                 <input  type="text" name="companyGroup" value="<%= company.companyGroup %>"/>
+                <% flash.get('companyGroup').forEach(function (message) { %>
+                <div class="form-error">
+                    <%= message %>
+                </div>
+                <% }) %>
             </td>
             <td>
                 <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
@@ -183,7 +243,13 @@
         <td>
             <textarea  type="text" name="description"><%- company.description%></textarea>
             <p><i>*Balises HTML autorisées</i></p>
+            <% flash.get('description').forEach(function (message) { %>
+            <div class="form-error">
+                <%= message %>
+            </div>
+            <% }) %>
         </td>
+
         <td>
             <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i></button>
         </td>
@@ -195,6 +261,11 @@
     <form  id="websiteUrl" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
         <td>
             <input  type="text" name="websiteUrl" value="<%= company.websiteUrl%>"/>
+            <% flash.get('websiteUrl').forEach(function (message) { %>
+            <div class="form-error">
+                <%= message %>
+            </div>
+            <% }) %>
         </td>
         <td>
             <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
@@ -208,6 +279,11 @@
     <form  id="careerUrl" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
         <td>
             <input  type="text" name="careerUrl" value="<%= company.careerUrl%>"/>
+            <% flash.get('careerUrl').forEach(function (message) { %>
+            <div class="form-error">
+                <%= message %>
+            </div>
+            <% }) %>
         </td>
         <td>
         <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
@@ -228,10 +304,35 @@
       <form  id="postAddress" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
           <td>
         <input  type="text" name="road" value="<%= company.road %>" placeholder="N° et rue"/><br />
+              <% flash.get('road').forEach(function (message) { %>
+              <div class="form-error">
+                  <%= message %>
+              </div>
+              <% }) %>
         <input  type="text" name="complementaryInformation" placeholder="Complément"/><br>
+              <% flash.get('complementaryInformation').forEach(function (message) { %>
+              <div class="form-error">
+                  <%= message %>
+              </div>
+              <% }) %>
         <input  type="text" name="postCode" value="<%= company.postCode %>" placeholder="Code postal"/><br />
+              <% flash.get('postCode').forEach(function (message) { %>
+              <div class="form-error">
+                  <%= message %>
+              </div>
+              <% }) %>
         <input  type="text" name="city" value="<%= company.city %>" placeholder="Ville"/><br />
+              <% flash.get('city').forEach(function (message) { %>
+              <div class="form-error">
+                  <%= message %>
+              </div>
+              <% }) %>
         <input  type="text" name="country" value="<%= company.country %>" placeholder="Pays"/>
+              <% flash.get('country').forEach(function (message) { %>
+              <div class="form-error">
+                  <%= message %>
+              </div>
+              <% }) %>
     </td>
     <td>
         <button  type="submit" ><i class="fa fa-check" aria-hidden="true"></i>
