@@ -607,7 +607,7 @@ module.exports = {
 
     },
 
-    updateSell: function(req, res, cb)  {
+    updateSell: function(req, res, next)  {
 
         if(!req.param('id'))    {
             sails.log.error('[AdminController.updateSell] id param not found');
@@ -615,15 +615,17 @@ module.exports = {
 
         }   else if(!req.body)   {
 
+            // get params
             Sells.findOne({id: req.param('id')}).exec((err, sell) => {
                 if(err) {
-                    return cb(err);
+                    sails.log.error('[AdminController.updateSell] no sell found with id: '+ req.param('id'));
+                    return next(err);
                 }
 
                 return res.view('AdminLTE/updateSell', {
                     layout: 'Layout/AdminLTE',
                     sell: sell
-                })
+                });
             });
 
         }   else    {
@@ -635,18 +637,40 @@ module.exports = {
             Sells.update({id: req.param('id')}, params).exec((err, sells) => {
                 if(err) {
                     sails.log.error('[AdminController.updateSell] error when update a sell: ', err);
-                    return cb(err);
-                }
+                    return next(err);
 
-                if(!sells || sells.length === 0)    {
+                }   else if(!sells || sells.length === 0)    {
+
                     sails.log.warn('[AdminController.updateSell] sell id '+ req.param('id') +' has not been updated, query: ', params);
                     req.addFlash('warning', 'Sell id '+ req.param('id') +' has not been updated');
                 }   else    {
-                    sails.log.info('[AdminController.updateSell] sell id '+ req.param('id') +' has been updated');
-                    req.addFlash('success', 'Sell id '+ req.param('id') +' has been updated');
-                }
 
-                return res.redirect(sails.getUrlFor('AdminController.getSells'));
+                    // update pdf
+                    Company.findOne({siret: sells[0].companySiret}).exec((err, company) => {
+                        if(err) {
+                            sails.log.error('[AdminController.updateSell] error when find company: ', err);
+                            return next(err);
+                        }
+
+                        PdfService.createFromEjs('Template/facture_template', {
+                                sell: sells[0],
+                                date: new Date(),
+                                company: company
+                            }, 'files/factures/modified-' + new Date().getFullYear() + '/' + company.siret + '.pdf',
+                            (err, pdf) =>   {
+
+                                if(err) {
+                                    sails.log.error('[AdminController.updateSell] error when find company: ', err);
+                                    return next(err);
+                                }
+
+                                sails.log.info('[AdminController.updateSell] sell id '+ req.param('id') +' has been updated');
+                                req.addFlash('success', 'Sell id '+ req.param('id') +' has been updated');
+                                return res.redirect(sails.getUrlFor('AdminController.getSells'));
+                            })
+                    });
+
+                }
 
             });
         }
@@ -664,7 +688,7 @@ module.exports = {
     getSells: function(req, res)    {
         return res.view('AdminLTE/getSells',  {
             layout: 'Layout/AdminLTE'
-        })
+        });
     },
 
     // api request give json response ---------
@@ -718,6 +742,9 @@ module.exports = {
     },
 
     apiUpdateSells: function(req, res)  {
+
+        // warning: this function won't modify our pdf file
+
         let id = req.param('id');
         let params = req.allParams();
         delete params.id;
