@@ -656,7 +656,7 @@ module.exports = {
                                 sell: sells[0],
                                 date: new Date(),
                                 company: company
-                            }, 'files/factures/modified-' + new Date().getFullYear() + '/' + company.siret + '.pdf',
+                            }, 'files/factures/' + new Date().getFullYear() + '/' + company.siret + '.pdf',
                             (err, pdf) =>   {
 
                                 if(err) {
