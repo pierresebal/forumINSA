@@ -645,18 +645,20 @@ module.exports = {
                     req.addFlash('warning', 'Sell id '+ req.param('id') +' has not been updated');
                 }   else    {
 
+                    let updatedSell = sells[0];
+
                     // update pdf
-                    Company.findOne({siret: sells[0].companySiret}).exec((err, company) => {
+                    Company.findOne({siret: updatedSell.companySiret}).exec((err, company) => {
                         if(err) {
                             sails.log.error('[AdminController.updateSell] error when find company: ', err);
                             return next(err);
                         }
 
                         PdfService.createFromEjs('Template/facture_template', {
-                                sell: sells[0],
+                                sell: updatedSell,
                                 date: new Date(),
                                 company: company
-                            }, 'files/factures/' + new Date().getFullYear() + '/' + company.siret + '.pdf',
+                            }, 'files/factures/' + updatedSell.year + '/' + company.siret + '.pdf',
                             (err, pdf) =>   {
 
                                 if(err) {
@@ -667,7 +669,7 @@ module.exports = {
                                 sails.log.info('[AdminController.updateSell] sell id '+ req.param('id') +' has been updated');
                                 req.addFlash('success', 'Sell id '+ req.param('id') +' has been updated');
                                 return res.redirect(sails.getUrlFor('AdminController.getSells'));
-                            })
+                            });
                     });
 
                 }
