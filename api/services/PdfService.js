@@ -41,7 +41,7 @@ module.exports ={
                 }
 
                 return callback(false, pdf);
-            })
+            });
         });
     }
 

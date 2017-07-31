@@ -142,6 +142,11 @@ module.exports.routes = {
         action: 'updateSell'
     },
 
+    '/admin/sjds' : {
+        controller: 'AdminController',
+        action: 'getSjds'
+    },
+
     /*-----------  End Admin datatables ----------------*/
 
     /*-------------  Admin api ------------------*/
@@ -163,6 +168,11 @@ module.exports.routes = {
     'POST /admin/api/sells/update':    {
         controller: 'AdminController',
         action: 'apiUpdateSells'
+    },
+
+    '/admin/api/sjd': {
+        controller: 'AdminController',
+        action: 'apiGetAllSjds'
     },
 
     /*-----------  End Admin api ----------------*/

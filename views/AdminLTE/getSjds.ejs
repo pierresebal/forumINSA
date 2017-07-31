@@ -1,0 +1,50 @@
+<section class="content-header">
+    <h1>Gestion des ventes</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Ventes</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Ventes</h3>
+                </div>
+                <div class="box-body">
+                    <%- partial('templateDatatable/Sjd.ejs') %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<link href="/dependencies/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/af-2.2.0/b-1.3.1/b-colvis-1.3.1/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/af-2.2.0/b-1.3.1/b-colvis-1.3.1/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.js"></script>
+
+<script src="/dependencies/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script>
+$(document).ready(function() {
+    var datatable = $('#datatable').DataTable( {
+        responsive: true,
+        ajax: {
+            'url': "<%= sails.getUrlFor('AdminController.apiGetAllSjds') %>",
+            'dataSrc': ''
+        },
+        columns: [
+            { 'data': 'year' },
+            { 'data': 'companyName',
+                'render': function(data, type, full, meta)    {
+                    return '<a class="text-green" href="/admin/company/' + full.companySiret +'">' + data + '</a>';
+                }
+            },
+            { 'data': 'sessionNb' },
+            { 'data': 'specialities' }
+        ]
+
+    } );
+} );
+</script>

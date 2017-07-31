@@ -16,7 +16,7 @@ module.exports = {
       type: 'string'
     },
     companySiret: {
-      type: 'string',
+      type: 'numeric',
       required: true
     },
     sessionNb: {

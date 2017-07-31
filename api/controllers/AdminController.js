@@ -693,6 +693,13 @@ module.exports = {
         });
     },
 
+    // working on it
+    getSjds: function(req, res)  {
+        return res.view('AdminLTE/getSjds',  {
+            layout: 'Layout/AdminLTE'
+        });
+    },
+
     // api request give json response ---------
 
     apiGetAllCompany: function(req, res)  {
@@ -766,6 +773,18 @@ module.exports = {
             sails.log.info('[AdminController.apiUpdateSells] updated Sells number '+ sells[0].billNumber);
             return res.json(200, {msg: 'Sell ' + sells[0].billNumber + ' has been updated successfully!'});
 
+        });
+    },
+
+    apiGetAllSjds: function(req, res, next) {
+        const actualYear = new Date().getFullYear();
+        Sjd.find({year: actualYear}).exec((err, sjds) => {
+            if(err) {
+                sails.log.error('[AdminController.apiGetAllSells] error when find all sells :', err);
+                return res.json(500, err);
+            }
+
+            return res.json(200, sjds);
         });
     },
 
