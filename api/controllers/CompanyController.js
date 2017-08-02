@@ -323,8 +323,8 @@ module.exports = {
                     SendMail.sendEmail({
                         destAddress: updated[0].mailAddress,
                         objectS: 'FIE: Réinitialisation du mot de passe',
-                        messageS: "Bonjour,\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + newPass + "\nPour vous connecter, cliquez ici: " + sails.config.configFIE.FIEdomainName + "/CompanySpace/Connexion\nA très bientot !\nL'équipe du Forum INSA Entreprises.",
-                        messageHTML: "<p>Bonjour,</p><p>Vous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:" + newPass + "</p><p>Pour vous connecter:<a href='" + sails.config.configFIE.FIEdomainName + "'/CompanySpace/Connexion'>Cliquez ICI</a>.</p><p>A très bientot !</p><p>L'équipe du Forum INSA Entreprises.</p>",
+                        messageS: "Bonjour,\n\nVous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:\n" + newPass + "\nPour vous connecter, cliquez ici: " + sails.config.configFIE.FIEdomainName + "/Company/AuthCompany\nA très bientot !\nL'équipe du Forum INSA Entreprises.",
+                        messageHTML: "<p>Bonjour,</p><p>Vous venez de réinitialiser votre mot de passe, votre nouveau mot de passe est le suivant:" + newPass + "</p><p>Pour vous connecter:<a href='" + sails.config.configFIE.FIEdomainName + "'/Company/AuthCompany'>Cliquez ICI</a>.</p><p>A très bientot !</p><p>L'équipe du Forum INSA Entreprises.</p>",
                         attachments: null
                     });
 

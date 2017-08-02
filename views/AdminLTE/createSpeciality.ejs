@@ -1,0 +1,47 @@
+<section class="content-header">
+    <h1>Gestion des spécialités</h1>
+    <ol class="breadcrumb">
+        <li><a href="<%= sails.getUrlFor('AdminController.home') %>"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<%= sails.getUrlFor('AdminController.getSpecialities') %>">Spécialité</a></li>
+        <li><a href="#">Création de spécialité</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Nouvelle spécialité</h3>
+                </div>
+                <form role="form" class="form-horizontal" method="POST" action="<%= sails.getUrlFor('AdminController.createSpeciality') %>">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="year" class="col-sm-2 control-label">Abbréviation</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="abbreviation" class="form-control" placeholder="abbréviation" <% if(speciality.abbreviation) { %> value="<%= speciality.abbreviation %>" <% } %>>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="year" class="col-sm-2 control-label">Nom entier</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" class="form-control" placeholder="ex: Maths" <% if(speciality.name) { %> value="<%= speciality.name %>" <% } %> >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="year" class="col-sm-2 control-label">Url</label>
+                            <div class="col-sm-10">
+                                <input type="url" name="insaUrl" class="form-control" placeholder="http://insa.etc.fr" <% if(speciality.insaUrl) { %> value="<%= speciality.insaUrl%>" <% } %> >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="reset" class="btn btn-success pull-left">Réinitialiser</button>
+                        <button type="submit" class="btn btn-info pull-right">Sauvegarder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

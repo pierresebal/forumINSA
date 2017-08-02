@@ -680,6 +680,84 @@ module.exports = {
 
     },
 
+    updateSpeciality: function(req, res, next) {
+        if(!req.body)   {
+            Speciality.findOne({abbreviation: req.param('abbreviation')}).exec((err, speciality) => {
+                if(err) {
+                    sails.log.error('[AdminController.updateSpeciality] error when find speciality: ', err);
+                    return next(err);
+                }
+
+                if(!speciality) {
+                    sails.log.error('[AdminController.updateSpeciality] no speciality found ');
+                    return res.notFound();
+                }
+
+                return res.view('AdminLTE/updateSpeciality', {
+                   layout: 'Layout/AdminLTE',
+                   speciality: speciality
+                });
+            });
+        } else {
+            Speciality.update({abbreviation: req.param('abbreviation')}, req.body).exec((err, updated) => {
+                if(err) {
+                    sails.log.error('[AdminController.updateSpeciality] error when update speciality: ', err);
+                    return next(err);
+                }
+
+                if(!updated || updated.length === 0) {
+                    sails.log.error('[AdminController.updateSpeciality] no update for speciality ');
+                    req.addFlash('warning', 'Speciality '+ updated[0] + ' is not updated');
+                    return res.serverError();
+                }
+
+                req.addFlash('success', 'Speciality '+ updated[0] +  'has been updated');
+                return res.redirect(sails.getUrlFor('AdminController.getSpecialities'));
+            });
+        }
+
+
+    },
+
+    createSpeciality: function(req, res, next) {
+        if(!req.body)   {
+            return res.view('AdminLTE/createSpeciality', {
+                layout: 'Layout/AdminLTE',
+                speciality: {}
+            });
+        } else {
+            Speciality.create(req.body).exec((err, speciality) => {
+                if(err) {
+
+                    sails.log.error('[CompanyController.update] error when update Company: ', err);
+
+                    // get error message from validator. (cf locale/*.json)
+                    for(var attribute of Object.keys(err.invalidAttributes))  {
+                        for(var error of err.Errors[attribute])    {
+                            req.addFlash(attribute, error.message);
+                        }
+                    }
+
+                    return res.view('AdminLTE/createSpeciality', {
+                        layout: 'Layout/AdminLTE',
+                        speciality: req.body
+                    });
+                }
+
+                if(!speciality || speciality.length === 0) {
+                    req.addFlash('warning', 'No speciality has been created');
+                    return res.view('AdminLTE/createSpeciality', {
+                        layout: 'Layout/AdminLTE',
+                        speciality: req.body
+                    });
+                }
+
+                req.addFlash('success', 'A new speciality created: ' + speciality.abbreviation);
+                return res.redirect(sails.getUrlFor('AdminController.getSpecialities'));
+            })
+        }
+    },
+
     //datatables -----------
     getCompanies: function(req, res)    {
         return res.view('AdminLTE/getCompanies',  {
@@ -693,9 +771,14 @@ module.exports = {
         });
     },
 
-    // working on it
     getSjds: function(req, res)  {
         return res.view('AdminLTE/getSjds',  {
+            layout: 'Layout/AdminLTE'
+        });
+    },
+
+    getSpecialities: function(req, res, next)   {
+        return res.view('AdminLTE/getSpecialities',  {
             layout: 'Layout/AdminLTE'
         });
     },
@@ -776,7 +859,7 @@ module.exports = {
         });
     },
 
-    apiGetAllSjds: function(req, res, next) {
+    apiGetAllSjds: function(req, res) {
         const actualYear = new Date().getFullYear();
         Sjd.find({year: actualYear}).exec((err, sjds) => {
             if(err) {
@@ -785,6 +868,33 @@ module.exports = {
             }
 
             return res.json(200, sjds);
+        });
+    },
+
+    apiGetAllSpecialities: function(req, res) {
+        Speciality.find().exec((err, specialities) => {
+            if(err) {
+                sails.log.error('[AdminController.apiGetAllSpecialities] error when find all Speciality :', err);
+                return res.json(500, err);
+            }
+
+            return res.json(200, specialities);
+        });
+    },
+
+    apiDeleteSpeciality: function(req, res) {
+        Speciality.destroy(req.allParams()).exec((err, speciality) => {
+            if(err) {
+                sails.log.error('[AdminController.apiDeleteSpeciality] error when delete speciality ', err);
+                return res.json(500, err);
+            }
+
+            if(!speciality || speciality.length === 0) {
+                sails.log.error('[AdminController.apiDeleteSpeciality] No speciality deleted ');
+                return res.json(500, 'No speciality deleted!');
+            }
+
+            return res.json(200, {msg: 'Speciality ' + speciality.abbreviation + ' has been deleted!'});
         });
     },
 

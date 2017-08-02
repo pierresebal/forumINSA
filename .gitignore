@@ -16,6 +16,5 @@ logs
 .idea/*
 .vscode             # Visual Studio
 .idea/
-api/models/Speciality.js
 app.log
 assets/images/form_choixdecours.pdf

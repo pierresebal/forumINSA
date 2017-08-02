@@ -147,6 +147,21 @@ module.exports.routes = {
         action: 'getSjds'
     },
 
+    '/admin/specialities' : {
+        controller: 'AdminController',
+        action: 'getSpecialities'
+    },
+
+    '/admin/speciality/:abbreviation': {
+        controller: 'AdminController',
+        action: 'updateSpeciality'
+    },
+
+    '/admin/specility/create': {
+        controller: 'AdminController',
+        action: 'createSpeciality'
+    },
+
     /*-----------  End Admin datatables ----------------*/
 
     /*-------------  Admin api ------------------*/
@@ -173,6 +188,16 @@ module.exports.routes = {
     '/admin/api/sjd': {
         controller: 'AdminController',
         action: 'apiGetAllSjds'
+    },
+
+    '/admin/api/speciality': {
+        controller: 'AdminController',
+        action: 'apiGetAllSpecialities'
+    },
+
+    'POST /admin/api/speciality/delete': {
+        controller: 'AdminController',
+        action: 'apiDeleteSpeciality'
     },
 
     /*-----------  End Admin api ----------------*/
