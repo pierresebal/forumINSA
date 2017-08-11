@@ -785,6 +785,12 @@ module.exports = {
         });
     },
 
+    getOffers: function(req, res, next)   {
+        return res.view('AdminLTE/getOffers',  {
+            layout: 'Layout/AdminLTE'
+        });
+    },
+
     // api request give json response ---------
 
     apiGetAllCompany: function(req, res)  {
@@ -897,6 +903,17 @@ module.exports = {
             }
 
             return res.json(200, {msg: 'Speciality ' + speciality.abbreviation + ' has been deleted!'});
+        });
+    },
+
+    apiGetAllOffers: function(req, res) {
+        Offer.find().exec((err, offers) => {
+            if(err) {
+                sails.log.error('[AdminController.apiGetAllOffers] error when find all Offers :', err);
+                return res.json(500, err);
+            }
+
+            return res.json(200, offers);
         });
     },
 

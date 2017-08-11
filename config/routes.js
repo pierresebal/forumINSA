@@ -162,6 +162,11 @@ module.exports.routes = {
         action: 'createSpeciality'
     },
 
+    '/admin/offers': {
+        controller: 'AdminController',
+        action: 'getOffers'
+    },
+
     /*-----------  End Admin datatables ----------------*/
 
     /*-------------  Admin api ------------------*/
@@ -200,6 +205,10 @@ module.exports.routes = {
         action: 'apiDeleteSpeciality'
     },
 
+    '/admin/api/offers': {
+        controller: 'AdminController',
+        action: 'apiGetAllOffers'
+    },
     /*-----------  End Admin api ----------------*/
 
     '/Track': {
