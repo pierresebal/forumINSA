@@ -66,7 +66,7 @@ module.exports = function (grunt) {
                 expand: true
             },  {
                 cwd: './node_modules/ionicons/dist',
-                src: ['**/*'],
+                src: ['**/*', '!**/*.scss'],
                 dest: '.tmp/public/dependencies/ionicons',
                 flattern: true,
                 expand: true

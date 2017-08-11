@@ -26,8 +26,17 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MODULES</li>
 
-            <li class="active"><a href="/AdminLTE"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+            <li class="active"><a href="<%= sails.getUrlFor('AdminController.home') %>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             <li><a href="/Admin/YearSettings"><i class="fa fa-cogs"></i> <span>Paramètres généraux</span></a></li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-code"></i> <span>Paramètres de contenu</span>
+                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="<%= sails.getUrlFor('AdminController.getSpecialities') %>"><i class="fa fa-certificate"></i> Spécialités</a></li>
+                </ul>
+            </li>
             <li><a href="<%= sails.getUrlFor('AdminController.getCompanies') %>"><i class="fa fa-industry"></i> <span>Entreprises inscrites</span></a></li>
             <li><a href="/Admin/RegisteredStudents"><i class="fa fa-users"></i> <span>Etudiants inscrits</span></a></li>
             <li><a href="<%= sails.getUrlFor('AdminController.getSells') %>"><i class="fa fa-money"></i> <span>Ventes</span></a></li>
@@ -37,9 +46,7 @@
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-assistive-listening-systems"></i> <span>Vigipirate</span>
-                    <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="/Admin/ParticipatingStudents"><i class="fa fa-circle-o"></i> Etudiants</a></li>

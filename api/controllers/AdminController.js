@@ -699,6 +699,8 @@ module.exports = {
                 });
             });
         } else {
+            console.log(req.body);
+            console.log(req.param('abbreviation'));
             Speciality.update({abbreviation: req.param('abbreviation')}, req.body).exec((err, updated) => {
                 if(err) {
                     sails.log.error('[AdminController.updateSpeciality] error when update speciality: ', err);
