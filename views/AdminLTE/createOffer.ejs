@@ -1,0 +1,49 @@
+<section class="content-header">
+    <h1>Paramètre interne</h1>
+    <ol class="breadcrumb">
+        <li><a href="<%= sails.getUrlFor('AdminController.home') %>"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<%= sails.getUrlFor('AdminController.getOffers') %>">Propositions</a></li>
+        <li><a href="#">Création de proposition</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Nouvelle proposition</h3>
+                </div>
+                <form role="form" class="form-horizontal" method="POST" action="<%= sails.getUrlFor('AdminController.createOffer') %>">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">Nom</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" class="form-control" placeholder="Ex: pack, premium" <% if(offer.name) { %> value="<%= offer.name %>" <% } %>>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label">Prix</label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="price" <% if(offer.price) { %> value="<%= offer.price %>" <% } %> >
+                                    <span class="input-group-addon">€</span>
+                                </div></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label">Description</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="description" class="form-control" placeholder="Ex: <strong>D</strong>escription" <% if(offer.description) { %> value="<%= offer.description%>" <% } %> >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="reset" class="btn btn-success pull-left">Réinitialiser</button>
+                        <button type="submit" class="btn btn-info pull-right">Sauvegarder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

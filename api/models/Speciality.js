@@ -28,7 +28,7 @@ module.exports = {
     // instantiate a blank object
     instantiate: (params) => {
         return Object.assign({
-            abbreviation, name
+            abbreviation: '', name: ''
         }, params);
     }
 };

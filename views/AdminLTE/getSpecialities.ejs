@@ -57,7 +57,9 @@ $(document).ready(function() {
 
     $(document).on('click', 'button.delete', function() {
 
-        let data = datatable.row( $(this).parents('tr') ).data();
+        let row = datatable.row( $(this).parents('tr') );
+        let data = row.data();
+
         $.ajax({
             url: '<%= sails.getUrlFor("AdminController.apiDeleteSpeciality") %>',
             type: 'POST',
@@ -66,7 +68,7 @@ $(document).ready(function() {
             },
             success: function(data, status, xhr) {
                 toastr.success(data.msg);
-                datatable.row($(this).parents('tr') ).remove().draw();
+                row.remove().draw();
             },
             error: function(jqXHR, status, err) {
                 if(jqXHR.responseJSON.msg)

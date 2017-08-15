@@ -13,7 +13,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Propositions</h3>
                     <div class="box-tools">
-                        <a href="<%= sails.getUrlFor('AdminController.createSpeciality') %>" class="btn btn-primary"><i class="fa fa-plus"></i> Créer un nouveau</a>
+                        <a href="<%= sails.getUrlFor('AdminController.createOffer') %>" class="btn btn-primary"><i class="fa fa-plus"></i> Créer un nouveau</a>
                     </div>
                 </div>
                 <div class="box-body">
@@ -39,13 +39,25 @@ $(document).ready(function() {
         },
         columns: [
             { 'data': "name" },
-            { 'data': "price" },
+            { 'data': "price" ,
+                render: function(data) {
+                    return data + ' €';
+                }
+            },
             { 'data': "description" },
-            { 'data': "available" },
-            { 'data': "allow" },
+            { 'data': "available",
+                'render': function(data, type, full, meta) {
+                    return data ? 'oui' : 'non';
+                }
+            },
+            { 'data': "allow",
+                'render': function(data) {
+                    return data? data.toString() : '[ ]' ;
+                }
+            },
             { 'data': null,
                 'render': function(data, type, full, meta)  {
-                    return '<a href="/admin/speciality/'+ full.abbreviation +'" class="btn btn-info update"><i class="fa fa-cog"></i> Modifier</a>' +
+                    return '<a href="/admin/offer/'+ full.id +'" class="btn btn-info update"><i class="fa fa-cog"></i> Modifier</a>' +
                         '<button class="btn btn-danger delete"><i class="fa fa-trash"></i> Supprimer</button>';
                 }
             }
@@ -55,16 +67,19 @@ $(document).ready(function() {
 
     $(document).on('click', 'button.delete', function() {
 
-        let data = datatable.row( $(this).parents('tr') ).data();
+        let row = datatable.row( $(this).parents('tr') );
+        let data = row.data();
+
         $.ajax({
-            url: '<%= sails.getUrlFor("AdminController.apiDeleteSpeciality") %>',
+            url: '<%= sails.getUrlFor("AdminController.apiDeleteOffer") %>',
             type: 'POST',
             data: {
-                abbreviation: data.abbreviation
+                id: data.id
             },
             success: function(data, status, xhr) {
                 toastr.success(data.msg);
-                datatable.row($(this).parents('tr') ).remove().draw();
+                console.log(row.data());
+                row.remove().draw();
             },
             error: function(jqXHR, status, err) {
                 if(jqXHR.responseJSON.msg)

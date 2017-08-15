@@ -35,15 +35,11 @@ module.exports = {
 
     displayYearSettings: function (req, res) {
 
-        console.log('displayYearSettings');
-
         GeneralSettings.findOrCreate({id: 1}, {id: 1}).exec((err, found) => {
             if (err) {
                 console.log(err);
                 return err
             }
-
-            console.log('general settings: ', found);
 
             var year = new Date().getFullYear();
             YearSettings.findOrCreate({year: year}, {year: year}).exec((err, record) => {
@@ -51,8 +47,6 @@ module.exports = {
                     console.log(err);
                     return err
                 }
-
-                console.log('year settings: ', record);
 
                 return res.view('Admin/YearSettings', {
                     layout: 'layout',
@@ -560,53 +554,6 @@ module.exports = {
         });
     },
 
-    // TODO not finished yet
-    createSell: function(req, res)    {
-
-        Company.find({select: ['siret']}).exec((err, companies) => {
-
-            if(!req.allParams())
-
-                // TODO view not finished yet
-                res.view('AdminLTE/createSell', {
-                    layout: 'Layout/AdminLTE',
-                    companies: companies,        // only list of siret
-                    errors: false
-                });
-
-            Sells.create(req.allParams()).exec((err, sell) => {
-
-                if(err) {
-                    sails.log.error('[AdminController.createSell] error when create sell :', err);
-
-                    let errors = {};
-                    // get error message from validator. (cf locale/*.json)
-                    for(let attribute of Object.keys(err.invalidAttributes))  {
-                        for(let error of err.Errors[attribute])    {
-                            errors[attribute] = error.message;
-                        }
-                    }
-
-                    return res.view('AdminLTE/createSell', {
-                        layout: 'Layout/AdminLTE',
-                        companies: companies,        // only list of siret
-                        errors: errors
-                    });
-                }
-
-                if(!sell)   {
-                    sails.log.warn('[AdminController.createSell] no sell has been created :');
-                    req.addFlash('danger', 'No sell has been created<br/> may be an error has been occured!');
-                    return res.redirect(sails.getUrlFor('AdminController.getSells'));
-                }
-
-                req.addFlash('success', 'Sell created with bill n° '+ sell.billNumber);
-                return res.redirect(sails.getUrlFor('AdminController.getSells'));
-            });
-        });
-
-    },
-
     updateSell: function(req, res, next)  {
 
         if(!req.param('id'))    {
@@ -699,8 +646,6 @@ module.exports = {
                 });
             });
         } else {
-            console.log(req.body);
-            console.log(req.param('abbreviation'));
             Speciality.update({abbreviation: req.param('abbreviation')}, req.body).exec((err, updated) => {
                 if(err) {
                     sails.log.error('[AdminController.updateSpeciality] error when update speciality: ', err);
@@ -731,7 +676,7 @@ module.exports = {
             Speciality.create(req.body).exec((err, speciality) => {
                 if(err) {
 
-                    sails.log.error('[CompanyController.update] error when update Company: ', err);
+                    sails.log.error('[CompanyController.createSpeciality] error when create a speciality: ', err);
 
                     // get error message from validator. (cf locale/*.json)
                     for(var attribute of Object.keys(err.invalidAttributes))  {
@@ -757,6 +702,82 @@ module.exports = {
                 req.addFlash('success', 'A new speciality created: ' + speciality.abbreviation);
                 return res.redirect(sails.getUrlFor('AdminController.getSpecialities'));
             })
+        }
+    },
+
+    createOffer: function(req, res, next) {
+        if(!req.body)   {
+            return res.view('AdminLTE/createOffer', {
+                layout: 'Layout/AdminLTE',
+                offer: {}
+            });
+        } else {
+            Offer.create(req.body).exec((err, offer) => {
+                if(err) {
+
+                    sails.log.error('[CompanyController.createOffer] error when create an offer: ', err);
+
+                    // get error message from validator. (cf locale/*.json)
+                    for(var attribute of Object.keys(err.invalidAttributes))  {
+                        for(var error of err.Errors[attribute])    {
+                            req.addFlash(attribute, error.message);
+                        }
+                    }
+
+                    return res.view('AdminLTE/createOffer', {
+                        layout: 'Layout/AdminLTE',
+                        offer: req.body
+                    });
+                }
+
+                if(!offer || offer.length === 0) {
+                    req.addFlash('warning', 'No offer has been created');
+                    return res.view('AdminLTE/createOffer', {
+                        layout: 'Layout/AdminLTE',
+                        offer: req.body
+                    });
+                }
+
+                req.addFlash('success', 'A new offer created: ' + offer.name);
+                return res.redirect(sails.getUrlFor('AdminController.getOffers'));
+            })
+        }
+    },
+
+    updateOffer: function(req, res, next) {
+        if(!req.body)   {
+            Offer.findOne({id: req.param('id')}).exec((err, offer) => {
+                if(err) {
+                    sails.log.error('[AdminController.updateOffer] error when find offer: ', err);
+                    return next(err);
+                }
+
+                if(!offer) {
+                    sails.log.error('[AdminController.updateOffer] no offer found ');
+                    return res.notFound();
+                }
+
+                return res.view('AdminLTE/updateOffer', {
+                    layout: 'Layout/AdminLTE',
+                    offer: offer
+                });
+            });
+        } else {
+            Offer.update({abbreviation: req.param('id')}, req.body).exec((err, updated) => {
+                if(err) {
+                    sails.log.error('[AdminController.updateOffer] error when update an offer: ', err);
+                    return next(err);
+                }
+
+                if(!updated || updated.length === 0) {
+                    sails.log.error('[AdminController.updateOffer] no update for offer ');
+                    req.addFlash('warning', 'Offer '+ updated[0] + ' is not updated');
+                    return res.serverError();
+                }
+
+                req.addFlash('success', 'Offer '+ updated[0] +  'has been updated');
+                return res.redirect(sails.getUrlFor('AdminController.updateOffer'));
+            });
         }
     },
 
@@ -914,6 +935,46 @@ module.exports = {
             }
 
             return res.json(200, offers);
+        });
+    },
+
+    apiUpdateOffer: function(req, res)  {
+
+        let id = req.param('id');
+        let params = req.allParams();
+        delete params.id;
+
+        Offer.update({id: id}, params).exec((err, updated)  =>  {
+
+            if(err) {
+                sails.log.error('[AdminController.apiUpdateOffer] error when update offer: ' + err);
+                return res.json(500, err);
+            }
+
+            if(!updated || updated.length === 0) {
+                sails.log.warn('[AdminController.apiUpdateOffer] no offer has been updated, querry: ', req.allParams());
+                return res.json(500, {msg: 'no offer updated'});
+            }
+
+            sails.log.info('[AdminController.apiUpdateOffer] updated offer '+ updated[0].name);
+            return res.json(200, {msg: 'Sell ' + updated[0].name + ' has been updated successfully!'});
+
+        });
+    },
+
+    apiDeleteOffer: function(req, res) {
+        Offer.destroy(req.allParams()).exec((err, offer) => {
+            if(err) {
+                sails.log.error('[AdminController.apiDeleteOffer] error when delete an offer ', err);
+                return res.json(500, err);
+            }
+
+            if(!offer || offer.length === 0) {
+                sails.log.error('[AdminController.apiDeleteOffer] No offer deleted ');
+                return res.json(500, 'No offer deleted!');
+            }
+
+            return res.json(200, {msg: 'Offer ' + offer[0].name + ' has been deleted!'});
         });
     },
 

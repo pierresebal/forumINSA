@@ -167,6 +167,16 @@ module.exports.routes = {
         action: 'getOffers'
     },
 
+    '/admin/offer/create': {
+        controller: 'AdminController',
+        action: 'createOffer'
+    },
+
+    '/admin/offer/:id': {
+        controller: 'AdminController',
+        action: 'updateOffer'
+    },
+
     /*-----------  End Admin datatables ----------------*/
 
     /*-------------  Admin api ------------------*/
@@ -209,6 +219,17 @@ module.exports.routes = {
         controller: 'AdminController',
         action: 'apiGetAllOffers'
     },
+
+    'POST /admin/api/offer/update': {
+        controller: 'AdminController',
+        action: 'apiUpdateOffer'
+    },
+
+    'POST /admin/api/offer/delete': {
+        controller: 'AdminController',
+        action: 'apiDeleteOffer'
+    },
+
     /*-----------  End Admin api ----------------*/
 
     '/Track': {

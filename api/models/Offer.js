@@ -1,5 +1,5 @@
 /**
- * Product.js
+ * Offer.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -7,13 +7,9 @@
 
 module.exports = {
 
-    attributes: {
+    schema:true,
 
-        id: {
-            type: 'integer',
-            autoIncrement: true,
-            primaryKey: true
-        },
+    attributes: {
 
         name: {
             type: 'string'
@@ -24,29 +20,17 @@ module.exports = {
         },
 
         description: {
-            type: 'mediumtext',
-            defaultTo: ''
+            type: 'mediumtext'
         },
 
-        available: {
-            type: 'boolean',
-            defaultTo: false
-        },
-
-        /**
-         * array of typeCompany who can see and buy this product. This should be worked as a filter
-         */
         allow: {
             type: 'array',
             defaultTo: []
         },
 
-        // @Override
-        toJson: function()  {
-            let clone = this.toObject();
-            if(clone.description.length > 21)
-                clone.description = clone.description.substr(0,20) + ' ...';
-            return clone;
+        available: {
+            type: 'boolean',
+            defaultTo: false
         }
     }
 };
