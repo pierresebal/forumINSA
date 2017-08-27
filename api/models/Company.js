@@ -243,6 +243,10 @@ module.exports = {
             defaultsTo: false
         },
 
+        specialities: {
+            collection: 'Speciality'
+        },
+
         /**
          * Check password
          * @param password
@@ -306,11 +310,6 @@ module.exports = {
         if (data.careerUrl && data.careerUrl.charAt(4) !== ':' && data.careerUrl.charAt(5) !== ':' && data.careerUrl !== '')
             data.careerUrl = 'http://' + data.careerUrl;
 
-        // Création du lien d'activation (sha1 sur chrono courrant du serveur)
-        var sha1 = require('sha1');
-        var date = new Date();
-
-        data.activationUrl = sha1(date.getTime());
         next();
     },
 
@@ -319,6 +318,12 @@ module.exports = {
         // encrypt password (must be done at the end)
         if(!data.password || data.password !== data.confirmpassword)
             return next({err: 'Password doesn\'t match password confirmation.'});
+
+        // Création du lien d'activation (sha1 sur chrono courrant du serveur)
+        var sha1 = require('sha1');
+        var date = new Date();
+
+        data.activationUrl = sha1(date.getTime());
 
         hashPassword(data.password, function(err, encryptedPassword)    {
             if(err)     {

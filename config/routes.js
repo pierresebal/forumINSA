@@ -129,7 +129,7 @@ module.exports.routes = {
 
     '/admin/company/:siret': {
         controller: 'AdminController',
-        action: 'getCompany'
+        action: 'updateCompany'
     },
 
     '/admin/sells': {
@@ -175,6 +175,16 @@ module.exports.routes = {
     '/admin/offer/:id': {
         controller: 'AdminController',
         action: 'updateOffer'
+    },
+
+    '/admin/companystatus': {
+        controller: 'AdminController',
+        action: 'getCompanyStatus'
+    },
+
+    '/admin/companystatus/create': {
+        controller: 'AdminController',
+        action: 'createCompanyStatus'
     },
 
     /*-----------  End Admin datatables ----------------*/
@@ -228,6 +238,16 @@ module.exports.routes = {
     'POST /admin/api/offer/delete': {
         controller: 'AdminController',
         action: 'apiDeleteOffer'
+    },
+
+    '/admin/api/companystatus': {
+        controller: 'AdminController',
+        action: 'apiGetAllCompanyStatus'
+    },
+
+    'POST /admin/api/companystatus/delete': {
+        controller: 'AdminController',
+        action: 'apiDeleteCompanyStatus'
     },
 
     /*-----------  End Admin api ----------------*/

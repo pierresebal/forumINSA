@@ -144,7 +144,7 @@
 
     <h2>Intérêts</h2>
     <fieldset style="border:0px">
-      <form  id="interests" method="post" action="/Company/setAUserInfo">
+      <form  id="interests" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
         <table>
         <input type="hidden" name="data" value="z"/>
           <tr>

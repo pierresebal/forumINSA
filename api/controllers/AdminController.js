@@ -554,6 +554,55 @@ module.exports = {
         });
     },
 
+    updateCompany: function(req, res, next) {
+        if(!req.param('siret')) {
+            sails.log.error('[AdminController.updateCompany] siret param not found');
+            return res.serverError();
+
+        } else if(!req.body)   {
+            Company.findOne({siret: req.param('siret')}).exec((err, company) => {
+                if (err) {
+                    sails.log.error('[AdminController.updateCompany] an error occured when find a company: ',err);
+                    return next(err);
+                }
+
+                if (!company) {
+                    sails.log.error('[AdminController.updateCompany] No company found with query: ', req.allParams());
+                    return res.notFound();
+                }
+
+                return res.view('AdminLTE/updateCompany', {
+                    layout: 'Layout/AdminLTE',
+                    company: company
+                });
+            });
+        } else {
+
+            // handle query
+            let params = req.allParams();
+            delete params.siret;
+
+            Company.update({siret: req.param('siret') }, params).exec((err, updated) => {
+
+                if(err) {
+                    sails.log.error('[AdminController.updateCompany] err occured when update company: '+ req.param('siret') + ': ', err);
+                    return next(err);
+                }
+
+                else if(!updated || updated.length === 0)    {
+                    sails.log.warn('[AdminController.updateCompany] company siret '+ req.param('siret') +' has not been updated, query: ', params);
+                    req.addFlash('warning', 'Company dont siret '+ req.param('siret') +' has not been updated');
+                    return res.redirect(sails.getUrlFor('AdminController.getCompanies'));
+                }   else {
+
+                    sails.log.info('[AdminController.updateCompany] company '+ updated[0].companyName +' has been updated');
+                    req.addFlash('success', 'Company '+ updated[0].companyName +' has been updated');
+                    return res.redirect(sails.getUrlFor('AdminController.getCompanies'));
+                }
+            });
+        }
+    },
+
     updateSell: function(req, res, next)  {
 
         if(!req.param('id'))    {
@@ -567,6 +616,11 @@ module.exports = {
                 if(err) {
                     sails.log.error('[AdminController.updateSell] no sell found with id: '+ req.param('id'));
                     return next(err);
+                }
+
+                if (!sell) {
+                    sails.log.error('[AdminController.updateSell] No company found with query: ', req.allParams());
+                    return res.notFound();
                 }
 
                 return res.view('AdminLTE/updateSell', {
@@ -590,6 +644,7 @@ module.exports = {
 
                     sails.log.warn('[AdminController.updateSell] sell id '+ req.param('id') +' has not been updated, query: ', params);
                     req.addFlash('warning', 'Sell id '+ req.param('id') +' has not been updated');
+                    return res.redirect(sails.getUrlFor('AdminController.updateSell'));
                 }   else    {
 
                     let updatedSell = sells[0];
@@ -781,6 +836,29 @@ module.exports = {
         }
     },
 
+    createCompanyStatus: function(req, res, next) {
+        if(!req.body)   {
+            return res.redirect(sails.getUrlFor('AdminController.getCompanyStatus'));
+        }   else    {
+            CompanyStatus.create(req.body).exec((err, status) => {
+                if(err) {
+                    sails.log.error('[CompanyController.createCompanyStatus] error when create an offer: ', err);
+                    req.addFlash('danger', 'An error occured : '+err);
+                    return res.redirect(sails.getUrlFor('AdminController.getCompanyStatus'));
+                }
+
+                if(!status || status.length === 0) {
+                    req.addFlash('warning', 'No status has been created');
+                    return res.redirect(sails.getUrlFor('AdminController.getCompanyStatus'));
+                }
+
+                req.addFlash('success', 'A new status created: ' + status.status);
+                return res.redirect(sails.getUrlFor('AdminController.getCompanyStatus'));
+            })
+        }
+
+    },
+
     //datatables -----------
     getCompanies: function(req, res)    {
         return res.view('AdminLTE/getCompanies',  {
@@ -811,6 +889,13 @@ module.exports = {
             layout: 'Layout/AdminLTE'
         });
     },
+
+    getCompanyStatus: function(req, res, next)   {
+        return res.view('AdminLTE/getCompanyStatus',  {
+            layout: 'Layout/AdminLTE'
+        });
+    },
+
 
     // api request give json response ---------
 
@@ -975,6 +1060,33 @@ module.exports = {
             }
 
             return res.json(200, {msg: 'Offer ' + offer[0].name + ' has been deleted!'});
+        });
+    },
+
+    apiGetAllCompanyStatus: function(req, res) {
+        CompanyStatus.find().exec((err, status) => {
+            if(err) {
+                sails.log.error('[AdminController.apiGetAllOffers] error when find all Offers :', err);
+                return res.json(500, err);
+            }
+
+            return res.json(200, status);
+        });
+    },
+
+    apiDeleteCompanyStatus: function(req, res) {
+        CompanyStatus.destroy(req.allParams()).exec((err, status) => {
+            if(err) {
+                sails.log.error('[AdminController.apiDeleteCompanyStatus] error when delete a status ', err);
+                return res.json(500, err);
+            }
+
+            if(!status || status.length === 0) {
+                sails.log.error('[AdminController.apiDeleteCompanyStatus] No status deleted ');
+                return res.json(500, 'No status deleted!');
+            }
+
+            return res.json(200, {msg: 'Offer ' + status[0].status + ' has been deleted!'});
         });
     },
 

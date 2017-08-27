@@ -1,0 +1,81 @@
+<section class="content-header">
+    <h1>Gestion des Propositions</h1>
+    <ol class="breadcrumb">
+        <li><a href="<%= sails.getUrlFor('AdminController.home') %>"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">CompanyStatus</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Propositions</h3>
+                    <div class="box-tools">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-companyStatus"><i class="fa fa-plus"></i> Créer un nouveau</button>
+                    </div>
+                </div>
+
+                <%- partial('partial/modalCompanyStatus.ejs') %>
+
+                <div class="box-body">
+                    <%- partial('templateDatatable/CompanyStatus.ejs') %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<link href="/dependencies/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/af-2.2.0/b-1.3.1/b-colvis-1.3.1/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/af-2.2.0/b-1.3.1/b-colvis-1.3.1/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.js"></script>
+
+<script src="/dependencies/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script>
+$(document).ready(function() {
+    let datatable = $('#datatable').DataTable( {
+        responsive: true,
+        ajax: {
+            'url': "<%= sails.getUrlFor('AdminController.apiGetAllCompanyStatus') %>",
+            'dataSrc': ''
+        },
+        columns: [
+            { 'data': "status" },
+            { 'data': null,
+                'render': function(data, type, full, meta)  {
+                    return '<button class="btn btn-danger delete"><i class="fa fa-trash"></i> Supprimer</button>';
+                }
+            }
+        ]
+
+    } );
+
+    $(document).on('click', 'button.delete', function() {
+
+        let row = datatable.row( $(this).parents('tr') );
+        let data = row.data();
+
+        $.ajax({
+            url: '<%= sails.getUrlFor("AdminController.apiDeleteCompanyStatus") %>',
+            type: 'POST',
+            data: {
+                status: data.status
+            },
+            success: function(data, status, xhr) {
+                toastr.success(data.msg);
+                console.log(row.data());
+                row.remove().draw();
+            },
+            error: function(jqXHR, status, err) {
+                if(jqXHR.responseJSON.msg)
+                    toastr.warning(jqXHR.responseJSON.msg);
+                else
+                    toastr.error(err);
+            }
+        })
+    });
+
+
+} );
+</script>
