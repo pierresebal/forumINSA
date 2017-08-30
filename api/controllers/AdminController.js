@@ -573,7 +573,8 @@ module.exports = {
 
                 return res.view('AdminLTE/updateCompany', {
                     layout: 'Layout/AdminLTE',
-                    company: company
+                    company: company,
+                    typesCompany: Company.definition.type.enum
                 });
             });
         } else {

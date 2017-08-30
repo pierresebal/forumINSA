@@ -20,16 +20,29 @@
 
                     <p class="text-muted text-center"><%= company.type %></p>
 
+                    <form class="form-horizontal" action="/admin/company/<%= company.siret %>" method="post">
+                        <div class="form-group">
+                            <label for="type" class="col-sm-3 control-label">Status</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" name="type">
+                                    <% typesCompany.forEach(function(type) { %>
+                                    <option value="<%= type %>" <%= type == company.type ? 'selected' : '' %>><%= type %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                        </div>
+
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
-                            <b>Featured 1 (in dev)</b> <a class="pull-right">1,322</a>
+                            <b>Numéro siret</b> <a class="pull-right"><%= company.siret %></a>
                         </li>
                         <li class="list-group-item">
-                            <b>Featured 2 (in dev)</b> <a class="pull-right">543</a>
+                            <b>Groupe</b> <a class="pull-right"><%= company.companyGroup %></a>
                         </li>
                     </ul>
 
-                    <a href="#" class="btn btn-primary btn-block"><b>Activer compte (in dev)</b></a>
+                    <button type="submit" class="btn btn-info btn-block"><b>Sauvegarder </b></button>
+                    </form>
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -45,24 +58,6 @@
                 <!-- form start -->
                 <form role="form" method="post" action="/admin/company/<%= company.siret %>" >
                 <div class="box-body">
-                    <strong><i class="fa fa-book margin-r-5"></i> Numéro siret</strong>
-                    <p class="text-muted">
-                        <%= company.siret %>
-                    </p>
-                    <hr>
-
-                    <strong><i class="fa fa-book margin-r-5"></i> Groupe</strong>
-                    <p class="text-muted">
-                        <%= company.companyGroup %>
-                    </p>
-                    <hr>
-
-                    <strong><i class="fa fa-book margin-r-5"></i> Description</strong>
-                    <p class="text-muted">
-                        <%= company.description %>
-                    </p>
-                    <hr>
-
                     <strong><i class="fa fa-book margin-r-5"></i> Site internet</strong>
                     <p class="text-muted">
                         <a href="<%= company.websiteUrl %>" target="_blank"><%= company.websiteUrl %></a>
@@ -127,7 +122,7 @@
                             <div class="form-group">
                                 <label for="lastName" class="col-sm-3 control-label">Téléphone</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="phoneNumber" class="form-control" placeholder="Position dans l'entreprise" value="<%= company.phoneNumber %>">
+                                    <input type="text" name="phoneNumber" class="form-control" placeholder="+339999999" value="<%= company.phoneNumber %>">
                                 </div>
                             </div>
 
@@ -174,7 +169,7 @@
                             <div class="form-group">
                                 <label for="lastName" class="col-sm-3 control-label">Téléphone</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="bPhoneNumber" class="form-control" placeholder="Position dans l'entreprise" value="<%= company.bPhoneNumber %>">
+                                    <input type="text" name="bPhoneNumber" class="form-control" placeholder="+339999999" value="<%= company.bPhoneNumber %>">
                                 </div>
                             </div>
 
@@ -195,7 +190,19 @@
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="ventes">
-
+                        <table id="datatable" class="table table-bordered table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>Année</th>
+                                <th>Forum</th>
+                                <th>SJD</th>
+                                <th>Pack premium</th>
+                                <th>SJD session sup.</th>
+                                <th>Repas</th>
+                                <th>N° facture</th>
+                            </tr>
+                            </thead>
+                        </table>
                     </div>
                     <!-- /.tab-pane -->
 
