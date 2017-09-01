@@ -181,8 +181,7 @@ module.exports = {
         },
 
         activationUrl: {
-            type: 'string',
-            required: true
+            type: 'string'
         },
 
         type:   {

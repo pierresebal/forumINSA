@@ -293,11 +293,6 @@ module.exports.routes = {
      *                                                                          *
      ***************************************************************************/
 
-    '/Connection': {
-        view: 'Connection_Password/Connection',
-        locals: {layout: 'layout', title: 'Connexion - FIE'}
-    },
-
     '/INSA': {
         view: 'Insa/InsaDescription',
         locals: {layout: 'layout', title: 'INSA - FIE'}

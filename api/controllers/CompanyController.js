@@ -31,6 +31,7 @@ module.exports = {
         Company.create(req.params.all()).exec((err, company) =>  {
            if(err)  {
 
+               sails.log.error('[AdminController.create] error when create a company ', err);
                req.addFlash('error', true);
 
                // get error message from validator. (cf locale/*.json)
@@ -246,8 +247,8 @@ module.exports = {
                 Company.update({
                     mailAddress: req.param('email'),
                     activationUrl: req.param('url'),
-                    active: 0
-                }, {active: 1}).exec((err, updated) => {
+                    active: false
+                }, {active: true}).exec((err, updated) => {
                     if (err) { // If we hit an error during update
                         console.log('Unable to activate user...')
                         return res.view('ErrorPage', {

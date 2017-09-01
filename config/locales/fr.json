@@ -17,6 +17,7 @@
 	"company.siret.required": "Veuillez nous renseigner votre numéro de siret",
 	"company.siret.minLength": "Numéro de siret doit être 14 caractères",
 	"company.siret.maxLength": "Numéro de siret doit être 14 caractères",
+	"company.siret.unique": "Ce siret a été inscrit, avez-vous oublié le mot de passe?",
 	"company.companyName.required": "Ce champs est obligatoire",
 	"company.companyName.minLength": "Le nom d'entreprise doit être au moins 1 caractère",
 	"company.companyName.maxLength": "Le nom d'entreprise doit être au plus 50 caractères",
