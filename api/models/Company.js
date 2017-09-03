@@ -190,6 +190,10 @@ module.exports = {
             required: true
         },
 
+        status: {
+            model: 'CompanyStatus'
+        },
+
         firstConnectionDone: {
             type: 'boolean',
             defaultsTo: false

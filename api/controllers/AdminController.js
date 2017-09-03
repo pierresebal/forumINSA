@@ -517,7 +517,7 @@ module.exports = {
             })
         })
     },
-
+/*
     getCompany: function(req, res)  {
         // find company by id and show it
 
@@ -553,6 +553,12 @@ module.exports = {
             })
         });
     },
+*/
+    getCompany: function(req, res, next) {
+          Company.find(req.params.all()).populate('status').exec((err, company) => {
+             return res.json(200, company);
+          });
+    },
 
     updateCompany: function(req, res, next) {
         if(!req.param('siret')) {
@@ -560,7 +566,7 @@ module.exports = {
             return res.serverError();
 
         } else if(!req.body)   {
-            Company.findOne({siret: req.param('siret')}).exec((err, company) => {
+            Company.findOne({siret: req.param('siret')}).populate('status').exec((err, company) => {
                 if (err) {
                     sails.log.error('[AdminController.updateCompany] an error occured when find a company: ',err);
                     return next(err);
@@ -571,16 +577,28 @@ module.exports = {
                     return res.notFound();
                 }
 
-                return res.view('AdminLTE/updateCompany', {
-                    layout: 'Layout/AdminLTE',
-                    company: company,
-                    typesCompany: Company.definition.type.enum
+                CompanyStatus.find().exec((err, types) => {
+                    if(err) {
+                        sails.log.error('[AdminController.updateCompany] error when find all status: ', err);
+                        return res.serverError();
+
+                    } else    {
+
+                        return res.view('AdminLTE/updateCompany', {
+                            layout: 'Layout/AdminLTE',
+                            company: company,
+                            typesCompany: types
+                        });
+                    }
+
+
                 });
             });
         } else {
 
             // handle query
             let params = req.allParams();
+            console.log(params);
             delete params.siret;
 
             Company.update({siret: req.param('siret') }, params).exec((err, updated) => {

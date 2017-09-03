@@ -24,9 +24,9 @@
                         <div class="form-group">
                             <label for="type" class="col-sm-3 control-label">Status</label>
                             <div class="col-sm-9">
-                                <select class="form-control" name="type">
+                                <select class="form-control" name="status">
                                     <% typesCompany.forEach(function(type) { %>
-                                    <option value="<%= type %>" <%= type == company.type ? 'selected' : '' %>><%= type %></option>
+                                    <option value="<%= type.id %>" <%= company.status && type.status == company.status ? 'selected' : '' %>><%= type.status %></option>
                                     <% }); %>
                                 </select>
                             </div>

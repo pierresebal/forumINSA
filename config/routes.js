@@ -187,6 +187,12 @@ module.exports.routes = {
         action: 'createCompanyStatus'
     },
 
+    //todo test
+    '/admin/get/company/:siret': {
+        controller: 'AdminController',
+        action: 'getCompany'
+    },
+
     /*-----------  End Admin datatables ----------------*/
 
     /*-------------  Admin api ------------------*/

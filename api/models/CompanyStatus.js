@@ -16,6 +16,11 @@ module.exports = {
             unique: true,
             required: true,
             primaryKey: true
+        },
+
+        company: {
+            collection: 'Company',
+            via: 'status'
         }
     }
 };
