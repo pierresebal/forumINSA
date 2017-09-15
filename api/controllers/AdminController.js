@@ -554,11 +554,6 @@ module.exports = {
         });
     },
 */
-    getCompany: function(req, res, next) {
-          Company.find(req.params.all()).populate('status').exec((err, company) => {
-             return res.json(200, company);
-          });
-    },
 
     updateCompany: function(req, res, next) {
         if(!req.param('siret')) {
@@ -566,6 +561,8 @@ module.exports = {
             return res.serverError();
 
         } else if(!req.body)   {
+
+            // as no query has been sent, display the update with information
             Company.findOne({siret: req.param('siret')}).populate('status').exec((err, company) => {
                 if (err) {
                     sails.log.error('[AdminController.updateCompany] an error occured when find a company: ',err);
@@ -577,7 +574,7 @@ module.exports = {
                     return res.notFound();
                 }
 
-                CompanyStatus.find().exec((err, types) => {
+                CompanyStatus.find().exec((err, status) => {
                     if(err) {
                         sails.log.error('[AdminController.updateCompany] error when find all status: ', err);
                         return res.serverError();
@@ -587,7 +584,8 @@ module.exports = {
                         return res.view('AdminLTE/updateCompany', {
                             layout: 'Layout/AdminLTE',
                             company: company,
-                            typesCompany: types
+                            typesCompany: Company.definition.type.enum,
+                            allStatus: status
                         });
                     }
 
@@ -871,7 +869,7 @@ module.exports = {
                     return res.redirect(sails.getUrlFor('AdminController.getCompanyStatus'));
                 }
 
-                req.addFlash('success', 'A new status created: ' + status.status);
+                req.addFlash('success', 'A new status created: ' + status.name);
                 return res.redirect(sails.getUrlFor('AdminController.getCompanyStatus'));
             })
         }
@@ -1105,7 +1103,7 @@ module.exports = {
                 return res.json(500, 'No status deleted!');
             }
 
-            return res.json(200, {msg: 'Offer ' + status[0].status + ' has been deleted!'});
+            return res.json(200, {msg: 'Offer ' + status[0].name + ' has been deleted!'});
         });
     },
 

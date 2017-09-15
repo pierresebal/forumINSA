@@ -41,7 +41,7 @@ $(document).ready(function() {
             'dataSrc': ''
         },
         columns: [
-            { 'data': "status" },
+            { 'data': "name" },
             { 'data': null,
                 'render': function(data, type, full, meta)  {
                     return '<button class="btn btn-danger delete"><i class="fa fa-trash"></i> Supprimer</button>';
@@ -60,7 +60,7 @@ $(document).ready(function() {
             url: '<%= sails.getUrlFor("AdminController.apiDeleteCompanyStatus") %>',
             type: 'POST',
             data: {
-                status: data.status
+                name: data.name
             },
             success: function(data, status, xhr) {
                 toastr.success(data.msg);

@@ -11,16 +11,11 @@ module.exports = {
 
     attributes: {
 
-        status: {
+        name: {
             type: 'string',
             unique: true,
             required: true,
             primaryKey: true
-        },
-
-        company: {
-            collection: 'Company',
-            via: 'status'
         }
     }
 };
