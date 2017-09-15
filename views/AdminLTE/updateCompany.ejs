@@ -27,7 +27,7 @@
                             <div class="col-sm-9">
                                 <select class="form-control" name="type">
                                     <% typesCompany.forEach(function(type) { %>
-                                    <option value="<%= type.status %>" <%=  type.status == company.type ? 'selected' : '' %>><%= type.status %></option>
+                                    <option value="<%= type %>" <%=  type == company.type ? 'selected' : '' %>><%= type %></option>
                                     <% }); %>
                                 </select>
                             </div>
@@ -38,7 +38,7 @@
                             <div class="col-sm-9">
                                 <select class="form-control" name="status">
                                     <% allStatus.forEach(function(status) { %>
-                                    <option value="<%= status.name %>" <%=  status.name == company.status.name ? 'selected' : '' %>><%= status.name %></option>
+                                    <option value="<%= status.name %>" <%= company.status && status.name == company.status.name ? 'selected' : '' %>><%= status.name %></option>
                                     <% }); %>
                                 </select>
                             </div>
