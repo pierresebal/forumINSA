@@ -17,7 +17,7 @@ module.exports = {
 
         return res.view('CompanySpace/Inscription', {
             layout: 'layout',
-            typesCompany: ``,
+            typesCompany: Company.definition.type.enum,
             company: company
         });
     },
