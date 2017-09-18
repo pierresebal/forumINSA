@@ -207,14 +207,28 @@
                             <thead>
                             <tr>
                                 <th>Année</th>
+                                <th>Facture</th>
                                 <th>Forum</th>
                                 <th>SJD</th>
                                 <th>Pack premium</th>
                                 <th>SJD session sup.</th>
                                 <th>Repas</th>
-                                <th>N° facture</th>
                             </tr>
                             </thead>
+                            <tbody>
+                            <%sells.forEach(function(sell) {%>
+                            <tr>
+                                <td><%=sell.year%></td>
+                                <td><a href='/admin/sell/<%= sell.id %>'><%=sell.billNumber%></a></td>
+                                <td><%= sell.forum? sell.forumPrice + ' €': '-' %></td>
+                                <td><%= sell.sjd? sell.sjdPrice + ' €': '-' %></td>
+                                <td><%= sell.premiumPack? sell.premiumPackPrice + ' €': '-' %></td>
+                                <td><%= sell.moreSjd > 0 ? sell.moreSjd + ' x ' + sell.moreSjdPrice + ' €': '-' %></td>
+                                <td><%= sell.moreMeal > 0 ? sell.moreMeal + ' x ' + sell.mealPrice + ' €': '-' %></td>
+
+                            </tr>
+                            <% }) %>
+                            </tbody>
                         </table>
                     </div>
                     <!-- /.tab-pane -->
@@ -228,3 +242,11 @@
         <!-- /.col -->
     </div>
 </section>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/af-2.2.0/b-1.3.1/b-colvis-1.3.1/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/af-2.2.0/b-1.3.1/b-colvis-1.3.1/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        let datatable = $('#datatable').DataTable();
+
+    })
+</script>

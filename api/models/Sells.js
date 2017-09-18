@@ -14,7 +14,7 @@ module.exports = {
             required: true
         },
         companySiret: {
-            type: 'string',
+            type: 'numeric',
             required: true
         },
         companyName: {
@@ -65,6 +65,7 @@ module.exports = {
         },
         moreMeal: {
             type: 'integer',
+            defaultsTo: 0,
             defaultsTo: 0,
             required: true
         },

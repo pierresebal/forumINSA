@@ -579,15 +579,22 @@ module.exports = {
                         sails.log.error('[AdminController.updateCompany] error when find all status: ', err);
                         return res.serverError();
 
-                    } else    {
+                    }
+
+                    Sells.find({companySiret: company.siret}).exec((err, sells) => {
+                        if(err) {
+                            sails.log.error('[AdminController.updateCompany] error when find sells for company ' + company.companyName + ': ', err);
+                            return res.serverError();
+                        }
 
                         return res.view('AdminLTE/updateCompany', {
                             layout: 'Layout/AdminLTE',
                             company: company,
                             typesCompany: Company.definition.type.enum,
+                            sells: sells,
                             allStatus: status
                         });
-                    }
+                    });
 
 
                 });
@@ -666,6 +673,10 @@ module.exports = {
 
                     let updatedSell = sells[0];
 
+                    // sell updated
+                    sails.log.info('[AdminController.updateSell] sell id '+ req.param('id') +' has been updated');
+                    req.addFlash('success', 'Sell id '+ req.param('id') +' has been updated');
+
                     // update pdf
                     Company.findOne({siret: updatedSell.companySiret}).exec((err, company) => {
                         if(err) {
@@ -685,9 +696,41 @@ module.exports = {
                                     return next(err);
                                 }
 
-                                sails.log.info('[AdminController.updateSell] sell id '+ req.param('id') +' has been updated');
-                                req.addFlash('success', 'Sell id '+ req.param('id') +' has been updated');
-                                return res.redirect(sails.getUrlFor('AdminController.getSells'));
+                                let year = new Date().getFullYear();
+
+                                Sjd.update({year: year, companySiret: updatedSell.companySiret}, {sessionNb: 2 + updatedSell.moreSjd}).exec((err, updatedSjd) => {
+                                    if(err) {
+                                        sails.log.error('[AdminController.updateSell] error when update sjd: ', err);
+                                        req.addFlash('danger', 'Error occured when update sjd');
+                                        return next(err);
+                                    }
+
+                                    if(!updatedSjd || updatedSjd.length === 0) {
+
+                                        Sjd.create({year: year, companySiret: updatedSell.companySiret, companyName: updatedSell.companyName, sessionNb: 2 + updatedSell.moreSjd}).exec((err, newSjd) => {
+
+                                            if(err) {
+                                                sails.log.error('[AdminController.updateSell] error when create a new sjd: ', err);
+                                                req.addFlash('danger', 'Error occured when create sjd');
+                                                return next(err);
+                                            }
+
+                                            sails.log.info('[AdminController.updateSell] a new Sjd session has been created');
+                                            req.addFlash('success', 'A new sjd session has been created');
+
+                                            return res.redirect(sails.getUrlFor('AdminController.getSells'));
+                                        });
+
+                                    } else {
+
+                                        sails.log.info('[AdminController.updateSell] sjd '+ updatedSjd[0].companyName+ ' for '+year+' has been updated');
+                                        req.addFlash('success', 'sjd '+updatedSjd[0].companyName+ ' for '+year+' has been updated');
+
+                                        return res.redirect(sails.getUrlFor('AdminController.getSells'));
+                                    }
+
+                                });
+
                             });
                     });
 
