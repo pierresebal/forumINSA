@@ -255,17 +255,6 @@ module.exports = {
         })
     },
 
-    displayParticipatingCompanies: function (req, res) {
-        Company.find().exec((err, companies) => {
-            if (err) {
-                console.log('error : ' + err)
-                return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Les entreprises ne sont pas récupérés'})
-            }
-
-            return res.view('Admin/ParticipatingCompanies', {layout: 'layout', companies: companies})
-        })
-    },
-
     displaySjdParticipants: function (req, res) {
         const actualYear = new Date().getFullYear()
         Sjd.find({year: actualYear}).exec((err, founds) => {

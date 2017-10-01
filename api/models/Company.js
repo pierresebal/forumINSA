@@ -115,8 +115,7 @@ module.exports = {
         },
 
         description: {
-            type: 'string',
-            maxLength: 500,
+            type: 'mediumtext',
             defaultsTo: 'Pas de description fournie.'
         },
 

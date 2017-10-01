@@ -100,11 +100,6 @@ module.exports.routes = {
         action: 'addCompaniesToSjd'
     },
 
-    '/Admin/ParticipatingCompanies': {
-        controller: 'AdminController',
-        action: 'displayParticipatingCompanies'
-    },
-
     '/Admin/CheckList': {
         controller: 'AdminController',
         action: 'checkTasks'
