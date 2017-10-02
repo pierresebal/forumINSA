@@ -104,6 +104,7 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#contact" data-toggle="tab">Contact</a></li>
+                    <li><a href="#profile" data-toggle="tab">Profil</a></li>
                     <li><a href="#facturation" data-toggle="tab">Facturation</a></li>
                     <li><a href="#ventes" data-toggle="tab">Ventes</a></li>
                 </ul>
@@ -143,6 +144,26 @@
                                 <label for="lastName" class="col-sm-3 control-label">Mail</label>
                                 <div class="col-sm-9">
                                     <input type="email" name="mailAddress" class="form-control" placeholder="contact@entreprise.com" value="<%= company.mailAddress %>">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="profile">
+                        <form class="form-horizontal" method="post" action="/admin/company/<%= company.siret %>">
+
+
+                            <div class="form-group">
+                                <label for="lastName" class="col-sm-3 control-label">Description</label>
+                                <div class="col-sm-9">
+                                    <textarea name="description" rows="10" class="form-control"><%= company.description %></textarea>
                                 </div>
                             </div>
 

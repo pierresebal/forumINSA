@@ -592,7 +592,6 @@ module.exports = {
 
             // handle query
             let params = req.allParams();
-            console.log(params);
             delete params.siret;
 
             Company.update({siret: req.param('siret') }, params).exec((err, updated) => {
