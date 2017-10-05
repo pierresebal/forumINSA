@@ -84,7 +84,6 @@ module.exports = {
         //Check for email and password in params. If none: send to signin view
         if(!req.param('login') || !req.param('password')) {
 
-            console.log(errMessage);
             errMessage['login'] = 'Veuillez remplir email et le mot de passe';
             return res.view('Connection_Password/Connection', {
                 layout: 'layout',
