@@ -387,7 +387,7 @@ module.exports = {
 
                 const index = session.specialities.findIndex((spe) => spe.name === req.param('speciality'))
 
-                if (session.specialities[index].students.length >= 8) {
+                if (session.specialities[index].students.length >= 10) {
                     return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Créneau complet', ErrorDesc: 'Le créneau sélectionné est déjà complet. Nous vous invitons à en choisir un autre.'})
                 } else {
                     var newSpecialities = session.specialities

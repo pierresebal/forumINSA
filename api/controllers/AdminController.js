@@ -316,7 +316,7 @@ module.exports = {
                 layout: 'layout',
                 sessions: sessions,
                 specialities: specialities,
-                maxCompanies: 8
+                maxCompanies: 10
             })
         })
     },
@@ -342,7 +342,7 @@ module.exports = {
 
             var newCompanies = []
 
-            for (var i = 0; i < 8; i++) {
+            for (var i = 0; i < 10; i++) {
                 if (req.param(i)) {
                     newCompanies.push(req.param(i))
                 }

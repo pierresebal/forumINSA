@@ -18,7 +18,7 @@
       <b>Session <%=session.sessionId%> (<%=session.hours%>)</b><br />
 
       <% session.specialities.forEach((speciality) => {
-        var places = 8 - speciality.students.length
+        var places = 10 - speciality.students.length
         var first
       %>
       <% if (speciality.companies.length != 0) { %>
