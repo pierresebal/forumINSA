@@ -17,4 +17,5 @@ logs
 .vscode             # Visual Studio
 .idea/
 app.log
+files/phpCAS/phpCAS.log
 assets/images/form_choixdecours.pdf

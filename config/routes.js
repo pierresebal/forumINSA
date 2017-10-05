@@ -339,6 +339,11 @@ module.exports.routes = {
         locals: {layout: 'layout', title: 'Espace Perso - FIE'}
     },
 
+    '/Student/testphp': {
+        controller: 'StudentController',
+        action: 'testPhp'
+    },
+
     '/Student/Specialities': {
         controller: 'StudentController',
         action: 'getSpecialities'

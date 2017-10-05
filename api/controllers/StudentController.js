@@ -63,6 +63,23 @@ module.exports = {
         })
     },
 
+    testPhp: (req, res, next) => {
+        var execPhp = require('exec-php');
+
+        execPhp('../../files/phpCAS/login.php', function(error, php, outprint){
+
+            console.log('outprint = ', outprint);
+
+            /*
+            php.loginCAS('toto', function(err, result, output, printed){
+                console.log('output = ', output);
+                console.log('printed = ', printed);
+            });*/
+        });
+
+        return res.json(200);
+    },
+
     /* ---------------------------------------------------------------------------------------------- */
     // StudentLogout: set session var as an unauthentificated user
     StudentLogout: function (req, res) {

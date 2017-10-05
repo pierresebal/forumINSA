@@ -19,7 +19,7 @@
     <label>Adresse mail </label> : <input type="text" name="mailAddress" placeholder="<%= mailAddress %>"/>
     <br />
     <label>Année</label> :
-    <select name="year">
+    <select name="year" required>
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
@@ -29,7 +29,7 @@
     <br />
 
     <label>Spécialité</label> :
-    <select name="speciality">
+    <select name="speciality" required>
       <% specialities.forEach(function(aSpeciality) { %>
       <option value="<%= aSpeciality %>"><%= aSpeciality%></option>
       <% }); %>
