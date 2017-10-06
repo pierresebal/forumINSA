@@ -80,6 +80,11 @@ module.exports.routes = {
         action: 'displayParticipatingStudents'
     },
 
+    '/Admin/ParticipatingCompanies': {
+        controller: 'AdminController',
+        action: 'displayParticipatingCompanies'
+    },
+
     '/Admin/SjdSessionInitialization': {
         controller: 'AdminController',
         action: 'initializeSjdSessions'
