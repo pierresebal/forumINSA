@@ -19,42 +19,48 @@
 
 module.exports.policies = {
 
-  // Control for member access
-    CompanyController:{
-        MemberHomeShow:"CompanyAuth",
+    // Control for member access
+    CompanyController: {
+        MemberHomeShow: "CompanyAuth",
         update: 'CompanyAuth',
-        Profile:"CompanyAuth",
-        CvTheque:"CompanyAuth",
+        Profile: "CompanyAuth",
+        CvTheque: "CompanyAuth",
         Command: "CompanyAuth",
-        CompanyLogout:"CompanyAuth",
-        displayBills:"CompanyAuth",
-        changePassword:"CompanyAuth",
-        TODOlist:"CompanyAuth",
-        displayVigipirate:"CompanyAuth",
-        addVigipirate:"CompanyAuth"
+        CompanyLogout: "CompanyAuth",
+        displayBills: "CompanyAuth",
+        changePassword: "CompanyAuth",
+        TODOlist: "CompanyAuth",
+        displayVigipirate: "CompanyAuth",
+        addVigipirate: "CompanyAuth"
     },
 
-  StudentController:{
-    StudentLogout:"StudentAuth",
-    profile:"StudentAuth",
-    setAUserInfo:"StudentAuth",
-    setAllInfo:"StudentAuth",
-    Companies:"StudentAuth",
-    sjd:"StudentAuth",
-    displayACompany:"StudentAuth"
-  },
+    StudentController: {
+        StudentLogout: "StudentAuth",
+        profile: "StudentAuth",
+        setAUserInfo: "StudentAuth",
+        setAllInfo: "StudentAuth",
+        Companies: "StudentAuth",
+        sjd: "StudentAuth",
+        displayACompany: "StudentAuth"
+    },
 
-  SellsController:{
-    addASell:"CompanyAuth"
-  },
+    SellsController: {
+        addASell: "CompanyAuth"
+    },
 
-  SjdController: {
-    addSpecialities: "CompanyAuth",
-    showSjdCompanyInscription: "CompanyAuth"
-  },
+    SjdController: {
+        addSpecialities: "CompanyAuth",
+        showSjdCompanyInscription: "CompanyAuth"
+    },
 
-  AdminController:{
-      '*':'adminAuth',
-      'login': true
-  }
+    'Admin/StudentController': {
+        '*': 'adminAuth'
+    },
+
+    AdminController: {
+        '*': 'adminAuth',
+        'login': true
+    }
+
+
 };

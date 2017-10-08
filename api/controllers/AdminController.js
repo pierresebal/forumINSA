@@ -15,6 +15,9 @@ module.exports = {
 
     login: function (req, res) {
 
+        if(req.session.isAdmin)
+            return res.redirect(sails.getUrlFor('AdminController.home'));
+
         if (req.param('password') === sails.config.configFIE.adminPassword) {
             req.session.isAdmin = true;
             // if user has url to go
@@ -381,6 +384,7 @@ module.exports = {
         })
     },
 
+    // references: getStudents
     displayStudents: function (req, res) {
         Student.find().exec((err, students) => {
             if (err) {

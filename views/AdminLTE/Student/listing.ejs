@@ -1,0 +1,110 @@
+<section class="content-header">
+    <h1>Gestion d'entreprises</h1>
+    <ol class="breadcrumb">
+        <li><a href="<%= sails.getUrlFor('AdminController.home') %>"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Étudiants</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Étudiants enregistré sur le site</h3>
+                </div>
+                <div class="box-body">
+                    <%- partial('../templateDatatable/Student.ejs') %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<link href="/dependencies/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/af-2.2.0/b-1.3.1/b-colvis-1.3.1/b-print-1.3.1/cr-1.3.3/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/af-2.2.0/b-1.3.1/b-colvis-1.3.1/b-print-1.3.1/cr-1.3.3/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.js"></script>
+<script src="/dependencies/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script>
+$(document).ready(function() {
+    var datatable = $('#datatable').DataTable( {
+        responsive: true,
+        ajax: {
+            'url': "<%= sails.getUrlFor('Admin/StudentController.apiGetAll') %>",
+            'dataSrc': ''
+        },
+        columns: [
+            { 'data': "login" ,
+                'render': function(data, type, full, meta) {
+                    return '<a href="/admin/student/'+ full.id +'">' + data + '</a>';
+                }
+            },
+            { 'data': "lastName" },
+            { 'data': "firstName" },
+            { 'data': "gender" ,
+                'render': function(data) {
+                    if(data === 'f')
+                        return '<i class="fa fa-female"></i>';
+                    return '<i class="fa fa-male"></i>';
+                }
+            },
+            { 'data': "mailAddress",
+                'render': function(data, type, full, meta) {
+                    return '<a href="mailto'+ data +'">' +
+                                data.split('@').shift() + '@...</a>';
+                }
+            },
+            { 'data': "year" },
+            { 'data': "frCVPath",
+                'render': function(data, type, full, meta) {
+                    return '<form id="downloadFormFR" method="post" action="/file/download">' +
+                    '<input type="hidden" name="dl" value="fr" />' +
+                    '<input type="hidden" name="cvLogin" value="' + full.login + '" />' +
+                    '<button type="submit" class="btn btn-primary"><i class="fa fa-download" aria-hidden="true"></i></button>' +
+                    '</form>';
+                }
+            },
+            { 'data': "enCVPath",
+                'render': function(data, type, full, meta) {
+                    return '<form id="downloadFormEN" method="post" action="/file/download">' +
+                        '<input type="hidden" name="dl" value="en" />' +
+                        '<input type="hidden" name="cvLogin" value="' + full.login + '" />' +
+                        '<button type="submit" class="btn btn-success"><i class="fa fa-download" aria-hidden="true"></i></button>' +
+                        '</form>';
+                }
+            },
+            { 'data': "personalWebsite",
+                'render': function(data) {
+                    if(!data)
+                        return '';
+                    return '<a href="'+data+'" class="btn btn-social-icon btn-foursquare"><i class="fa fa-external-link"></i></a>';
+                }
+            },
+            { 'data': "linkedin",
+                'render': function(data) {
+                    if(!data)
+                        return '';
+                    return '<a href="'+data+'" class="btn btn-social-icon btn-linkedin"><i class="fa fa-linkedin"></i></a>';
+                }
+            },
+            { 'data': "viadeo",
+                'render': function(data) {
+                    if(!data)
+                        return '';
+                    return '<a href="'+data+'" class="btn btn-social-icon btn-google"><i class="fa fa-viadeo"></i></a>';
+                }
+            },
+            { 'data': "github",
+                'render': function(data) {
+                    if(!data)
+                        return '';
+                    return '<a href="'+data+'" class="btn btn-social-icon btn-github"><i class="fa fa-github"></i></a>'
+                }
+            }
+        ],
+        drawCallback: function(settings, json)  {
+        }
+
+    } );
+} );
+</script>

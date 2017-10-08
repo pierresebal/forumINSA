@@ -122,6 +122,11 @@ module.exports.routes = {
 
     /*-------------  Admin datatables ------------------*/
 
+    '/admin/students': {
+        controller: 'Admin/StudentController',
+        action: 'listing'
+    },
+
     '/admin/companies': {
         controller: 'AdminController',
         action: 'getCompanies'
@@ -190,6 +195,11 @@ module.exports.routes = {
     /*-----------  End Admin datatables ----------------*/
 
     /*-------------  Admin api ------------------*/
+    '/admin/api/student': {
+        controller: 'Admin/StudentController',
+        action: 'apiGetAll'
+    },
+
     '/admin/api/company': {
         controller: 'AdminController',
         action: 'apiGetAllCompany'
