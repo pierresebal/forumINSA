@@ -1,55 +1,72 @@
 <h2>Première connexion</h2>
 
 <p>
-  Bienvenue sur le site Forum INSA Entreprise.
-  <br />
-  Afin que les entreprises puissent exploiter au mieux votre profil, nous vous invitons à le compléter dès maintenant. Vous pourrez le modifier plus tard si vous le souhaitez.
-  <br />
-  Il est particulièrement prévu pour les 4 et 5A et l'inscription n'est pas utile pour les années en dessous.
+    Bienvenue sur le site Forum INSA Entreprise.
+    <br/>
+    Afin que les entreprises puissent exploiter au mieux votre profil, nous vous invitons à le compléter dès maintenant. Vous pourrez le modifier plus tard si vous le souhaitez.
+    <br/>
+    Il est particulièrement prévu pour les 4 et 5A et l'inscription n'est pas utile pour les années en dessous.
 
 </p>
 
-<form id="setAllInfo" method="POST" action ="/Student/setAllInfo">
-  <p>
-    <label>Login</label> : <%=login%><br />
-    <label>Prénom</label> : <%=firstName%><br />
-    <label>Nom</label> : <%=lastName%><br />
-    Votre adresse mail actuelle est <b><%=mailAddress%></b>. Mettez en une nouvelle si vous souhaitez la modifier. Sinon laissez la case vide.
-    <br />
-    <label>Adresse mail </label> : <input type="text" name="mailAddress" placeholder="<%= mailAddress %>"/>
-    <br />
-    <label>Année</label> :
-    <select name="year" required>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-    <br />
+<form id="setAllInfo" method="POST" action="/Student/setAllInfo">
+    <p>
+        <label>Login</label> : <%= login %><br/>
+        <label>Prénom</label> : <%= firstName %><br/>
+        <label>Nom</label> : <%= lastName %><br/>
+        Votre adresse mail actuelle est <b><%= mailAddress %></b>. Mettez en une nouvelle si vous souhaitez la modifier. Sinon laissez la case vide.
+        <br/>
+        <label>Adresse mail </label> : <input type="text" name="mailAddress" placeholder="<%= mailAddress %>"/>
+        <br/>
+        <label>Année</label> :
+        <select name="year" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <br/>
 
-    <label>Spécialité</label> :
-    <select name="speciality" required>
-      <% specialities.forEach(function(aSpeciality) { %>
-      <option value="<%= aSpeciality %>"><%= aSpeciality%></option>
-      <% }); %>
-    </select>
-    <br />
+        <label>Spécialité</label> :
+        <select name="speciality" required>
+            <% specialities.forEach(function(aSpeciality) { %>
+            <option value="<%= aSpeciality %>"><%= aSpeciality %></option>
+            <% }); %>
+        </select>
+        <br/>
 
-    <label>Site web personnel</label> : <input type="text" name="personalWebsite" placeholder="exemple : http://beaugossdu31.fr"/>
-    <br />
+        <label>Site web personnel</label> : <input type="text" name="personalWebsite" placeholder="exemple : http://beaugossdu31.fr"/>
+        <br/>
 
-    <label>Profil linkedin</label> : <input type="text" name="linkedin" placeholder="https://www.linkedin.com/..."/>
-    <br />
+        <label>Profil linkedin</label> : <input type="text" name="linkedin" placeholder="https://www.linkedin.com/..."/>
+        <br/>
 
-    <label>Profil Viadeo</label> : <input type="text" name="viadeo" placeholder="http://viadeo.com/..."/>
-    <br />
+        <label>Profil Viadeo</label> : <input type="text" name="viadeo" placeholder="http://viadeo.com/..."/>
+        <br/>
 
-    <label>Profil Github</label> : <input type="text" name="github" placeholder="https://github.com/..."/>
-    <br />
+        <label>Profil Github</label> : <input type="text" name="github" placeholder="https://github.com/..."/>
+        <br/>
 
-    <input type="submit" value="Envoyer"/>
+        <div class="well-danger">
+            <label>
+                Attention: Veuillez vérifier votre année et votre spécialité avant de continuer.<br>
+                <input id="cbConfirm" type="checkbox" name="confirm"> Confirmer pour activer le bouton <b>Envoyer</b>
+            </label>
+            
+        </div>
 
-  </p>
+    <input id="btnSubmit" type="submit" value="Envoyer" disabled/>
+
+    </p>
 
 </form>
+<script>
+    $('#cbConfirm').change(function() {
+        if(this.checked) {
+            $('#btnSubmit').removeAttr('disabled');
+        } else {
+            $('#btnSubmit').attr('disabled', 'disabled');
+        }
+    })
+</script>
