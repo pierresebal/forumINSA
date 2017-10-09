@@ -9,31 +9,66 @@
 
 <section class="content">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Proposition <%= offer.name %> </h3>
+                    <h3 class="box-title">Etudiant <%= student.login %> </h3>
                 </div>
-                <form role="form" class="form-horizontal" method="POST" action="<%= sails.getUrlFor('AdminController.createOffer') %>">
+                <form role="form" class="form-horizontal" method="POST" action="/admin/student/<%= student.id %>">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">Nom</label>
+                            <label for="login" class="col-sm-2 control-label">Login</label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" class="form-control" placeholder="Ex: pack, premium" <% if(offer.name) { %> value="<%= offer.name %>" <% } %>>
+                                <input type="text" name="login" class="form-control" disabled value="<%= student.login %>" >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="description" class="col-sm-2 control-label">Prix</label>
+                            <label for="mailAddress" class="col-sm-2 control-label">Mail</label>
                             <div class="col-sm-10">
-                                <div class="input-group">
-                                    <input type="number" class="form-control" name="price" <% if(offer.price) { %> value="<%= offer.price %>" <% } %> >
-                                    <span class="input-group-addon">€</span>
-                                </div></div>
+                                <input type="text" name="mailAddress" class="form-control" disabled value="<%= student.mailAddress %>" >
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="description" class="col-sm-2 control-label">Description</label>
+                            <label for="firstName" class="col-sm-2 control-label">Prénom</label>
                             <div class="col-sm-10">
-                                <input type="text" name="description" class="form-control" placeholder="Ex: <strong>D</strong>escription" <% if(offer.description) { %> value="<%= offer.description%>" <% } %> >
+                                <input type="text" name="firstName" class="form-control" value="<%= student.firstName %>" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" class="col-sm-2 control-label">Nom</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="lastName" class="form-control" value="<%= student.lastName %>" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender" class="col-sm-2 control-label">Gendre</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="gender">
+                                    <% genders.forEach(function(gender) { %>
+                                    <option value="<%= gender %>" <%=  gender == student.gender ? 'selected' : '' %>><%= gender %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="year" class="col-sm-2 control-label">Année</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="year">
+                                    <% years.forEach(function(year) { %>
+                                    <option value="<%= year %>" <%=  year == student.year ? 'selected' : '' %>><%= year %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="speciality" class="col-sm-2 control-label">Spécialité</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="speciality">
+                                    <% specialities.forEach(function(speciality) { %>
+                                    <option value="<%= speciality %>" <%=  speciality == student.speciality ? 'selected' : '' %>><%= speciality %></option>
+                                    <% }); %>
+                                </select>
                             </div>
                         </div>
                     </div>

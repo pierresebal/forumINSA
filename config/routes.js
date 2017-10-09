@@ -127,6 +127,11 @@ module.exports.routes = {
         action: 'listing'
     },
 
+    '/admin/student/:id': {
+        controller: 'Admin/StudentController',
+        action: 'update'
+    },
+
     '/admin/companies': {
         controller: 'AdminController',
         action: 'getCompanies'
