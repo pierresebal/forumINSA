@@ -53,14 +53,18 @@ module.exports.policies = {
         showSjdCompanyInscription: "CompanyAuth"
     },
 
-    'Admin/StudentController': {
-        '*': 'adminAuth'
-    },
 
+    //------------------- protect admin -----------------------//
     AdminController: {
         '*': 'adminAuth',
         'login': true
-    }
+    },
 
+    'Admin/VigipirateController': {
+        '*': 'adminAuth'
+    },
+    'Admin/StudentController': {
+        '*': 'adminAuth'
+    },
 
 };

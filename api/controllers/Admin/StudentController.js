@@ -53,6 +53,11 @@ module.exports = {
 
     apiGetAll: function(req, res, next) {
         Student.find().exec((err, found) => {
+            if(err) {
+                sails.log.error('[Admin/StudentController.apiGetAll] error when find all students:', err);
+                return res.json(500, err);
+            }
+
             return res.json(200, found);
         });
     }

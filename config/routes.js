@@ -120,7 +120,7 @@ module.exports.routes = {
         action: 'changeStudentSjd'
     },
 
-    /*-------------  Admin datatables ------------------*/
+    /*-------------  new admin ------------------*/
 
     '/admin/students': {
         controller: 'Admin/StudentController',
@@ -197,7 +197,12 @@ module.exports.routes = {
         action: 'createCompanyStatus'
     },
 
-    /*-----------  End Admin datatables ----------------*/
+    '/admin/vigipirate/student': {
+        controller: 'Admin/VigipirateController',
+        action: 'listingParticipatingStudent'
+    },
+
+    /*-----------  End new admin ----------------*/
 
     /*-------------  Admin api ------------------*/
     '/admin/api/student': {
@@ -263,6 +268,11 @@ module.exports.routes = {
     'POST /admin/api/companystatus/delete': {
         controller: 'AdminController',
         action: 'apiDeleteCompanyStatus'
+    },
+
+    '/admin/api/vigipirate/students': {
+        controller: 'Admin/VigipirateController',
+        action: 'apiGetAllParticipatingStudents'
     },
 
     /*-----------  End Admin api ----------------*/
