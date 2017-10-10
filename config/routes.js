@@ -32,18 +32,10 @@ module.exports.routes = {
      *                                                                          *
      ***************************************************************************/
 
-
-
     '/': {
-        view: 'Homepage/Homepage',
-        locals: {layout: 'layout', title: 'Accueil - FIE'}
+        controller: 'HomeController',
+        action: 'home'
     },
-
-    /*
-     '/' : {
-     view: 'construction',
-     locals:{}
-     },*/
 
     '/admin': {
         controller: 'AdminController',

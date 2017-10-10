@@ -9,7 +9,13 @@ module.exports = {
     listingParticipatingStudent: function (req, res, next) {
         return res.view('AdminLTE/Vigipirate/listingParticipatingStudents', {
             layout: 'Layout/AdminLTE'
-        })
+        });
+    },
+
+    displayParticipatingCompanies: (req, res, next) => {
+        return res.view('AdminLTE/Vigipirate/listingParticipatingCompanies', {
+            layout: 'Layout/AdminLTE'
+        });
     },
 
 
@@ -22,6 +28,19 @@ module.exports = {
 
             return res.json(200, students);
         })
+    },
+
+
+    apiGetAllParticipatingCompanies: (req, res, next) => {
+        Company.find().exec((err, companies) => {
+            if(err) {
+                sails.log.error('[Admin/VigipirateController.apiGetAllParticipatingStudents] error when find all participating companies:', err);
+                return res.json(500, err);
+            }
+
+            return res.json(200, companies);
+        })
     }
+
 };
 
