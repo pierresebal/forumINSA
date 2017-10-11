@@ -150,18 +150,18 @@ module.exports.routes = {
     },
 
     '/admin/specialities' : {
-        controller: 'AdminController',
-        action: 'getSpecialities'
+        controller: 'Admin/SpecialityController',
+        action: 'listing'
     },
 
     '/admin/speciality/:abbreviation': {
-        controller: 'AdminController',
-        action: 'updateSpeciality'
+        controller: 'Admin/SpecialityController',
+        action: 'update'
     },
 
     '/admin/specility/create': {
-        controller: 'AdminController',
-        action: 'createSpeciality'
+        controller: 'Admin/SpecialityController',
+        action: 'create'
     },
 
     '/admin/offers': {
@@ -233,13 +233,13 @@ module.exports.routes = {
     },
 
     '/admin/api/speciality': {
-        controller: 'AdminController',
-        action: 'apiGetAllSpecialities'
+        controller: 'Admin/SpecialityController',
+        action: 'apiGetAll'
     },
 
     'POST /admin/api/speciality/delete': {
-        controller: 'AdminController',
-        action: 'apiDeleteSpeciality'
+        controller: 'Admin/SpecialityController',
+        action: 'apiDelete'
     },
 
     '/admin/api/offers': {

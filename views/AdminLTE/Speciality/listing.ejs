@@ -13,11 +13,11 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Ventes</h3>
                     <div class="box-tools">
-                        <a href="<%= sails.getUrlFor('AdminController.createSpeciality') %>" class="btn btn-primary"><i class="fa fa-plus"></i> Créer un nouveau</a>
+                        <a href="<%= sails.getUrlFor('Admin/SpecialityController.create') %>" class="btn btn-primary"><i class="fa fa-plus"></i> Créer un nouveau</a>
                     </div>
                 </div>
                 <div class="box-body">
-                    <%- partial('templateDatatable/Speciality.ejs') %>
+                    <%- partial('../templateDatatable/Speciality.ejs') %>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@ $(document).ready(function() {
     let datatable = $('#datatable').DataTable( {
         responsive: true,
         ajax: {
-            'url': "<%= sails.getUrlFor('AdminController.apiGetAllSpecialities') %>",
+            'url': "<%= sails.getUrlFor('Admin/SpecialityController.apiGetAll') %>",
             'dataSrc': ''
         },
         columns: [
@@ -61,7 +61,7 @@ $(document).ready(function() {
         let data = row.data();
 
         $.ajax({
-            url: '<%= sails.getUrlFor("AdminController.apiDeleteSpeciality") %>',
+            url: '<%= sails.getUrlFor("Admin/SpecialityController.apiDelete") %>',
             type: 'POST',
             data: {
                 abbreviation: data.abbreviation

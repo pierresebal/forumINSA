@@ -2,7 +2,7 @@
     <h1>Paramètre interne</h1>
     <ol class="breadcrumb">
         <li><a href="<%= sails.getUrlFor('AdminController.home') %>"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="<%= sails.getUrlFor('AdminController.getSpecialities') %>">Spécialité</a></li>
+        <li><a href="<%= sails.getUrlFor('Admin/SpecialityController.listing') %>">Spécialité</a></li>
         <li><a href="#">Création de spécialité</a></li>
     </ol>
 </section>
@@ -14,7 +14,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Nouvelle spécialité</h3>
                 </div>
-                <form role="form" class="form-horizontal" method="POST" action="<%= sails.getUrlFor('AdminController.createSpeciality') %>">
+                <form role="form" class="form-horizontal" method="POST" action="<%= sails.getUrlFor('Admin/SpecialityController.create') %>">
                     <div class="box-body">
                         <div class="form-group">
                             <label for="year" class="col-sm-2 control-label">Abbréviation</label>

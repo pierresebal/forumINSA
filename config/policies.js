@@ -70,6 +70,10 @@ module.exports.policies = {
 
     'Admin/CompanyController': {
         '*': 'adminAuth'
+    },
+
+    'Admin/SpecialityController': {
+        '*': 'adminAuth'
     }
 
 };
