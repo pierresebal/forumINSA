@@ -12,7 +12,7 @@ module.exports = {
         });
     },
 
-    displayParticipatingCompanies: (req, res, next) => {
+    listingParticipatingCompany: (req, res, next) => {
         return res.view('AdminLTE/Vigipirate/listingParticipatingCompanies', {
             layout: 'Layout/AdminLTE'
         });
@@ -30,7 +30,8 @@ module.exports = {
         })
     },
 
-
+    // look like apiGetAllCompany, we need to have another method to get
+    // exact participating company
     apiGetAllParticipatingCompanies: (req, res, next) => {
         Company.find().exec((err, companies) => {
             if(err) {

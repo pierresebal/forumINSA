@@ -30,14 +30,21 @@ $(document).ready(function() {
     var datatable = $('#datatable').DataTable( {
         responsive: true,
         ajax: {
-            'url': "<%= sails.getUrlFor('Admin/VigipirateController.apiGetAllParticipatingStudents') %>",
+            'url': "<%= sails.getUrlFor('Admin/VigipirateController.apiGetAllParticipatingCompanies') %>",
             'dataSrc': ''
         },
         columns: [
-            { 'data': "studentId" },
-            { 'data': "login" },
-            { 'data': "firstName" },
-            { 'data': "lastName" },
+            { 'data': "companyName" },
+            { 'data': null,
+                'render': function(data, type, full, meta) {
+                    return full.vigipirate.length;
+                }
+            },
+            { 'data': "vigipirate",
+                'render': function(data) {
+                    return data.join(', ');
+                }
+            }
         ],
         drawCallback: function(settings, json)  {
         }

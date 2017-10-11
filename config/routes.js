@@ -194,6 +194,11 @@ module.exports.routes = {
         action: 'listingParticipatingStudent'
     },
 
+    '/admin/vigipirate/company': {
+        controller: 'Admin/VigipirateController',
+        action: 'listingParticipatingCompany'
+    },
+
     /*-----------  End new admin ----------------*/
 
     /*-------------  Admin api ------------------*/
@@ -265,6 +270,11 @@ module.exports.routes = {
     '/admin/api/vigipirate/students': {
         controller: 'Admin/VigipirateController',
         action: 'apiGetAllParticipatingStudents'
+    },
+
+    '/admin/api/vigipirate/companies': {
+        controller: 'Admin/VigipirateController',
+        action: 'apiGetAllParticipatingCompanies'
     },
 
     /*-----------  End Admin api ----------------*/
