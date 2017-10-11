@@ -14,7 +14,7 @@
                     <h3 class="box-title">Entreprises inscrites</h3>
                 </div>
                 <div class="box-body">
-                    <%- partial('templateDatatable/Company.ejs') %>
+                    <%- partial('../templateDatatable/Company.ejs') %>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@ $(document).ready(function() {
     var datatable = $('#datatable').DataTable( {
         responsive: true,
         ajax: {
-            'url': "<%= sails.getUrlFor('AdminController.apiGetAllCompany') %>",
+            'url': "<%= sails.getUrlFor('Admin/CompanyController.apiGetAll') %>",
             'dataSrc': ''
         },
         columns: [
@@ -67,7 +67,7 @@ $(document).ready(function() {
                 onSwitchChange: function(event, state)  {
                     var data = datatable.row( $(this).parents('tr') ).data();
                     $.ajax({
-                        url: '<%= sails.getUrlFor("AdminController.apiUpdateCompany") %>',
+                        url: '<%= sails.getUrlFor("Admin/CompanyController.apiUpdate") %>',
                         type: 'POST',
                         data:   {
                             id: data.id,

@@ -39,7 +39,7 @@
                     <li><a href="<%= sails.getUrlFor('AdminController.getCompanyStatus') %>"><i class="fa fa-circle-o"></i> Status entreprises</a></li>
                 </ul>
             </li>
-            <li><a href="<%= sails.getUrlFor('AdminController.getCompanies') %>"><i class="fa fa-industry"></i> <span>Entreprises inscrites</span></a></li>
+            <li><a href="<%= sails.getUrlFor('Admin/CompanyController.listing') %>"><i class="fa fa-industry"></i> <span>Entreprises inscrites</span></a></li>
             <li><a href="<%= sails.getUrlFor('Admin/StudentController.listing') %>"><i class="fa fa-users"></i> <span>Etudiants inscrits</span></a></li>
             <li><a href="<%= sails.getUrlFor('AdminController.getSells') %>"><i class="fa fa-money"></i> <span>Ventes</span></a></li>
             <li><a href="<%= sails.getUrlFor('AdminController.getSjds') %>"><i class="fa fa-suitcase"></i> <span>Voir entreprises SJD</span></a></li>

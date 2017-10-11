@@ -125,13 +125,13 @@ module.exports.routes = {
     },
 
     '/admin/companies': {
-        controller: 'AdminController',
-        action: 'getCompanies'
+        controller: 'Admin/CompanyController',
+        action: 'listing'
     },
 
     '/admin/company/:siret': {
-        controller: 'AdminController',
-        action: 'updateCompany'
+        controller: 'Admin/CompanyController',
+        action: 'update'
     },
 
     '/admin/sells': {
@@ -208,13 +208,13 @@ module.exports.routes = {
     },
 
     '/admin/api/company': {
-        controller: 'AdminController',
-        action: 'apiGetAllCompany'
+        controller: 'Admin/CompanyController',
+        action: 'apiGetAll'
     },
 
     'POST /admin/api/company/update':    {
-        controller: 'AdminController',
-        action: 'apiUpdateCompany'
+        controller: 'Admin/CompanyController',
+        action: 'apiUpdate'
     },
 
     '/admin/api/sells': {

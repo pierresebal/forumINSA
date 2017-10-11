@@ -63,8 +63,13 @@ module.exports.policies = {
     'Admin/VigipirateController': {
         '*': 'adminAuth'
     },
+
     'Admin/StudentController': {
         '*': 'adminAuth'
     },
+
+    'Admin/CompanyController': {
+        '*': 'adminAuth'
+    }
 
 };
