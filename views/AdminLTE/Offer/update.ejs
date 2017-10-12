@@ -2,7 +2,7 @@
     <h1>Paramètre interne</h1>
     <ol class="breadcrumb">
         <li><a href="<%= sails.getUrlFor('AdminController.home') %>"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="<%= sails.getUrlFor('AdminController.getOffers') %>">Propositions</a></li>
+        <li><a href="<%= sails.getUrlFor('Admin/OfferController.listing') %>">Propositions</a></li>
         <li><a href="#">Modification de proposition</a></li>
     </ol>
 </section>
@@ -14,7 +14,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Proposition <%= offer.name %> </h3>
                 </div>
-                <form role="form" class="form-horizontal" method="POST" action="<%= sails.getUrlFor('AdminController.createOffer') %>">
+                <form role="form" class="form-horizontal" method="POST" action="<%= sails.getUrlFor('Admin/OfferController.create') %>">
                     <div class="box-body">
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">Nom</label>
