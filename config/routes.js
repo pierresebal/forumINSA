@@ -165,18 +165,18 @@ module.exports.routes = {
     },
 
     '/admin/offers': {
-        controller: 'AdminController',
-        action: 'getOffers'
+        controller: 'Admin/OfferController',
+        action: 'listing'
     },
 
     '/admin/offer/create': {
-        controller: 'AdminController',
-        action: 'createOffer'
+        controller: 'Admin/OfferController',
+        action: 'create'
     },
 
     '/admin/offer/:id': {
-        controller: 'AdminController',
-        action: 'updateOffer'
+        controller: 'Admin/OfferController',
+        action: 'update'
     },
 
     '/admin/companystatus': {
@@ -243,18 +243,18 @@ module.exports.routes = {
     },
 
     '/admin/api/offers': {
-        controller: 'AdminController',
-        action: 'apiGetAllOffers'
+        controller: 'Admin/OfferController',
+        action: 'apiGetAll'
     },
 
     'POST /admin/api/offer/update': {
-        controller: 'AdminController',
-        action: 'apiUpdateOffer'
+        controller: 'Admin/OfferController',
+        action: 'apiUpdate'
     },
 
     'POST /admin/api/offer/delete': {
-        controller: 'AdminController',
-        action: 'apiDeleteOffer'
+        controller: 'Admin/OfferController',
+        action: 'apiDelete'
     },
 
     '/admin/api/companystatus': {

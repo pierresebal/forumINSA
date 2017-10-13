@@ -55,3 +55,6 @@ delete Sells, delte YearSettings (replaced buy Offer)
 - Long term:
 dev Task, improve GeneralSetting (move it into a file or sth, not in database)
 
+### View architecture
+See here
+
