@@ -16,6 +16,6 @@ module.exports = function(req, res, next) {
     return next();
   }
   else {
-    return res.view('Connection_Password/Connection', {nexturl:req.originalUrl,error: "Vous devez être connecté comme étudiant pour acceder a cette pages", layout: 'layout'});
+    return res.view('Connection_Password/Connection', {errMessage:{}, nexturl:req.originalUrl,error: "Vous devez être connecté comme étudiant pour acceder a cette pages", layout: 'layout'});
   }
 };

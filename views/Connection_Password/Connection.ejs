@@ -10,7 +10,7 @@
 
 <h1>Connexion</h1>
 
-    <% if(errMessage.account)    { %>
+    <% if(typeof errMessage !== 'undefined' && errMessage.account)    { %>
         <p style="color:red;font-size:12px%>"><%= errMessage.account? errMessage.account : '' %></p>
     <% } %>
 
@@ -24,7 +24,7 @@
     <input class="pure-input-1-3" type="password" placeholder="Mot de passe" name="password" required/>
 
         <div class="form-error">
-        <p><%= errMessage.password? errMessage.password : '' %></p>
+        <p><%= typeof errMessage !== 'undefined' && errMessage.password? errMessage.password : '' %></p>
         </div>
 
     <input class="pure-input-1-3" type="hidden" name="nexturl" value="<%=nexturl%>"/>
