@@ -35,7 +35,7 @@ var CriteriaBox =  React.createClass({
     if (this.state.GPE)
       specialitiesSearch.push('Génie des Procédés');
     if (this.state.GMM)
-      specialitiesSearch.push('Génie Mathématique et Modélisation');
+      specialitiesSearch.push('Génie Mathématique Appliqué');
     if (this.state.GM)
       specialitiesSearch.push('Génie Mécanique');
     if (this.state.GP)
