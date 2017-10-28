@@ -7,15 +7,15 @@
  * @docs        :: http://sailsjs.org/#!/documentation/concepts/Policies
  *
  */
-module.exports = function(req, res, next) {
+module.exports = function (req, res, next) {
 
-  // User is allowed, proceed to the next policy,
-  // or if this is the last policy, the controller
-  console.log("Session authenticated (policy): "+req.session.authenticated);
-  if (req.session.authenticated && req.session.sessionType == "student") {
-    return next();
-  }
-  else {
-    return res.view('Connection_Password/Connection', {errMessage:{}, nexturl:req.originalUrl,error: "Vous devez être connecté comme étudiant pour acceder a cette pages", layout: 'layout'});
-  }
+    // User is allowed, proceed to the next policy,
+    // or if this is the last policy, the controller
+    if (req.session.authenticated && req.session.sessionType == "student") {
+        return next();
+    }
+    else {
+        req.session.cbUrl = req.url;  //save the url to redirect after logging in
+        return res.redirect(sails.getUrlFor('StudentController.login'));
+    }
 };

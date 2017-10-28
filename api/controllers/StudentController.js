@@ -40,8 +40,17 @@ module.exports = {
                                 })
                             })
                         } else {
-                            StudentSession.setStudentSessionVariables(req, record.login, record.firstName, record.mailAddress, true, 'student')
-                            return res.redirect('/')
+
+                            req.session.user = record;
+                            StudentSession.setStudentSessionVariables(req, record.login, record.firstName, record.mailAddress, true, 'student');
+
+                            if (req.session.cbUrl) {
+                                let next = _.clone(req.session.cbUrl);
+                                delete req.session.cbUrl;
+                                return res.redirect(next);
+                            }
+
+                            return res.redirect('/');
                         }
                     })
                 } else { // Personne non reconnu par le ldap

@@ -1,4 +1,6 @@
-# FIE
+# Forum INSA Entreprise
+
+Platform where company can buy their place for the stand
 
 ## Getting started
 ### Required
@@ -23,7 +25,7 @@ Command Prompt
 "C:\Program Files\MongoDB\Server\3.4\bin\mongod.exe" --dbpath "d:\test\mongo db data"
 ```
 
-### Debug - Log file
+## Debug - Log file
 Log is like an app diary, helpful for developer for debugging.<br/>
 Tag convention:
 * Controller: sails.log.warn([Controller].[action]: [message]);
@@ -33,7 +35,7 @@ Level convention:
 * Info for debug: sails.log.debug(err);
 * Info for realtime debug: sails.log.info(err);
 
-### Model system
+## Model system
 Ideal model:
 - User: user for login method (passport)
 - Student extends<User>
@@ -55,6 +57,11 @@ delete Sells, delte YearSettings (replaced buy Offer)
 - Long term:
 dev Task, improve GeneralSetting (move it into a file or sth, not in database)
 
-### View architecture
+## View architecture
 See here
+
+## Nodejs dependancy
+See more in [nodejs.md](readme/nodejs.md)
+
+
 
