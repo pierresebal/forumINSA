@@ -674,28 +674,7 @@ module.exports = {
 
     },
 
-    createCompanyStatus: function(req, res, next) {
-        if(!req.body)   {
-            return res.redirect(sails.getUrlFor('AdminController.getCompanyStatus'));
-        }   else    {
-            CompanyStatus.create(req.body).exec((err, status) => {
-                if(err) {
-                    sails.log.error('[CompanyController.createCompanyStatus] error when create an offer: ', err);
-                    req.addFlash('danger', 'An error occured : '+err);
-                    return res.redirect(sails.getUrlFor('AdminController.getCompanyStatus'));
-                }
 
-                if(!status || status.length === 0) {
-                    req.addFlash('warning', 'No status has been created');
-                    return res.redirect(sails.getUrlFor('AdminController.getCompanyStatus'));
-                }
-
-                req.addFlash('success', 'A new status created: ' + status.name);
-                return res.redirect(sails.getUrlFor('AdminController.getCompanyStatus'));
-            })
-        }
-
-    },
 
     //datatables -----------
 
@@ -707,12 +686,6 @@ module.exports = {
 
     getSjds: function(req, res)  {
         return res.view('AdminLTE/getSjds',  {
-            layout: 'Layout/AdminLTE'
-        });
-    },
-
-    getCompanyStatus: function(req, res, next)   {
-        return res.view('AdminLTE/getCompanyStatus',  {
             layout: 'Layout/AdminLTE'
         });
     },
@@ -765,33 +738,6 @@ module.exports = {
             }
 
             return res.json(200, sjds);
-        });
-    },
-
-    apiGetAllCompanyStatus: function(req, res) {
-        CompanyStatus.find().exec((err, status) => {
-            if(err) {
-                sails.log.error('[AdminController.apiGetAllOffers] error when find all Offers :', err);
-                return res.json(500, err);
-            }
-
-            return res.json(200, status);
-        });
-    },
-
-    apiDeleteCompanyStatus: function(req, res) {
-        CompanyStatus.destroy(req.allParams()).exec((err, status) => {
-            if(err) {
-                sails.log.error('[AdminController.apiDeleteCompanyStatus] error when delete a status ', err);
-                return res.json(500, err);
-            }
-
-            if(!status || status.length === 0) {
-                sails.log.error('[AdminController.apiDeleteCompanyStatus] No status deleted ');
-                return res.json(500, 'No status deleted!');
-            }
-
-            return res.json(200, {msg: 'Offer ' + status[0].name + ' has been deleted!'});
         });
     },
 

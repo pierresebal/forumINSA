@@ -17,10 +17,10 @@
                     </div>
                 </div>
 
-                <%- partial('partial/modalCompanyStatus.ejs') %>
+                <%- partial('../partial/modalCompanyStatus.ejs') %>
 
                 <div class="box-body">
-                    <%- partial('templateDatatable/CompanyStatus.ejs') %>
+                    <%- partial('../templateDatatable/CompanyStatus.ejs') %>
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@ $(document).ready(function() {
     let datatable = $('#datatable').DataTable( {
         responsive: true,
         ajax: {
-            'url': "<%= sails.getUrlFor('AdminController.apiGetAllCompanyStatus') %>",
+            'url': "<%= sails.getUrlFor('Admin/CompanyStatusController.apiGetAll') %>",
             'dataSrc': ''
         },
         columns: [
@@ -57,7 +57,7 @@ $(document).ready(function() {
         let data = row.data();
 
         $.ajax({
-            url: '<%= sails.getUrlFor("AdminController.apiDeleteCompanyStatus") %>',
+            url: '<%= sails.getUrlFor("Admin/CompanyStatusController.apiDelete") %>',
             type: 'POST',
             data: {
                 name: data.name

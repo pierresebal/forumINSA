@@ -6,7 +6,7 @@
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Nouveau status juridique</h4>
             </div>
-            <form class="form-horizontal" method="POST" action="<%= sails.getUrlFor('AdminController.createCompanyStatus') %>">
+            <form class="form-horizontal" method="POST" action="<%= sails.getUrlFor('Admin/CompanyStatusController.create') %>">
             <div class="modal-body">
                 <div class="form-group">
                     <label for="year" class="col-sm-2 control-label">Status</label>

@@ -180,13 +180,13 @@ module.exports.routes = {
     },
 
     '/admin/companystatus': {
-        controller: 'AdminController',
-        action: 'getCompanyStatus'
+        controller: 'Admin/CompanyStatusController',
+        action: 'listing'
     },
 
     '/admin/companystatus/create': {
-        controller: 'AdminController',
-        action: 'createCompanyStatus'
+        controller: 'Admin/CompanyStatusController',
+        action: 'create'
     },
 
     '/admin/vigipirate/student': {
@@ -258,13 +258,13 @@ module.exports.routes = {
     },
 
     '/admin/api/companystatus': {
-        controller: 'AdminController',
-        action: 'apiGetAllCompanyStatus'
+        controller: 'Admin/CompanyStatusController',
+        action: 'apiGetAll'
     },
 
     'POST /admin/api/companystatus/delete': {
-        controller: 'AdminController',
-        action: 'apiDeleteCompanyStatus'
+        controller: 'Admin/CompanyStatusController',
+        action: 'apiDelete'
     },
 
     '/admin/api/vigipirate/students': {
