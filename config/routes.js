@@ -102,11 +102,6 @@ module.exports.routes = {
         action: 'checkTasks'
     },
 
-    '/Admin/RegisteredStudents': {
-        controller: 'AdminController',
-        action: 'displayStudents'
-    },
-
     '/Admin/changeStudentSjd': {
         controller: 'AdminController',
         action: 'changeStudentSjd'
