@@ -246,7 +246,7 @@ module.exports = {
         },
 
         specialities: {
-            collection: 'Speciality'
+            collection: 'speciality',
         },
 
         /**

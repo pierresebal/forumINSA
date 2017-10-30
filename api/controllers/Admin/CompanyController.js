@@ -21,7 +21,7 @@ module.exports = {
         } else if(!req.body)   {
 
             // as no query has been sent, display the update with information
-            Company.findOne({siret: req.param('siret')}).populate('status').exec((err, company) => {
+            Company.findOne({siret: req.param('siret')}).populate('status').populate('specialities').exec((err, company) => {
                 if (err) {
                     sails.log.error('[Admin/CompanyController.update] an error occured when find a company: ',err);
                     return next(err);
@@ -32,26 +32,37 @@ module.exports = {
                     return res.notFound();
                 }
 
+                // the next 3 query, we'll give the elements for some listing choices for the front page
+
                 CompanyStatus.find().exec((err, status) => {
                     if(err) {
                         sails.log.error('[Admin/CompanyController.update] error when find all status: ', err);
-                        return res.serverError();
-
+                        return res.serverError(err);
                     }
 
                     Sells.find({companySiret: company.siret}).exec((err, sells) => {
                         if(err) {
                             sails.log.error('[Admin/CompanyController.update] error when find sells for company ' + company.companyName + ': ', err);
-                            return res.serverError();
+                            return res.serverError(err);
                         }
 
-                        return res.view('AdminLTE/Company/update', {
-                            layout: 'Layout/AdminLTE',
-                            company: company,
-                            typesCompany: Company.definition.type.enum,
-                            sells: sells,
-                            allStatus: status
+                        Speciality.find().exec((err, specialities) => {
+                            if(err) {
+                                sails.log.error('[Admin/CompanyController.update] error when find all speciality: ', err);
+                                return res.serverError(err);
+                            }
+
+                            return res.view('AdminLTE/Company/update', {
+                                layout: 'Layout/AdminLTE',
+                                company: company,
+                                typesCompany: Company.definition.type.enum,
+                                sells: sells,
+                                allStatus: status,
+                                specialities: specialities
+                            });
+
                         });
+
                     });
 
 
@@ -66,7 +77,7 @@ module.exports = {
             Company.update({siret: req.param('siret') }, params).exec((err, updated) => {
 
                 if(err) {
-                    sails.log.error('[Admin/CompanyController.update] err occured when update company: '+ req.param('siret') + ': ', err);
+                    sails.log.error('[Admin/CompanyController.update] err occured when update company '+ req.param('siret') + ': ', err);
                     return next(err);
                 }
 

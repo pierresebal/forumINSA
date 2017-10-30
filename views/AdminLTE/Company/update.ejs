@@ -159,13 +159,27 @@
                     <div class="tab-pane" id="profile">
                         <form class="form-horizontal" method="post" action="/admin/company/<%= company.siret %>">
 
+                            <div class="form-group">
+                                <label for="lastName" class="col-sm-3 control-label">Specialities </label>
+                                <div class="col-sm-9">
+                                <% specialities.forEach(function(speciality) { %>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="specialities" value="<%= speciality.abbreviation %>" <%= company.specialities.filter(function(spe){return spe.id === speciality.id;}).length > 0 ? 'checked' : '' %>>
+                                        <%= speciality.abbreviation %>
+                                    </label>
+                                </div>
+                                <% }); %>
+                                </div>
+
+                            </div>
 
                             <div class="form-group">
                                 <label for="lastName" class="col-sm-3 control-label">Description</label>
                                 <div class="col-sm-9">
                                     <textarea name="description" rows="10" class="form-control"><%= company.description %></textarea>
                                 </div>
-                                <textarea id="editor1" name="editor1" rows="10" cols="80">
+                                <textarea id="editor1" rows="10" cols="80">
                                             This is my textarea to be replaced with CKEditor.
                                 </textarea>
                             </div>
