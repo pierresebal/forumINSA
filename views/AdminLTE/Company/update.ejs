@@ -161,11 +161,12 @@
 
                             <div class="form-group">
                                 <label for="lastName" class="col-sm-3 control-label">Specialities </label>
+
                                 <div class="col-sm-9">
                                 <% specialities.forEach(function(speciality) { %>
-                                <div class="checkbox">
+                                <div class="col-md-4">
                                     <label>
-                                        <input type="checkbox" name="specialities" value="<%= speciality.abbreviation %>" <%= company.specialities.filter(function(spe){return spe.id === speciality.id;}).length > 0 ? 'checked' : '' %>>
+                                        <input type="checkbox" class="flat-red" name="specialities" value="<%= speciality.abbreviation %>" <%= company.specialities.filter(function(spe){return spe.id === speciality.id;}).length > 0 ? 'checked' : '' %>>
                                         <%= speciality.abbreviation %>
                                     </label>
                                 </div>
@@ -179,9 +180,6 @@
                                 <div class="col-sm-9">
                                     <textarea name="description" rows="10" class="form-control"><%= company.description %></textarea>
                                 </div>
-                                <textarea id="editor1" rows="10" cols="80">
-                                            This is my textarea to be replaced with CKEditor.
-                                </textarea>
                             </div>
 
                             <div class="form-group">
@@ -282,14 +280,15 @@
 </section>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/af-2.2.0/b-1.3.1/b-colvis-1.3.1/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.css"/>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.15/af-2.2.0/b-1.3.1/b-colvis-1.3.1/fc-3.2.2/fh-3.1.2/kt-2.2.1/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.js"></script>
-<script type="text/javascript" src="/../../../ckeditor/ckeditor.js"></script>
+<link href="/plugins/iCheck/flat/red.css" rel="stylesheet">
+<script type="text/javascript" src="/plugins/iCheck/icheck.min.js"></script>
 <script>
     $(document).ready(function() {
         let datatable = $('#datatable').DataTable();
 
-        // Replace the <textarea id="editor1"> with a CKEditor
-        // instance, using default configuration.
-        CKEDITOR.replace('editor1');
+        $('input[type="checkbox"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-red'
+        })
 
     })
 </script>

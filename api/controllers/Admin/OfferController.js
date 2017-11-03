@@ -14,11 +14,21 @@ module.exports = {
     },
 
     create: function(req, res) {
-        if(!req.body)   {
-            return res.view('AdminLTE/Offer/create', {
-                layout: 'Layout/AdminLTE',
-                offer: {}
+        if(req.method !== 'POST')   {
+
+            CompanyStatus.find().exec((err, allStatus) => {
+                if(err) {
+                    sails.log.error('[Admin/OfferController.create] error when create an offer: ', err);
+                    return res.serverError(err);
+                }
+
+                return res.view('AdminLTE/Offer/create', {
+                    offer: {},
+                    allStatus: allStatus,
+                    layout: 'Layout/AdminLTE'
+                });
             });
+
         } else {
             Offer.create(req.body).exec((err, offer) => {
                 if(err) {
@@ -32,10 +42,21 @@ module.exports = {
                         }
                     }
 
-                    return res.view('AdminLTE/Offer/create', {
-                        layout: 'Layout/AdminLTE',
-                        offer: req.body
+                    CompanyStatus.find().exec((err, allStatus) => {
+                        if(err) {
+                            sails.log.error('[Admin/OfferController.create] error when create an offer: ', err);
+                            return res.next
+                        }
+
+                        return res.view('AdminLTE/Offer/create', {
+                            offer: req.body,
+                            allStatus: allStatus,
+                            layout: 'Layout/AdminLTE'
+                        });
+
                     });
+
+
                 }
 
                 if(!offer || offer.length === 0) {
@@ -53,8 +74,8 @@ module.exports = {
     },
 
     update: function(req, res, next) {
-        if(!req.body)   {
-            Offer.findOne({id: req.param('id')}).exec((err, offer) => {
+        if(req.method !== 'POST')   {
+            Offer.findOne({id: req.param('id')}).populate('allow').exec((err, offer) => {
                 if(err) {
                     sails.log.error('[Admin/OfferController.update] error when find offer: ', err);
                     return next(err);
@@ -65,13 +86,27 @@ module.exports = {
                     return res.notFound();
                 }
 
-                return res.view('AdminLTE/Offer/update', {
-                    layout: 'Layout/AdminLTE',
-                    offer: offer
+                CompanyStatus.find().exec((err, allStatus) => {
+                    if(err) {
+                        sails.log.error('[Admin/OfferController.update] error when find company status: ', err);
+                        return next(err);
+                    }
+
+                    return res.view('AdminLTE/Offer/update', {
+                        layout: 'Layout/AdminLTE',
+                        allStatus: allStatus,
+                        offer: offer
+                    });
                 });
             });
         } else {
-            Offer.update({abbreviation: req.param('id')}, req.body).exec((err, updated) => {
+
+            // if not have array, put empty array so that waterline delete it
+            if(!req.param('allow')) {
+                req.body.allow = [];
+            }
+
+            Offer.update({id: req.param('id')}, req.body).exec((err, updated) => {
                 if(err) {
                     sails.log.error('[Admin/OfferController.update] error when update an offer: ', err);
                     return next(err);
@@ -79,18 +114,20 @@ module.exports = {
 
                 if(!updated || updated.length === 0) {
                     sails.log.error('[Admin/OfferController.update] no update for offer ');
-                    req.addFlash('warning', 'Offer '+ updated[0] + ' is not updated');
+                    req.addFlash('warning', 'Offer '+ updated[0].name + ' is not updated');
                     return res.serverError();
                 }
 
-                req.addFlash('success', 'Offer '+ updated[0] +  'has been updated');
-                return res.redirect(sails.getUrlFor('Admin/OfferController.update'));
+                // problem cas: when empty array, need to remove all element
+
+                req.addFlash('success', 'Offer '+ updated[0].name +  'has been updated');
+                return res.redirect(sails.getUrlFor('Admin/OfferController.listing'));
             });
         }
     },
 
     apiGetAll: function(req, res) {
-        Offer.find().exec((err, offers) => {
+        Offer.find().populate('allow', {select: ['name']}).exec((err, offers) => {
             if(err) {
                 sails.log.error('[Admin/OfferController.apiGetAll] error when find all Offers :', err);
                 return res.json(500, err);

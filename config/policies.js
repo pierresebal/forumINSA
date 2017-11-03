@@ -72,6 +72,10 @@ module.exports.policies = {
         '*': 'adminAuth'
     },
 
+    'Admin/OfferController': {
+        '*': 'adminAuth'
+    },
+
     'Admin/SpecialityController': {
         '*': 'adminAuth'
     }

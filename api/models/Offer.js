@@ -24,8 +24,7 @@ module.exports = {
         },
 
         allow: {
-            type: 'array',
-            defaultTo: []
+            collection: 'companyStatus'
         },
 
         available: {
@@ -33,5 +32,6 @@ module.exports = {
             defaultTo: false
         }
     }
+
 };
 

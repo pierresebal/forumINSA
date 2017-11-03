@@ -2,7 +2,7 @@
     <h1>Paramètre interne</h1>
     <ol class="breadcrumb">
         <li><a href="<%= sails.getUrlFor('AdminController.home') %>"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="<%= sails.getUrlFor('AdminController.getOffers') %>">Propositions</a></li>
+        <li><a href="<%= sails.getUrlFor('Admin/OfferController.listing') %>">Propositions</a></li>
         <li><a href="#">Création de proposition</a></li>
     </ol>
 </section>
@@ -14,7 +14,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Nouvelle proposition</h3>
                 </div>
-                <form role="form" class="form-horizontal" method="POST" action="<%= sails.getUrlFor('AdminController.createOffer') %>">
+                <form role="form" class="form-horizontal" method="POST" action="<%= sails.getUrlFor('Admin/OfferController.create') %>">
                     <div class="box-body">
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">Nom</label>
@@ -36,6 +36,20 @@
                                 <input type="text" name="description" class="form-control" placeholder="Ex: <strong>D</strong>escription" <% if(offer.description) { %> value="<%= offer.description%>" <% } %> >
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label">Filtre</label>
+                            <div class="col-sm-10">
+                                <% allStatus.forEach(function(status) { %>
+                                <div class="col-md-4">
+                                    <label>
+                                        <input type="checkbox" class="flat-red" name="allow" value="<%= status.name %>" <%= offer.allow && offer.allow.filter(function(a){return a.id === status.id;}).length > 0 ? 'checked' : '' %>>
+                                        <%= status.name %>
+                                    </label>
+                                </div>
+                                <% }); %>
+                            </div>
+                            <div class="col-sm-offset-2 col-sm-10"><p class="help-block">Seuls les entreprises disposant le status coché peut voir cette offre.</p></div>
+                        </div>
                     </div>
 
                     <div class="box-footer">
@@ -47,3 +61,14 @@
         </div>
     </div>
 </section>
+
+<link href="/plugins/iCheck/flat/red.css" rel="stylesheet">
+<script type="text/javascript" src="/plugins/iCheck/icheck.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('input[type="checkbox"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-red'
+        })
+    })
+</script>

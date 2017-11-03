@@ -52,7 +52,13 @@ $(document).ready(function() {
             },
             { 'data': "allow",
                 'render': function(data) {
-                    return data? data.toString() : '[ ]' ;
+                    if (!Array.isArray(data) || data.length < 1) {
+                        return '[ ]';
+                    }
+
+                    let allow = '[';
+                    data.forEach(function(status) { allow += status.name + ', ' ; });
+                    return allow.slice(0,-2) + ']';
                 }
             },
             { 'data': null,

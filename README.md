@@ -2,6 +2,13 @@
 
 Platform where company can buy their place for the stand
 
+## Sumary
+* Getting started
+* Quick explanation
+* Debug - Log file
+* Model architecture
+* View architecture
+
 ## Getting started
 ### Required
 * MongoDB
@@ -25,17 +32,14 @@ Command Prompt
 "C:\Program Files\MongoDB\Server\3.4\bin\mongod.exe" --dbpath "d:\test\mongo db data"
 ```
 
+## Quick explanation
+TODO: j'ai la flem d'ecrire
+
 ## Debug - Log file
 Log is like an app diary, helpful for developer for debugging.<br/>
-Tag convention:
-* Controller: sails.log.warn([Controller].[action]: [message]);
-* Service: sails.log.warn([ServiceName]: [message]);
-Level convention:
-* when error occur: sails.log.error(err);
-* Info for debug: sails.log.debug(err);
-* Info for realtime debug: sails.log.info(err);
+Please take a look at FIE's log convention in [here](readme/log.md)
 
-## Model system
+## Model architecture
 Ideal model:
 - User: user for login method (passport)
 - Student extends<User>
