@@ -172,11 +172,15 @@
                 // footer
                 page_middle = $(window).width()/2;
                 $("#footer-content").html(
-                    '<svg height="220" width="'+ $(window).width() + '">'
+                    '<div style="text-align:center" class="center-column">'
+                        +'<img id="logo-img" src="/images/logo_noir.png" width="400" alt="logo"/>'
+                    +'</div>'
+                    /*'<svg height="220" width="'+ $(window).width() + '">'
                         +'<polygon points="0,50 0,150 ' + parseInt(page_middle + 50) + ',150 ' + parseInt(page_middle + 100) + ',50" style="fill:#F02FC2;" />'
                         +'<polygon points="'+ parseInt(page_middle - 50) + ',0 '+ parseInt(page_middle - 100)+',100 '+$(window).width()+',100 '+$(window).width()+',0" style="fill:#6094EA;" />'
                         +'Sorry, your browser does not support inline SVG.'
-                    +'</svg>'
+                    +'</svg>'*/
+                    
                 );
 
             }
