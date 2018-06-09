@@ -329,6 +329,16 @@ module.exports.routes = {
         view: 'SpeedJobDating/SJDDescription',
         locals: {layout: 'layout', title: 'Speed Job Dating - FIE'}
     },
+    
+    '/Conferences': {
+        view: 'Conferences/confDescription',
+        locals: {layout: 'layout', title: 'Conférences - FIE'}
+    },
+    
+    '/Ateliers': {
+        view: 'Ateliers/ateliersDescription',
+        locals: {layout: 'layout', title: 'Ateliers - FIE'}
+    },
 
     '/about': {
         view: 'About/Contact',
