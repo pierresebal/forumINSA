@@ -1,6 +1,6 @@
 header {
   text-align: left;
-  background-image : linear-gradient(to bottom right, #F02FC2, #6094EA);
+  background-image : linear-gradient(to bottom right, #86156b, #284d8b); /*#F02FC2, #6094EA*/
   width: 100%;
 }
 
@@ -100,6 +100,14 @@ h2, h3 {
       color: #7E7E7E;
       margin-bottom: 20px;
       text-align: justify;
+}
+
+.content img.bw {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
 }
 
 @media (max-width: 1030px){
