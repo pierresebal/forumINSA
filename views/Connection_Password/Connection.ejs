@@ -11,7 +11,7 @@
 <h1>Connexion</h1>
 
     <% if(typeof errMessage !== 'undefined' && errMessage.account)    { %>
-        <p style="color:red;font-size:12px%>"><%= errMessage.account? errMessage.account : '' %></p>
+        <p style="color:red;font-size:12px;"><%= errMessage.account? errMessage.account : '' %></p>
     <% } %>
 
 <% if (!req.session.authenticated) { %>
