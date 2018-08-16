@@ -129,6 +129,11 @@ module.exports.routes = {
         action: 'update'
     },
 
+    '/admin/company/create': {
+        controller: 'Admin/CompanyController',
+        action: 'create'
+    },
+
     '/admin/sells': {
         controller: 'AdminController',
         action: 'getSells'

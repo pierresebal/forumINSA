@@ -12,6 +12,9 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Entreprises inscrites</h3>
+                    <div class="box-tools">
+                        <a href="<%= sails.getUrlFor('Admin/CompanyController.create') %>" class="btn btn-primary"><i class="fa fa-plus"></i> Créer une nouvelle</a>
+                    </div>
                 </div>
                 <div class="box-body">
                     <%- partial('../templateDatatable/Company.ejs') %>
@@ -31,7 +34,6 @@
 $(document).ready(function() {
     var datatable = $('#datatable').DataTable( {
         responsive: true,
-        dom: 'Bfrtip',
         ajax: {
             'url': "<%= sails.getUrlFor('Admin/CompanyController.apiGetAll') %>",
             'dataSrc': ''

@@ -22,6 +22,9 @@
     <li><a href="/Forum">FORUM</a></li>
     <li><a href="/SJD">SPEED JOB DATING</a></li>
     <li><a href="/INSA">INSA TOULOUSE</a></li>
+    <li><a href="/Conferences">CONFÉRENCES</a></li>
+    <li><a href="/Ateliers">ATELIERS</a></li>
+    <li><a href="/About">À PROPOS</a></li>
     <% if (req.session.authenticated) { %>
       <% if(req.session.sessionType=="company"){%>
           <li class="dropdown">
@@ -51,9 +54,7 @@
       } else { %>
       <li><a href="<%= sails.getUrlFor('CompanyController.new') %>" style="color: #e42618">ESPACE ENTREPRISE</a></li> <!--En attendant que ca soit dans une popup -->
       <% } %>
-        <li><a href="/Conferences">CONFÉRENCES</a></li>
-        <li><a href="/Ateliers">ATELIERS</a></li>
-        <li><a href="/About">À PROPOS</a></li>
+
     </ul>
   </div>
 </nav>

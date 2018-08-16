@@ -7,6 +7,45 @@
 
 module.exports = {
 
+    create: function(req, res, next) {
+        if(!req.body)   {
+            return res.view('AdminLTE/Speciality/create', {
+                layout: 'Layout/AdminLTE',
+                speciality: {}
+            });
+        } else {
+            Speciality.create(req.body).exec((err, speciality) => {
+                if(err) {
+
+                    sails.log.error('[Admin/SpecialityController.create] error when create a speciality: ', err);
+
+                    // get error message from validator. (cf locale/*.json)
+                    for(var attribute of Object.keys(err.invalidAttributes))  {
+                        for(var error of err.Errors[attribute])    {
+                            req.addFlash(attribute, error.message);
+                        }
+                    }
+
+                    return res.view('AdminLTE/Speciality/create', {
+                        layout: 'Layout/AdminLTE',
+                        speciality: req.body
+                    });
+                }
+
+                if(!speciality || speciality.length === 0) {
+                    req.addFlash('warning', 'No speciality has been created');
+                    return res.view('AdminLTE/Speciality/create', {
+                        layout: 'Layout/AdminLTE',
+                        speciality: req.body
+                    });
+                }
+
+                req.addFlash('success', 'A new speciality created: ' + speciality.abbreviation);
+                return res.redirect(sails.getUrlFor('Admin/SpecialityController.listing'));
+            })
+        }
+    },
+
     listing: function (req, res) {
         return res.view('AdminLTE/Company/listing',  {
             layout: 'Layout/AdminLTE'

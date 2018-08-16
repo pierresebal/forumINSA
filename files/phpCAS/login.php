@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by Kihansi
- * Date: 05/10/2017
+ * Date: 05/10/2018
  * Doc can find at https://github.com/apereo/phpCAS/blob/master/docs/examples/example_simple.php
  */
 

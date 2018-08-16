@@ -30,7 +30,7 @@ Log file is stored in FIE/logs/*.log. For instance we only have app.log which co
 * Generate different log for different action (In the future transaction - online payment, modification in admin space, ...)
 
 ### Log configuration
-Normally, this step has been done by Kihansi95 - webmaster in 2017-2018 and it needs to be done once. <br/>
+Normally, this step has been done by Kihansi95 - webmaster in 2018-2018 and it needs to be done once. <br/>
 The following guide is for experience purpose.
 
 Reference: [http://sailsjs.com/documentation/reference/configuration/sails-config-log](http://sailsjs.com/documentation/reference/configuration/sails-config-log)

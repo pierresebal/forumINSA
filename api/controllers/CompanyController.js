@@ -50,7 +50,7 @@ module.exports = {
             SendMail.sendEmail({
                 destAddress: company.mailAddress,
                 objectS: "Confirmation de la création de votre compte",
-                messageS: '\n\nMadame/Monsieur ' + company.lastName + ', bonjour' +
+                messageS: '\nMadame/Monsieur ' + company.lastName + ', bonjour' +
                 "\n\nNous vous confirmons par l’envoi de ce mail que vous avez créé un compte pour votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
                 '\nhttps://' + sails.config.configFIE.FIEdomainName + "/Company/ActivateCompany?url=" + company.activationUrl + '&email=' + company.mailAddress +
                 "\n\nVous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
@@ -58,7 +58,7 @@ module.exports = {
                 "\n\nLe site étant récent il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
                 '\n\nNous vous remercions de votre confiance et avons hâte de vous rencontrer le 23 octobre prochain.' +
                 "\nCordialement,\nL'équipe FIE 2018",
-                messageHTML: '<br /><br /><p>Madame/Monsieur ' + company.lastName + ', bonjour' +
+                messageHTML: '<br /><p>Madame/Monsieur ' + company.lastName + ', bonjour' +
                 "<br /><br />Nous vous confirmons par l’envoi de ce mail que vous avez créé un compte pour votre entreprise sur le site du Forum INSA Entreprises. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
                 '<br /><a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/ActivateCompany?url=' + company.activationUrl + '&email=' + company.mailAddress + '">Cliquez ici</a>' +
                 "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
