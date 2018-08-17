@@ -35,6 +35,27 @@ module.exports = {
         }
 
     },
+    
+    generate: function(req, res) {
+        let default_status = [
+            {name: 'Start-up'}, {name: 'PME'}, {name: 'GE'}, {name: 'Bureaux locaux de grand groupe'}, {name: 'GE'}
+        ];
+        CompanyStatus.create(default_status).exec((err, status) => {
+            if(err) {
+                sails.log.error('[Admin/CompanyStatusController.generate] error when create new status: ', err);
+                req.addFlash('danger', 'An error occured : '+err);
+                return res.redirect(sails.getUrlFor('Admin/CompanyStatusController.listing'));
+            }
+    
+            if(!status || status.length === 0) {
+                req.addFlash('warning', 'No status has been created');
+                return res.redirect(sails.getUrlFor('Admin/CompanyStatusController.listing'));
+            }
+    
+            req.addFlash('success', 'Status have been generated');
+            return res.redirect(sails.getUrlFor('Admin/CompanyStatusController.listing'));
+        })
+    },
 
     apiGetAll: function(req, res) {
         CompanyStatus.find().exec((err, status) => {

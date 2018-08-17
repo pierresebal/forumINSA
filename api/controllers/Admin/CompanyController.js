@@ -55,7 +55,6 @@ module.exports = {
                             return res.view('AdminLTE/Company/update', {
                                 layout: 'Layout/AdminLTE',
                                 company: company,
-                                typesCompany: Company.definition.type.enum,
                                 sells: sells,
                                 allStatus: status,
                                 specialities: specialities
@@ -98,8 +97,7 @@ module.exports = {
         //if(!req.body)   {
             return res.view('AdminLTE/Company/create', {
                 layout: 'Layout/AdminLTE',
-                company: {},
-                typesCompany: Company.definition.type.enum
+                company: {}
             });
         /*} else {
             Company.create(req.body).exec((err, company) => {

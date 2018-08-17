@@ -25,17 +25,6 @@
                         <div class="form-group">
                             <label for="type" class="col-sm-3 control-label">Status</label>
                             <div class="col-sm-9">
-                                <select class="form-control" name="type">
-                                    <% typesCompany.forEach(function(type) { %>
-                                    <option value="<%= type %>" <%=  type == company.type ? 'selected' : '' %>><%= type %></option>
-                                    <% }); %>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="type" class="col-sm-3 control-label">Status version 2</label>
-                            <div class="col-sm-9">
                                 <select class="form-control" name="status">
                                     <% allStatus.forEach(function(status) { %>
                                     <option value="<%= status.name %>" <%= company.status && status.name == company.status.name ? 'selected' : '' %>><%= status.name %></option>

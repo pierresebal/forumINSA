@@ -190,6 +190,11 @@ module.exports.routes = {
         action: 'create'
     },
     
+    '/admin/companystatus/generate': {
+        controller: 'Admin/CompanyStatusController',
+        action: 'generate'
+    },
+    
     '/admin/vigipirate/student': {
         controller: 'Admin/VigipirateController',
         action: 'listingParticipatingStudent'

@@ -183,11 +183,12 @@ module.exports = {
             type: 'string'
         },
 
+        /*
         type:   {
             type: 'string',
             enum: ['Start-up', 'PME', 'Bureaux locaux de grand groupe', 'ETI', 'GE'],
             required: true
-        },
+        },*/
 
         status: {
             model: 'CompanyStatus'
