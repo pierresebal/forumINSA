@@ -7,45 +7,6 @@
 
 module.exports = {
 
-    create: function(req, res, next) {
-        if(!req.body)   {
-            return res.view('AdminLTE/Speciality/create', {
-                layout: 'Layout/AdminLTE',
-                speciality: {}
-            });
-        } else {
-            Speciality.create(req.body).exec((err, speciality) => {
-                if(err) {
-
-                    sails.log.error('[Admin/SpecialityController.create] error when create a speciality: ', err);
-
-                    // get error message from validator. (cf locale/*.json)
-                    for(var attribute of Object.keys(err.invalidAttributes))  {
-                        for(var error of err.Errors[attribute])    {
-                            req.addFlash(attribute, error.message);
-                        }
-                    }
-
-                    return res.view('AdminLTE/Speciality/create', {
-                        layout: 'Layout/AdminLTE',
-                        speciality: req.body
-                    });
-                }
-
-                if(!speciality || speciality.length === 0) {
-                    req.addFlash('warning', 'No speciality has been created');
-                    return res.view('AdminLTE/Speciality/create', {
-                        layout: 'Layout/AdminLTE',
-                        speciality: req.body
-                    });
-                }
-
-                req.addFlash('success', 'A new speciality created: ' + speciality.abbreviation);
-                return res.redirect(sails.getUrlFor('Admin/SpecialityController.listing'));
-            })
-        }
-    },
-
     listing: function (req, res) {
         return res.view('AdminLTE/Company/listing',  {
             layout: 'Layout/AdminLTE'
@@ -53,11 +14,11 @@ module.exports = {
     },
 
     update: function(req, res, next) {
-        if(!req.param('siret')) {
+        if (!req.param('siret')) {
             sails.log.error('[Admin/CompanyController.update] siret param not found');
             return res.serverError();
 
-        } else if(!req.body)   {
+        } else if (!req.body) {
 
             // as no query has been sent, display the update with information
             Company.findOne({siret: req.param('siret')}).populate('status').populate('specialities').exec((err, company) => {
@@ -112,7 +73,6 @@ module.exports = {
             // handle query
             let params = req.allParams();
             delete params.siret;
-
             Company.update({siret: req.param('siret') }, params).exec((err, updated) => {
 
                 if(err) {
@@ -132,6 +92,45 @@ module.exports = {
                 }
             });
         }
+    },
+
+    create: function(req, res, next) {
+        //if(!req.body)   {
+            return res.view('AdminLTE/Company/create', {
+                layout: 'Layout/AdminLTE',
+                company: {}
+            });
+        /*} else {
+            Company.create(req.body).exec((err, company) => {
+                if(err) {
+
+                    sails.log.error('[Admin/CompanyController.create] error when create a company: ', err);
+
+                    // get error message from validator. (cf locale/*.json)
+                    for(var attribute of Object.keys(err.invalidAttributes))  {
+                        for(var error of err.Errors[attribute])    {
+                            req.addFlash(attribute, error.message);
+                        }
+                    }
+
+                    return res.view('AdminLTE/Company/create', {
+                        layout: 'Layout/AdminLTE',
+                        company: req.body
+                    });
+                }
+
+                if(!company || company.length === 0) {
+                    req.addFlash('warning', 'No speciality has been created');
+                    return res.view('AdminLTE/Company/create', {
+                        layout: 'Layout/AdminLTE',
+                        company: req.body
+                    });
+                }
+
+                req.addFlash('success', 'A new company has been created: ' + company.abbreviation);
+                return res.redirect(sails.getUrlFor('Admin/CompanyController.listing'));
+            })
+        }*/
     },
 
     apiGetAll: function (req, res) {
