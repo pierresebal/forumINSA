@@ -98,7 +98,8 @@ module.exports = {
         //if(!req.body)   {
             return res.view('AdminLTE/Company/create', {
                 layout: 'Layout/AdminLTE',
-                company: {}
+                company: {},
+                typesCompany: Company.definition.type.enum
             });
         /*} else {
             Company.create(req.body).exec((err, company) => {
