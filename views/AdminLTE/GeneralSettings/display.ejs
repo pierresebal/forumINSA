@@ -1,0 +1,135 @@
+<section class="content-header">
+    <h1>Paramètre général</h1>
+    <ol class="breadcrumb">
+        <li><a href="<%= sails.getUrlFor('AdminController.home') %>"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Paramètre général du site</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title"> Configuration pour l'année <%= year %> </h3>
+                </div>
+                <form role="form" class="form-horizontal" method="POST" action="<%= sails.getUrlFor('Admin/SettingsController.updateYearSettings') %>">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-8 control-label">Prix pour un repas supplémentaire</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="mealPrice" value="<%= yearSettings.mealPrice %>"/>
+                                    <span class="input-group-addon">€</span>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 style="background-color:#f7f7f7; font-size: 18px; text-align: center; padding: 7px 10px; margin-top: 0;">
+                            Pour les grandes entreprises
+                        </h4>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-8 control-label">Prix du forum</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="forumPrice" value="<%= yearSettings.forumPrice %>">
+                                    <span class="input-group-addon">€</span>
+                                </div></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-8 control-label">Prix du SJD</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="sjdPrice" value="<%= yearSettings.sjdPrice %>">
+                                    <span class="input-group-addon">€</span>
+                                </div></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-8 control-label">Prix d'une session supplémentaire au SJD</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="sjdSessionPrice" value="<%= yearSettings.sjdSessionPrice %>">
+                                    <span class="input-group-addon">€</span>
+                                </div></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-8 control-label">Prix du pack premium</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="premiumPrice" value="<%= yearSettings.premiumPrice %>">
+                                    <span class="input-group-addon">€</span>
+                                </div></div>
+                        </div>
+
+                        <h4 style="background-color:#f7f7f7; font-size: 18px; text-align: center; padding: 7px 10px; margin-top: 0;">
+                            Pour les PME
+                        </h4>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-8 control-label">Prix du forum</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="forumPricePME" value="<%= yearSettings.forumPricePME %>">
+                                    <span class="input-group-addon">€</span>
+                                </div></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-8 control-label">Prix du SJD</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="sjdPricePME" value="<%= yearSettings.sjdPricePME %>">
+                                    <span class="input-group-addon">€</span>
+                                </div></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-8 control-label">Prix d'une session supplémentaire au SJD</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="sjdSessionPricePME" value="<%= yearSettings.sjdSessionPricePME %>">
+                                    <span class="input-group-addon">€</span>
+                                </div></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-8 control-label">Prix du pack premium</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="premiumPricePME" value="<%= yearSettings.premiumPricePME %>">
+                                    <span class="input-group-addon">€</span>
+                                </div></div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="reset" class="btn btn-success pull-left">Réinitialiser</button>
+                        <button type="submit" class="btn btn-info pull-right">Sauvegarder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Configuration pour le site</h3>
+                </div>
+                <form role="form" method="POST" action="<%= sails.getUrlFor('Admin/SettingsController.updateGeneralSettings') %>">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label>Date limite d'inscription</label>
+
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" type="date" value="<%= generalSettings.inscriptionDeadline%>">
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-info pull-right">Sauvegarder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+

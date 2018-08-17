@@ -108,6 +108,20 @@ module.exports.routes = {
     },
     
     /*-------------  new admin ------------------*/
+    '/admin/settings' : {
+        controller: 'Admin/SettingsController',
+        action: 'display'
+    },
+    
+    'POST /admin/settings/yearsettings' : {
+        controller: 'Admin/SettingsController',
+        action: 'updateYearSettings'
+    },
+    
+    'POST /admin/settings/generalsettings' : {
+        controller: 'Admin/SettingsController',
+        action: 'updateGeneralSettings'
+    },
     
     '/admin/students': {
         controller: 'Admin/StudentController',

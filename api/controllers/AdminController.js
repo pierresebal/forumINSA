@@ -63,9 +63,7 @@ module.exports = {
 
     setPrices: function (req, res) {
         var year = new Date().getFullYear();
-
-        console.log('setPrices');
-
+        
         YearSettings.findOne({year: year}).exec((err, settings) => {
             if (err) {
                 console.log('year not found and not created')
@@ -225,25 +223,6 @@ module.exports = {
 
                 return res.view('Admin/Sells', {layout: 'layout', sells: sells, companiesMail: companiesMail})
             })
-        })
-    },
-
-    setDidPay: function (req, res) {
-        var siret = req.param('siret')
-        var didPay = req.param('didPay')
-        var yearTargeted = req.param('year')
-
-        Sells.update({companySiret: siret, year: yearTargeted}, {didPay: didPay}).exec((err, updated) => {
-            if (err) {
-                console.log('error : ' + err)
-                return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Erreur lors de la mise à jour.'})
-            }
-
-            if (!updated) {
-                return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Aucune entreprise trouvée avec ce siret.'})
-            }
-
-            return res.redirect('/Admin/Sells')
         })
     },
 
@@ -521,44 +500,7 @@ module.exports = {
             })
         })
     },
-/*
-    getCompany: function(req, res)  {
-        // find company by id and show it
-
-        Company.findOne(req.allParams()).exec((err, company) => {
-            if(err)  {
-                sails.log.error('[AdminController.getCompany] an error occured when find a company :');
-                sails.log.error(err);
-                return res.serverError();
-            }
-
-            if(!company) {
-                return res.view('ErrorPage', {
-                    layout: 'layout',
-                    ErrorTitle: "L'entreprise au siret " + req.param('siret') + " n'existe pas."
-                });
-            }
-
-            Sells.find({companySiret: company.siret}).exec((err, sells) => {
-                if(err)  {
-                    sails.log.error('[AdminController.getCompany] an error occured when find a sell:');
-                    sails.log.error(err);
-                    return res.serverError();
-                }
-
-                let sellsExist = sells.length > 0;
-
-                return res.view('Admin/CompanyInfo', {
-                    layout: 'layout',
-                    company: company,
-                    sells: sells,
-                    sellsExist: sellsExist
-                });
-            })
-        });
-    },
-*/
-
+    
     updateSell: function(req, res, next)  {
 
         if(!req.param('id'))    {
@@ -673,9 +615,7 @@ module.exports = {
 
 
     },
-
-
-
+    
     //datatables -----------
 
     getSells: function(req, res)    {
