@@ -94,12 +94,13 @@ module.exports = {
     },
 
     create: function(req, res, next) {
-        //if(!req.body)   {
+
+        if(!req.body)   {
             return res.view('AdminLTE/Company/create', {
                 layout: 'Layout/AdminLTE',
                 company: {}
             });
-        /*} else {
+        } else {
             Company.create(req.body).exec((err, company) => {
                 if(err) {
 
@@ -129,7 +130,7 @@ module.exports = {
                 req.addFlash('success', 'A new company has been created: ' + company.abbreviation);
                 return res.redirect(sails.getUrlFor('Admin/CompanyController.listing'));
             })
-        }*/
+        }
     },
 
     apiGetAll: function (req, res) {
