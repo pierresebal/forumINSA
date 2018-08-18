@@ -134,7 +134,6 @@ module.exports.routes = {
         action: 'update'
     },
     
-    
     '/admin/sells': {
         controller: 'AdminController',
         action: 'getSells'
