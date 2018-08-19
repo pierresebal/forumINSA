@@ -348,21 +348,21 @@
   <form  id="interests" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
     <table>
       <tr>
-        <td><input type="checkbox" name="IR" id="IR" <%= company.IR? 'checked' : '' %>/><label for="IR">Informatique et Réseaux</label></td>
-        <td><input type="checkbox" name="AE" id="AE" <%= company.AE? 'checked' : '' %>/><label for="AE">Génie Automatique et Électronique</label></td>
+        <td><input type="checkbox" name="IR" id="IR" <%= company.IR? 'checked' : '' %>/><label for="IR">&nbsp;Informatique et Réseaux</label></td>
+        <td><input type="checkbox" name="AE" id="AE" <%= company.AE? 'checked' : '' %>/><label for="AE">&nbsp;Automatique, Électronique</label></td>
         <td rowspan="4"><button  type="submit" >Enregistrer</button></td>
       </tr>
       <tr>
-        <td><input type="checkbox" name="GP" id="GP" <%= company.GP? 'checked' : '' %>/><label for="GP">Génie Physique</label></td>
-        <td><input type="checkbox" name="GB" id="GB" <%= company.GB? 'checked' : '' %>/><label for="GB">Génie Biochimique</label></td>
+        <td><input type="checkbox" name="GP" id="GP" <%= company.GP? 'checked' : '' %>/><label for="GP">&nbsp;Génie Physique</label></td>
+        <td><input type="checkbox" name="GB" id="GB" <%= company.GB? 'checked' : '' %>/><label for="GB">&nbsp;Génie Biologique</label></td>
       </tr>
       <tr>
-        <td><input type="checkbox" name="GPE" id="GPE" <%= company.GPE? 'checked' : '' %>/><label for="GPE">Génie des Procédés</label></td>
-        <td><input type="checkbox" name="GC" id="GC" <%= company.GC? 'checked' : '' %>/><label for="GC">Génie Civil</label></td>
+        <td><input type="checkbox" name="GPE" id="GPE" <%= company.GPE? 'checked' : '' %>/><label for="GPE">&nbsp;Génie des Procédés et Environnement</label></td>
+        <td><input type="checkbox" name="GC" id="GC" <%= company.GC? 'checked' : '' %>/><label for="GC">&nbsp;Génie Civil</label></td>
       </tr>
       <tr>
-        <td><input type="checkbox" name="GM" id="GM" <%= company.GM? 'checked' : '' %>/><label for="GM">Génie Mécanique</label></td>
-        <td><input type="checkbox" name="GMM" id="GMM" <%= company.GMM? 'checked' : '' %>/><label for="GMM">Génie Mathématiques Appliqués</label></td>
+        <td><input type="checkbox" name="GM" id="GM" <%= company.GM? 'checked' : '' %>/><label for="GM">&nbsp;Génie Mécanique</label></td>
+        <td><input type="checkbox" name="GMM" id="GMM" <%= company.GMM? 'checked' : '' %>/><label for="GMM">&nbsp;Mathématiques appliquées</label></td>
       </tr>
     </table>
   </form>
