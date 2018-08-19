@@ -389,7 +389,7 @@ module.exports = {
                 return res.view('ErrorPage', {
                     layout: 'layout',
                     ErrorTitle: 'Accès non autorisé',
-                    ErrorDesc: 'Pour avoir accès à cette pages, vous devez d\'abord passer commande.'
+                    ErrorDesc: 'Pour avoir accès à cette page, vous devez d\'abord passer commande.'
                 })
             }
         })

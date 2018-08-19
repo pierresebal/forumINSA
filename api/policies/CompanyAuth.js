@@ -16,7 +16,7 @@ module.exports = function(req, res, next) {
     return next();
   }
   else {
-      errMessage = {account: 'Vous devez être connecté comme entreprise pour acceder à cette pages'};
+      errMessage = {account: 'Vous devez être connecté comme entreprise pour acceder à cette page'};
       return res.view('Connection_Password/Connection', {
           nexturl:req.originalUrl,
           errMessage: errMessage,

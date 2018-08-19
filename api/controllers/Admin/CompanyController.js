@@ -120,29 +120,7 @@ module.exports = {
                         layout: 'Layout/AdminLTE',
                         company: req.body
                     });
-                }
-
-                // We send an email with the function send email contained inside services/SendMail.js
-                SendMail.sendEmail({
-                    destAddress: company.mailAddress,
-                    objectS: "Confirmation de la création de votre compte",
-                    messageS: '\nMadame/Monsieur ' + company.lastName + ', bonjour' +
-                    "\n\nNous vous confirmons par l’envoi de ce mail que nous avons créé un compte pour votre entreprise sur le site Forum by INSA. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
-                    '\nhttps://' + sails.config.configFIE.FIEdomainName + "/Company/ActivateCompany?url=" + company.activationUrl + '&email=' + company.mailAddress +
-                    "\n\nVous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
-                    '\n\nNous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
-                    "\n\nLe site ayant été mis à jour récemment, il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
-                    '\n\nNous vous remercions de votre confiance et avons hâte de vous rencontrer le 23 octobre prochain.' +
-                    "\nCordialement,\nL'équipe FIE 2018",
-                    messageHTML: '<br /><p>Madame/Monsieur ' + company.lastName + ', bonjour' +
-                    "<br /><br />Nous vous confirmons par l’envoi de ce mail que nous avons créé un compte pour votre entreprise sur le site du Forum by INSA. Nous vous invitons maintenant à cliquer sur le lien suivant afin d'activer votre compte :" +
-                    '<br /><a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/ActivateCompany?url=' + company.activationUrl + '&email=' + company.mailAddress + '">Cliquez ici</a>' +
-                    "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
-                    '<br /><br />Nous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
-                    "<br /><br />Le site ayant été mis à jour récemment, il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
-                    '<br /><br />Nous vous remercions de votre confiance et avons hâte de vous rencontrer le 23 octobre prochain.</p>' +
-                    "<p>Cordialement,<br />L'équipe FIE 2018</p>"
-                });
+                }           
 
                 req.addFlash('success', 'A new company has been created: ' + company.companyName);
                 return res.redirect(sails.getUrlFor('Admin/CompanyController.listing'));
@@ -181,8 +159,36 @@ module.exports = {
                 return res.json(500, {msg: 'no company updated'});
             }
 
-            sails.log.info('[Admin/CompanyController.apiUpdate] updated Company '+ companies[0].companyName);
-            return res.json(200, {msg: 'Company ' + companies[0].companyName + ' has updated info !'});
+            let company = companies[0];
+            sails.log.info('[Admin/CompanyController.apiUpdate] updated Company '+ company.companyName);
+
+            if (params.active !== undefined) {
+                if (params.active) {
+                    // We send an email with the function send email contained inside services/SendMail.js
+                    SendMail.sendEmail({
+                        destAddress: company.mailAddress,
+                        objectS: "Confirmation de la création de votre compte",
+                        messageS: '\nMadame/Monsieur ' + company.lastName + ', bonjour' +
+                        "\n\nNous vous confirmons par l’envoi de ce mail que nous avons créé un compte pour votre entreprise sur le site Forum by INSA. Nous vous invitons maintenant à cliquer sur le lien suivant afin de vous connecter à votre espace :" +
+                        '\nhttps://' + sails.config.configFIE.FIEdomainName + "/Company/" +
+                        "\n\nVous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
+                        '\n\nNous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
+                        "\n\nLe site ayant été mis à jour récemment, il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
+                        '\n\nNous vous remercions de votre confiance et avons hâte de vous rencontrer le 23 octobre prochain.' +
+                        "\nCordialement,\nL'équipe FIE 2018",
+                        messageHTML: '<br /><p>Madame/Monsieur ' + company.lastName + ', bonjour' +
+                        "<br /><br />Nous vous confirmons par l’envoi de ce mail que nous avons créé un compte pour votre entreprise sur le site du Forum by INSA. Nous vous invitons maintenant à cliquer sur le lien suivant afin de vous connecter à votre espace :" +
+                        '<br /><a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/' + '">Cliquez ici</a>' +
+                        "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
+                        '<br /><br />Nous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
+                        "<br /><br />Le site ayant été mis à jour récemment, il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
+                        '<br /><br />Nous vous remercions de votre confiance et avons hâte de vous rencontrer le 23 octobre prochain.</p>' +
+                        "<p>Cordialement,<br />L'équipe FIE 2018</p>"
+                    });
+                }
+            }
+
+            return res.json(200, {msg: 'Company ' + company.companyName + ' has updated info !'});
 
         });
     }
