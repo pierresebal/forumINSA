@@ -503,11 +503,11 @@ module.exports = {
     
     updateSell: function(req, res, next)  {
 
-        if(!req.param('id'))    {
+        if (!req.param('id'))    {
             sails.log.error('[AdminController.updateSell] id param not found');
             return res.serverError();
 
-        }   else if(!req.body)   {
+        } else if (!req.body)   {
 
             // get params
             Sells.findOne({id: req.param('id')}).exec((err, sell) => {
@@ -527,7 +527,7 @@ module.exports = {
                 });
             });
 
-        }   else    {
+        } else {
 
             // handle query
             let params = req.allParams();
