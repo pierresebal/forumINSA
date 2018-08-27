@@ -171,7 +171,7 @@ module.exports = {
         forum: {
             type: 'boolean',
             required: true,
-            defaultsTo: true
+            defaultsTo: false
         },
 
         sjd: {
@@ -313,7 +313,7 @@ module.exports = {
     },
 
     // lifecycle callback
-    beforeValidate: function(data, next)   {
+    beforeValidate: function(data, next) {
         // turn to boolean (need to cleaning this attribute)
         specitalities = ['AE', 'GB', 'GP', 'GMM', 'GM', 'GPE', 'IR', 'GC'];
         for (spe of specitalities) {
@@ -322,6 +322,7 @@ module.exports = {
         }
         options = ['forum', 'sjd'];
         for (opt of options) {
+            sails.log.info(data[opt])
             if (typeof data[opt] !== 'boolean')
                 data[opt] = data[opt] === 'on'; // convert to boolean
         }
