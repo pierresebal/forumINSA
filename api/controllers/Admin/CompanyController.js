@@ -102,7 +102,7 @@ module.exports = {
             });
         } else {
             Company.create(req.body).exec((err, company) => {
-                if(err) {
+                if (err) {
 
                     sails.log.error('[Admin/CompanyController.create] error when create a company: ', err);
 
@@ -113,17 +113,175 @@ module.exports = {
                         company: req.body
                     });
                 }
-
-                if(!company || company.length === 0) {
+                else if (!company || company.length === 0) {
                     req.addFlash('warning', 'No company has been created');
                     return res.view('AdminLTE/Company/create', {
                         layout: 'Layout/AdminLTE',
                         company: req.body
                     });
-                }           
 
-                req.addFlash('success', 'A new company has been created: ' + company.companyName);
-                return res.redirect(sails.getUrlFor('Admin/CompanyController.listing'));
+                } else {
+                    sails.log.info(company.siret)
+
+                    // Create  the sell
+                    
+                        var year = new Date().getFullYear();
+                        var month = new Date().getMonth();
+                        month++;
+                
+                
+                            YearSettings.findOne({year: year}).exec((err, found2) => {
+                                    if (err) {
+                                        return err;
+                                    }
+                
+                                    /* Traitement des informations de ventes */
+                                    var forum, sjd;
+                                    if (company.sjd) {
+                                        forum = false;
+                                        sjd = true;
+                                    } else if (company.forum) {
+                                        forum = true;
+                                        sjd = false;
+                                    }
+                
+                                    var moreMeal = company.moreMeal;
+                                    var mealPrice = found2.mealPrice;
+                                    var forumPrice = found2.forumPrice;
+                                    var sjdPrice = found2.sjdPrice;
+                
+                                    GeneralSettings.findOne({id: 1}).exec((err, found) => {
+                                        if (err) {
+                                            return err;
+                                        }
+                
+                                        // Creation du numéro de facture entier
+                                        var fullBillNumber = found.billNumberMonth * 1000000 + month * 10000 + year;
+                
+                                        /* Creation de la vente */
+                                        Sells.create({
+                                            year: year,
+                                            companySiret: company.siret,
+                                            companyName: company.companyName,
+                                            companyType: company.type,
+                                            forum: forum,
+                                            forumPrice: forumPrice,
+                                            sjd: sjd,
+                                            sjdPrice: sjdPrice,
+                                            moreMeal: moreMeal,
+                                            mealPrice: mealPrice,
+                                            billNumber: fullBillNumber
+                                        }).exec((err, created) => {
+                                            if (err) {
+                                                sails.log.error('[SellsController.addASell] error when create sells: ');
+                                                sails.log.error(err);
+                                            }
+                
+                                            GeneralSettings.update({id: 1}, {billNumberMonth: found.billNumberMonth + 1}).exec((err, updated) => {
+                                                if (err) {
+                                                    sails.log.error('[SellsController.addASell] error when update GeneralSettings: ');
+                                                    sails.log.error(err);
+                                                }
+                
+                                                var pdf = require('html-pdf');
+                                                var fs = require('fs');
+                
+                                                var contenu = fs.readFileSync('files/facture_template/facture_template.html').toString();
+                                                var date = new Date();
+                
+                                                var companyAddress = company.road + '<br />' + company.complementaryInformation;
+                                                if (company.complementaryInformation !== '') {
+                                                    companyAddress = companyAddress + '<br />';
+                                                }
+                                                companyAddress = companyAddress + company.postCode + ' ' + company.city + '<br />' + company.country;
+                
+                                                var product, productPrice;
+                                                if (forum === true) {
+                                                    product = 'Stand Forum';
+                                                    productPrice = forumPrice;
+                                                } else if (sjd === true) {
+                                                    product = 'Stand Forum + Speed Job Dating';
+                                                    productPrice = sjdPrice;
+                                                }
+                
+                                                // Création de la facture en format HTML
+                                                contenu = contenu.replace('@year', date.getFullYear())
+                                                contenu = contenu.replace('@billNumber', fullBillNumber.toString())
+                                                contenu = contenu.replace('@date', date.getDate() + '/' + (date.getMonth() + 1).toString() + '/' + date.getFullYear())
+                                                contenu = contenu.replace('@companyName', company.companyName)
+                                                contenu = contenu.replace('@siret', company.siret)
+                                                contenu = contenu.replace('@companyAddress', companyAddress)
+                                                contenu = contenu.replace('@forum', product)
+                                                contenu = contenu.replace('@forumPrice', productPrice)
+                                                contenu = contenu.replace('@moreMeal', moreMeal)
+                                                contenu = contenu.replace('@mealPrice', mealPrice)
+                                                contenu = contenu.replace('@totalMealPrice', moreMeal * mealPrice)
+                                                contenu = contenu.replace('@totalTTC', productPrice + moreMeal * mealPrice)
+                
+                                                var options = {format: 'A4', orientation: 'portrait', border: '1cm'}
+                
+                                                sails.log.info("ICI")
+                
+                                                pdf.create(contenu, options).toFile('files/factures/' + year + '/' + company.siret + '.pdf', function afterwards(err) {
+                                                    if (err) {
+                                                        sails.log.error('[SellsController.addASell] error when create pdf: ');
+                                                        sails.log.error(err);
+                                                    }
+                                                    sails.log.info("LA")
+                                                    sails.log.info(company.mailAddress)
+                                                    // Envoi du mail de facture
+                                                    SendMail.sendEmail({
+                                                        destAddress: company.mailAddress,
+                                                        //Bcc: 'contact@foruminsaentreprises.fr',
+                                                        objectS: 'Confirmation de commande',
+                                                        messageS: '\n\nBonjour,' +
+                                                        '\n\nNous vous confirmons que la commande de prestation pour le FIE a été prise en compte. Vous trouverez ci-joint la facture correspondante.' +
+                                                        '\n\nSi vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : contact@foruminsaentreprises.fr' +
+                                                        '\n\nDans le cas où le plan vigipirate serait maintenu, vous serez recontactés peu de temps avant le forum afin d\'enregistrer les noms de vos représentants. Une pièce d\'identité vous sera alors nécessaire.' +
+                                                        '\n\nLe paiement doit être fait avant le 23 octobre 2018 par virement (RIB en pièce jointe) ou par chèque à l\'ordre du FORUM INSA ENTREPRISES et envoyé à l\'adresse :' +
+                                                        '\nAmicale - Forum INSA Entreprises' +
+                                                        '\n135 Avenue de rangueil,' +
+                                                        '\n31400 Toulouse FRANCE' +
+                                                        '\n\nNous vous remercions pour votre participation et avons hâte de vous rencontrer le 23 octobre prochain !' +
+                                                        "\n\nCordialement,\nL'équipe FIE " + date.getFullYear(), // plaintext body
+                                                        messageHTML: '<br /><br />Bonjour,' +
+                                                        '<br /><br />Nous vous confirmons que la commande de prestation pour le FIE a été prise en compte. Vous trouverez ci-joint la facture correspondante.' +
+                                                        '<br /><br />Si vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : contact@foruminsaentreprises.fr' +
+                                                        "<br /><br />Dans le cas où le plan vigipirate serait maintenu, vous serez recontactés peu de temps avant le forum afin d'enregistrer les noms de vos représentants. Une pièce d'identité vous sera alors nécessaire." +
+                                                        "<br /><br />Le paiement doit être fait avant le 23 octobre 2018 par virement (RIB en pièce jointe) ou par chèque à l'ordre du FORUM INSA ENTREPRISES et envoyé à l'adresse :" +
+                                                        '<br />Amicale - Forum INSA Entreprises' +
+                                                        '<br />135 Avenue de rangueil,' +
+                                                        '<br />31400 Toulouse FRANCE' +
+                                                        '<br /><br />Nous vous remercions pour votre participation et avons hâte de vous rencontrer le 23 octobre prochain !' +
+                                                        "<br /><br />Cordialement,<br />L'équipe FIE " + date.getFullYear(),
+                                                        attachments: [{filename: 'facture.pdf', filePath: 'files/factures/' + year + '/' + company.siret + '.pdf'}, {filename: 'RIB-FIE.pdf', filePath: 'files/facture_template/RIB-FIE.pdf'}]
+                                                    });
+                                                    sails.log.info("ET LA")
+                                                    if (created.sjd) {
+                                                        Sjd.create({
+                                                            year: year,
+                                                            companyName: company.companyName,
+                                                            companySiret: company.siret,
+                                                            sessionNb: 1
+                                                        })
+                                                            .exec((err, record) => {
+                                                                if (err) {
+                                                                    sails.log.error('[SellsController.addASell] error when create a sjd: ');
+                                                                    sails.log.error(err);
+                                                                }
+                                                            })
+                                                        }
+                                                })
+                                            })
+                                        })
+                                    })
+                                })
+                
+                    
+
+                    req.addFlash('success', 'A new company has been created: ' + company.companyName);
+                    return res.redirect(sails.getUrlFor('Admin/CompanyController.listing'));
+                } 
             })
         }
     },
@@ -191,6 +349,157 @@ module.exports = {
             return res.json(200, {msg: 'Company ' + company.companyName + ' has updated info !'});
 
         });
+    },
+
+    addASell: function (company) {
+        var year = new Date().getFullYear();
+        var month = new Date().getMonth();
+        month++;
+
+        YearSettings.findOne({year: year}).exec((err, found2) => {
+            if (err) {
+                return err;
+            }
+
+            /* Traitement des informations de ventes */
+            var forum, sjd;
+            if (company.sjd) {
+                forum = false;
+                sjd = true;
+            } else if (company.forum) {
+                forum = true;
+                sjd = false;
+            }
+
+            var moreMeal = company.moreMeal;
+            var mealPrice = found2.mealPrice;
+            var forumPrice = found2.forumPrice;
+            var sjdPrice = found2.sjdPrice;
+
+            GeneralSettings.findOne({id: 1}).exec((err, found) => {
+                if (err) {
+                    return err;
+                }
+
+                // Creation du numéro de facture entier
+                var fullBillNumber = found.billNumberMonth * 1000000 + month * 10000 + year;
+
+                /* Creation de la vente */
+                Sells.create({
+                    year: year,
+                    companySiret: company.siret,
+                    companyName: company.companyName,
+                    companyType: company.type,
+                    forum: forum,
+                    forumPrice: forumPrice,
+                    sjd: sjd,
+                    sjdPrice: sjdPrice,
+                    moreMeal: moreMeal,
+                    mealPrice: mealPrice,
+                    billNumber: fullBillNumber
+                }).exec((err, created) => {
+                    if (err) {
+                        sails.log.error('[SellsController.addASell] error when create sells: ');
+                        sails.log.error(err);
+                    }
+
+                    GeneralSettings.update({id: 1}, {billNumberMonth: found.billNumberMonth + 1}).exec((err, updated) => {
+                        if (err) {
+                            sails.log.error('[SellsController.addASell] error when update GeneralSettings: ');
+                            sails.log.error(err);
+                        }
+
+                        var pdf = require('html-pdf');
+                        var fs = require('fs');
+
+                        var contenu = fs.readFileSync('files/facture_template/facture_template.html').toString();
+                        var date = new Date();
+
+                        var companyAddress = company.road + '<br />' + company.complementaryInformation;
+                        if (company.complementaryInformation !== '') {
+                            companyAddress = companyAddress + '<br />';
+                        }
+                        companyAddress = companyAddress + company.postCode + ' ' + company.city + '<br />' + company.country;
+
+                        var product, productPrice;
+                        if (forum === true) {
+                            product = 'Stand Forum';
+                            productPrice = forumPrice;
+                        } else if (sjd === true) {
+                            product = 'Stand Forum + Speed Job Dating';
+                            productPrice = sjdPrice;
+                        }
+
+                        // Création de la facture en format HTML
+                        contenu = contenu.replace('@year', date.getFullYear())
+                        contenu = contenu.replace('@billNumber', fullBillNumber.toString())
+                        contenu = contenu.replace('@date', date.getDate() + '/' + (date.getMonth() + 1).toString() + '/' + date.getFullYear())
+                        contenu = contenu.replace('@companyName', company.companyName)
+                        contenu = contenu.replace('@siret', company.siret)
+                        contenu = contenu.replace('@companyAddress', companyAddress)
+                        contenu = contenu.replace('@forum', product)
+                        contenu = contenu.replace('@forumPrice', productPrice)
+                        contenu = contenu.replace('@totalForumPrice', productPrice)
+                        contenu = contenu.replace('@moreMeal', moreMeal)
+                        contenu = contenu.replace('@mealPrice', mealPrice)
+                        contenu = contenu.replace('@totalMealPrice', moreMeal * mealPrice)
+                        contenu = contenu.replace('@totalTTC', productPrice + moreMeal * mealPrice)
+
+                        var options = {format: 'A4', orientation: 'portrait', border: '1cm'}
+
+                        pdf.create(contenu, options).toFile('files/factures/' + year + '/' + company.siret + '.pdf', function afterwards(err) {
+                            if (err) {
+                                sails.log.error('[SellsController.addASell] error when create pdf: ');
+                                sails.log.error(err);
+                            }
+                            // Envoi du mail de facture
+                            SendMail.sendEmail({
+                                destAddress: company.mailAddress,
+                                //Bcc: 'contact@foruminsaentreprises.fr',
+                                objectS: 'Confirmation de commande',
+                                messageS: '\n\nBonjour,' +
+                                '\n\nNous vous confirmons que la commande de prestation pour le FIE a été prise en compte. Vous trouverez ci-joint la facture correspondante.' +
+                                '\n\nSi vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : contact@foruminsaentreprises.fr' +
+                                '\n\nDans le cas où le plan vigipirate serait maintenu, vous serez recontactés peu de temps avant le forum afin d\'enregistrer les noms de vos représentants. Une pièce d\'identité vous sera alors nécessaire.' +
+                                '\n\nLe paiement doit être fait avant le 23 octobre 2018 par virement (RIB en pièce jointe) ou par chèque à l\'ordre du FORUM INSA ENTREPRISES et envoyé à l\'adresse :' +
+                                '\nAmicale - Forum INSA Entreprises' +
+                                '\n135 Avenue de rangueil,' +
+                                '\n31400 Toulouse FRANCE' +
+                                '\n\nNous vous remercions pour votre participation et avons hâte de vous rencontrer le 23 octobre prochain !' +
+                                "\n\nCordialement,\nL'équipe FIE " + date.getFullYear(), // plaintext body
+                                messageHTML: '<br /><br />Bonjour,' +
+                                '<br /><br />Nous vous confirmons que la commande de prestation pour le FIE a été prise en compte. Vous trouverez ci-joint la facture correspondante.' +
+                                '<br /><br />Si vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : contact@foruminsaentreprises.fr' +
+                                "<br /><br />Dans le cas où le plan vigipirate serait maintenu, vous serez recontactés peu de temps avant le forum afin d'enregistrer les noms de vos représentants. Une pièce d'identité vous sera alors nécessaire." +
+                                "<br /><br />Le paiement doit être fait avant le 23 octobre 2018 par virement (RIB en pièce jointe) ou par chèque à l'ordre du FORUM INSA ENTREPRISES et envoyé à l'adresse :" +
+                                '<br />Amicale - Forum INSA Entreprises' +
+                                '<br />135 Avenue de rangueil,' +
+                                '<br />31400 Toulouse FRANCE' +
+                                '<br /><br />Nous vous remercions pour votre participation et avons hâte de vous rencontrer le 23 octobre prochain !' +
+                                "<br /><br />Cordialement,<br />L'équipe FIE " + date.getFullYear(),
+                                attachments: [{filename: 'facture.pdf', filePath: 'files/factures/' + year + '/' + company.siret + '.pdf'}, {filename: 'RIB-FIE.pdf', filePath: 'files/facture_template/RIB-FIE.pdf'}]
+                            });
+
+                            if (created.sjd) {
+                                Sjd.create({
+                                    year: year,
+                                    companyName: company.companyName,
+                                    companySiret: company.siret,
+                                    sessionNb: 1
+                                })
+                                .exec((err, record) => {
+                                    if (err) {
+                                        sails.log.error('[SellsController.addASell] error when create a sjd: ');
+                                        sails.log.error(err);
+                                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Erreur lors de la création'});
+                                    }
+                                })
+                            }
+                        })
+                    })
+                })
+            })
+        })
     }
 };
 

@@ -12,8 +12,9 @@
 <h2>Paramètre à changer</h2>
 <p>Attention, le changement de ces paramètres aura des répercutions sur l'ensemble du site. Faites le uniquement avec l'accord du webmaster.</p>
 
+<!--
 <h3>Changement pour l'année <%=year%></h3>
-<form method="post" action="/Admin/SetPrices">
+  <form method="post" action="/Admin/SetPrices">
   <label>Nouveau prix pour un repas supplémentaire (actuel : <%= yearSettings.mealPrice %>€)</label> <input type="number" name="mealPrice"/><br />
   <h3>Pour les grandes entreprises</h3>
   <label>Nouveau prix du forum (actuel : <%= yearSettings.forumPrice %>€)</label> <input type="number" name="forumPrice"/><br />
@@ -28,7 +29,7 @@
   <label>Nouveau prix du pack premium (actuel : <%= yearSettings.premiumPricePME %>€)</label> <input type="number" name="premiumPricePME"/><br />
   <input type="submit" value="Envoyer"/>
 </form>
-
+-->
 <h3>Date limite d'inscription</h3>
 <p>
   Actuellement la deadline est fixée à <b><%= generalSettings.inscriptionDeadline %></b>.<br />

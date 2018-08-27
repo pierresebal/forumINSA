@@ -46,23 +46,6 @@ module.exports = {
             required: true
         },
 
-        premiumPack: {
-            type: 'boolean',
-            required: true
-        },
-        premiumPackPrice: {
-            type: 'integer',
-            required: true
-        },
-
-        moreSjd: {
-            type: 'integer',
-            required: true
-        },
-        moreSjdPrice: {
-            type: 'integer',
-            required: true
-        },
         moreMeal: {
             type: 'integer',
             defaultsTo: 0,

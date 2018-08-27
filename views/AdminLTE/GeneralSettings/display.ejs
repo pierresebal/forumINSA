@@ -19,84 +19,88 @@
                             <label for="name" class="col-sm-8 control-label">Prix pour un repas supplémentaire</label>
                             <div class="col-sm-4">
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="mealPrice" value="<%= yearSettings.mealPrice %>"/>
+                                    <input type="number" class="form-control" name="mealPrice" value="<%= yearSettings.mealPrice %>" required/>
                                     <span class="input-group-addon">€</span>
                                 </div>
                             </div>
                         </div>
                         <h4 style="background-color:#f7f7f7; font-size: 18px; text-align: center; padding: 7px 10px; margin-top: 0;">
-                            Pour les grandes entreprises
+                            Pour les entreprises classiques
                         </h4>
                         <div class="form-group">
-                            <label for="description" class="col-sm-8 control-label">Prix du forum</label>
+                            <label for="description" class="col-sm-8 control-label">Prix Forum</label>
                             <div class="col-sm-4">
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="forumPrice" value="<%= yearSettings.forumPrice %>">
+                                    <input type="number" class="form-control" name="forumPrice" value="<%= yearSettings.forumPrice %>" required>
                                     <span class="input-group-addon">€</span>
                                 </div></div>
                         </div>
                         <div class="form-group">
-                            <label for="description" class="col-sm-8 control-label">Prix du SJD</label>
+                            <label for="description" class="col-sm-8 control-label">Prix Forum + SJD</label>
                             <div class="col-sm-4">
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="sjdPrice" value="<%= yearSettings.sjdPrice %>">
+                                    <input type="number" class="form-control" name="sjdPrice" value="<%= yearSettings.sjdPrice %>" required>
                                     <span class="input-group-addon">€</span>
                                 </div></div>
                         </div>
-                        <div class="form-group">
-                            <label for="description" class="col-sm-8 control-label">Prix d'une session supplémentaire au SJD</label>
-                            <div class="col-sm-4">
-                                <div class="input-group">
-                                    <input type="number" class="form-control" name="sjdSessionPrice" value="<%= yearSettings.sjdSessionPrice %>">
-                                    <span class="input-group-addon">€</span>
-                                </div></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="description" class="col-sm-8 control-label">Prix du pack premium</label>
-                            <div class="col-sm-4">
-                                <div class="input-group">
-                                    <input type="number" class="form-control" name="premiumPrice" value="<%= yearSettings.premiumPrice %>">
-                                    <span class="input-group-addon">€</span>
-                                </div></div>
-                        </div>
-
                         <h4 style="background-color:#f7f7f7; font-size: 18px; text-align: center; padding: 7px 10px; margin-top: 0;">
-                            Pour les PME
+                            Pour les Start-up/PME
                         </h4>
                         <div class="form-group">
-                            <label for="description" class="col-sm-8 control-label">Prix du forum</label>
+                            <label for="description" class="col-sm-8 control-label">Prix Forum</label>
                             <div class="col-sm-4">
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="forumPricePME" value="<%= yearSettings.forumPricePME %>">
+                                    <input type="number" class="form-control" name="forumPricePME" value="<%= yearSettings.forumPricePME %>" required>
                                     <span class="input-group-addon">€</span>
                                 </div></div>
                         </div>
                         <div class="form-group">
-                            <label for="description" class="col-sm-8 control-label">Prix du SJD</label>
+                            <label for="description" class="col-sm-8 control-label">Prix Forum + SJD</label>
                             <div class="col-sm-4">
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="sjdPricePME" value="<%= yearSettings.sjdPricePME %>">
+                                    <input type="number" class="form-control" name="sjdPricePME" value="<%= yearSettings.sjdPricePME %>" required>
+                                    <span class="input-group-addon">€</span>
+                                </div></div>
+                        </div>
+                        <h4 style="background-color:#f7f7f7; font-size: 18px; text-align: center; padding: 7px 10px; margin-top: 0;">
+                            Pour les organismes de recherche
+                        </h4>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-8 control-label">Prix Forum</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="forumPriceResearch" value="<%= yearSettings.forumPriceResearch %>" required>
                                     <span class="input-group-addon">€</span>
                                 </div></div>
                         </div>
                         <div class="form-group">
-                            <label for="description" class="col-sm-8 control-label">Prix d'une session supplémentaire au SJD</label>
+                            <label for="description" class="col-sm-8 control-label">Prix Forum + SJD</label>
                             <div class="col-sm-4">
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="sjdSessionPricePME" value="<%= yearSettings.sjdSessionPricePME %>">
+                                    <input type="number" class="form-control" name="sjdPriceResearch" value="<%= yearSettings.sjdPriceResearch %>" required>
+                                    <span class="input-group-addon">€</span>
+                                </div></div>
+                        </div>
+                        <h4 style="background-color:#f7f7f7; font-size: 18px; text-align: center; padding: 7px 10px; margin-top: 0;">
+                            Pour les entreprises de la fondation INSA Toulouse
+                        </h4>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-8 control-label">Prix Forum</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="forumPriceFoundation" value="<%= yearSettings.forumPriceFoundation %>" required>
                                     <span class="input-group-addon">€</span>
                                 </div></div>
                         </div>
                         <div class="form-group">
-                            <label for="description" class="col-sm-8 control-label">Prix du pack premium</label>
+                            <label for="description" class="col-sm-8 control-label">Prix Forum + SJD</label>
                             <div class="col-sm-4">
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="premiumPricePME" value="<%= yearSettings.premiumPricePME %>">
+                                    <input type="number" class="form-control" name="sjdPriceFoundation" value="<%= yearSettings.sjdPriceFoundation %>" required>
                                     <span class="input-group-addon">€</span>
                                 </div></div>
                         </div>
                     </div>
-
                     <div class="box-footer">
                         <button type="reset" class="btn btn-success pull-left">Réinitialiser</button>
                         <button type="submit" class="btn btn-info pull-right">Sauvegarder</button>

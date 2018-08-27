@@ -74,12 +74,12 @@ module.exports = {
             YearSettings.update({year: settings.year}, {
                 forumPrice: req.param('forumPrice'),
                 sjdPrice: req.param('sjdPrice'),
-                premiumPrice: req.param('premiumPrice'),
-                sjdSessionPrice: req.param('sjdSessionPrice'),
-                forumPricePME: req.param('forumPricePME'), // PME
+                forumPricePME: req.param('forumPricePME'),
                 sjdPricePME: req.param('sjdPricePME'),
-                premiumPricePME: req.param('premiumPricePME'),
-                sjdSessionPricePME: req.param('sjdSessionPricePME'),
+                forumPriceResearch: req.param('forumPriceResearch'),
+                sjdPriceResearch: req.param('sjdPriceResearch'),
+                forumPriceFoundation: req.param('forumPriceFoundation'),
+                sjdPriceFoundation: req.param('sjdPriceFoundation'),
                 mealPrice: req.param('mealPrice')
             }).exec((err, updated) => {
                 if (err) {

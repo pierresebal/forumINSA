@@ -25,15 +25,52 @@ module.exports = {
         forumPrice: {
             type: 'Integer',
             required: true,
-            defaultsTo: 400
+            defaultsTo: 1500
         },
 
         sjdPrice: {
             type: 'Integer',
             required: true,
-            defaultsTo: 200
+            defaultsTo: 1700
         },
 
+        forumPricePME: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 500
+        },
+
+        sjdPricePME: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 600
+        },
+
+        forumPriceResearch: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 900
+        },
+
+        sjdPriceResearch: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 1000
+        },
+
+        forumPriceFoundation: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 500
+        },
+
+        sjdPriceFoundation: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 600
+        }
+
+        /*
         sjdSessionPrice: {
             type: 'Integer',
             required: true,
@@ -69,7 +106,7 @@ module.exports = {
             type: 'Integer',
             required: true,
             defaultsTo: 350
-        },
+        },*/
     }
 };
 

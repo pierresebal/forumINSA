@@ -166,6 +166,26 @@ module.exports = {
             required: true
         },
 
+        /* Command */
+
+        forum: {
+            type: 'boolean',
+            required: true,
+            defaultsTo: true
+        },
+
+        sjd: {
+            type: 'boolean',
+            required: true,
+            defaultsTo: false
+        },
+
+        moreMeal: {
+            type: 'number',
+            required: true,
+            defaultsTo: ''
+        },
+
         /* Other Information */
 
         blacklist: {
@@ -296,14 +316,23 @@ module.exports = {
     beforeValidate: function(data, next)   {
         // turn to boolean (need to cleaning this attribute)
         specitalities = ['AE', 'GB', 'GP', 'GMM', 'GM', 'GPE', 'IR', 'GC'];
-        for(spe of specitalities)   {
-            if(typeof data[spe] !== 'boolean')
+        for (spe of specitalities) {
+            if (typeof data[spe] !== 'boolean')
                 data[spe] = data[spe] === 'on'; // convert to boolean
+        }
+        options = ['forum', 'sjd'];
+        for (opt of options) {
+            if (typeof data[opt] !== 'boolean')
+                data[opt] = data[opt] === 'on'; // convert to boolean
         }
 
         // check phone number
         if(data.phoneNumber)
             data.phoneNumber = parseInt(data.phoneNumber);
+
+        // check number of meal
+        if(data.moreMeal)
+            data.moreMeal = parseInt(data.moreMeal);
 
         // format url
         if (data.websiteUrl && data.websiteUrl.charAt(4) !== ':' && data.websiteUrl.charAt(5) !== ':' && data.websiteUrl !== '')
