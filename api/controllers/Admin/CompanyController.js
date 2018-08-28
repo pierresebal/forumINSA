@@ -275,7 +275,7 @@ module.exports = {
                             product = 'Stand Forum';
                             productPrice = forumPrice;
                         } else if (sjd === true) {
-                            product = 'Stand Forum + Speed Job Dating';
+                            product = 'Stand Forum + SJD';
                             productPrice = sjdPrice;
                         }
 
