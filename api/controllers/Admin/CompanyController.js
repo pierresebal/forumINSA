@@ -280,19 +280,20 @@ module.exports = {
                         }
 
                         // Création de la facture en format HTML
-                        contenu = contenu.replace('@year', date.getFullYear())
-                        contenu = contenu.replace('@billNumber', fullBillNumber.toString())
-                        contenu = contenu.replace('@date', date.getDate() + '/' + (date.getMonth() + 1).toString() + '/' + date.getFullYear())
-                        contenu = contenu.replace('@companyName', company.companyName)
-                        contenu = contenu.replace('@siret', company.siret)
-                        contenu = contenu.replace('@companyAddress', companyAddress)
-                        contenu = contenu.replace('@forum', product + " pour " + company.type)
-                        contenu = contenu.replace('@forumPrice', productPrice)
-                        contenu = contenu.replace('@totalForumPrice', productPrice)
-                        contenu = contenu.replace('@moreMeal', moreMeal)
-                        contenu = contenu.replace('@mealPrice', mealPrice)
-                        contenu = contenu.replace('@totalMealPrice', moreMeal * mealPrice)
-                        contenu = contenu.replace('@totalTTC', productPrice + moreMeal * mealPrice)
+                        contenu = contenu.replace('@year', date.getFullYear());
+                        contenu = contenu.replace('@billNumber', fullBillNumber.toString());
+                        contenu = contenu.replace('@date', date.getDate() + '/' + (date.getMonth() + 1).toString() + '/' + date.getFullYear());
+                        contenu = contenu.replace('@companyName', company.companyName);
+                        contenu = contenu.replace('@companyType', company.type);
+                        contenu = contenu.replace('@siret', company.siret);
+                        contenu = contenu.replace('@companyAddress', companyAddress);
+                        contenu = contenu.replace('@forum', product);
+                        contenu = contenu.replace('@forumPrice', productPrice);
+                        contenu = contenu.replace('@totalForumPrice', productPrice);
+                        contenu = contenu.replace('@moreMeal', moreMeal);
+                        contenu = contenu.replace('@mealPrice', mealPrice);
+                        contenu = contenu.replace('@totalMealPrice', moreMeal * mealPrice);
+                        contenu = contenu.replace('@totalTTC', productPrice + moreMeal * mealPrice);
 
                         var options = {format: 'A4', orientation: 'portrait', border: '1cm'}
 
