@@ -5,7 +5,7 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-module.exports = {
+/*module.exports = {
     addASell: function (req, res) {
         var year = new Date().getFullYear();
         var month = new Date().getMonth();
@@ -36,7 +36,7 @@ module.exports = {
                         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Les prix n'ont pas encore été définis pour cette année"})
                     }
 
-                    /* Traitement des informations de ventes */
+                    // Traitement des informations de ventes
                     var forum, forumPrice, sjd, sjdPrice, premiumPack, premiumPackPrice, moreSjd, moreSjdPrice;
 
                     if (typeof req.param('numberSjdSession') === 'undefined' || req.param('numberSjdSession') === '' || req.param('Command') === 'forum' || Number(req.param('numberSjdSession')) <= 0) { // S'ils prennent que forum alors ils ne peuvent pas avoir de sessionSJD supplémentaires
@@ -101,7 +101,7 @@ module.exports = {
                         // Creation du numéro de facture entier
                         var fullBillNumber = found.billNumberMonth * 1000000 + month * 10000 + year;
 
-                        /* Creation de la vente */
+                        // Creation de la vente
                         Sells.create({
                             year: year,
                             companySiret: req.session.siret,
@@ -246,4 +246,4 @@ module.exports = {
 
         })
     }
-}
+}*/

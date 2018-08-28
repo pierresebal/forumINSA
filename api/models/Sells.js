@@ -21,9 +21,9 @@ module.exports = {
             type: 'string'
         },
 
-        companyType:   {
+        companyType: {
             type: 'string',
-            enum: ['Start-up', 'PME', 'Bureaux locaux de grand groupe', 'ETI', 'GE'],
+            enum: ['Entreprise classique', 'Start-up/PME', 'Organisme de recherche', 'Entreprise Fondation INSA Toulouse'],
             required: true
         },
 
@@ -36,7 +36,6 @@ module.exports = {
             type: 'integer',
             required: true
         },
-
         sjd: {
             type: 'boolean',
             required: true
@@ -45,7 +44,6 @@ module.exports = {
             type: 'integer',
             required: true
         },
-
         moreMeal: {
             type: 'integer',
             defaultsTo: 0,
@@ -69,7 +67,7 @@ module.exports = {
     // lifecycle callback
     beforeValidate: (data, next) => {
         //convert to boolean
-        let booleanAttribute = ['forum', 'sjd', 'premiumPack']
+        let booleanAttribute = ['forum', 'sjd']
 
         for(att of booleanAttribute)
             if(typeof data[att] !== 'boolean')

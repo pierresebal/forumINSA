@@ -36,12 +36,12 @@ module.exports = {
           inscriptionDeadline: found.inscriptionDeadline,
           forumPrice: record.forumPrice,
           sjdPrice: record.sjdPrice,
-          sjdSessionPrice: record.sjdSessionPrice,
-          premiumPrice: record.premiumPrice,
           forumPricePME: record.forumPricePME,
           sjdPricePME: record.sjdPricePME,
-          sjdSessionPricePME: record.sjdSessionPricePME,
-          premiumPricePME: record.premiumPricePME,
+          forumPriceResearch: record.forumPriceResearch,
+          sjdPriceResearch: record.sjdPriceResearch,
+          forumPriceFoundation: record.forumPriceFoundation,
+          sjdPriceFoundation: record.sjdPriceFoundation,
           mealPrice: record.mealPrice
         })
       })

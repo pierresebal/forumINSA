@@ -169,15 +169,15 @@ module.exports = {
         /* Command */
 
         forum: {
-            type: 'boolean',
+            type: 'string',
             required: true,
-            defaultsTo: false
+            defaultsTo: 'off'
         },
 
         sjd: {
-            type: 'boolean',
+            type: 'string',
             required: true,
-            defaultsTo: false
+            defaultsTo: 'off'
         },
 
         moreMeal: {
@@ -205,7 +205,7 @@ module.exports = {
 
         type:   {
             type: 'string',
-            enum: ['Start-up', 'PME', 'Bureaux locaux de grand groupe', 'ETI', 'GE'],
+            enum: ['Entreprise classique', 'Start-up/PME', 'Organisme de recherche', 'Entreprise Fondation INSA Toulouse'],
             required: true
         },
 
@@ -225,44 +225,44 @@ module.exports = {
         //Ce qui va suivre est très moche. Il aurait fallu faire un many-to-many mais je l'ai vu trop tard et j'ai pas envie de tout rechanger car la deadline c'était il y a 3 jours.
         //Ca correspond aux spécialités qui intéressent la companie
         AE: {
-            type: 'boolean',
+            type: 'string',
             required: true,
-            defaultsTo: false
+            defaultsTo: 'off'
         },
         GB: {
-            type: 'boolean',
+            type: 'string',
             required: true,
-            defaultsTo: false
+            defaultsTo: 'off'
         },
         GP: {
-            type: 'boolean',
+            type: 'string',
             required: true,
-            defaultsTo: false
+            defaultsTo: 'off'
         },
         GMM: {
-            type: 'boolean',
+            type: 'string',
             required: true,
-            defaultsTo: false
+            defaultsTo: 'off'
         },
         GM: {
-            type: 'boolean',
+            type: 'string',
             required: true,
-            defaultsTo: false
+            defaultsTo: 'off'
         },
         GPE: {
-            type: 'boolean',
+            type: 'string',
             required: true,
-            defaultsTo: false
+            defaultsTo: 'off'
         },
         IR: {
-            type: 'boolean',
+            type: 'string',
             required: true,
-            defaultsTo: false
+            defaultsTo: 'off'
         },
         GC: {
-            type: 'boolean',
+            type: 'string',
             required: true,
-            defaultsTo: false
+            defaultsTo: 'off'
         },
 
         specialities: {
@@ -292,8 +292,12 @@ module.exports = {
          * Define if type of company allows to benefit a reduction
          * @return: boolean
          */
+        isResearchOrganization: function()   {
+            return this.type === 'Organisme de recherche';
+        },
+
         isBenefitPromotion: function()   {
-            return this.type === 'PME' || this.type === 'Start-up';
+            return this.type === 'Start-up/PME' || this.type === 'Entreprise Fondation INSA Toulouse';
         },
 
         // @Override
@@ -308,24 +312,13 @@ module.exports = {
     // instantiate a blank object
     instantiate: function(params) {
         return Object.assign({
-            firstName: '', lastName: '', position:'', mailAddress: '', phoneNumber: '', password: '', siret: '', companyName: '', companyGroup: '', description: '', websiteUrl: '', careerUrl: '', road: '', complementaryInformation: '', city: '', postCode: '', country: ''
+            firstName: '', lastName: '', position:'', mailAddress: '', phoneNumber: '', password: '', siret: '', companyName: '', companyGroup: '', description: '', websiteUrl: '', careerUrl: '', road: '', complementaryInformation: '', city: '', postCode: '', country: '',
+            forum: '', sjd: ''
         }, params);
     },
 
     // lifecycle callback
     beforeValidate: function(data, next) {
-        // turn to boolean (need to cleaning this attribute)
-        specitalities = ['AE', 'GB', 'GP', 'GMM', 'GM', 'GPE', 'IR', 'GC'];
-        for (spe of specitalities) {
-            if (typeof data[spe] !== 'boolean')
-                data[spe] = data[spe] === 'on'; // convert to boolean
-        }
-        options = ['forum', 'sjd'];
-        for (opt of options) {
-            sails.log.info(data[opt])
-            if (typeof data[opt] !== 'boolean')
-                data[opt] = data[opt] === 'on'; // convert to boolean
-        }
 
         // check phone number
         if(data.phoneNumber)

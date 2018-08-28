@@ -76,7 +76,7 @@ Copyright (c) Nicolas Gallagher and Jonathan Neal
 
       <p>
         Facture n°@billNumber<br/>
-        A toulouse le @date
+        À Toulouse le @date
         </p>
 
       <h2>@companyName</h2>
@@ -91,33 +91,33 @@ Copyright (c) Nicolas Gallagher and Jonathan Neal
         <tr>
           <th>Produit</th>
           <th>Quantité</th>
-          <th>Prix unitaire (TTC) en euros</th>
-          <th>Total (TTC) en euros</th>
+          <th>Prix unitaire (TTC)</th>
+          <th>Total (TTC)</th>
         </tr>
     </thead>
         <tr>
           <td>@forum</td>
-          <td>1</td>
-          <td>@forumPrice</td>
-          <td>@totalForumPrice</td>
+          <td align="center">1</td>
+          <td align="right">@forumPrice €</td>
+          <td align="right">@totalForumPrice €</td>
         </tr>
         <tr>
           <td>Repas</td>
-          <td>@moreMeal</td>
-          <td>@mealPrice</td>
-          <td>@totalMealPrice</td>
+          <td align="center">@moreMeal</td>
+          <td align="right">@mealPrice €</td>
+          <td align="right">@totalMealPrice €</td>
         </tr>
         <tr>
-          <td></td>
-          <td></td>
-          <td>Payé</td>
-          <td>0</td>
+          <td style="border-top: 1px solid silver"></td>
+          <td style="border-top: 1px solid silver"></td>
+          <td style="border-top: 1px solid silver">Payé</td>
+          <td style="border-top: 1px solid silver" align="right">0 €</td>
         </tr>
         <tr>
           <td></td>
           <td></td>
           <td>Reste à payer</td>
-          <td>@totalTTC</td>
+          <td align="right">@totalTTC €</td>
         </tr>
       </table>
       <br />

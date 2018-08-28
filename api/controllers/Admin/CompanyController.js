@@ -14,6 +14,7 @@ module.exports = {
     },
 
     update: function(req, res, next) {
+
         if (!req.param('siret')) {
             sails.log.error('[Admin/CompanyController.update] siret param not found');
             return res.serverError();
@@ -115,14 +116,11 @@ module.exports = {
                         layout: 'Layout/AdminLTE',
                         company: req.body
                     });
-
-                } else {
-                    sails.log.info(company.forum);
-                    sails.log.info(company.sjd);
-
+                } 
+                else {
                     req.addFlash('success', 'A new company has been created: ' + company.companyName);
                     return res.redirect(sails.getUrlFor('Admin/CompanyController.listing'));
-                } 
+                }                
             })
         }
     },
@@ -146,7 +144,7 @@ module.exports = {
         let params = req.allParams();
         delete params.id;
 
-        Company.update({id: id}, params).exec((err, companies)  =>  {
+        Company.update({id: id}, params).exec((err, companies) => {
 
             if(err) {
                 sails.log.error('[Admin/CompanyController.apiUpdate] error when update company: ' + err);
@@ -203,25 +201,29 @@ module.exports = {
             if (err) {
                 return err;
             }
-            sails.log.info(company.forum);
-            sails.log.info(company.sjd);
             /* Traitement des informations de ventes */
             var forum, sjd;
-            if (company.sjd) {
+            if (company.sjd == 'on') {
                 forum = false;
                 sjd = true;
-            } else if (company.forum) {
+            } else if (company.forum == 'on') {
                 forum = true;
                 sjd = false;
             }
 
-            sails.log.info(forum);
-            sails.log.info(sjd);
-
             var moreMeal = company.moreMeal;
             var mealPrice = found2.mealPrice;
-            var forumPrice = found2.forumPrice;
-            var sjdPrice = found2.sjdPrice;
+            var forumPrice, sjdPrice;
+            if(company.isBenefitPromotion()) {
+                forumPrice = found2.forumPricePME;
+                sjdPrice = found2.sjdPricePME;
+            } else if (company.isResearchOrganization()) {
+                forumPrice = found2.forumPriceResearch;
+                sjdPrice = found2.sjdPriceResearch;
+            } else {
+                forumPrice = found2.forumPrice;
+                sjdPrice = found2.sjdPrice;
+            }
 
             GeneralSettings.findOne({id: 1}).exec((err, found) => {
                 if (err) {

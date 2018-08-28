@@ -19,10 +19,6 @@ module.exports = {
       type: 'numeric',
       required: true
     },
-    sessionNb: {
-      type: 'integer',
-      required: true
-    },
     specialities: {
       type: 'array',
       defaultsTo: [],
