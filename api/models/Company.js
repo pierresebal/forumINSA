@@ -61,8 +61,14 @@ module.exports = {
         password: {
             type: 'string',
             minLength: 6,
+            regex: /^[\S\s]{0,50}/
+        },
+
+        tmpPassword: {
+            type: 'string',
+            minLength: 6,
             regex: /^[\S\s]{0,50}/,
-            required: true,
+            required: true
         },
 
         /* Contact Facturation */
@@ -340,17 +346,13 @@ module.exports = {
 
     beforeCreate: function(data, next)    {
 
-        // encrypt password (must be done at the end)
-        if(!data.password || data.password !== data.confirmpassword)
-            return next({err: 'Password doesn\'t match password confirmation.'});
-
         // Création du lien d'activation (sha1 sur chrono courrant du serveur)
         var sha1 = require('sha1');
         var date = new Date();
 
         data.activationUrl = sha1(date.getTime());
 
-        hashPassword(data.password, function(err, encryptedPassword)    {
+        hashPassword(data.tmpPassword, function(err, encryptedPassword)    {
             if(err)     {
                 sails.log.error('[Company.beforeCreate] error: ', err);
                 return next(err);

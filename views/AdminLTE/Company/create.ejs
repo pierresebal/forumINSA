@@ -134,20 +134,20 @@
                                     <input type="email" maxlength="150" name="mailAddress" class="form-control" placeholder="Email" required>
                                 </div>
                             </div>
+                            <br><br>
+                            <p>Mot de passe généré aléatoirement et changé par l'entreprise lors de sa première connexion.</p>
                             <div class="form-group">
                                 <label for="password" class="col-sm-4 control-label">Mot de passe<sup>*</sup></label>
-                                <div class="col-sm-8">
-                                    <input type="password" minlength="6" maxlength="50" name="password" class="form-control" placeholder="Password" required>
+                                <div class="input-group col-sm-7">
+                                    <div class="input-group-addon">
+                                        <a id="pw" style="cursor: pointer;"><i class="fa fa-unlock-alt"/></i></a>
+                                    </div>
+                                    <input id="inputPassword" type="password" minlength="6" maxlength="50" name="tmpPassword" class="form-control pull-right" placeholder="Password" required>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirmpassword" class="col-sm-4 control-label">Confirmez le mot de passe<sup>*</sup></label>
-                                <div class="col-sm-8">
-                                    <input type="password" minlength="6" maxlength="50" name="confirmpassword" class="form-control" placeholder="Confirm password" required>
+                                <div class="col-sm-4"></div>
+                                <div class="input-group col-sm-7">
+                                    <span style="font-size: x-small;"><i>Cliquez sur le cadenas pour générer le mot de passe.</i></span>
                                 </div>
-                            </div>
-                            <div class="form-error">
-                                <p>Les mots de passe doivent être identiques et contenir entre 6 et 50 carac.</p>
                             </div>
                         </div>
 
@@ -236,3 +236,11 @@
         </div>
     </div>
 </section>
+
+<script>
+    $("#pw").click(function() {
+        var randPassword = Array(8).fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+        $("#inputPassword").val(randPassword);
+    });
+
+</script>

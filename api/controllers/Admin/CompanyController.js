@@ -286,7 +286,7 @@ module.exports = {
                         contenu = contenu.replace('@companyName', company.companyName)
                         contenu = contenu.replace('@siret', company.siret)
                         contenu = contenu.replace('@companyAddress', companyAddress)
-                        contenu = contenu.replace('@forum', product)
+                        contenu = contenu.replace('@forum', product + " pour " + company.type)
                         contenu = contenu.replace('@forumPrice', productPrice)
                         contenu = contenu.replace('@totalForumPrice', productPrice)
                         contenu = contenu.replace('@moreMeal', moreMeal)
@@ -305,7 +305,7 @@ module.exports = {
                             SendMail.sendEmail({
                                 destAddress: company.mailAddress,
                                 //Bcc: 'contact@foruminsaentreprises.fr',
-                                objectS: 'Confirmation de commande',
+                                objectS: 'Confirmation de commande et de participation au Forum by INSA 2018',
                                 messageS: '\n\nBonjour,' +
                                 '\n\nNous vous confirmons que la commande de prestation pour le FIE a été prise en compte. Vous trouverez ci-joint la facture correspondante.' +
                                 '\n\nSi vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : contact@foruminsaentreprises.fr' +
@@ -316,16 +316,21 @@ module.exports = {
                                 '\n31400 Toulouse FRANCE' +
                                 '\n\nNous vous remercions pour votre participation et avons hâte de vous rencontrer le 23 octobre prochain !' +
                                 "\n\nCordialement,\nL'équipe FIE " + date.getFullYear(), // plaintext body
-                                messageHTML: '<br /><br />Bonjour,' +
-                                '<br /><br />Nous vous confirmons que la commande de prestation pour le FIE a été prise en compte. Vous trouverez ci-joint la facture correspondante.' +
-                                '<br /><br />Si vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : contact@foruminsaentreprises.fr' +
-                                "<br /><br />Dans le cas où le plan vigipirate serait maintenu, vous serez recontactés peu de temps avant le forum afin d'enregistrer les noms de vos représentants. Une pièce d'identité vous sera alors nécessaire." +
-                                "<br /><br />Le paiement doit être fait avant le 23 octobre 2018 par virement (RIB en pièce jointe) ou par chèque à l'ordre du FORUM INSA ENTREPRISES et envoyé à l'adresse :" +
-                                '<br />Amicale - Forum INSA Entreprises' +
+                                messageHTML: '<p>Bonjour Madame/Monsieur ' + company.lastName + ',' +
+                                "<br /><br />Nous vous confirmons par l’envoi de ce mail que nous avons créé un compte pour votre entreprise sur le site <i>Forum by INSA</i>. Nous vous invitons maintenant à cliquer sur le lien suivant afin de vous connecter à votre espace, muni des identifiants ci-dessous :" +
+                                '<br /><br /><b>Email</b> : ' + company.mailAddress +
+                                "<br /><b>Password : </b>" + company.tmpPassword +
+                                '<br /><a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/' + '">Connexion</a>' +
+                                "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin de changer votre mot de passe, consulter vos factures ou encore la CVthèque." +
+                                '<br /><br />Nous vous confirmons de même que votre commande de prestation a été validée. Vous trouverez ci-joint la facture correspondante.' +
+                                '<br />Si vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : <a href="mailto:contact@foruminsaentreprises.fr">contact@foruminsaentreprises.fr</a>' +
+                                "<br />Le paiement doit être fait <b>avant le 30 septembre 2018</b> par virement (RIB en pièce jointe) ou par chèque à l'ordre de FORUM BY INSA et envoyé à l'adresse :" +
+                                '<br /><br />Amicale - Forum by INSA' +
                                 '<br />135 Avenue de rangueil,' +
                                 '<br />31400 Toulouse FRANCE' +
-                                '<br /><br />Nous vous remercions pour votre participation et avons hâte de vous rencontrer le 23 octobre prochain !' +
-                                "<br /><br />Cordialement,<br />L'équipe FIE " + date.getFullYear(),
+                                '<br /><br />Nous vous remercions de votre confiance et avons hâte de vous rencontrer le 23 octobre prochain !' +
+                                "<br /><br />Cordialement,<br />L'équipe Forum by INSA " + date.getFullYear() +
+                                "<br /><br /><span style='font-size: small;'>PS: <i>Le site ayant été mis à jour récemment, il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse <a href='mailto:contact@foruminsaentreprises.fr'>contact@foruminsaentreprises.fr</a></i></span>",                                
                                 attachments: [{filename: 'facture.pdf', filePath: 'files/factures/' + year + '/' + company.siret + '.pdf'}, {filename: 'RIB-FIE.pdf', filePath: 'files/facture_template/RIB-FIE.pdf'}]
                             });
 
