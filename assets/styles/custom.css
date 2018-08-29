@@ -134,6 +134,11 @@ legend, label, button {
 #btn_react{
     margin: auto;
     display: block;
+    border-radius: 3px;
+    background: rgb(72, 53, 125);
+    color: white;
+    border: none;
+    padding: .5rem;
 }
 
 #table_react td {
