@@ -321,7 +321,7 @@ module.exports = {
                             // Envoi du mail de facture
                             SendMail.sendEmail({
                                 destAddress: company.mailAddress,
-                                //Bcc: 'contact@foruminsaentreprises.fr',
+                                Bcc: 'contact@foruminsaentreprises.fr',
                                 objectS: 'Confirmation de commande et de participation au Forum by INSA 2018',
                                 messageS: '\n\nBonjour,' +
                                 '\n\nNous vous confirmons que la commande de prestation pour le FIE a été prise en compte. Vous trouverez ci-joint la facture correspondante.' +
