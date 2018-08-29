@@ -21,12 +21,11 @@
                             <div class="form-group">
                                 <label for="type" class="col-sm-4 control-label">Type d'entreprise<sup>*</sup></label>
                                 <div class="col-sm-8">
-                                    <select name="type" class="form-control" required>
-                                        <option value="Entreprise classique">Entreprise classique</option>
-                                        <option value="Start-up/PME">Start-up/PME</option>
-                                        <option value="Organisme de recherche">Organisme de recherche</option>
-                                        <option value="Entreprise Fondation INSA Toulouse">Entreprise Fondation INSA Toulouse</option>
-                                    </select>                           
+                                    <select class="form-control" name="status">
+                                        <% allStatus.forEach(function(status) { %>
+                                        <option value="<%= status.name %>" <%= company.status && status.name == company.status.name ? 'selected' : '' %>><%= status.name %></option>
+                                        <% }); %>
+                                    </select>                          
                                 </div>
                             </div>                            
                             <div class="form-group">

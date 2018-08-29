@@ -93,14 +93,20 @@ module.exports = {
     create: function(req, res, next) {
 
         if(!req.body)   {
-            return res.view('AdminLTE/Company/create', {
-                layout: 'Layout/AdminLTE',
-                company: {}
+            CompanyStatus.find().exec((err, status) => {
+                if(err) {
+                    sails.log.error('[Admin/CompanyController.create] error when find all status: ', err);
+                    return res.serverError(err);
+                }
+                return res.view('AdminLTE/Company/create', {
+                    layout: 'Layout/AdminLTE',
+                    company: {},
+                    allStatus: status
+                });
             });
         } else {
             Company.create(req.body).exec((err, company) => {
                 if (err) {
-
                     sails.log.error('[Admin/CompanyController.create] error when create a company: ', err);
 
                     // get error message from validator. (cf locale/*.json)
@@ -238,7 +244,7 @@ module.exports = {
                     year: year,
                     companySiret: company.siret,
                     companyName: company.companyName,
-                    companyType: company.type,
+                    companyType: company.status,
                     forum: forum,
                     forumPrice: forumPrice,
                     sjd: sjd,
@@ -284,7 +290,7 @@ module.exports = {
                         contenu = contenu.replace('@billNumber', fullBillNumber.toString());
                         contenu = contenu.replace('@date', date.getDate() + '/' + (date.getMonth() + 1).toString() + '/' + date.getFullYear());
                         contenu = contenu.replace('@companyName', company.companyName);
-                        contenu = contenu.replace('@companyType', company.type);
+                        contenu = contenu.replace('@companyType', company.status);
                         contenu = contenu.replace('@siret', company.siret);
                         contenu = contenu.replace('@companyAddress', companyAddress);
                         contenu = contenu.replace('@forum', product);
@@ -321,7 +327,7 @@ module.exports = {
                                 "<br /><br />Nous vous confirmons par l’envoi de ce mail que nous avons créé un compte pour votre entreprise sur le site <i>Forum by INSA</i>. Nous vous invitons maintenant à cliquer sur le lien suivant afin de vous connecter à votre espace, muni des identifiants ci-dessous :" +
                                 '<br /><br /><b>Email</b> : ' + company.mailAddress +
                                 "<br /><b>Password : </b>" + company.tmpPassword +
-                                '<br /><a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/' + '">Connexion</a>' +
+                                '<br /><a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/AuthCompany' + '">Connexion</a>' +
                                 "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin de changer votre mot de passe, consulter vos factures ou encore la CVthèque." +
                                 '<br /><br />Nous vous confirmons de même que votre commande de prestation a été validée. Vous trouverez ci-joint la facture correspondante.' +
                                 '<br />Si vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : <a href="mailto:contact@foruminsaentreprises.fr">contact@foruminsaentreprises.fr</a>' +

@@ -39,37 +39,23 @@ $(document).ready(function() {
             { 'data': "year" },
             { 'data': "forum",
                 'render' : function(data, type, full, meta) {
-                    if(!data)
+                    if (data == 'false')
                         return '-';
-                    return full.forumPrice;
+                    return full.forumPrice + " €";
                 }
             },
             { 'data': "sjd",
                 'render' : function(data, type, full, meta) {
-                    if(!data)
+                    if (data == 'false')
                         return '-';
-                    return full.sjdPrice;
-                }
-            },
-            { 'data': "premiumPack",
-                'render' : function(data, type, full, meta) {
-                    if(!data)
-                        return '-';
-                    return full.premiumPackPrice;
-                }
-            },
-            { 'data': "moreSjd",
-                'render' : function(data, type, full, meta) {
-                    if(!data)
-                        return '-';
-                    return full.moreSjdPrice;
+                    return full.sjdPrice + " €";
                 }
             },
             { 'data': "moreMeal",
                 'render' : function(data, type, full, meta) {
-                    if(!data)
+                    if (!data)
                         return '-';
-                    return full.mealPrice;
+                    return data + " x " + full.mealPrice + " €";
                 }
             },
             { 'data': "billNumber",
@@ -85,12 +71,12 @@ $(document).ready(function() {
                 'render': function(data)    {
                     return '<input type="checkbox" name="checkbox-switch" ' + (data ? ' checked>' : '>');
                 }
-            },
-            {'data': 'id',
+            }
+            /*{'data': 'id',
                 render: function(data, type, full, meta)    {
                     return '<a class="btn btn-info" href="/admin/sell/' + full.id + '">Modifier</a>'
                 }
-            }
+            }*/
         ],
         drawCallback: function(settings, json)  {
             $('input[name="checkbox-switch"]').bootstrapSwitch({

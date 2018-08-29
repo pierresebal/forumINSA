@@ -4,7 +4,7 @@
 
 <form method="POST" action="/Track/Login">
   <input type="password" name="password"/>
-  <input type="submit" value="Se connecter"/>
+  <input type="submit" class="form-button" value="Se connecter"/>
 </form>
 
 <% } else {
@@ -36,7 +36,7 @@
           <form id="downloadBill" method="post" action="/file/bills/download">
             <input type="hidden" name="dl" value="<%=sell.year%>" />
             <input type="hidden" name="siret" value="<%=sell.companySiret%>" />
-            <input type="submit" value="n°<%=sell.billNumber%>" />
+            <input type="submit" class="form-button" value="n°<%=sell.billNumber%>" />
           </form>
         </td>
         <td><%=sell.didPay%></td>

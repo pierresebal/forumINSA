@@ -120,7 +120,7 @@ var CriteriaBox =  React.createClass({
             </tbody>
           </table>
           <br/>
-          <button id="btn_react" type="submit">Rechercher</button>
+          <button id="btn_react" type="submit" class="form-button">Rechercher</button>
         </form>
       </div>
     );
@@ -144,7 +144,7 @@ var CVDownloadForm = React.createClass({
       <form class="pure-form" id={id} method="post" action="/file/download">
         <input type="hidden" name="dl" value={value}/>
         <input type="hidden" name="cvLogin" value={this.props.cvLogin}/>
-        <input type="submit" value="Télécharger"/>
+        <input type="submit" class="form-button" value="Télécharger"/>
       </form>
     );
   }

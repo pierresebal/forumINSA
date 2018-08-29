@@ -140,7 +140,7 @@ module.exports = {
             sails.log.info('[CompanyController.AuthentificateCompany] Company ' + company.companyName + ' is logging in');
 
             // for first connection
-            if (!company.firstConnectionDone) {
+            if (true/*!company.firstConnectionDone*/) {
                 Company.update({mailAddress: company.mailAddress}, {firstConnectionDone: true}).exec((err) => {
                     if (err) {
                         return err;
@@ -236,7 +236,7 @@ module.exports = {
     // ActivateCompany: check URL request from email confirmation sent after User inscription in order to set Active:1 the Account
     // (this allow the user to connect)
     ActivateCompany: function (req, res) {
-        if (req.session.authenticated) {
+        if (false/*req.session.authenticated*/) {
             // Error if the user is already authenticated
             return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Vous êtes déjà connecté'})
         } else {

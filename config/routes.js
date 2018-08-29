@@ -537,10 +537,10 @@ module.exports.routes = {
     },
     
     /* COMMANDES */
-    '/Command/NewCommand': {
+    /*'/Command/NewCommand': {
         controller: 'SellsController',
         action: 'addASell'
-    },
+    },*/
     
     '/Company/Bills': {
         controller: 'CompanyController',

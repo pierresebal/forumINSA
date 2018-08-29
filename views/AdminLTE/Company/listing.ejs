@@ -55,9 +55,9 @@ $(document).ready(function() {
                     return new Date(data).toLocaleDateString();
                 }
             },
-            { 'data': "blacklist",
+            { 'data': "mailAddress",
                 'render': function(data)    {
-                    return data ? 'oui' : '-';
+                    return data;
                 }
             },
             { 'data': "active",

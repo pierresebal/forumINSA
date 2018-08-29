@@ -60,7 +60,7 @@ if (typeof complementaryInformation == 'undefined')
     <td><%=mailAddress%></td>
     <td>
         <input type="text" name="mailAddress" value="<%=mailAddress%>"/>
-        <input type="submit" value="Sauvegarder"/>
+        <input type="submit" class="form-button" value="Sauvegarder"/>
     </td>
   </tr>
   </form>
@@ -111,7 +111,7 @@ if (typeof complementaryInformation == 'undefined')
     <td><%=bMailAddress%></td>
     <td>
         <input class="pure-input" type="text" name="bMailAddress" value="<%=bMailAddress%>"/>
-        <input class="pure-input-1-3" type="submit" value="Sauvegarder"/>
+        <input class="pure-input-1-3" type="submit" class="form-button" value="Sauvegarder"/>
       </form>
     </td>
     <td style="display: block;"></td>
@@ -138,7 +138,7 @@ if (typeof complementaryInformation == 'undefined')
       <form id="companyName" method="post" action="/Company/setAUserInfo">
         <input type="hidden" name="data" value="l"/>
         <input type="text" name="companyName" value="<%=companyName%>"/>
-        <input type="submit" value="Sauvegarder"/>
+        <input type="submit" class="form-button" value="Sauvegarder"/>
       </form>
     </td>
   </tr>
@@ -149,7 +149,7 @@ if (typeof complementaryInformation == 'undefined')
       <form id="companyGroup" method="post" action="/Company/setAUserInfo">
         <input type="hidden" name="data" value="m"/>
         <input type="text" name="companyGroup" value="<%=companyGroup%>"/>
-        <input type="submit" value="Sauvegarder"/>
+        <input type="submit" class="form-button" value="Sauvegarder"/>
       </form>
     </td>
   </tr>
@@ -163,7 +163,7 @@ if (typeof complementaryInformation == 'undefined')
     <td>
       <form id="logoUpload" method="post" action="/file/uploadLogo" enctype="multipart/form-data">
         <input type="file" name="logo"/>
-        <input type="submit" value="Enregister">
+        <input type="submit" class="form-button" value="Enregister">
       </form>
     </td>
   </tr>
@@ -174,7 +174,7 @@ if (typeof complementaryInformation == 'undefined')
       <form id="description" method="post" action="/Company/setAUserInfo">
         <input type="hidden" name="data" value="n"/>
         <textarea type="text" name="description"><%=description%></textarea>
-        <input type="submit" value="Sauvegarder"/>
+        <input type="submit" class="form-button" value="Sauvegarder"/>
       </form>
     </td>
   </tr>
@@ -185,7 +185,7 @@ if (typeof complementaryInformation == 'undefined')
       <form id="websiteUrl" method="post" action="/Company/setAUserInfo">
         <input type="hidden" name="data" value="o"/>
         <input type="text" name="websiteUrl" value="<%=websiteUrl%>"/>
-        <input type="submit" value="Sauvegarder"/>
+        <input type="submit" class="form-button" value="Sauvegarder"/>
       </form>
     </td>
   </tr>
@@ -196,7 +196,7 @@ if (typeof complementaryInformation == 'undefined')
       <form class="pure-form" id="careerUrl" method="post" action="/Company/setAUserInfo">
         <input type="hidden" name="data" value="p"/>
         <input type="text" name="careerUrl" value="<%=careerUrl%>"/>
-        <input type="submit" value="Sauvegarder"/>
+        <input type="submit"class="form-button" value="Sauvegarder"/>
       </form>
     </td>
   </tr>
@@ -218,7 +218,7 @@ if (typeof complementaryInformation == 'undefined')
         <input type="text" name="postCode" value="<%=postCode%>" placeholder="Code postal"/><br />
         <input type="text" name="city" value="<%=city%>" placeholder="Ville"/><br />
         <input type="text" name="country" value="<%=country%>" placeholder="Pays"/><br />
-        <button class="pure-button pure-button-primary pure-input-1" type="submit" >Sauvegarder</button>
+        <button class="form-button" type="submit" >Sauvegarder</button>
       </form>
     </td>
   </tr>

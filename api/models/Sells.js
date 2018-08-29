@@ -10,11 +10,11 @@ module.exports = {
     attributes: {
 
         year: {
-            type: 'Integer',
+            type: 'integer',
             required: true
         },
         companySiret: {
-            type: 'numeric',
+            type: 'string',
             required: true
         },
         companyName: {
@@ -29,16 +29,18 @@ module.exports = {
 
         /* Command */
         forum: {
-            type: 'boolean',
-            required: true
+            type: 'string',
+            required: true,
+            defaultsTo: 'off'
         },
         forumPrice: {
             type: 'integer',
-            required: true
+            required: true,
         },
         sjd: {
-            type: 'boolean',
-            required: true
+            type: 'string',
+            required: true,
+            defaultsTo: 'off'
         },
         sjdPrice: {
             type: 'integer',
@@ -46,7 +48,6 @@ module.exports = {
         },
         moreMeal: {
             type: 'integer',
-            defaultsTo: 0,
             defaultsTo: 0,
             required: true
         },
@@ -67,11 +68,7 @@ module.exports = {
     // lifecycle callback
     beforeValidate: (data, next) => {
         //convert to boolean
-        let booleanAttribute = ['forum', 'sjd']
 
-        for(att of booleanAttribute)
-            if(typeof data[att] !== 'boolean')
-                data[att] = data[att] === 'on';
 
         next();
     }

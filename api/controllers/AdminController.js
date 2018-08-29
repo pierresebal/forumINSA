@@ -538,14 +538,16 @@ module.exports = {
                     sails.log.error('[AdminController.updateSell] error when update a sell: ', err);
                     return next(err);
 
-                }   else if(!sells || sells.length === 0)    {
+                } else if(!sells || sells.length === 0) {
 
                     sails.log.warn('[AdminController.updateSell] sell id '+ req.param('id') +' has not been updated, query: ', params);
                     req.addFlash('warning', 'Sell id '+ req.param('id') +' has not been updated');
                     return res.redirect(sails.getUrlFor('AdminController.updateSell'));
-                }   else    {
+                } else {
 
                     let updatedSell = sells[0];
+                    sails.log.info(updatedSell.forum);
+                    sails.log.info(updatedSell.sjd);
 
                     // sell updated
                     sails.log.info('[AdminController.updateSell] sell id '+ req.param('id') +' has been updated');

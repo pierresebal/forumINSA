@@ -1,7 +1,28 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: PSR;
+    src: url(../fonts/PSR.ttf);
+}
+@font-face {
+    font-family: PSI;
+    src: url(../fonts/PSI.ttf);
+	font-weight: italic;
+}
+@font-face {
+    font-family: PSB;
+    src: url(../fonts/PSB.ttf);
+    font-weight: bold;
+}
+
 header {
   text-align: left;
   background-image : linear-gradient(to bottom right, #86156b, #284d8b); /*#F02FC2, #6094EA*/
   width: 100%;
+}
+
+header p {
+    font-family: "PSR", 'Open Sans', sans-serif;
 }
 
 header img {
@@ -10,11 +31,13 @@ header img {
 }
 
 body{
+    font-family: "PSR", 'Open Sans', sans-serif;
     color: #7E7E7E;
     font-size: 1.5em;
 }
 
 h1 {
+    font-family: "PSR", 'Open Sans', sans-serif;
     font-size: 2.2em;
     color: #333333;
 }
@@ -28,7 +51,12 @@ h3 {
 }
 
 h2, h3 {
+    font-family: "PSR", 'Open Sans', sans-serif;
     color: #656464;
+}
+
+legend, label, button {
+    font-family: "PSR", 'Open Sans', sans-serif;
 }
 
 .unselectable {
@@ -59,7 +87,22 @@ h2, h3 {
 }
 
 .navbar {
+  font-family: "PSR", 'Open Sans', sans-serif;
   margin-bottom: 0px;
+}
+
+.form-button {
+    border-radius: 3px;
+    background: rgb(72, 53, 125);
+    color: white;
+    border: none;
+    padding: .5rem;
+}
+.form-button:hover, .form-button:active {
+    background: rgb(109, 71, 170);
+    color: white;
+    border: none;
+    padding: .5rem;
 }
 
 .red-button {

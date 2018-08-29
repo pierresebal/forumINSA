@@ -12,7 +12,7 @@
     <td>
       <form id="downloadFormFr" method="post" action="/file/download">
         <input type="hidden" name="dl" value="fr" />
-        <input type="submit" value="Télécharger" />
+        <input type="submit" class="form-button" value="Télécharger" />
       </form></td>
     <% } else { %>
       <form id="uploadFormFr"
@@ -25,7 +25,7 @@
           <input type="file" name="fr-cv" accept=".pdf"/>
         </td>
         <td>
-          <input type="submit" value="Envoyer"/>
+          <input type="submit" class="form-button"value="Envoyer"/>
         </td>
       </form>
     <% } %>
@@ -37,7 +37,7 @@
     <td>
       <form id="downloadFormEn" method="post" action="/file/download">
         <input type="hidden" name="dl" value="en" />
-        <input type="submit" value="Télécharger" />
+        <input type="submit" class="form-button" value="Télécharger" />
       </form>
 
     </td>
@@ -52,7 +52,7 @@
           <input type="file" name="en-cv" accept=".pdf"/>
         </td>
         <td>
-          <input type="submit" value="Envoyer"/>
+          <input type="submit" class="form-button" value="Envoyer"/>
         </td>
       </form>
     <% } %>

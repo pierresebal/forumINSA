@@ -20,7 +20,7 @@ module.exports = {
             CompanyStatus.create(req.body).exec((err, status) => {
                 if(err) {
                     sails.log.error('[Admin/CompanyStatusController.create] error when create a new status: ', err);
-                    req.addFlash('danger', 'An error occured : '+err);
+                    req.addFlash('danger', 'An error occured : '+ err);
                     return res.redirect(sails.getUrlFor('Admin/CompanyStatusController.listing'));
                 }
 

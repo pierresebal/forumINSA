@@ -89,6 +89,7 @@ module.exports = {
 
         bMailAddress: {
             type: 'email',
+            defaultsTo: ''
         },
 
         bPhoneNumber: {
@@ -138,9 +139,7 @@ module.exports = {
         },
 
         logoPath: {
-            type: 'string',
-            defaultsTo: ""
-        },
+            type: 'string'        },
 
         road: { //Both number and road
             type: 'string',
@@ -209,14 +208,15 @@ module.exports = {
             type: 'string'
         },
 
-        type:   {
+        /*type:   {
             type: 'string',
             enum: ['Entreprise classique', 'Start-up/PME', 'Organisme de recherche', 'Entreprise Fondation INSA Toulouse'],
             required: true
-        },
+        },*/
 
         status: {
-            model: 'CompanyStatus'
+            model: 'CompanyStatus',
+            required: true
         },
 
         firstConnectionDone: {
@@ -299,11 +299,11 @@ module.exports = {
          * @return: boolean
          */
         isResearchOrganization: function()   {
-            return this.type === 'Organisme de recherche';
+            return this.status === 'Organisme de recherche';
         },
 
         isBenefitPromotion: function()   {
-            return this.type === 'Start-up/PME' || this.type === 'Entreprise Fondation INSA Toulouse';
+            return this.status === 'Start-up/PME' || this.status === 'Entreprise Fondation INSA Toulouse';
         },
 
         // @Override
