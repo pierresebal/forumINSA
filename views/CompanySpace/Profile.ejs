@@ -19,18 +19,13 @@
 
 <div class="content">
 <h1>Profil Entreprise</h1>
-<p>Vous pouvez ici modifier votre profil.<br />Pensez à mettre une description et un logo. Ils seront utilisés dans nos supports de communication.</p>
-    <% if (!canBook)    { %>
-        <div class="well-info">
-            Vous ne pouvez pas encore réserver un Speed Job Dating!!<br/>
-            Veuillez remplir les champs suivis par <sup style="color:#e42618;">*</sup>
-        </div>
-    <% } %>
+<p>Vous pouvez ici consulter votre profil.<br />Pensez à mettre un <b>logo</b>. Il sera utilisé dans nos supports de communication.</p>
+<p>N'oubliez pas de changer de mot de passe si ce n'est pas encore fait !</p>
 
 <h2>Contacts</h2>
-<div class="pure-g">
+<div class="col-sm-12">
 
-    <div class="pure-u-1 pure-u-md-1-4">
+    <div class="col-sm-6">
         <form class="pure-form pure-form-stacked" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
           <fieldset>
               <legend>Forum</legend>
@@ -75,13 +70,11 @@
               </div>
               <% }) %>
 
-              <br/>
               <button style="width: 100%;" type="submit" class="form-button">Enregistrer</button>
           </fieldset>
         </form>
     </div>
-    <div class="pure-u-md-1-8"></div>
-    <div class="pure-u-1 pure-u-md-1-4">
+    <div class="col-sm-6">
         <form class="pure-form pure-form-stacked" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
           <fieldset>
               <legend>Facturation</legend>
@@ -125,175 +118,100 @@
                   <%= message %>
               </div>
               <% }) %>
-
-              <br/>
               <button style="width: 100%;" type="submit" class="form-button">Enregistrer</button>
           </fieldset>
         </form>
     </div>
     <div class="pure-u-md-1-8"></div>
-
 </div>
 
-<h2>Mot de passe</h2>
-<div class="pure-g">
-  <div class="pure-u-1 pure-u-md-1-3">
-    <form class="pure-form pure-form-stacked" method="post" action="<%= sails.getUrlFor('CompanyController.changePassword') %>" >
-      <fieldset>
-          <% flash.get('password').forEach(function (message) { %>
-          <div class="form-error">
-              <%= message %>
-          </div>
-          <% }) %>
-
-          <% flash.get('password-success').forEach(function (message) { %>
-          <div class="form-sucess">
-              <%= message %>
-          </div>
-          <% }) %>
-        <label for="password">Mot de passe actuel</label>
-        <input class="pure-input-1" type="password" id="password" name="password" placeholder="Mot de passe actuel">
-
-        <label for="newpassword">Nouveau mot de passe</label>
-        <input class="pure-input-1" type="password" id="newpassword" name="newpassword" placeholder="Nouveau mot de passe">
-
-        <label for="confirmpassword">Confirmation nouveau mot de passe </label>
-        <input class="pure-input-1" type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirmez votre nouveau mot de passe">
-
-        <button style="width: 100%;" type="submit">Enregistrer</button>
-      </fieldset>
-    </form>
-  </div>
-</div>
-
-<h2>Informations générales</h2>
-<table class="pure-form  pure-table-bordered" style="width: 100%">
-  <tr>
-    <td><h3>Siret</h3></td>
-    <td><%=company.siret%></td>
-    <td>
-    </td>
-    <td></td>
-  </tr>
-    <tr>
-        <td><h3>Status d'entreprise</h3></td>
-        <td><%= company.type %></td>
-        <td></td>
-        <td></td>
-    </tr>
-  <tr>
-    <td><h3>Nom</h3></td>
-    <td><%=company.companyName%></td>
-    <form id="companyName" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
-        <td>
-            <input  type="text" name="companyName" value="<%= company.companyName %>"/>
-        </td>
-        <% flash.get('companyName').forEach(function (message) { %>
-        <div class="form-error">
-            <%= message %>
-        </div>
-        <% }) %>
-        <td>
-            <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
-</button>
-        </td>
-
-    </form>
-  </tr>
-  <tr>
-    <td><h3>Group</h3></td>
-    <td><%=company.companyGroup%></td>
-        <form id="companyGroup" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
-            <td>
-                <input  type="text" name="companyGroup" value="<%= company.companyGroup %>"/>
-                <% flash.get('companyGroup').forEach(function (message) { %>
+<div class="col-sm-12">
+    <div class="col-sm-6">
+        <h3>Mot de passe</h3>
+        <form class="pure-form pure-form-stacked" method="post" action="<%= sails.getUrlFor('CompanyController.changePassword') %>" >
+            <fieldset>
+                <% flash.get('password').forEach(function (message) { %>
                 <div class="form-error">
                     <%= message %>
                 </div>
                 <% }) %>
-            </td>
-            <td>
-                <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
-    </button>
-            </td>
-      </form>
-  </tr>
 
+                <% flash.get('password-success').forEach(function (message) { %>
+                <div class="form-sucess">
+                    <%= message %>
+                </div>
+                <% }) %>
+            <label for="password">Mot de passe actuel</label>
+            <input class="pure-input-1" type="password" id="password" name="password" placeholder="Mot de passe actuel">
+
+            <label for="newpassword">Nouveau mot de passe</label>
+            <input class="pure-input-1" type="password" id="newpassword" name="newpassword" placeholder="Nouveau mot de passe">
+
+            <label for="confirmpassword">Confirmation nouveau mot de passe </label>
+            <input class="pure-input-1" type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirmez votre nouveau mot de passe">
+
+            <button style="width: 100%;" type="submit" class="form-button">Enregistrer</button>
+            </fieldset>
+        </form>
+    </div>
+    <div class="col-sm-6">
+        <h3>Logo</h3>
+        <form id="uploadLogo" class="pure-form pure-form-stacked" enctype="multipart/form-data" action="/file/uploadLogo" method="post" >
+            <label for="logo">Uploader votre logo</label>
+            <% if (typeof company.logoPath !== 'undefined' && company.logoPath !== ''){ %>
+                <img src="/images/logos/<%= company.logoPath %>" style="width: 50px; height: auto" /></td>
+            <% } else { %>
+                <img src="/images/default_logo.png" style="width: 50px; height: auto" /></td>
+            <% } %>
+            <input class="pure-input-1" type="file" name="logo" accept="image/png">
+            <button style="width: 100%;" type="submit" class="form-button">Envoyer</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<p>&nbsp;</p>
+<h2>Informations générales</h2>
+<table class="pure-form  pure-table-bordered" style="width: 100%">
   <tr>
-    <td><h3>Logo <sup class="text-danger">*</sup></h3></td>
-    <% if (typeof company.logoPath !== 'undefined' && company.logoPath !== ''){ %>
-    <td><img src="/images/logos/<%= company.logoPath %>" style="width: 100px; height: auto" /></td>
-    <% } else { %>
-    <td>-</td>
-    <% } %>
-      <form id="logoUpload" method="post" action="/file/uploadLogo" enctype="multipart/form-data">
-        <td>
-          <input type="file" name="logo" accept="image/png"/>
-        </td>
-        <td>
-            <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
-</button>
-        </td>
-      </form>
+    <td><h3>Siret</h3></td>
+    <td align="right"><%= company.siret%></td>
   </tr>
   <tr>
-    <td><h3>Description <sup class="text-danger">*</sup></h3></td>
-    <td><%- company.description%></td>
-    <form id="description" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
-        <td>
-            <textarea  type="text" name="description"><%- company.description%></textarea>
-            <p><i>*Balises HTML autorisées</i></p>
-            <% flash.get('description').forEach(function (message) { %>
-            <div class="form-error">
-                <%= message %>
-            </div>
-            <% }) %>
-        </td>
-
-        <td>
-            <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i></button>
-        </td>
-    </form>
+    <td><h3>Nom de l'entreprise</h3></td>
+    <td align="right"><%= company.companyName%></td>
+  </tr>
+  <tr>
+    <td><h3>Status</h3></td>
+    <td align="right"><%= company.status %></td>
+  </tr>
+  <tr>
+    <td><h3>Formule choisie</h3></td>
+    <td align="right"><% if (company.sjd == 'on') { %>
+        Forum + SJD<% } else { %> Forum <% } %></td>
+  </tr>
+  <tr>
+    <td><h3>Nombre de repas</h3></td>
+    <td align="right"><%= company.moreMeal %></td>
+  </tr>
+  <tr>
+    <td><h3>Groupe</h3></td>
+    <td align="right"><%= company.companyGroup%></td>
+  </tr>
+  <tr>
+    <td><h3>Description</h3></td>
+    <td align="right"><%= company.description%></td>
   </tr>
   <tr>
     <td><h3>Site internet</h3></td>
-    <td><a href="<%= company.websiteUrl%>" target="_blank"><%= company.websiteUrl%></a></td>
-    <form  id="websiteUrl" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
-        <td>
-            <input  type="text" name="websiteUrl" value="<%= company.websiteUrl%>"/>
-            <% flash.get('websiteUrl').forEach(function (message) { %>
-            <div class="form-error">
-                <%= message %>
-            </div>
-            <% }) %>
-        </td>
-        <td>
-            <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
-</button>
-        </td>
-    </form>
+    <td align="right"><a href="<%= company.websiteUrl%>" target="_blank"><%= company.websiteUrl%></a></td>
   </tr>
   <tr>
     <td><h3>Site de recrutement</h3></td>
-    <td><a href="<%= company.careerUrl%>" target="_blank"><%= company.careerUrl%></a></td>
-    <form  id="careerUrl" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
-        <td>
-            <input  type="text" name="careerUrl" value="<%= company.careerUrl%>"/>
-            <% flash.get('careerUrl').forEach(function (message) { %>
-            <div class="form-error">
-                <%= message %>
-            </div>
-            <% }) %>
-        </td>
-        <td>
-        <button  type="submit"><i class="fa fa-check" aria-hidden="true"></i>
-</button>
-        </td>
-    </form>
+    <td align="right"><a href="<%= company.careerUrl%>" target="_blank"><%= company.careerUrl%></a></td>
   </tr>
   <tr>
-    <td><h3>Adresse postale<sup class="text-danger">*</sup></h3> </td>
-    <td>
+    <td><h3>Adresse postale</h3> </td>
+    <td align="right">
       <%=company.road %><br />
       <% if (typeof company.complementaryInformation != 'undefined' && company.complementaryInformation != "") { %>
         <%= company.complementaryInformation %><br />
@@ -301,44 +219,6 @@
       <%= company.postCode %> <%= company.city %><br />
       <%= company.country %>
     </td>
-      <form  id="postAddress" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
-          <td>
-        <input  type="text" name="road" value="<%= company.road %>" placeholder="N° et rue"/><br />
-              <% flash.get('road').forEach(function (message) { %>
-              <div class="form-error">
-                  <%= message %>
-              </div>
-              <% }) %>
-        <input  type="text" name="complementaryInformation" placeholder="Complément"/><br>
-              <% flash.get('complementaryInformation').forEach(function (message) { %>
-              <div class="form-error">
-                  <%= message %>
-              </div>
-              <% }) %>
-        <input  type="text" name="postCode" value="<%= company.postCode %>" placeholder="Code postal"/><br />
-              <% flash.get('postCode').forEach(function (message) { %>
-              <div class="form-error">
-                  <%= message %>
-              </div>
-              <% }) %>
-        <input  type="text" name="city" value="<%= company.city %>" placeholder="Ville"/><br />
-              <% flash.get('city').forEach(function (message) { %>
-              <div class="form-error">
-                  <%= message %>
-              </div>
-              <% }) %>
-        <input  type="text" name="country" value="<%= company.country %>" placeholder="Pays"/>
-              <% flash.get('country').forEach(function (message) { %>
-              <div class="form-error">
-                  <%= message %>
-              </div>
-              <% }) %>
-    </td>
-    <td>
-        <button  type="submit" class="form-button"><i class="fa fa-check" aria-hidden="true"></i>
-</button>
-</td>
-      </form>
   </tr>
 </table>
 

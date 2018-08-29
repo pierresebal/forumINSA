@@ -47,7 +47,7 @@
         <input type="text" placeholder="Modifier" name="mailAddress"/>
     </td>
     <td>
-        <button type="submit" class="form-button"><i class="fa fa-check" aria-hidden="true"></i></button>
+        <button type="submit" class="form-button" class="form-button"><i class="fa fa-check" aria-hidden="true"></i></button>
     </td>
      </form>
     </tr>
@@ -74,7 +74,7 @@
                     </select>
             </td>
             <td>
-                <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+                <button type="submit" class="form-button" ><i class="fa fa-check" aria-hidden="true"></i></button>
             </td>
         </form>
   </tr>
@@ -98,7 +98,7 @@
             </select>
         </td>
         <td>
-            <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+            <button type="submit" class="form-button" ><i class="fa fa-check" aria-hidden="true"></i></button>
         </td>
     </form>
   </tr>
@@ -109,7 +109,7 @@
     <form id="downloadFormFr" method="post" action="/file/download">
         <td>
           <input type="hidden" name="dl" value="fr" />
-          <input type="submit"
+          <input type="submit" class="form-button"
           <% if (typeof (frCVPath) == 'undefined' || frCVPath == "") { %>
               disabled
           <% } %>
@@ -127,7 +127,7 @@
           <input type="file" name="fr-cv" accept=".pdf"/>
         </td>
         <td>
-            <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+            <button type="submit" class="form-button" ><i class="fa fa-check" aria-hidden="true"></i></button>
         </td>
     </form>
   </tr>
@@ -137,7 +137,7 @@
     <form id="downloadFormEn" method="post" action="/file/download">
         <td>
           <input type="hidden" name="dl" value="en" />
-          <input type="submit"
+          <input type="submit" class="form-button"
           <% if (typeof (enCVPath) == 'undefined' || enCVPath == "") { %>
               disabled
           <% } %>
@@ -154,7 +154,7 @@
           <input type="file" name="en-cv" accept=".pdf"/>
         </td>
         <td>
-            <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+            <button type="submit" class="form-button" ><i class="fa fa-check" aria-hidden="true"></i></button>
         </td>
     </form>
   </tr>
@@ -174,7 +174,7 @@
             <input type="text" placeholder="ex: http://beaugossdu31.fr" name="personalWebsite"/>
         </td>
         <td>
-            <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+            <button type="submit" class="form-button" ><i class="fa fa-check" aria-hidden="true"></i></button>
         </td>
     </form>
     </tr>
@@ -194,7 +194,7 @@
             <input type="text" placeholder="https://www.linkedin.com/..." name="linkedin"/>
         </td>
         <td>
-            <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+            <button type="submit" class="form-button" ><i class="fa fa-check" aria-hidden="true"></i></button>
         </td>
     </form>
     </tr>
@@ -214,7 +214,7 @@
               <input type="text" placeholder="http://fr.viadeo.com/..." name="viadeo"/>
           </td>
           <td>
-              <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+              <button type="submit" class="form-button" ><i class="fa fa-check" aria-hidden="true"></i></button>
           </td>
       </form>
       </tr>
@@ -234,7 +234,7 @@
               <input type="text" placeholder="https://github.com/..." name="github"/>
           </td>
           <td>
-              <button type="submit" ><i class="fa fa-check" aria-hidden="true"></i></button>
+              <button type="submit" class="form-button" ><i class="fa fa-check" aria-hidden="true"></i></button>
           </td>
       </form>
       </tr>

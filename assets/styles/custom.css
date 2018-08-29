@@ -91,18 +91,17 @@ legend, label, button {
   margin-bottom: 0px;
 }
 
-.form-button {
+.form-button, #btn_react {
     border-radius: 3px;
     background: rgb(72, 53, 125);
     color: white;
     border: none;
-    padding: .5rem;
+    padding: .5em;
 }
-.form-button:hover, .form-button:active {
+.form-button:hover, .form-button:active,
+    #btn_react:hover, #btn_react:active {
     background: rgb(109, 71, 170);
     color: white;
-    border: none;
-    padding: .5rem;
 }
 
 .red-button {
@@ -131,14 +130,9 @@ legend, label, button {
     position: relative;
 }
 
-#btn_react{
+#btn_react {
     margin: auto;
     display: block;
-    border-radius: 3px;
-    background: rgb(72, 53, 125);
-    color: white;
-    border: none;
-    padding: .5rem;
 }
 
 #table_react td {
