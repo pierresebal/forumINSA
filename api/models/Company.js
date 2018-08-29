@@ -319,7 +319,7 @@ module.exports = {
     instantiate: function(params) {
         return Object.assign({
             firstName: '', lastName: '', position:'', mailAddress: '', phoneNumber: '', password: '', siret: '', companyName: '', companyGroup: '', description: '', websiteUrl: '', careerUrl: '', road: '', complementaryInformation: '', city: '', postCode: '', country: '',
-            forum: '', sjd: ''
+            forum: '', sjd: '', AE: '', GB: '', GP: '', GPE: '', IR: '', GM: '', GMM: '', GC: ''
         }, params);
     },
 

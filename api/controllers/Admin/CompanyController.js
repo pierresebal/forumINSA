@@ -21,6 +21,8 @@ module.exports = {
 
         } else if (!req.body) {
 
+            
+
             // as no query has been sent, display the update with information
             Company.findOne({siret: req.param('siret')}).populate('status').populate('specialities').exec((err, company) => {
                 if (err) {
@@ -68,19 +70,27 @@ module.exports = {
 
             // handle query
             let params = req.allParams();
-            delete params.siret;
-            Company.update({siret: req.param('siret') }, params).exec((err, updated) => {
+                if (typeof req.param('AE') === 'undefined') params.AE = 'off';
+                if (typeof req.param('GB') == 'undefined') params.GB = 'off';
+                if (typeof req.param('GPE') == 'undefined') params.GPE = 'off';
+                if (typeof req.param('GP') == 'undefined') params.GP = 'off';
+                if (typeof req.param('GC') == 'undefined') params.GC = 'off';
+                if (typeof req.param('GMM') == 'undefined') params.GMM = 'off';
+                if (typeof req.param('GM') == 'undefined') params.GM = 'off';
+                if (typeof req.param('IR') == 'undefined') params.IR = 'off';
+            
+            Company.update({siret: req.param('siret')}, params).exec((err, updated) => {
 
                 if(err) {
                     sails.log.error('[Admin/CompanyController.update] err occured when update company '+ req.param('siret') + ': ', err);
                     return next(err);
                 }
-
-                else if(!updated || updated.length === 0)    {
+                else if (!updated || updated.length === 0)    {
                     sails.log.warn('[Admin/CompanyController.update] company siret '+ req.param('siret') +' has not been updated, query: ', params);
                     req.addFlash('warning', 'Company dont siret '+ req.param('siret') +' has not been updated');
                     return res.redirect(sails.getUrlFor('Admin/CompanyController.listing'));
-                }   else {
+                } 
+                else {
 
                     sails.log.info('[Admin/CompanyController.update] company '+ updated[0].companyName +' has been updated');
                     req.addFlash('success', 'Company '+ updated[0].companyName +' has been updated');
