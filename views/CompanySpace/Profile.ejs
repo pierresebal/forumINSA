@@ -22,7 +22,7 @@
 <p>Vous pouvez ici consulter votre profil.<br />Pensez à mettre un <b>logo</b>. Il sera utilisé dans nos supports de communication.</p>
 <p>N'oubliez pas de changer de mot de passe si ce n'est pas encore fait !</p>
 
-<h2>Contacts</h2>
+<h2><i class="fa fa-user"></i>&nbsp;&nbsp;Contacts</h2>
 <div class="col-sm-12">
 
     <div class="col-sm-6">
@@ -54,7 +54,7 @@
               </div>
               <% }) %>
 
-              <label for="phoneNumber">Téléphone : <%=company.phoneNumber%></label>
+              <label for="phoneNumber"><i class="fa fa-phone"></i>&nbsp;&nbsp;Téléphone : <%=company.phoneNumber%></label>
               <input class="pure-input-1" type="text" name="phoneNumber" value="<%=company.phoneNumber%>">
               <% flash.get('phoneNumber').forEach(function (message) { %>
               <div class="form-error">
@@ -62,7 +62,7 @@
               </div>
               <% }) %>
 
-              <label for="mailAddress">Mail : <%= company.mailAddress %></label>
+              <label for="mailAddress"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Email : <%= company.mailAddress %></label>
               <input class="pure-input-1" type="text" name="mailAddress" value="<%= company.mailAddress %>">
               <% flash.get('mailAddress').forEach(function (message) { %>
               <div class="form-error">
@@ -103,7 +103,7 @@
               </div>
               <% }) %>
 
-              <label for="bPhoneNumber">Téléphone<sup class="text-danger">*</sup> : <%= company.bPhoneNumber %></label>
+              <label for="bPhoneNumber"><i class="fa fa-phone"></i>&nbsp;&nbsp;Téléphone<sup class="text-danger">*</sup> : <%= company.bPhoneNumber %></label>
               <input class="pure-input-1" type="text" name="bPhoneNumber" value="<%= company.bPhoneNumber %>">
               <% flash.get('bPhoneNumber').forEach(function (message) { %>
               <div class="form-error">
@@ -111,7 +111,7 @@
               </div>
               <% }) %>
 
-              <label for="bMailAddress">Mail<sup class="text-danger">*</sup> : <%= typeof company.bMailAddress == 'undefined' ? '' : company.bMailAddress %></label>
+              <label for="bMailAddress"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Email<sup class="text-danger">*</sup> : <%= typeof company.bMailAddress == 'undefined' ? '' : company.bMailAddress %></label>
               <input class="pure-input-1" type="text" name="bMailAddress" value="<%= typeof company.bMailAddress == 'undefined' ? '' : company.bMailAddress %>">
               <% flash.get('bMailAddress').forEach(function (message) { %>
               <div class="form-error">
@@ -127,7 +127,7 @@
 
 <div class="col-sm-12">
     <div class="col-sm-6">
-        <h3>Mot de passe</h3>
+        <h3><i class="fa fa-lock"></i>&nbsp;&nbsp;Mot de passe</h3>
         <form class="pure-form pure-form-stacked" method="post" action="<%= sails.getUrlFor('CompanyController.changePassword') %>" >
             <fieldset>
                 <% flash.get('password').forEach(function (message) { %>
@@ -155,7 +155,7 @@
         </form>
     </div>
     <div class="col-sm-6">
-        <h3>Logo</h3>
+        <h3><i class="fa fa-google"></i>&nbsp;&nbsp;Logo</h3>
         <form id="uploadLogo" class="pure-form pure-form-stacked" enctype="multipart/form-data" action="/file/uploadLogo" method="post" >
             <label for="logo">Uploader votre logo</label>
             <% if (typeof company.logoPath !== 'undefined' && company.logoPath !== ''){ %>
@@ -170,7 +170,7 @@
     </div>
 </div>
 <p>&nbsp;</p>
-<h2>Informations générales</h2>
+<h2><i class="fa fa-info"></i>&nbsp;&nbsp;Informations générales</h2>
 <table class="pure-form  pure-table-bordered" style="width: 100%">
   <tr>
     <td><h3>Siret</h3></td>
@@ -223,29 +223,14 @@
 </table>
 
 <h2>Intérêts</h2>
-<p>Quels sont les profils d'étudiants qui vous intéressent ?</p>
-<fieldset style="border:0px">
-  <form  id="interests" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
-    <table>
-      <tr>
-        <td><input type="checkbox" name="IR" id="IR" <%= company.IR? 'checked' : '' %>/><label for="IR">&nbsp;Informatique et Réseaux</label></td>
-        <td><input type="checkbox" name="AE" id="AE" <%= company.AE? 'checked' : '' %>/><label for="AE">&nbsp;Automatique, Électronique</label></td>
-        <td rowspan="4"><button  type="submit" class="form-button">Enregistrer</button></td>
-      </tr>
-      <tr>
-        <td><input type="checkbox" name="GP" id="GP" <%= company.GP? 'checked' : '' %>/><label for="GP">&nbsp;Génie Physique</label></td>
-        <td><input type="checkbox" name="GB" id="GB" <%= company.GB? 'checked' : '' %>/><label for="GB">&nbsp;Génie Biologique</label></td>
-      </tr>
-      <tr>
-        <td><input type="checkbox" name="GPE" id="GPE" <%= company.GPE? 'checked' : '' %>/><label for="GPE">&nbsp;Génie des Procédés et Environnement</label></td>
-        <td><input type="checkbox" name="GC" id="GC" <%= company.GC? 'checked' : '' %>/><label for="GC">&nbsp;Génie Civil</label></td>
-      </tr>
-      <tr>
-        <td><input type="checkbox" name="GM" id="GM" <%= company.GM? 'checked' : '' %>/><label for="GM">&nbsp;Génie Mécanique</label></td>
-        <td><input type="checkbox" name="GMM" id="GMM" <%= company.GMM? 'checked' : '' %>/><label for="GMM">&nbsp;Mathématiques appliquées</label></td>
-      </tr>
-    </table>
-  </form>
-</fieldset>
+<p>Voici les domaines de spécialité qui vous intéressent :</p>
+<% if (company.IR == 'on') { %><i class="fa fa-check"></i>&nbsp;<b>IR</b> : Informatique et Réseaux<br> <% } %>
+<% if (company.AE == 'on') { %><i class="fa fa-check"></i>&nbsp;<b>AE</b> : Automatique, Électronique<br> <% } %>
+<% if (company.GP == 'on') { %><i class="fa fa-check"></i>&nbsp;<b>GP</b> : Génie Physique<br> <% } %>
+<% if (company.GB == 'on') { %><i class="fa fa-check"></i>&nbsp;<b>GB</b> : Génie Biologique<br> <% } %>
+<% if (company.GPE == 'on') { %><i class="fa fa-check"></i>&nbsp;<b>GPE</b> : Génie des Procédés et Environnement<br> <% } %>
+<% if (company.GC == 'on') { %><i class="fa fa-check"></i>&nbsp;<b>GC</b> : Génie Civil<br> <% } %>
+<% if (company.GM == 'on') { %><i class="fa fa fa-check"></i>&nbsp;<b>GM</b> : Génie Mécanique<br> <% } %>
+<% if (company.GMM == 'on') { %><i class="fa fa-check"></i>&nbsp;<b>GMM</b> : Mathématiques appliquées<br> <% } %>
 
 </div>

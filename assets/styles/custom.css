@@ -91,7 +91,7 @@ legend, label, button {
   margin-bottom: 0px;
 }
 
-.form-button, #btn_react {
+.form-button, #btn_react, #btn_download {
     border-radius: 3px;
     background: rgb(72, 53, 125);
     color: white;
@@ -99,7 +99,8 @@ legend, label, button {
     padding: .5em;
 }
 .form-button:hover, .form-button:active,
-    #btn_react:hover, #btn_react:active {
+    #btn_react:hover, #btn_react:active,
+    #btn_download:hover, #btn_download:active {
     background: rgb(109, 71, 170);
     color: white;
 }

@@ -96,7 +96,7 @@
 
                 <div class="pure-u" id="connect-infos">
                     <% if(req.session.authenticated){ %>
-                        <p>Connecté en tant que:<br/><b>
+                        <p>Connecté en tant que:<br/><b><i class="fa fa-user"></i>&nbsp;&nbsp;
                       <% if (req.session.sessionType == "company") {%>
                           <%=req.session.companyName%>
                     <%  } else if (req.session.sessionType == "student") { %>

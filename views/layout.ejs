@@ -61,9 +61,9 @@
                 <div class="pure-u" id="connect-infos">
                     <% if(req.session.authenticated){ %>
                         <p>Connecté en tant que:<br/><b>
-                      <% if (req.session.sessionType == "company") {%>
+                      <% if (req.session.sessionType == "company") {%><i class="fa fa-briefcase"></i>&nbsp;&nbsp;
                           <%=req.session.companyName%>
-                    <%  } else if (req.session.sessionType == "student") { %>
+                    <%  } else if (req.session.sessionType == "student") { %><i class="fa fa-graduation-cap"></i>&nbsp;&nbsp;
                           <%=req.session.firstName%>
                     <%  } else { %>
                           Type inconnu
@@ -71,8 +71,8 @@
                         </b></p>
                     <% } else { %>
                             <p>CONNEXION </p>
-                            <button id="connectStudent" type="button" class="btn red-button student" disabled><i class="fa fa-graduation-cap"></i> Étudiant</button>
-                            <button id="connectCompany" type="button" class="btn red-button company" ><i class="fa fa-briefcase"></i> Entreprise</button>
+                            <button id="connectStudent" type="button" class="btn red-button student" disabled><i class="fa fa-graduation-cap"></i>&nbsp;&nbsp;Étudiant</button>
+                            <button id="connectCompany" type="button" class="btn red-button company" ><i class="fa fa-briefcase"></i>&nbsp;&nbsp;Entreprise</button>
                     <% } %>
                 </div>
             </div>

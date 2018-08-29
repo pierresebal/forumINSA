@@ -10,7 +10,7 @@
   <table style="border-spacing: 10px; border-collapse: separate">
     <% bills.forEach( function(bill) { %>
       <tr>
-        <td>
+        <td><i class="fa fa-money"></i>&nbsp;&nbsp;
           <%=bill.year%>
         </td>
         <form id="downloadBill" method="post" action="/file/bills/download">

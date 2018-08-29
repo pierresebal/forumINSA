@@ -75,15 +75,15 @@ var CriteriaBox =  React.createClass({
         <form onSubmit={this.onSearchSubmit}>
         <br/>
           <p>Spécialités :</p>
-          <table id="table_react" style={{borderSpacing: '10px', borderCollapse: 'separate'}}>
+          <table id="table_react" style={{borderSpacing: '15px', borderCollapse: 'separate'}}>
             <tbody>
               <tr>
                 <td><input id="AE" type="checkbox" name='Automatique, Électronique' onClick={this.handleCheckAE}/> <label>Automatique, Électronique</label></td>
-                <td><input id="GB" type="checkbox" name='Génie Biochimique' onClick={this.handleCheckGB}/> <label>Génie Biochimique</label></td>
+                <td><input id="GB" type="checkbox" name='Génie Biologique' onClick={this.handleCheckGB}/> <label>Génie Biologique</label></td>
               </tr>
               <tr>
-                <td><input id="GPE" type="checkbox" name='Génie des Procédés' onClick={this.handleCheckGPE}/> <label>Génie des Procédés</label></td>
-                <td><input id="GMM" type="checkbox" name='Génie Mathématique et Modélisation' onClick={this.handleCheckGMM}/> <label>Génie Mathématique et Modélisation</label></td>
+                <td><input id="GPE" type="checkbox" name='Génie des Procédés et Environnement' onClick={this.handleCheckGPE}/> <label>Génie des Procédés et Environnements</label></td>
+                <td><input id="GMM" type="checkbox" name='Mathématiques appliquées' onClick={this.handleCheckGMM}/> <label>Mathématiques appliquées</label></td>
               </tr>
               <tr>
                 <td><input id="GM" type="checkbox" name='Génie Mécanique' onClick={this.handleCheckGM}/> <label>Génie Mécanique</label></td>
@@ -91,6 +91,9 @@ var CriteriaBox =  React.createClass({
               </tr>
               <tr>
                 <td><input id="IR" type="checkbox" name='Informatique et Réseaux' onClick={this.handleCheckIR}/> <label>Informatique et Réseaux</label></td>
+                <td><input id="AS" type="checkbox" name='Génie Civil' onClick={this.handleCheckGC}/> <label>Génie Civil</label></td>
+              </tr>
+              <tr>
                 <td><input id="AS" type="checkbox" name='Aucune spécialité' onClick={this.handleCheckAS}/> <label>Aucune spécialité</label></td>
               </tr>
             </tbody>
@@ -115,8 +118,8 @@ var CriteriaBox =  React.createClass({
           <p>Avec CV :</p>
           <table style={{borderSpacing: '10px', borderCollapse: 'separate'}}>
             <tbody>
-              <tr><input id="frCV" type="checkbox" name='withFrCv' onClick={this.handleCheckFrCV}/>français</tr><br/>
-              <tr><input id="enCV" type="checkbox" name='withFrCv' onClick={this.handleCheckEnCV}/>anglais</tr>
+              <tr><input id="frCV" type="checkbox" name='withFrCv' onClick={this.handleCheckFrCV}/> <label>français</label></tr><br/>
+              <tr><input id="enCV" type="checkbox" name='withFrCv' onClick={this.handleCheckEnCV}/> <label>anglais</label></tr>
             </tbody>
           </table>
           <br/>
@@ -144,7 +147,7 @@ var CVDownloadForm = React.createClass({
       <form class="pure-form" id={id} method="post" action="/file/download">
         <input type="hidden" name="dl" value={value}/>
         <input type="hidden" name="cvLogin" value={this.props.cvLogin}/>
-        <input type="submit" class="form-button" value="Télécharger"/>
+        <input id="btn_download" type="submit" class="form-button" value="Télécharger"/>
       </form>
     );
   }
