@@ -2,13 +2,14 @@ var CriteriaBox =  React.createClass({
 
   getInitialState: function() {
     //return {specialities: []};
-    return {AE:false, GB:false, GPE:false, GMM:false, GM:false, GP:false, IR:false, AS:false, A1:false, A2:false, A3:false, A4:false, A5:false, All:false, frCV:false, enCV:false}
+    return {AE:false, GB:false, GPE:false, GMM:false, GM:false, GC:false, GP:false, IR:false, AS:false, A1:false, A2:false, A3:false, A4:false, A5:false, All:false, frCV:false, enCV:false}
   },
 
   handleCheckAE : function(e) {this.setState({AE:e.target.checked});},
   handleCheckGB : function(e) {this.setState({GB:e.target.checked});},
   handleCheckGPE : function(e) {this.setState({GPE:e.target.checked});},
   handleCheckGMM : function(e) {this.setState({GMM:e.target.checked});},
+  handleCheckGC : function(e) {this.setState({GC:e.target.checked});},
   handleCheckGM : function(e) {this.setState({GM:e.target.checked});},
   handleCheckGP : function(e) {this.setState({GP:e.target.checked});},
   handleCheckIR : function(e) {this.setState({IR:e.target.checked});},
@@ -31,15 +32,17 @@ var CriteriaBox =  React.createClass({
     if (this.state.AE)
       specialitiesSearch.push('Automatique, Électronique');
     if (this.state.GB)
-      specialitiesSearch.push('Génie Biochimique');
+      specialitiesSearch.push('Génie Biologique');
     if (this.state.GPE)
-      specialitiesSearch.push('Génie des Procédés');
+      specialitiesSearch.push('Génie des Procédés et Environnement');
     if (this.state.GMM)
-      specialitiesSearch.push('Génie Mathématique Appliqué');
+      specialitiesSearch.push('Mathématiques appliquées');
     if (this.state.GM)
       specialitiesSearch.push('Génie Mécanique');
     if (this.state.GP)
       specialitiesSearch.push('Génie Physique');
+    if (this.state.GC)
+      specialitiesSearch.push('Génie Civil');
     if (this.state.IR)
       specialitiesSearch.push('Informatique et Réseaux');
     if (this.state.AS)
