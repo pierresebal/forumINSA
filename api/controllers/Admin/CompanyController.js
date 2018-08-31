@@ -139,20 +139,6 @@ module.exports = {
         }
     },
 
-    count: function (res) {
-        // give all companies in json
-
-        Company.find({}).exec((err, companies)  =>  {
-            if(err) {
-                sails.log.error('[Admin/CompanyController.apiGetAll] error when find all companies:', err);
-                return res.json(500, err);
-            }
-            sails.log.info(companies.length);
-            return companies.length;
-        });
-
-    },
-
     apiGetAll: function (req, res) {
         // give all companies in json
 
