@@ -142,6 +142,11 @@ module.exports.routes = {
         controller: 'Admin/CompanyController',
         action: 'create'
     },
+
+    '/admin/company/count': {
+        controller: 'Admin/CompanyController',
+        action: 'count'
+    },
     
     '/admin/company/:siret': {
         controller: 'Admin/CompanyController',

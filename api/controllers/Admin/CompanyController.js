@@ -21,8 +21,6 @@ module.exports = {
 
         } else if (!req.body) {
 
-            
-
             // as no query has been sent, display the update with information
             Company.findOne({siret: req.param('siret')}).populate('status').populate('specialities').exec((err, company) => {
                 if (err) {
@@ -141,6 +139,20 @@ module.exports = {
         }
     },
 
+    count: function (res) {
+        // give all companies in json
+
+        Company.find({}).exec((err, companies)  =>  {
+            if(err) {
+                sails.log.error('[Admin/CompanyController.apiGetAll] error when find all companies:', err);
+                return res.json(500, err);
+            }
+            sails.log.info(companies.length);
+            return companies.length;
+        });
+
+    },
+
     apiGetAll: function (req, res) {
         // give all companies in json
 
@@ -149,7 +161,6 @@ module.exports = {
                 sails.log.error('[Admin/CompanyController.apiGetAll] error when find all companies:', err);
                 return res.json(500, err);
             }
-
             return res.json(200, companies);
         });
 
@@ -334,7 +345,7 @@ module.exports = {
                                 "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin de changer votre mot de passe, consulter vos factures ou encore la CVthèque." +
                                 '<br /><br />Nous vous confirmons de même que votre commande de prestation a été validée. Vous trouverez ci-joint la facture correspondante.' +
                                 '<br />Si vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : <a href="mailto:contact@foruminsaentreprises.fr">contact@foruminsaentreprises.fr</a>' +
-                                "<br />Le paiement doit être fait <b>avant le 15 octobre 2018</b> par virement (RIB en pièce jointe) ou par chèque à l'ordre de FORUM INSA ENTREPRISES et envoyé à l'adresse :" +
+                                "<br />Le paiement doit être fait <b>avant le 12 octobre 2018</b> par virement (RIB en pièce jointe) ou par chèque à l'ordre de FORUM INSA ENTREPRISES et envoyé à l'adresse :" +
                                 '<br /><br />Amicale - Forum by INSA' +
                                 '<br />135 Avenue de rangueil,' +
                                 '<br />31400 Toulouse FRANCE' +
