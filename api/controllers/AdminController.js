@@ -115,7 +115,7 @@ module.exports = {
                     return err
                 }
 
-                return res.redirect('/Admin/YearSettings')
+                return res.redirect(sails.getUrlFor('Admin/SettingsController.display'));
             })
         })
     },
@@ -128,7 +128,7 @@ module.exports = {
                 return err
             }
 
-            return res.redirect('/Admin/YearSettings')
+            return res.redirect(sails.getUrlFor('Admin/SettingsController.display'));
         })
     },
 

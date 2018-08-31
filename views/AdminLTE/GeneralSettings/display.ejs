@@ -130,23 +130,49 @@
         <div class="col-lg-6">
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Configuration pour le site</h3>
+                    <h3 class="box-title">Date limite d'inscription</h3>
                 </div>
-                <form role="form" method="POST" action="<%= sails.getUrlFor('Admin/SettingsController.updateGeneralSettings') %>">
+                <form role="form" method="POST" action="/Admin/setInscriptionDeadline">
                     <div class="box-body">
                         <div class="form-group">
-                            <label>Date limite d'inscription</label>
-
+                            <p><b><%= generalSettings.inscriptionDeadline.getDate() %>/
+                               <%= generalSettings.inscriptionDeadline.getMonth() + 1 %>/
+                               <%= generalSettings.inscriptionDeadline.getFullYear() %></b>
+                               <br />
+                               Changer la deadline pour :
+                            </p>
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input type="text" class="form-control pull-right" type="date" value="<%= generalSettings.inscriptionDeadline%>">
+                                <input type="date" class="form-control pull-right" name="inscriptionDeadline" Zvalue="<%= generalSettings.inscriptionDeadline%>">
                             </div>
                             <!-- /.input group -->
                         </div>
                     </div>
 
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-info pull-right">Sauvegarder</button>
+                    </div>
+                </form>
+            </div>
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Ouverture des inscriptions</h3>
+                </div>
+                <form role="form" method="POST" action="/Admin/setInscriptionOpen"">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <p>Actuellement, les inscriptions sont <b><%= generalSettings.areInscriptionsOpened? 'ouvertes' : 'fermées' %></b>.<br />
+                               Définir les inscriptions comme :
+                            </p>
+                            <div class="radio">
+                                <label><input type="radio" value="1" name="inscriptions" <%= generalSettings.areInscriptionsOpened ? 'checked' : '' %>/>ouvertes</label><br>
+                                <label><input type="radio" value="0" name="inscriptions" <%= generalSettings.areInscriptionsOpened ? '' : 'checked' %>/>fermées</label>
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                    </div>
                     <div class="box-footer">
                         <button type="submit" class="btn btn-info pull-right">Sauvegarder</button>
                     </div>
