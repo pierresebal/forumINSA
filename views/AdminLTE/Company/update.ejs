@@ -260,6 +260,7 @@
                                 <th>Facture</th>
                                 <th>Forum</th>
                                 <th>Forum + SJD</th>
+                                <th>Forum XXL + SJD</th>
                                 <th>Repas</th>
                             </tr>
                             </thead>
@@ -267,9 +268,10 @@
                             <%sells.forEach(function(sell) {%>
                             <tr>
                                 <td><%=sell.year%></td>
-                                <td><a href='/admin/sell/<%= sell.id %>'><%=sell.billNumber%></a></td>
+                                <td><a href='#'><%=sell.billNumber%></a></td>
                                 <td><%= sell.forum == 'true' ? sell.forumPrice + ' €': '-' %></td>
                                 <td><%= sell.sjd == 'true' ? sell.sjdPrice + ' €': '-' %></td>
+                                <td><%= sell.offer == 'true' ? sell.offerPrice + ' €': '-' %></td>
                                 <td><%= sell.moreMeal > 0 ? sell.moreMeal + ' x ' + sell.mealPrice + ' €': '-' %></td>
                             </tr>
                             <% }) %>

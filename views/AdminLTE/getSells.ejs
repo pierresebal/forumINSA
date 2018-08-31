@@ -51,6 +51,13 @@ $(document).ready(function() {
                     return full.sjdPrice + " €";
                 }
             },
+            { 'data': "offer",
+                'render' : function(data, type, full, meta) {
+                    if (data == 'false')
+                        return '-';
+                    return full.offerPrice + " €";
+                }
+            },
             { 'data': "moreMeal",
                 'render' : function(data, type, full, meta) {
                     if (!data)

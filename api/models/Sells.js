@@ -46,6 +46,15 @@ module.exports = {
             type: 'integer',
             required: true
         },
+        offer: {
+            type: 'string',
+            required: true,
+            defaultsTo: 'off'
+        },
+        offerPrice: {
+            type: 'integer',
+            required: true
+        },
         moreMeal: {
             type: 'integer',
             defaultsTo: 0,

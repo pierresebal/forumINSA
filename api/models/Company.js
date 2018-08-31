@@ -185,6 +185,12 @@ module.exports = {
             defaultsTo: 'off'
         },
 
+        offer: {
+            type: 'string',
+            required: true,
+            defaultsTo: 'off'
+        },
+
         moreMeal: {
             type: 'number',
             required: true,
@@ -319,7 +325,7 @@ module.exports = {
     instantiate: function(params) {
         return Object.assign({
             firstName: '', lastName: '', position:'', mailAddress: '', phoneNumber: '', password: '', siret: '', companyName: '', companyGroup: '', description: '', websiteUrl: '', careerUrl: '', road: '', complementaryInformation: '', city: '', postCode: '', country: '',
-            forum: '', sjd: '', AE: '', GB: '', GP: '', GPE: '', IR: '', GM: '', GMM: '', GC: ''
+            forum: '', sjd: '', offer: '', AE: '', GB: '', GP: '', GPE: '', IR: '', GM: '', GMM: '', GC: ''
         }, params);
     },
 

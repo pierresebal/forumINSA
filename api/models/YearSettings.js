@@ -68,45 +68,13 @@ module.exports = {
             type: 'Integer',
             required: true,
             defaultsTo: 600
+        },
+
+        offerPrice: {
+            type: 'Integer',
+            required: true,
+            defaultsTo: 0
         }
-
-        /*
-        sjdSessionPrice: {
-            type: 'Integer',
-            required: true,
-            defaultsTo: 50
-        },
-
-        premiumPrice: {
-            type: 'Integer',
-            required: true,
-            defaultsTo: 500
-        },
-
-        //PME
-        forumPricePME: {
-            type: 'Integer',
-            required: true,
-            defaultsTo: 280
-        },
-
-        sjdPricePME: {
-            type: 'Integer',
-            required: true,
-            defaultsTo: 140
-        },
-
-        sjdSessionPricePME: {
-            type: 'Integer',
-            required: true,
-            defaultsTo: 50
-        },
-
-        premiumPricePME: {
-            type: 'Integer',
-            required: true,
-            defaultsTo: 350
-        },*/
     }
 };
 

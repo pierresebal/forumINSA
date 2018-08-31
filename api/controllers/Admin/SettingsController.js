@@ -49,6 +49,7 @@ module.exports = {
                 sjdPriceResearch: req.param('sjdPriceResearch'),
                 forumPriceFoundation: req.param('forumPriceFoundation'),
                 sjdPriceFoundation: req.param('sjdPriceFoundation'),
+                offerPrice: req.param('offerPrice'),
                 mealPrice: req.param('mealPrice')
                 /*premiumPrice: req.param('premiumPrice'),
                 sjdSessionPrice: req.param('sjdSessionPrice'),

@@ -42,6 +42,7 @@ module.exports = {
           sjdPriceResearch: record.sjdPriceResearch,
           forumPriceFoundation: record.forumPriceFoundation,
           sjdPriceFoundation: record.sjdPriceFoundation,
+          offerPrice: record.offerPrice,
           mealPrice: record.mealPrice
         })
       })

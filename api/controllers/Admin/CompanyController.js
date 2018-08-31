@@ -177,27 +177,6 @@ module.exports = {
 
             if (params.active !== undefined) {
                 if (params.active) {
-                    // We send an email with the function send email contained inside services/SendMail.js
-                    /*SendMail.sendEmail({
-                        destAddress: company.mailAddress,
-                        objectS: "Confirmation de la création de votre compte",
-                        messageS: '\nMadame/Monsieur ' + company.lastName + ', bonjour' +
-                        "\n\nNous vous confirmons par l’envoi de ce mail que nous avons créé un compte pour votre entreprise sur le site Forum by INSA. Nous vous invitons maintenant à cliquer sur le lien suivant afin de vous connecter à votre espace :" +
-                        '\nhttps://' + sails.config.configFIE.FIEdomainName + "/Company/" +
-                        "\n\nVous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
-                        '\n\nNous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
-                        "\n\nLe site ayant été mis à jour récemment, il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
-                        '\n\nNous vous remercions de votre confiance et avons hâte de vous rencontrer le 23 octobre prochain.' +
-                        "\nCordialement,\nL'équipe FIE 2018",
-                        messageHTML: '<br /><p>Madame/Monsieur ' + company.lastName + ', bonjour' +
-                        "<br /><br />Nous vous confirmons par l’envoi de ce mail que nous avons créé un compte pour votre entreprise sur le site du Forum by INSA. Nous vous invitons maintenant à cliquer sur le lien suivant afin de vous connecter à votre espace :" +
-                        '<br /><a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/' + '">Cliquez ici</a>' +
-                        "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin d'éditer votre profil, voir vos factures et consulter la CVthèque. Vous pouvez également choisir quelle prestation vous souhaitez commander." +
-                        '<br /><br />Nous vous rappelons que votre venue au FIE ne sera prise en compte que lorsque vous aurez effectué une commande de prestation (forum, speed job dating ou les deux).' +
-                        "<br /><br />Le site ayant été mis à jour récemment, il est possible que des bugs soient encore présents. N’hésitez pas à nous signaler le moindre problème ou à nous poser des questions si vous rencontrez une difficulté  à l'adresse contact@foruminsaentreprises.fr." +
-                        '<br /><br />Nous vous remercions de votre confiance et avons hâte de vous rencontrer le 23 octobre prochain.</p>' +
-                        "<p>Cordialement,<br />L'équipe FIE 2018</p>"
-                    });*/
                     // Create  the sell
                     this.addASell(company);
                 }
@@ -218,13 +197,19 @@ module.exports = {
                 return err;
             }
             /* Traitement des informations de ventes */
-            var forum, sjd;
-            if (company.sjd == 'on') {
+            var forum, sjd, offer;
+            if (company.offer == 'on') {
+                forum = false;
+                sjd = false;
+                offer = true;
+            } else if (company.sjd == 'on') {
                 forum = false;
                 sjd = true;
+                offer = false;
             } else if (company.forum == 'on') {
                 forum = true;
                 sjd = false;
+                offer = false;
             }
 
             var moreMeal = company.moreMeal;
@@ -236,6 +221,9 @@ module.exports = {
             } else if (company.isResearchOrganization()) {
                 forumPrice = found2.forumPriceResearch;
                 sjdPrice = found2.sjdPriceResearch;
+            } else if (offer) {
+                forumPrice = found2.offerPrice;
+                sjdPrice = found2.offerPrice;
             } else {
                 forumPrice = found2.forumPrice;
                 sjdPrice = found2.sjdPrice;
@@ -259,6 +247,8 @@ module.exports = {
                     forumPrice: forumPrice,
                     sjd: sjd,
                     sjdPrice: sjdPrice,
+                    offer: offer,
+                    offerPrice: forumPrice,
                     moreMeal: moreMeal,
                     mealPrice: mealPrice,
                     billNumber: fullBillNumber
@@ -293,6 +283,9 @@ module.exports = {
                         } else if (sjd === true) {
                             product = 'Stand Forum + SJD';
                             productPrice = sjdPrice;
+                        } else {
+                            product = 'Stand Forum XXL + SJD';
+                            productPrice = forumPrice;
                         }
 
                         // Création de la facture en format HTML
@@ -341,7 +334,7 @@ module.exports = {
                                 "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin de changer votre mot de passe, consulter vos factures ou encore la CVthèque." +
                                 '<br /><br />Nous vous confirmons de même que votre commande de prestation a été validée. Vous trouverez ci-joint la facture correspondante.' +
                                 '<br />Si vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : <a href="mailto:contact@foruminsaentreprises.fr">contact@foruminsaentreprises.fr</a>' +
-                                "<br />Le paiement doit être fait <b>avant le 30 septembre 2018</b> par virement (RIB en pièce jointe) ou par chèque à l'ordre de FORUM BY INSA et envoyé à l'adresse :" +
+                                "<br />Le paiement doit être fait <b>avant le 15 octobre 2018</b> par virement (RIB en pièce jointe) ou par chèque à l'ordre de FORUM INSA ENTREPRISES et envoyé à l'adresse :" +
                                 '<br /><br />Amicale - Forum by INSA' +
                                 '<br />135 Avenue de rangueil,' +
                                 '<br />31400 Toulouse FRANCE' +
