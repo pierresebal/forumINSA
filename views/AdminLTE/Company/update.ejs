@@ -1,5 +1,5 @@
 <section class="content-header">
-    <h1>Gestion des Entreprises</h1>
+    <h1><i class="fa fa-briefcase"></i> Gestion des Entreprises</h1>
     <ol class="breadcrumb">
         <li><a href="<%= sails.getUrlFor('AdminController.home') %>"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="<%= sails.getUrlFor('Admin/CompanyController.listing') %>">Entreprises inscrites</a></li>
@@ -60,19 +60,19 @@
                 <!-- form start -->
                 <form role="form" method="post" action="/admin/company/<%= company.siret %>" >
                 <div class="box-body">
-                    <strong><i class="fa fa-book margin-r-5"></i> Site internet</strong>
+                    <strong><i class="fa fa-globe margin-r-5"></i> Site internet</strong>
                     <p class="text-muted">
                         <a href="<%= company.websiteUrl %>" target="_blank"><%= company.websiteUrl %></a>
                     </p>
                     <hr>
 
-                    <strong><i class="fa fa-book margin-r-5"></i> Site internet</strong>
+                    <strong><i class="fa fa-globe margin-r-5"></i> Site de recrutement</strong>
                     <p class="text-muted">
                         <a href="<%= company.careerUrl %>" target="_blank"><%= company.careerUrl %></a>
                     </p>
                     <hr>
 
-                    <strong><i class="fa fa-book margin-r-5"></i> Adresse postale</strong>
+                    <strong><i class="fa fa-home margin-r-5"></i> Adresse postale</strong>
                     <p class="text-muted">
                         <%=company.road%><br />
                         <% if (typeof complementaryInformation != 'undefined' && complementaryInformation != "") { %>

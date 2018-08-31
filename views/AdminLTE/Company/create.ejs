@@ -19,7 +19,7 @@
                         </div>
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="type" class="col-sm-4 control-label">Type d'entreprise<sup>*</sup></label>
+                                <label for="type" class="col-sm-4 control-label">Type d'entreprise<sup class="text-danger">*</sup></label>
                                 <div class="col-sm-8">
                                     <select class="form-control" name="status">
                                         <% allStatus.forEach(function(status) { %>
@@ -29,13 +29,13 @@
                                 </div>
                             </div>                            
                             <div class="form-group">
-                                <label for="siret" class="col-sm-4 control-label">Numéro de siret<sup>*</sup></label>
+                                <label for="siret" class="col-sm-4 control-label">Numéro de siret<sup class="text-danger">*</sup></label>
                                 <div class="col-sm-8">
                                     <input type="text" minlength="14" maxlength="14" name="siret" class="form-control" placeholder="Siret" required pattern="[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{5}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="companyName" class="col-sm-4 control-label">Nom d'entreprise<sup>*</sup></label>
+                                <label for="companyName" class="col-sm-4 control-label">Nom d'entreprise<sup class="text-danger">*</sup></label>
                                 <div class="col-sm-8">
                                     <input type="text" maxlength="50" name="companyName" class="form-control" placeholder="Nom de l'entreprise" required>
                                 </div>
@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="road" class="col-sm-4 control-label">Adresse<sup>*</sup></label>
+                                <label for="road" class="col-sm-4 control-label">Adresse<sup class="text-danger">*</sup></label>
                                 <div class="col-sm-8">
                                     <input type="text" maxlength="50" name="road" class="form-control" placeholder="Adresse" required>
                                 </div>
@@ -77,19 +77,19 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="postCode" class="col-sm-4 control-label">Code Postal<sup>*</sup></label>
+                                <label for="postCode" class="col-sm-4 control-label">Code Postal<sup class="text-danger">*</sup></label>
                                 <div class="col-sm-8">
                                     <input type="number" maxlength="5" name="postCode" class="form-control" placeholder="Code Postal" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="city" class="col-sm-4 control-label">Ville<sup>*</sup></label>
+                                <label for="city" class="col-sm-4 control-label">Ville<sup class="text-danger">*</sup></label>
                                 <div class="col-sm-8">
                                     <input type="text" maxlength="50" name="city" class="form-control" placeholder="Ville" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="country" class="col-sm-4 control-label">Pays<sup>*</sup></label>
+                                <label for="country" class="col-sm-4 control-label">Pays<sup class="text-danger">*</sup></label>
                                 <div class="col-sm-8">
                                     <input type="text" maxlength="50" name="country" class="form-control" placeholder="Pays" required>
                                 </div>
@@ -103,32 +103,32 @@
                         </div>
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="firstName" class="col-sm-4 control-label">Prénom<sup>*</sup></label>
+                                <label for="firstName" class="col-sm-4 control-label">Prénom<sup class="text-danger">*</sup></label>
                                 <div class="col-sm-8">
                                     <input type="text" maxlength="50" name="firstName" class="form-control" placeholder="Prénom" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="lastName" class="col-sm-4 control-label">Nom<sup>*</sup></label>
+                                <label for="lastName" class="col-sm-4 control-label">Nom<sup class="text-danger">*</sup></label>
                                 <div class="col-sm-8">
                                     <input type="text" maxlength="50" name="lastName" class="form-control" placeholder="Nom" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="position" class="col-sm-4 control-label">Fonction<sup>*</sup></label>
+                                <label for="position" class="col-sm-4 control-label">Fonction<sup class="text-danger">*</sup></label>
                                 <div class="col-sm-8">
                                     <input type="text" maxlength="50" name="position" class="form-control" placeholder="Fonction" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="phoneNumber" class="col-sm-4 control-label">Numéro de téléphone<sup>*</sup></label>
+                                <label for="phoneNumber" class="col-sm-4 control-label">Numéro de téléphone<sup class="text-danger">*</sup></label>
                                 <div class="col-sm-8">
                                     <input maxlength="13" type="text" name="phoneNumber" placeholder="Numéro de téléphone"
                                     pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="mailAddress" class="col-sm-4 control-label">Adresse e-mail<sup>*</sup></label>
+                                <label for="mailAddress" class="col-sm-4 control-label">Adresse e-mail<sup class="text-danger">*</sup></label>
                                 <div class="col-sm-8">
                                     <input type="email" maxlength="150" name="mailAddress" class="form-control" placeholder="Email" required>
                                 </div>
@@ -136,7 +136,7 @@
                             <br><br>
                             <p>Mot de passe généré aléatoirement et changé par l'entreprise lors de sa première connexion.</p>
                             <div class="form-group">
-                                <label for="password" class="col-sm-4 control-label">Mot de passe<sup>*</sup></label>
+                                <label for="password" class="col-sm-4 control-label">Mot de passe<sup class="text-danger">*</sup></label>
                                 <div class="input-group col-sm-7">
                                     <div class="input-group-addon">
                                         <a id="pw" style="cursor: pointer;"><i class="fa fa-unlock-alt"/></i></a>
@@ -223,7 +223,7 @@
                                 </div>
                             </div>                       
                             <div class="form-group">
-                                <label for="year" class="col-sm-2 control-label">Nombre de repas<sup>*</sup></label>
+                                <label for="year" class="col-sm-2 control-label">Nombre de repas<sup class="text-danger">*</sup></label>
                                 <div class="col-sm-10">
                                     <input type="number" name="moreMeal" class="form-control" placeholder="Nombre de repas" required>
                                 </div>

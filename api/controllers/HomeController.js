@@ -19,7 +19,7 @@ module.exports = {
             return res.view('Homepage/Homepage', {
                 inscriptionOpen: config.areInscriptionsOpened,
                 layout: 'layout',
-                title: 'Accueil - FIE'
+                title: 'Accueil - Forum by INSA'
             });
         })
 
