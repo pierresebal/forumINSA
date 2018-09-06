@@ -281,7 +281,7 @@ module.exports = {
                             product = 'Stand Forum + SJD';
                             productPrice = sjdPrice;
                         } else {
-                            product = 'Stand Forum XXL + SJD';
+                            product = 'Stand Forum XXL';
                             productPrice = forumPrice;
                         }
 
