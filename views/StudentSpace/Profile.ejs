@@ -240,6 +240,52 @@
       </tr>
 
 </table>
+
+<br/>
+
+<h2>Inscription SJD</h2>
+
+<table class="pure-table pure-table-striped" id="student_profile" style="width: 100%; margin: auto;">
+    <% if (typeof wishes!== 'undefined') { %>
+        <tr>
+            <td><h3>Voeu 1</h3></td>
+            <td><%= wishes.wish1 %></td>
+        </tr>
+        <tr>
+            <td><h3>Voeu 2</h3></td>
+            <td><%= wishes.wish2 %></td>
+        </tr>
+        <tr>
+            <td><h3>Voeu 3</h3></td>
+            <td><%= wishes.wish3 %></td>
+        </tr>
+    <% } else { %>
+        <tr>
+            <td><h3>Pas de voeux effectués</h3></td>
+            <td></td>
+        </tr>
+    <% } %>
+</table>
+
+<br/>
+
+<h2>Inscription Ateliers</h2>
+
+<table class="pure-table pure-table-striped" id="student_profile" style="width: 100%; margin: auto;">
+    <% if (typeof workshops!== 'undefined') { %>
+        <tr>
+            <td><h3>Atelier 1</h3></td>
+            <td><%= workshops.wish1 %></td>
+        </tr>
+    <% } else { %>
+        <tr>
+            <td><h3>Pas d'ateliers choisis</h3></td>
+            <td></td>
+        </tr>
+    <% } %>
+</table>
+
 <br/>
 <br/>
+
 </div>

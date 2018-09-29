@@ -45,24 +45,31 @@ module.exports = {
                     console.log('err', err)
                     return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Votre inscription s\'est mal passée et est dans un état instable. Veuillez prévenir le webmaster pour qu\'il règle le problème.'})
                 }
-                student.sjdRegistered = true
-                req.addFlash('success', 'A new wish has been created: ');
-                return res.view('StudentSpace/Profile', {
-                  layout: 'layout',
-                  login: student.login,
-                  firstName: student.firstName,
-                  lastName: student.lastName,
-                  mailAddress: student.mailAddress,
-                  year: student.year,
-                  speciality: student.speciality,
-                  frCVPath: student.frCVPath,
-                  enCVPath: student.enCVPath,
-                  personalWebsite: student.personalWebsite,
-                  linkedin: student.linkedin,
-                  viadeo: student.viadeo,
-                  github: student.github,
-                  specialities: Student.definition.speciality.enum
-                })
+                SjdWish.findOne({login: req.session.login}).exec((err, wishes) => {
+                  if (err) {
+                      console.log('err', err)
+                      return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
+                  }
+                  student.sjdRegistered = true
+                  req.addFlash('success', 'A new wish has been created: ');
+                  return res.view('StudentSpace/Profile', {
+                    layout: 'layout',
+                    login: student.login,
+                    firstName: student.firstName,
+                    lastName: student.lastName,
+                    mailAddress: student.mailAddress,
+                    year: student.year,
+                    speciality: student.speciality,
+                    frCVPath: student.frCVPath,
+                    enCVPath: student.enCVPath,
+                    personalWebsite: student.personalWebsite,
+                    linkedin: student.linkedin,
+                    viadeo: student.viadeo,
+                    github: student.github,
+                    specialities: Student.definition.speciality.enum,
+                    wishes: wishes
+                  })
+              })
             })
           })
         })

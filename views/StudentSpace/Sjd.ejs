@@ -19,14 +19,14 @@
 <h2>Vos voeux</h2>
 
 <% if (student.sjdRegistered) { %>
-
-  <p>Vous êtes déjà inscrit. Voici vos voeux en attente de confirmation par notre équipe :</p>
-  <ul>
-      <li><b>Voeu 1 :</b> <%= wishes.wish1 %></li>
-      <li><b>Voeu 2 :</b> <%= wishes.wish2 %></li>
-      <li><b>Voeu 3 :</b> <%= wishes.wish3 %></li>
-  </ul>
-
+  <% if (typeof wishes!== 'undefined') { %>
+    <p>Vous êtes déjà inscrit. Voici vos voeux en attente de confirmation par notre équipe :</p>
+    <ul>
+        <li><b>Voeu 1 :</b> <%= wishes.wish1 %></li>
+        <li><b>Voeu 2 :</b> <%= wishes.wish2 %></li>
+        <li><b>Voeu 3 :</b> <%= wishes.wish3 %></li>
+    </ul>
+  <% } %>
 <% } else { %>
   <table class="pure-table pure-table-striped" id="student_profile" style="width: 100%; margin: auto;">
     <tr>

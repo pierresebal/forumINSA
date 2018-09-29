@@ -110,23 +110,30 @@ module.exports = {
                 return res.negotiate(err)
             }
             if (!record) {
-                return res.view('errorPage', {layout: 'layout', ErrorTitle: 'Recherche du profil failed', ErrorDesc: 'Etes-vous bien connecté ? Contacter le webmaster si le problème persiste'})
+                return res.view('errorPage', {layout: 'layout', ErrorTitle: 'La recherche du profil a échouée', ErrorDesc: 'Etes-vous bien connecté ? Contacter le webmaster si le problème persiste'})
             } else {
-                return res.view('StudentSpace/Profile', {
-                    layout: 'layout',
-                    login: record.login,
-                    firstName: record.firstName,
-                    lastName: record.lastName,
-                    mailAddress: record.mailAddress,
-                    year: record.year,
-                    speciality: record.speciality,
-                    frCVPath: record.frCVPath,
-                    enCVPath: record.enCVPath,
-                    personalWebsite: record.personalWebsite,
-                    linkedin: record.linkedin,
-                    viadeo: record.viadeo,
-                    github: record.github,
-                    specialities: Student.definition.speciality.enum
+                SjdWish.findOne({login: req.session.login}).exec((err, wishes) => {
+                    if (err) {
+                        console.log('err', err)
+                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
+                    }
+                    return res.view('StudentSpace/Profile', {
+                        layout: 'layout',
+                        login: record.login,
+                        firstName: record.firstName,
+                        lastName: record.lastName,
+                        mailAddress: record.mailAddress,
+                        year: record.year,
+                        speciality: record.speciality,
+                        frCVPath: record.frCVPath,
+                        enCVPath: record.enCVPath,
+                        personalWebsite: record.personalWebsite,
+                        linkedin: record.linkedin,
+                        viadeo: record.viadeo,
+                        github: record.github,
+                        specialities: Student.definition.speciality.enum,
+                        wishes: wishes
+                    })
                 })
             }
         })
@@ -323,9 +330,6 @@ module.exports = {
                     return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Les entreprises ne sont pas récupérées'})
                 }
                 const actualYear = new Date().getFullYear()
-                console.log('selectedSpeciality', selectedSpeciality)
-                console.log('specialities', specialities)
-                console.log('companies', companies)
                 return res.view('StudentSpace/Companies', {layout: 'layout', companies: companies, specialities: specialities, selectedSpeciality: selectedSpeciality, year: actualYear})
             })
         })
@@ -373,14 +377,17 @@ module.exports = {
                     console.log('err', err)
                     return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
                 }
-                SjdWish.findOne({login: req.session.login}).exec((err, wishes) => {
-                    if (err) {
-                        console.log('err', err)
-                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
-                    }
-                    return res.view('StudentSpace/Sjd', {layout: 'layout', student: student, sjd: sjd, wishes: wishes})
-                })
-            
+                if (!student) {
+                    return res.view('errorPage', {layout: 'layout', ErrorTitle: 'La recherche du profil a échouée', ErrorDesc: 'Etes-vous bien connecté ? Contacter le webmaster si le problème persiste'})
+                } else { 
+                    SjdWish.findOne({login: req.session.login}).exec((err, wishes) => {
+                        if (err) {
+                            console.log('err', err)
+                            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
+                        }
+                        return res.view('StudentSpace/Sjd', {layout: 'layout', student: student, sjd: sjd, wishes: wishes})
+                    })
+                }
             })
         })
     },
