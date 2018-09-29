@@ -16,7 +16,7 @@
     <% } else { %>
     <table style="border-spacing: 10px; border-collapse: separate">
       <tr>
-        <th></th> <th>Nom</th> <th>PME</th> <th>site internet</th> <th>Plus d'info</th>
+        <th></th> <th>Nom</th> <th>site internet</th> <th>Plus d'info</th>
       </tr>
     <% companies.forEach(function(company) { %>
     <tr>
@@ -28,9 +28,6 @@
 
       <td>
         <%=company.companyName %>
-      </td>
-      <td>
-        <%= company.isPME ? 'oui' : 'non' %>
       </td>
 
       <td>

@@ -162,6 +162,11 @@ module.exports.routes = {
         controller: 'AdminController',
         action: 'updateSell'
     },
+
+    '/admin/sjdInscriptions': {
+        controller: 'AdminController',
+        action: 'getSjdInscriptions'
+    },
     
     '/admin/sjds': {
         controller: 'AdminController',
@@ -244,6 +249,11 @@ module.exports.routes = {
     '/admin/api/sells': {
         controller: 'AdminController',
         action: 'apiGetAllSells'
+    },
+
+    '/admin/api/sjdInscriptions': {
+        controller: 'AdminController',
+        action: 'apiGetAllSjdInscriptions'
     },
     
     'POST /admin/api/sells/update': {
@@ -472,6 +482,11 @@ module.exports.routes = {
     '/Student/SjdInscription': {
         controller: 'StudentController',
         action: 'sjdInscription'
+    },
+
+    'POST /Student/SjdWish' : {
+        controller: 'SjdWishController',
+        action: 'create'
     },
     
     /*

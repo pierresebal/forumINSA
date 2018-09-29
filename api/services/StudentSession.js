@@ -3,9 +3,10 @@
  */
 
 module.exports = {
-  setStudentSessionVariables: function (req, login, firstName, mailAddress, authenticated, sessionType) {
+  setStudentSessionVariables: function (req, login, firstName, lastName, mailAddress, authenticated, sessionType) {
     req.session.login = login;
     req.session.firstName = firstName;
+    req.session.lastName = lastName;
     req.session.mailAddress = mailAddress;
     req.session.authenticated = authenticated;
     req.session.sessionType = sessionType;

@@ -627,6 +627,12 @@ module.exports = {
         });
     },
 
+    getSjdInscriptions: function(req, res)    {
+        return res.view('AdminLTE/getSjdInscriptions',  {
+            layout: 'Layout/AdminLTE'
+        });
+    },
+
     getSjds: function(req, res)  {
         return res.view('AdminLTE/getSjds',  {
             layout: 'Layout/AdminLTE'
@@ -643,6 +649,17 @@ module.exports = {
             }
 
             return res.json(200, sells);
+        })
+    },
+
+    apiGetAllSjdInscriptions: function(req, res)  {
+        SjdWish.find({}).exec((err, wishes) => {
+            if(err) {
+                sails.log.error('[AdminController.apiGetAllSjdInscriptions] error when find all wishes :', err);
+                return res.json(500, err);
+            }
+
+            return res.json(200, wishes);
         })
     },
 

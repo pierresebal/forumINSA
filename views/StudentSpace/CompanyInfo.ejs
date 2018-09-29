@@ -1,21 +1,21 @@
-<%  var AE = company.AE ? "checked" : ""
-var IR = company.IR ? "checked" : ""
-var GB = company.GB ? "checked" : ""
-var GP = company.GP ? "checked" : ""
-var GPE = company.GPE ? "checked" : ""
-var GC = company.GC ? "checked" : ""
-var GM = company.GM ? "checked" : ""
-var GMM = company.GMM ? "checked" : ""
+<%  var AE = company.AE == "on" ? "checked" : ""
+var IR = company.IR == "on" ? "checked" : ""
+var GB = company.GB == "on" ? "checked" : ""
+var GP = company.GP == "on" ? "checked" : ""
+var GPE = company.GPE == "on" ? "checked" : ""
+var GC = company.GC == "on" ? "checked" : ""
+var GM = company.GM == "on" ? "checked" : ""
+var GMM = company.GMM == "on" ? "checked" : ""
 var description = company.description
 description = description.replace(/(?:\r\n|\r|\n)/g, '<br />');
 
 var inscription = ''
-if (sell.forum)
-  inscription = 'Forum uniquement'
-else if (sell.sjd)
-  inscription = 'SJD uniquement'
-else if (sell.premiumPack)
-  inscription = 'Forum et SJD'
+if (sell.forum == "true")
+  inscription = 'Forum'
+else if (sell.sjd == "true")
+  inscription = 'Forum + SJD'
+else if (sell.offer == "true")
+  inscription = 'Forum XXL'
 
 %>
 

@@ -44,7 +44,7 @@
             <li><a href="<%= sails.getUrlFor('Admin/StudentController.listing') %>"><i class="fa fa-graduation-cap"></i> <span>Etudiants inscrits</span></a></li>
             <li><a href="<%= sails.getUrlFor('AdminController.getSells') %>"><i class="fa fa-money"></i> <span>Ventes</span></a></li>
             <!--<li><a href="<%= sails.getUrlFor('AdminController.getSjds') %>"><i class="fa fa-suitcase"></i> <span>Voir entreprises SJD</span></a></li>-->
-            <li><a href="/Admin/SjdSessions"><i class="fa fa-edit"></i> <span>Gérer les sessions SJD</span></a></li>
+            <li><a href="<%= sails.getUrlFor('AdminController.getSjdInscriptions') %>""><i class="fa fa-edit"></i> <span>Inscriptions SJD</span></a></li>
             <!--<li><a href="/Admin/CheckList"><i class="fa fa-check-square-o"></i> <span>Vérifier les actions à faire</span></a></li>-->
             <!--<li class="treeview">
                 <a href="#">

@@ -14,8 +14,8 @@ module.exports = {
 
             if (!err && httpResponse.statusCode === 200) {
 
-
-                if (body !== '0') { // si la personne a pu se connecter au ldap
+                if (body !== '0' && body[0] != 's') { // si la personne a pu se connecter au ldap
+                    console.log(body)
                     var result = JSON.parse(body)
                     delete result.studentId // On n'a pas besoin de cette property
 
@@ -28,7 +28,7 @@ module.exports = {
                                 if (err) {
                                     return res.negotiate(err)
                                 }
-                                StudentSession.setStudentSessionVariables(req, created.login, created.firstName, created.mailAddress, true, 'student')
+                                StudentSession.setStudentSessionVariables(req, created.login, created.firstName, created.lastName, created.mailAddress, true, 'student')
 
                                 return res.view('StudentSpace/FirstConnection_1', {
                                     layout: 'layout',
@@ -42,7 +42,7 @@ module.exports = {
                         } else {
 
                             req.session.user = record;
-                            StudentSession.setStudentSessionVariables(req, record.login, record.firstName, record.mailAddress, true, 'student');
+                            StudentSession.setStudentSessionVariables(req, record.login, record.firstName, record.lastName, record.mailAddress, true, 'student');
 
                             if (req.session.cbUrl) {
                                 let next = _.clone(req.session.cbUrl);
@@ -314,7 +314,7 @@ module.exports = {
             var sortSettings = {siret: companiesSiret}
 
             if (selectedSpeciality !== 'tout') { // On rajoute le tri sur les spé que si on ne les veut pas toutes
-                sortSettings[req.param('speciality')] = true
+                sortSettings[req.param('speciality')] = "on"
             }
 
             Company.find(sortSettings).exec((err, companies) => {
@@ -323,6 +323,9 @@ module.exports = {
                     return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Les entreprises ne sont pas récupérées'})
                 }
                 const actualYear = new Date().getFullYear()
+                console.log('selectedSpeciality', selectedSpeciality)
+                console.log('specialities', specialities)
+                console.log('companies', companies)
                 return res.view('StudentSpace/Companies', {layout: 'layout', companies: companies, specialities: specialities, selectedSpeciality: selectedSpeciality, year: actualYear})
             })
         })
@@ -358,27 +361,32 @@ module.exports = {
     },
 
     sjd: function (req, res) {
-        const specialities = ['AE', 'IR', 'GMM', 'GC', 'GM', 'GB', 'GP', 'GPE']
+        //const specialities = ['AE', 'IR', 'GMM', 'GC', 'GM', 'GB', 'GP', 'GPE']
 
-        SjdSession.find().exec((err, sessions) => {
+        Sjd.find().exec((err, sjd) => {
             if (err) {
                 console.log('err', err)
                 return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
             }
-
             Student.findOne({login: req.session.login}).exec((err, student) => {
                 if (err) {
                     console.log('err', err)
                     return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
                 }
-
-                return res.view('StudentSpace/Sjd', {layout: 'layout', sessions: sessions, student: student, specialities: specialities})
+                SjdWish.findOne({login: req.session.login}).exec((err, wishes) => {
+                    if (err) {
+                        console.log('err', err)
+                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
+                    }
+                    return res.view('StudentSpace/Sjd', {layout: 'layout', student: student, sjd: sjd, wishes: wishes})
+                })
+            
             })
         })
     },
 
     sjdInscription: function (req, res) {
-        Student.findOne({login: req.session.login}).exec((err, student) => {
+        /*Student.findOne({login: req.session.login}).exec((err, student) => {
             if (err) {
                 console.log('err', err)
                 return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
@@ -388,7 +396,11 @@ module.exports = {
                 return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Vous êtes déjà inscrit'})
             }
 
-            SjdSession.findOne({sessionId: req.param('sessionId')}).exec((err, session) => {
+            SjdWish.create(req.body).exec((err, company) => {
+
+            }
+
+            /*SjdSession.findOne({sessionId: req.param('sessionId')}).exec((err, session) => {
                 if (err) {
                     console.log('err', err)
                     return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
@@ -423,7 +435,7 @@ module.exports = {
                     })
                 }
             })
-        })
+        })*/
     },
 
     getSpecialities: function (req, res) {

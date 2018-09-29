@@ -11,8 +11,7 @@ module.exports = {
     Sells.find({ // Entreprises inscrites au SJD
       year: actualYear,
       or: [
-        {premiumPack: true},
-        {sjd: true}
+        {sjd: "on"}
       ]
     }).exec((err, sells) => {
       if (err) {
@@ -24,9 +23,7 @@ module.exports = {
         entries.push({
           year: actualYear,
           companyName: sell.companyName,
-          companySiret: sell.companySiret,
-          sessionNb: 2 + sell.moreSjd,
-          specialities: []
+          companySiret: sell.companySiret
         })
       })
 
