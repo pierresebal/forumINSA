@@ -57,5 +57,12 @@ module.exports = {
       type: 'string',
       required: true
     }
+  },
+
+  beforeCreate: function(data, next)    {
+
+    if (data.wish1 != data.wish2 && data.wish1 != data.wish3 && data.wish2 != data.wish3) {
+      next();
+    }
   }
 };
