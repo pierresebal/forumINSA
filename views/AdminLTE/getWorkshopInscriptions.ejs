@@ -35,9 +35,17 @@ $(document).ready(function() {
             'dataSrc': ''
         },
         columns: [
-            { 'data': "workshopName" },
             { 'data': "lastName" },
             { 'data': "firstName" },
+            { 'data': "workshops" ,
+                'render': function(data, type, full, meta) {
+                    var r = '<ul>';
+                    data.forEach(element => {
+                        r = r + '<li>' + element + '</li>';
+                    });
+                    return r + '</ul>';
+                }
+            },
             { 'data': "year" },
             { 'data': "speciality" }, 
             { 'data': "mail" }
