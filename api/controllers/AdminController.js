@@ -670,7 +670,7 @@ module.exports = {
     },
 
     apiGetAllWorkshopInscriptions: function(req, res)  {
-        Workshop.find({}).exec((err, workshops) => {
+        WorkshopWish.find({}).exec((err, workshops) => {
             if(err) {
                 sails.log.error('[AdminController.apiGetAllWorkshops] error when find all workshops :', err);
                 return res.json(500, err);

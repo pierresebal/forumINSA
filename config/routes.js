@@ -508,6 +508,11 @@ module.exports.routes = {
         controller: 'StudentController',
         action: 'sjd'
     },
+
+    '/Student/Ateliers': {
+        controller: 'StudentController',
+        action: 'workshop'
+    },
     
     '/Student/CompanyInfo': {
         controller: 'StudentController',
@@ -521,6 +526,11 @@ module.exports.routes = {
 
     'POST /Student/SjdWish' : {
         controller: 'SjdWishController',
+        action: 'create'
+    },
+
+    'POST /Student/WorkshopWish' : {
+        controller: 'WorkshopWishController',
         action: 'create'
     },
     

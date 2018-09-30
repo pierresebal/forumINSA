@@ -77,6 +77,10 @@ module.exports = {
             type: 'boolean',
             defaultsTo: false
         },
+        workshopRegistered: {
+            type: 'boolean',
+            defaultsTo: false
+        },
         sjdSession: {
             type: 'string',
             defaultsTo: ''

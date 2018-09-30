@@ -25,6 +25,16 @@ module.exports = {
            required: true
         },
 
+        startHour: {
+            type: 'string',
+            required: true
+        },
+
+        endHour: {
+            type: 'string',
+            required: true
+        },
+
         places: {
             type: 'integer',
             required: true
@@ -38,7 +48,7 @@ module.exports = {
     // instantiate a blank object
     instantiate: (params) => {
         return Object.assign({
-            abbreviation: '', name: '', organizer: '', places: '', freePlaces: ''
+            abbreviation: '', name: '', organizer: '', startHour: '', endHour: '', places: '', freePlaces: ''
         }, params);
     },
 

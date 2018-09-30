@@ -19,11 +19,11 @@ module.exports = {
                     var result = JSON.parse(body)
                     delete result.studentId // On n'a pas besoin de cette property
 
-                    Student.findOne({login: result.login}).exec((err, record) => {
+                    Student.findOne({login: result.login}).exec((err, student) => {
                         if (err) {
                             return res.negotiate(err)
                         }
-                        if (!record) { // Première connexion
+                        if (!student) { // Première connexion
                             Student.create(result).exec((err, created) => {
                                 if (err) {
                                     return res.negotiate(err)
@@ -41,8 +41,8 @@ module.exports = {
                             })
                         } else {
 
-                            req.session.user = record;
-                            StudentSession.setStudentSessionVariables(req, record.login, record.firstName, record.lastName, record.mailAddress, true, 'student');
+                            req.session.user = student;
+                            StudentSession.setStudentSessionVariables(req, student.login, student.firstName, student.lastName, student.mailAddress, true, 'student');
 
                             if (req.session.cbUrl) {
                                 let next = _.clone(req.session.cbUrl);
@@ -105,37 +105,51 @@ module.exports = {
 
     // Affiche les informations du profil
     profile: function (req, res) {
-        Student.findOne({login: req.session.login}).exec((err, record) => {
+        Workshop.find().exec((err, workshop) => {
             if (err) {
-                return res.negotiate(err)
+                console.log('err', err)
+                return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
             }
-            if (!record) {
-                return res.view('errorPage', {layout: 'layout', ErrorTitle: 'La recherche du profil a échouée', ErrorDesc: 'Etes-vous bien connecté ? Contacter le webmaster si le problème persiste'})
-            } else {
-                SjdWish.findOne({login: req.session.login}).exec((err, wishes) => {
-                    if (err) {
-                        console.log('err', err)
-                        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
-                    }
-                    return res.view('StudentSpace/Profile', {
-                        layout: 'layout',
-                        login: record.login,
-                        firstName: record.firstName,
-                        lastName: record.lastName,
-                        mailAddress: record.mailAddress,
-                        year: record.year,
-                        speciality: record.speciality,
-                        frCVPath: record.frCVPath,
-                        enCVPath: record.enCVPath,
-                        personalWebsite: record.personalWebsite,
-                        linkedin: record.linkedin,
-                        viadeo: record.viadeo,
-                        github: record.github,
-                        specialities: Student.definition.speciality.enum,
-                        wishes: wishes
+            Student.findOne({login: req.session.login}).exec((err, student) => {
+                if (err) {
+                    return res.negotiate(err)
+                }
+                if (!student) {
+                    return res.view('errorPage', {layout: 'layout', ErrorTitle: 'La recherche du profil a échouée', ErrorDesc: 'Etes-vous bien connecté ? Contacter le webmaster si le problème persiste'})
+                } else {
+                    SjdWish.findOne({login: req.session.login}).exec((err, sjdWishes) => {
+                        if (err) {
+                            console.log('err', err)
+                            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
+                        }
+                        WorkshopWish.findOne({login: req.session.login}).exec((err, workshopWishes) => {
+                            if (err) {
+                                console.log('err', err)
+                                return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
+                            }
+                            return res.view('StudentSpace/Profile', {
+                                layout: 'layout',
+                                login: student.login,
+                                firstName: student.firstName,
+                                lastName: student.lastName,
+                                mailAddress: student.mailAddress,
+                                year: student.year,
+                                speciality: student.speciality,
+                                frCVPath: student.frCVPath,
+                                enCVPath: student.enCVPath,
+                                personalWebsite: student.personalWebsite,
+                                linkedin: student.linkedin,
+                                viadeo: student.viadeo,
+                                github: student.github,
+                                specialities: Student.definition.speciality.enum,
+                                sjdWishes: sjdWishes,
+                                workshop: workshop,
+                                workshopWishes: workshopWishes
+                            })
+                        })
                     })
-                })
-            }
+                }
+            })
         })
     },
 
@@ -148,7 +162,7 @@ module.exports = {
             case 'y':
                 var year = req.param('year')
                 // Todo: Verification de year
-                Student.update({login: req.session.login}, {year: year}).exec((err, record) => {
+                Student.update({login: req.session.login}, {year: year}).exec((err, student) => {
                     if (err) {
                         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update year.'})
                     }
@@ -165,7 +179,7 @@ module.exports = {
                 }
 
                 // Todo: Verification de personnalWebsite
-                Student.update({login: req.session.login}, {personalWebsite: personalWebsite}).exec((err, record) => {
+                Student.update({login: req.session.login}, {personalWebsite: personalWebsite}).exec((err, student) => {
                     if (err) {
                         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update personalWebsite.'})
                     }
@@ -181,7 +195,7 @@ module.exports = {
                     linkedin = 'https://' + linkedin
                 }
                 // Todo: Verification de year
-                Student.update({login: req.session.login}, {linkedin: linkedin}).exec((err, record) => {
+                Student.update({login: req.session.login}, {linkedin: linkedin}).exec((err, student) => {
                     if (err) {
                         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update Linkedin.'})
                     }
@@ -197,7 +211,7 @@ module.exports = {
                 }
 
                 // Todo: Verification de year
-                Student.update({login: req.session.login}, {viadeo: viadeo}).exec((err, record) => {
+                Student.update({login: req.session.login}, {viadeo: viadeo}).exec((err, student) => {
                     if (err) {
                         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update Viadeo.'})
                     }
@@ -213,7 +227,7 @@ module.exports = {
                     github = 'https://' + github
                 }
                 // Todo: Verification de year
-                Student.update({login: req.session.login}, {github: github}).exec((err, record) => {
+                Student.update({login: req.session.login}, {github: github}).exec((err, student) => {
                     if (err) {
                         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update github.'})
                     }
@@ -225,7 +239,7 @@ module.exports = {
             case 's' :
                 var speciality = req.param('speciality')
                 // Todo: Verification de year
-                Student.update({login: req.session.login}, {speciality: speciality}).exec((err, record) => {
+                Student.update({login: req.session.login}, {speciality: speciality}).exec((err, student) => {
                     if (err) {
                         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update github.'})
                     }
@@ -237,7 +251,7 @@ module.exports = {
             case 'm' :
                 var mailAddress = req.param('mailAddress')
                 // Todo: Verification de year
-                Student.update({login: req.session.login}, {mailAddress: mailAddress}).exec((err, record) => {
+                Student.update({login: req.session.login}, {mailAddress: mailAddress}).exec((err, student) => {
                     if (err) {
                         return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'prb update mailAddress.'})
                     }
@@ -392,6 +406,34 @@ module.exports = {
         })
     },
 
+    workshop: function (req, res) {
+        //const specialities = ['AE', 'IR', 'GMM', 'GC', 'GM', 'GB', 'GP', 'GPE']
+
+        Workshop.find().exec((err, workshop) => {
+            if (err) {
+                console.log('err', err)
+                return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
+            }
+            Student.findOne({login: req.session.login}).exec((err, student) => {
+                if (err) {
+                    console.log('err', err)
+                    return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
+                }
+                if (!student) {
+                    return res.view('errorPage', {layout: 'layout', ErrorTitle: 'La recherche du profil a échouée', ErrorDesc: 'Etes-vous bien connecté ? Contacter le webmaster si le problème persiste'})
+                } else { 
+                    WorkshopWish.findOne({login: req.session.login}).exec((err, wishes) => {
+                        if (err) {
+                            console.log('err', err)
+                            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
+                        }
+                        return res.view('StudentSpace/Workshop', {layout: 'layout', student: student, workshop: workshop, wishes: wishes})
+                    })
+                }
+            })
+        })
+    },
+
     sjdInscription: function (req, res) {
         /*Student.findOne({login: req.session.login}).exec((err, student) => {
             if (err) {
@@ -450,13 +492,13 @@ module.exports = {
     },
 
     getStudents: function (req, res) {
-        Student.find().exec((err, records) => {
+        Student.find().exec((err, students) => {
             if (err) {
                 console.log('Erreur renvoi students')
                 return
             }
 
-            var lightRecords = records.map(function (found) {
+            var lightRecords = students.map(function (found) {
                 return {
                     'login': found.login,
                     'lastName': found.lastName,

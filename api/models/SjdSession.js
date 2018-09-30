@@ -29,6 +29,6 @@ module.exports = {
         {name: 'GP', companies: [], students: []},
         {name: 'GPE', companies: [], students: []},
       ]
-    },
+    }
   }
 };

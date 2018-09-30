@@ -1,0 +1,78 @@
+<style>
+  tr.border td {
+    border: 1px solid lightgray;
+  }
+</style>
+
+<div class="content">
+
+<h1>Inscription Ateliers</h1>
+
+<p>
+  Cette année, vous avez aussi la possibilité d'assister à des <b>ateliers</b> qui vous permettront
+  d'améliorer vos compétences dans le domaine de la recherche de stage et de travail.
+</p>
+<p>
+  Ces ateliers sont à capacité limitée (ou on), et vous avez la possiblité d'en sélectionner plusieurs.
+  L'inscription est définitive, donc veillez à faire les bons choix pour ne pas pénaliser ceux qui auraient
+  voulu s'inscrire à votre place !
+</p>
+
+<h2>Vos choix d'ateliers</h2>
+
+<% if (student.workshopRegistered) { %>
+  <% if (typeof wishes!== 'undefined') { %>
+    <p>Vous êtes déjà inscrit. Voici les ateliers auxquels vous vous êtes inscrits :</p>
+    <ul>
+        <% wishes.workshops.forEach(function(wish) { 
+          workshop.forEach(function(w) {
+            if (w.abbreviation == wish) { %>
+              <li><%= w.name %><b><%= " (" + w.startHour + "-" + w.endHour + ")" %></b></li> 
+          <% }
+          })
+        }) %>
+    </ul>
+  <% } %>
+<% } else { %>
+  <table class="pure-table pure-table-striped" id="student_profile" style="width: 100%; margin: auto;">
+    <tr>
+      <form role="form" class="form-horizontal" method="POST" action="<%= sails.getUrlFor('WorkshopWishController.create') %>">
+        <input type="hidden" name="login" value="<%= student.login %>"/>
+        <input type="hidden" name="firstName" value="<%= student.firstName %>"/>
+        <input type="hidden" name="lastName" value="<%= student.lastName %>"/>
+        <input type="hidden" name="mail" value="<%= student.mailAddress %>"/>
+        <input type="hidden" name="year" value="<%= student.year %>"/>
+        <input type="hidden" name="speciality" value="<%= student.speciality %>"/>
+        <td>
+        <% workshop.forEach(function(aWorkshop) { %>
+          <div class="checkbox">
+              <label><input type="checkbox" <% if (aWorkshop.freePlaces == 0) { %>disabled <% } %> name="<%= aWorkshop.abbreviation %>">
+                <%= aWorkshop.name %><b><%= " (" + aWorkshop.startHour + "-" + aWorkshop.endHour + ")" %></b>
+              </label>
+          </div>
+        <% }); %>
+        </td>
+        <td align="right">
+          <% workshop.forEach(function(aWorkshop) { %>
+            <div>
+              <label>
+                <span style="color: rebeccapurple; font: bold">
+                  <%= aWorkshop.freePlaces %> place(s) restantes /<%= aWorkshop.places %>
+                </span>
+              </label>
+          </div>
+          <% }); %>
+        </td>
+      </tr>
+      <tr></tr>
+      <tr class="border" align="center">
+        <td border="1" colspan="2">
+        <button type="submit" class="form-button" ><i class="fa fa-check" aria-hidden="true"></i> Enregistrer</button>
+      </td>
+      </form>
+    </tr>
+  </table>
+
+<% } %>
+
+</div>
