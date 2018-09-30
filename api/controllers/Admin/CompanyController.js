@@ -341,6 +341,7 @@ module.exports = {
                                 attachments: [{filename: 'facture.pdf', filePath: 'files/factures/' + year + '/' + company.siret + '.pdf'}, {filename: 'RIB-FIE.pdf', filePath: 'files/facture_template/RIB-FIE.pdf'}]
                             });
 
+                            console.log('sjd', sjd);
                             if (sjd === true) {
                                 Sjd.create({
                                     year: year,
