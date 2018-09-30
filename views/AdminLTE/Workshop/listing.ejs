@@ -2,7 +2,7 @@
     <h1><i class="fa fa-code"></i> Paramètre de contenu</h1>
     <ol class="breadcrumb">
         <li><a href="<%= sails.getUrlFor('AdminController.home') %>"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Spécialités</a></li>
+        <li><a href="#">Ateliers</a></li>
     </ol>
 </section>
 
@@ -11,13 +11,13 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Spécialités</h3>
+                    <h3 class="box-title">Ateliers</h3>
                     <div class="box-tools">
-                        <a href="<%= sails.getUrlFor('Admin/SpecialityController.create') %>" class="btn btn-primary"><i class="fa fa-plus"></i> Créer un nouveau</a>
+                        <a href="<%= sails.getUrlFor('Admin/WorkshopController.create') %>" class="btn btn-primary"><i class="fa fa-plus"></i> Créer un nouveau</a>
                     </div>
                 </div>
                 <div class="box-body">
-                    <%- partial('../templateDatatable/Speciality.ejs') %>
+                    <%- partial('../templateDatatable/Workshop.ejs') %>
                 </div>
             </div>
         </div>
@@ -34,21 +34,18 @@ $(document).ready(function() {
     let datatable = $('#datatable').DataTable( {
         responsive: true,
         ajax: {
-            'url': "<%= sails.getUrlFor('Admin/SpecialityController.apiGetAll') %>",
+            'url': "<%= sails.getUrlFor('Admin/WorkshopController.apiGetAll') %>",
             'dataSrc': ''
         },
         columns: [
             { 'data': "abbreviation" },
             { 'data': "name" },
-            { 'data': "insaUrl",
-                'render': function(data) {
-                    return '<a href="'+data+'">'+data+'</a>';
-                }
-            },
+            { 'data': "organizer" },
+            { 'data': "places" },
+            { 'data': "freePlaces" },
             { 'data': null,
                 'render': function(data, type, full, meta)  {
-                    return '<a href="/admin/speciality/'+ full.abbreviation +'" class="btn btn-info update"><i class="fa fa-cog"></i> Modifier</a>' +
-                        '<button class="btn btn-danger delete"><i class="fa fa-trash"></i> Supprimer</button>';
+                    return '<button class="btn btn-danger delete"><i class="fa fa-trash"></i> Supprimer</button>';
                 }
             }
         ]
@@ -61,7 +58,7 @@ $(document).ready(function() {
         let data = row.data();
 
         $.ajax({
-            url: '<%= sails.getUrlFor("Admin/SpecialityController.apiDelete") %>',
+            url: '<%= sails.getUrlFor("Admin/WorkshopController.apiDelete") %>',
             type: 'POST',
             data: {
                 abbreviation: data.abbreviation

@@ -633,6 +633,12 @@ module.exports = {
         });
     },
 
+    getWorkshopInscriptions: function(req, res)    {
+        return res.view('AdminLTE/getWorkshopInscriptions',  {
+            layout: 'Layout/AdminLTE'
+        });
+    },
+
     getSjds: function(req, res)  {
         return res.view('AdminLTE/getSjds',  {
             layout: 'Layout/AdminLTE'
@@ -660,6 +666,17 @@ module.exports = {
             }
 
             return res.json(200, wishes);
+        })
+    },
+
+    apiGetAllWorkshopInscriptions: function(req, res)  {
+        Workshop.find({}).exec((err, workshops) => {
+            if(err) {
+                sails.log.error('[AdminController.apiGetAllWorkshops] error when find all workshops :', err);
+                return res.json(500, err);
+            }
+
+            return res.json(200, workshops);
         })
     },
 

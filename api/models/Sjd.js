@@ -9,7 +9,7 @@ module.exports = {
 
   attributes: {
     year: {
-      type: 'Integer',
+      type: 'integer',
       required: true
     },
     companyName: {

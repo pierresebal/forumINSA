@@ -167,6 +167,11 @@ module.exports.routes = {
         controller: 'AdminController',
         action: 'getSjdInscriptions'
     },
+
+    '/admin/workshopInscriptions': {
+        controller: 'AdminController',
+        action: 'getWorkshopInscriptions'
+    },
     
     '/admin/sjds': {
         controller: 'AdminController',
@@ -185,6 +190,21 @@ module.exports.routes = {
     
     '/admin/specility/create': {
         controller: 'Admin/SpecialityController',
+        action: 'create'
+    },
+
+    '/admin/workshops': {
+        controller: 'Admin/WorkshopController',
+        action: 'listing'
+    },
+
+    /*'/admin/workshop/:abbreviation': {
+        controller: 'Admin/WorkshopController',
+        action: 'update'
+    },*/
+    
+    '/admin/workshop/create': {
+        controller: 'Admin/WorkshopController',
         action: 'create'
     },
     
@@ -255,6 +275,11 @@ module.exports.routes = {
         controller: 'AdminController',
         action: 'apiGetAllSjdInscriptions'
     },
+
+    '/admin/api/workshopInscriptions': {
+        controller: 'AdminController',
+        action: 'apiGetAllWorkshopInscriptions'
+    },
     
     'POST /admin/api/sells/update': {
         controller: 'AdminController',
@@ -273,6 +298,16 @@ module.exports.routes = {
     
     'POST /admin/api/speciality/delete': {
         controller: 'Admin/SpecialityController',
+        action: 'apiDelete'
+    },
+
+    '/admin/api/workshop': {
+        controller: 'Admin/WorkshopController',
+        action: 'apiGetAll'
+    },
+    
+    'POST /admin/api/workshop/delete': {
+        controller: 'Admin/WorkshopController',
         action: 'apiDelete'
     },
     
