@@ -15,7 +15,6 @@ module.exports = {
             if (!err && httpResponse.statusCode === 200) {
 
                 if (body !== '0' && body[0] != 's') { // si la personne a pu se connecter au ldap
-                    console.log(body)
                     var result = JSON.parse(body)
                     delete result.studentId // On n'a pas besoin de cette property
 
@@ -50,7 +49,7 @@ module.exports = {
                                 return res.redirect(next);
                             }
 
-                            return res.redirect('/');
+                            return res.redirect('Student/Profile');
                         }
                     })
                 } else { // Personne non reconnu par le ldap
