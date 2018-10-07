@@ -343,7 +343,7 @@ var CvBox = React.createClass({
     return (
       <div className="CvBox">
         <h1>CVThèque</h1>
-        <p>La CVThèque se remplit au fur et à mesure que les étudiants upload leur CV.</p>
+        <p>La CVThèque se remplit au fur et à mesure que les étudiants téléchargent leur CV.</p>
         <CriteriaBox  onSearch={this.search}/>
         <CvList
           cvList={this.state.cvListFound}
