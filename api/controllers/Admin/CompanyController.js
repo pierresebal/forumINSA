@@ -317,7 +317,7 @@ module.exports = {
                                 '\n\nNous vous confirmons que la commande de prestation pour le FIE a été prise en compte. Vous trouverez ci-joint la facture correspondante.' +
                                 '\n\nSi vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : contact@foruminsaentreprises.fr' +
                                 '\n\nDans le cas où le plan vigipirate serait maintenu, vous serez recontactés peu de temps avant le forum afin d\'enregistrer les noms de vos représentants. Une pièce d\'identité vous sera alors nécessaire.' +
-                                '\n\nLe paiement doit être fait avant le 27 octobre 2018 par virement (RIB en pièce jointe) ou par chèque à l\'ordre du FORUM INSA ENTREPRISES et envoyé à l\'adresse :' +
+                                '\n\nLe paiement doit être fait avant le 30 novembre 2018 par virement (RIB en pièce jointe) ou par chèque à l\'ordre du FORUM INSA ENTREPRISES et envoyé à l\'adresse :' +
                                 '\nAmicale - Forum INSA Entreprises' +
                                 '\n135 Avenue de rangueil,' +
                                 '\n31400 Toulouse FRANCE' +
@@ -331,7 +331,7 @@ module.exports = {
                                 "<br /><br />Vous pouvez dès à présent visiter votre espace personnel sur le site afin de changer votre mot de passe, consulter vos factures ou encore la CVthèque." +
                                 '<br /><br />Nous vous confirmons de même que votre commande de prestation a été validée. Vous trouverez ci-joint la facture correspondante.' +
                                 '<br />Si vous souhaitez modifier votre commande, merci de nous en faire part le plus tôt possible à l’adresse suivante : <a href="mailto:contact@foruminsaentreprises.fr">contact@foruminsaentreprises.fr</a>' +
-                                "<br />Le paiement doit être fait <b>avant le 27 octobre 2018</b> par virement (RIB en pièce jointe) ou par chèque à l'ordre de FORUM INSA ENTREPRISES et envoyé à l'adresse :" +
+                                "<br />Le paiement doit être fait <b>avant le 30 novembre 2018</b> par virement (RIB en pièce jointe) ou par chèque à l'ordre de FORUM INSA ENTREPRISES et envoyé à l'adresse :" +
                                 '<br /><br />Amicale - Forum by INSA' +
                                 '<br />135 Avenue de rangueil,' +
                                 '<br />31400 Toulouse FRANCE' +

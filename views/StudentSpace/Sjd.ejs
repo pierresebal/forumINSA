@@ -40,21 +40,33 @@
         <div class="form-group">
           <select name="wish1">
             <% sjd.forEach(function(company) { %>
-              <option value="<%= company.companyName %>"><%= company.companyName%></option>
+              <% if (company.companyName == "Altran" || company.companyName == "Dedienne Aerospace" || company.companyName == "MICHELIN") { %>
+                <option disabled style="color: red;" value=""><%= company.companyName%> COMPLET</option>
+              <% } else { %>
+                <option value="<%= company.companyName %>"><%= company.companyName%></option>
+              <% } %>
             <% }); %>
           </select>
         </div>
         <div class="form-group">
           <select name="wish2">
             <% sjd.forEach(function(company) { %>
-              <option value="<%= company.companyName %>"><%= company.companyName%></option>
+              <% if (company.companyName == "Altran" || company.companyName == "Dedienne Aerospace" || company.companyName == "MICHELIN") { %>
+                <option disabled style="color: red;" value=""><%= company.companyName%> COMPLET</option>
+              <% } else { %>
+                <option value="<%= company.companyName %>"><%= company.companyName%></option>
+              <% } %>
             <% }); %>
           </select>
         </div>
         <div class="form-group">
           <select name="wish3">
             <% sjd.forEach(function(company) { %>
-              <option value="<%= company.companyName %>"><%= company.companyName%></option>
+              <% if (company.companyName == "Altran" || company.companyName == "Dedienne Aerospace" || company.companyName == "MICHELIN") { %>
+                <option disabled style="color: red;" value=""><%= company.companyName%> COMPLET</option>
+              <% } else { %>
+                <option value="<%= company.companyName %>"><%= company.companyName%></option>
+              <% } %>
             <% }); %>
           </select>
         </div>
