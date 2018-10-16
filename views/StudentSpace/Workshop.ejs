@@ -24,10 +24,10 @@
   <% if (typeof wishes!== 'undefined') { %>
     <p>Vous êtes déjà inscrit. Voici les ateliers auxquels vous vous êtes inscrits :</p>
     <ul>
-        <% wishes.workshops.forEach(function(wish) { 
+        <% wishes.workshops.forEach(function(wish) {
           workshop.forEach(function(w) {
             if (w.abbreviation == wish) { %>
-              <li><%= w.name %><b><%= " (" + w.startHour + "-" + w.endHour + ")" %></b></li> 
+              <li><%= w.name %><b><%= " (" + w.startHour + "-" + w.endHour + ")" %></b></li>
           <% }
           })
         }) %>
@@ -61,8 +61,8 @@
                   <%= aWorkshop.freePlaces %> place(s) restantes /<%= aWorkshop.places %>
                 </span>
               </label>
-          </div>
-          <% }); %>
+            </div>
+            <% }); %>
         </td>
       </tr>
       <tr></tr>
@@ -73,7 +73,9 @@
       </form>
     </tr>
   </table>
-
-<% } %>
-
+    
+  <% } %>
+    
 </div>
+                                                           
+                                                                                                                                                                                                1,1          Haut
