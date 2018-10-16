@@ -39,6 +39,7 @@
         <input type="hidden" name="speciality" value="<%= student.speciality %>"/>
         <div class="form-group">
           <select name="wish1">
+            <option value="-">Aucune entreprise sélectionnée</option>
             <% sjd.forEach(function(company) { %>
               <% if (company.companyName == "Altran" || company.companyName == "Dedienne Aerospace" || company.companyName == "MICHELIN") { %>
                 <option disabled style="color: red;" value=""><%= company.companyName%> COMPLET</option>
@@ -50,6 +51,7 @@
         </div>
         <div class="form-group">
           <select name="wish2">
+            <option value="-">Aucune entreprise sélectionnée</option>
             <% sjd.forEach(function(company) { %>
               <% if (company.companyName == "Altran" || company.companyName == "Dedienne Aerospace" || company.companyName == "MICHELIN") { %>
                 <option disabled style="color: red;" value=""><%= company.companyName%> COMPLET</option>
@@ -61,6 +63,7 @@
         </div>
         <div class="form-group">
           <select name="wish3">
+            <option value="-">Aucune entreprise sélectionnée</option>
             <% sjd.forEach(function(company) { %>
               <% if (company.companyName == "Altran" || company.companyName == "Dedienne Aerospace" || company.companyName == "MICHELIN") { %>
                 <option disabled style="color: red;" value=""><%= company.companyName%> COMPLET</option>

@@ -61,8 +61,9 @@ module.exports = {
 
   beforeCreate: function(data, next)    {
 
-    if (data.wish1 != data.wish2 && data.wish1 != data.wish3 && data.wish2 != data.wish3) {
+    if (data.wish1 != "-") {
       next();
     }
+    
   }
 };
