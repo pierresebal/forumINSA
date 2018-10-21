@@ -41,7 +41,7 @@
           <select name="wish1">
             <option value="-">Aucune entreprise sélectionnée</option>
             <% sjd.forEach(function(company) { %>
-              <% if (company.companyName == "Altran" || company.companyName == "Dedienne Aerospace" || company.companyName == "MICHELIN") { %>
+              <% if (!company.companyName == "MALET") { %>
                 <option disabled style="color: red;" value=""><%= company.companyName%> COMPLET</option>
               <% } else { %>
                 <option value="<%= company.companyName %>"><%= company.companyName%></option>
@@ -53,7 +53,7 @@
           <select name="wish2">
             <option value="-">Aucune entreprise sélectionnée</option>
             <% sjd.forEach(function(company) { %>
-              <% if (company.companyName == "Altran" || company.companyName == "Dedienne Aerospace" || company.companyName == "MICHELIN") { %>
+              <% if (!company.companyName == "MALET") { %>
                 <option disabled style="color: red;" value=""><%= company.companyName%> COMPLET</option>
               <% } else { %>
                 <option value="<%= company.companyName %>"><%= company.companyName%></option>
@@ -65,7 +65,7 @@
           <select name="wish3">
             <option value="-">Aucune entreprise sélectionnée</option>
             <% sjd.forEach(function(company) { %>
-              <% if (company.companyName == "Altran" || company.companyName == "Dedienne Aerospace" || company.companyName == "MICHELIN") { %>
+              <% if (!company.companyName == "MALET") { %>
                 <option disabled style="color: red;" value=""><%= company.companyName%> COMPLET</option>
               <% } else { %>
                 <option value="<%= company.companyName %>"><%= company.companyName%></option>
