@@ -17,7 +17,7 @@
 
 header {
   text-align: left;
-  background-image : linear-gradient(to bottom right, #86156b, #284d8b); /*#F02FC2, #6094EA*/
+  background-image : linear-gradient(to bottom right, #0070C0 , #00C057); /*2018: #86156b, #284d8b *//* before: #F02FC2, #6094EA*/
   width: 100%;
 }
 
