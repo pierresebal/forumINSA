@@ -9,7 +9,7 @@ module.exports.configFIE = {
   FIEmailService: "Gmail",
   FIEmailAddress: "forum.insa.entreprise@gmail.com",
   FIEmailPassword: "",
-  FIEmailSenderName: "Forum INSA Entreprises",
+  FIEmailSenderName: "Forum by INSA",
 
   trackPassword: "",
   adminPassword: ""
