@@ -43,23 +43,28 @@ h1 {
 }
 
 h2 {
-    font-size: 1.8em;
+  font-family: "PSR", 'Open Sans', sans-serif;
+  font-size: 1.8em;
 }
 
 h3 {
-    font-size: 1.6em;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.6em;
 }
 
 h2, h3 {
-    font-family: "PSR", 'Open Sans', sans-serif;
     color: #656464;
 }
 
-legend, label, button {
-    font-family: "PSR", 'Open Sans', sans-serif;
+legend, label {
+    font-family:  "Helvetica", "Segoe UI", Arial, sans-serif;
 }
 
-a, input {
+button {
+  font-family: "PSR", 'Open Sans', sans-serif;
+}
+
+a, input, button {
   -webkit-transition: all 0.2s;
      -moz-transition: all 0.2s;
        -o-transition: all 0.2s;
@@ -100,15 +105,16 @@ a, input {
 
 .form-button, #btn_react, #btn_download {
     border-radius: 3px;
-    background: #00CE9A;
+    background: #11AA81;
     color: white;
     border: none;
+    margin-top: .5em;
     padding: .5em;
 }
 .form-button:hover, .form-button:active,
     #btn_react:hover, #btn_react:active,
     #btn_download:hover, #btn_download:active {
-    background: #1CB58C;
+    background: #249174;
     color: white;
 }
 
