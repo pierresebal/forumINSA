@@ -59,6 +59,13 @@ legend, label, button {
     font-family: "PSR", 'Open Sans', sans-serif;
 }
 
+a, input {
+  -webkit-transition: all 0.2s;
+     -moz-transition: all 0.2s;
+       -o-transition: all 0.2s;
+          transition: all 0.2s;
+}
+
 .unselectable {
   cursor: pointer;
   user-select: none;
@@ -93,7 +100,7 @@ legend, label, button {
 
 .form-button, #btn_react, #btn_download {
     border-radius: 3px;
-    background: rgb(72, 53, 125);
+    background: #00CE9A;
     color: white;
     border: none;
     padding: .5em;
@@ -101,7 +108,7 @@ legend, label, button {
 .form-button:hover, .form-button:active,
     #btn_react:hover, #btn_react:active,
     #btn_download:hover, #btn_download:active {
-    background: rgb(109, 71, 170);
+    background: #1CB58C;
     color: white;
 }
 
