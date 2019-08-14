@@ -139,7 +139,8 @@ module.exports = {
         },
 
         logoPath: {
-            type: 'string'        },
+            type: 'string'        
+        },
 
         road: { //Both number and road
             type: 'string',
@@ -172,7 +173,7 @@ module.exports = {
         },
 
         /* Command */
-
+        /*
         forum: {
             type: 'string',
             required: true,
@@ -196,6 +197,28 @@ module.exports = {
             required: true,
             defaultsTo: ''
         },
+*/
+        /* now, stored in : */
+
+        
+        orderYear: {
+            type: 'number',
+            required: true,
+            defaultsTo: ''
+        },
+
+        orderOption: {
+            type: 'string',
+            required: true,
+            defaultsTo: ''
+        },
+
+        orderMeals: {
+            type: 'number',
+            required: true,
+            defaultsTo: ''
+        },
+
 
         /* Other Information */
 
@@ -295,9 +318,11 @@ module.exports = {
          * @return: boolean
          */
         canBook: function() {
+            var year = new Date().getFullYear();
             return this.firstName && this.lastName && this.position && this.phoneNumber && this.mailAddress         // contact
                 && this.bFirstName && this.bLastName && this.bPosition && this.bPhoneNumber && this.bMailAddress    // facturation
-                && this.logoPath && this.description && this.road && this.postCode && this.country && this.city;
+                && this.logoPath && this.description && this.road && this.postCode && this.country && this.city 
+                && this.orderYear==year;
         },
 
         /**
@@ -324,8 +349,7 @@ module.exports = {
     // instantiate a blank object
     instantiate: function(params) {
         return Object.assign({
-            firstName: '', lastName: '', position:'', mailAddress: '', phoneNumber: '', password: '', siret: '', companyName: '', companyGroup: '', description: '', websiteUrl: '', careerUrl: '', road: '', complementaryInformation: '', city: '', postCode: '', country: '',
-            forum: '', sjd: '', offer: '', AE: '', GB: '', GP: '', GPE: '', IR: '', GM: '', GMM: '', GC: ''
+            firstName: '', lastName: '', position:'', mailAddress: '', phoneNumber: '', password: '', siret: '', companyName: '', companyGroup: '', description: '', websiteUrl: '', careerUrl: '', road: '', complementaryInformation: '', city: '', postCode: '', country: '', orderYear: '', orderOption: '', orderMeals: '', AE: '', GB: '', GP: '', GPE: '', IR: '', GM: '', GMM: '', GC: ''
         }, params);
     },
 
@@ -337,8 +361,12 @@ module.exports = {
             data.phoneNumber = parseInt(data.phoneNumber);
 
         // check number of meal
-        if(data.moreMeal)
-            data.moreMeal = parseInt(data.moreMeal);
+        if(data.orderMeals)
+            data.orderMeals = parseInt(data.orderMeals);
+
+        // check year
+        if(data.orderYear)
+            data.orderYear = parseInt(data.orderYear);
 
         // format url
         if (data.websiteUrl && data.websiteUrl.charAt(4) !== ':' && data.websiteUrl.charAt(5) !== ':' && data.websiteUrl !== '')

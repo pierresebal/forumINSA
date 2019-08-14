@@ -195,21 +195,21 @@ module.exports = {
             }
             /* Traitement des informations de ventes */
             var forum, sjd, offer;
-            if (company.offer == 'on') {
+            if (company.orderOption == 'forum') {
                 forum = false;
                 sjd = false;
                 offer = true;
-            } else if (company.sjd == 'on') {
+            } else if (company.orderOption == 'forumSJD') {
                 forum = false;
                 sjd = true;
                 offer = false;
-            } else if (company.forum == 'on') {
+            } else if (company.orderOption == 'special') {
                 forum = true;
                 sjd = false;
                 offer = false;
             }
 
-            var moreMeal = company.moreMeal;
+            var moreMeal = company.orderMeals;
             var mealPrice = found2.mealPrice;
             var forumPrice, sjdPrice;
             if(company.isBenefitPromotion()) {
