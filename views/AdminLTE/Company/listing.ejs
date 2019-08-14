@@ -41,42 +41,72 @@ $(document).ready(function() {
         buttons: [
             'excel'
         ],
+        /*
+          Columns fields are described in 
+          views\AdminLTE\templateDatatable\Company.ejs 
+        */
         columns: [
             { 'data': "companyName" },
+            /*
+            { 'data': "logoPath",
+                'render' : function(data, type, full, meta) {
+                    return '<img class="img-responsive rounded" src="' + (data ? '/images/logos/' + data : '/images/default_logo.png') + '" alt="Company logo">';
+                }
+            },*/
             { 'data': "status",
-                'render': function(data) {
+            //trying without those line, to check il we can delete them
+                /*'render': function(data) {
                     if(typeof data === 'undefined')
                         return '';
                     return data;
+                }*/
+            },
+            { 'data': "mailAddress" },
+            { 'data': "siret",
+                'render': function(data, type, full, meta)  {
+                    return '<a class="btn btn-info" href="/Admin/company/' +data+'"><i class="fa fa-info-circle"></i> Voir plus</a>';
                 }
             },
+            { 'data': "siret",
+                'render': function(data, type, full, meta)  {
+                    let year = new Date().getFullYear();
+                    let renewable = full.orderYear < year || !full.orderYear;
+                    return '<a class="btn btn btn-primary" href=' 
+                    + (renewable 
+                        ? '"/Admin/company/renew/' + data + '"' 
+                        : '"#" disabled')
+                     + '><i class="fa fa-refresh"></i> Renouveler </a>';
+                }
+            },
+            { 'data': "active",
+                'render': function(data, type, full, meta) {
+                    let year = new Date().getFullYear();
+                    let activable = full.orderYear == year || data;
+                    
+                    return '<input type="checkbox" name="checkbox-switch" ' 
+                    + (activable ? '' : 'disabled')
+                    + (data ? ' checked' : '')
+                    +'>';
+                }
+            },
+            
             { 'data': "createdAt",
                 'render' : function(data, type, full, meta) {
                     return new Date(data).toLocaleDateString();
                 }
             },
-            { 'data': "mailAddress",
-                'render': function(data)    {
-                    return data;
+            { 'data': "updatedAt",
+                'render' : function(data, type, full, meta) {
+                    return new Date(data).toLocaleDateString();
                 }
             },
-            { 'data': "active",
-                'render': function(data)    {
-                    return '<input type="checkbox" name="checkbox-switch" ' + (data ? ' checked>' : '>');
-                }
-            },
-            { 'data': "siret",
-                'render': function(data, type, full, meta)  {
-                    return '<a class="btn btn-info" href="/Admin/company/' +data+'"><i class="fa fa-info-circle"></i> Voir plus</a>';
-            }
-            }
         ],
         drawCallback: function(settings, json)  {
             $('input[name="checkbox-switch"]').bootstrapSwitch({
                 onColor: 'success',
-                onText: 'Oui',
+                onText: '<i class="fa fa-check">',
                 offColor: 'danger',
-                offText: 'Non',
+                offText: '<i class="fa fa-times">',
                 labelWidth: 0,
                 onSwitchChange: function(event, state)  {
                     var data = datatable.row( $(this).parents('tr') ).data();
