@@ -98,6 +98,105 @@ module.exports = {
         }
     },
 
+    renew: function(req, res, next) {
+
+        sails.log.info('[Admin/CompanyController.renew] Siret : ' + req.param('siret'));
+
+        if (!req.param('siret')) {
+            sails.log.error('[Admin/CompanyController.renew] siret param not found');
+            return res.serverError();
+
+        } else if (!req.body) {
+
+            // as no query has been sent, display the renewed with information
+            Company.findOne({siret: req.param('siret')}).populate('status').populate('specialities').exec((err, company) => {
+                if (err) {
+                    sails.log.error('[Admin/CompanyController.renew] an error occured when find a company: ', err);
+                    return next(err);
+                }
+
+                if (!company) {
+                    sails.log.error('[Admin/CompanyController.renew] No company found with query: ', req.allParams());
+                    return res.notFound();
+                }
+
+                // the next 3 query, we'll give the elements for some listing choices for the front page
+
+                CompanyStatus.find().exec((err, status) => {
+                    if(err) {
+                        sails.log.error('[Admin/CompanyController.renew] error when find all status: ', err);
+                        return res.serverError(err);
+                    }
+
+                    Sells.find({companySiret: company.siret}).exec((err, sells) => {
+                        if(err) {
+                            sails.log.error('[Admin/CompanyController.renew] error when find sells for company ' + company.companyName + ': ', err);
+                            return res.serverError(err);
+                        }
+
+                        Speciality.find().exec((err, specialities) => {
+                            if(err) {
+                                sails.log.error('[Admin/CompanyController.renew] error when find all speciality: ', err);
+                                return res.serverError(err);
+                            }
+
+                            return res.view('AdminLTE/Company/renew', {
+                                layout: 'Layout/AdminLTE',
+                                company: company,
+                                sells: sells,
+                                allStatus: status,
+                                specialities: specialities
+                            });
+                        });
+                    });
+                });
+            });
+        } else {
+
+            // handle query
+            let params = req.allParams();
+            
+            sails.log.info('[Admin/CompanyController.renew] Siret : ' + req.param('siret'));
+            sails.log.info('[Admin/CompanyController.renew] Siret : ' + params.siret);
+
+            sails.log.info('[Admin/CompanyController.renew] Form params : ' + JSON.stringify(params));
+
+            if (typeof req.param('AE') === 'undefined') params.AE = 'off';
+            if (typeof req.param('GB') == 'undefined') params.GB = 'off';
+            if (typeof req.param('GPE') == 'undefined') params.GPE = 'off';
+            if (typeof req.param('GP') == 'undefined') params.GP = 'off';
+            if (typeof req.param('GC') == 'undefined') params.GC = 'off';
+            if (typeof req.param('GMM') == 'undefined') params.GMM = 'off';
+            if (typeof req.param('GM') == 'undefined') params.GM = 'off';
+            if (typeof req.param('IR') == 'undefined') params.IR = 'off';
+            sails.log.info('[Admin/CompanyController.renew] Well');
+            sails.log.info('[Admin/CompanyController.renew] Corrected params : ' + JSON.stringify(params));
+            
+            sails.log.info('[Admin/CompanyController.renew] Siret : ' + req.param('siret'));
+            Company.update({siret: params.siret}, params).exec((err, renewed) => {
+
+                if(err) {
+                    sails.log.error('[Admin/CompanyController.renew] err occured when renew company '+ req.param('siret') + ' : ', err);
+                    sails.log.error('[Admin/CompanyController.renew](err occured when renew company '+ params.siret + ') : ', err);
+                    return next(err);
+                }
+                else if (!renewed || renewed.length === 0)    {
+                    sails.log.warn('[Admin/CompanyController.renew] renewed: ', !renewed, renewed.length);
+                    sails.log.error('[Admin/CompanyController.renew] err occured when renew company '+ req.param('siret') + ': ', err);
+                    sails.log.warn('[Admin/CompanyController.renew] company siret '+ req.param('siret') +' has not been renewed, query: ', params);
+                    req.addFlash('warning', 'Company dont siret '+ req.param('siret') +' has not been renewed');
+                    return res.redirect(sails.getUrlFor('Admin/CompanyController.listing'));
+                } 
+                else {
+
+                    sails.log.info('[Admin/CompanyController.renew] company '+ renewed[0].companyName +' has been renewed');
+                    req.addFlash('success', 'Company '+ renewed[0].companyName +' has been renewted');
+                    return res.redirect(sails.getUrlFor('Admin/CompanyController.listing'));
+                }
+            });
+        }
+    },
+
     create: function(req, res, next) {
 
         if(!req.body)   {

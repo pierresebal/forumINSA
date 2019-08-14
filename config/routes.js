@@ -46,7 +46,7 @@ module.exports.routes = {
         controller: 'AdminController',
         action: 'login'
     },
-    
+    /*
     '/Admin/YearSettings': {
         controller: 'AdminController',
         action: 'displayYearSettings'
@@ -106,7 +106,7 @@ module.exports.routes = {
         controller: 'AdminController',
         action: 'changeStudentSjd'
     },
-    
+    */
     /*-------------  new admin ------------------*/
     '/admin/settings' : {
         controller: 'Admin/SettingsController',
@@ -141,6 +141,12 @@ module.exports.routes = {
     '/admin/company/create': {
         controller: 'Admin/CompanyController',
         action: 'create'
+    },
+
+    
+    '/admin/company/renew/:siret': {
+        controller: 'Admin/CompanyController',
+        action: 'renew'
     },
 
     /*'/admin/company/count': {
@@ -347,10 +353,10 @@ module.exports.routes = {
     },
     
     /*-----------  End Admin api ----------------*/
-    
+    /*
     '/Track': {
         view: 'Track/Homepage',
-        locals: {layout: 'layout', title: 'Suivi - FIE'}
+        locals: {layout: 'layout', title: 'Suivi - Forum by INSA'}
     },
     
     '/Track/Login': {
@@ -377,7 +383,7 @@ module.exports.routes = {
         controller: 'TrackController',
         action: 'displaySells'
     },
-    
+    */
     
     /***************************************************************************
      *                                                                          *
@@ -391,32 +397,32 @@ module.exports.routes = {
     
     '/INSA': {
         view: 'Insa/InsaDescription',
-        locals: {layout: 'layout', title: 'INSA - FIE'}
+        locals: {layout: 'layout', title: 'INSA - Forum by INSA'}
     },
     
-    '/Forum': {
+    '/forum': {
         view: 'Forum/forumDescription',
-        locals: {layout: 'layout', title: 'Forum - FIE'}
+        locals: {layout: 'layout', title: 'Forum - Forum by INSA'}
     },
     
     '/SJD': {
         view: 'SpeedJobDating/SJDDescription',
-        locals: {layout: 'layout', title: 'Speed Job Dating - FIE'}
+        locals: {layout: 'layout', title: 'Speed Job Dating - Forum by INSA'}
     },
     
-    '/Conferences': {
+    '/conferences': {
         view: 'Conferences/confDescription',
-        locals: {layout: 'layout', title: 'Conférences - FIE'}
+        locals: {layout: 'layout', title: 'Conférences - Forum by INSA'}
     },
     
-    '/Ateliers': {
+    '/ateliers': {
         view: 'Ateliers/ateliersDescription',
-        locals: {layout: 'layout', title: 'Ateliers - FIE'}
+        locals: {layout: 'layout', title: 'Ateliers - Forum by INSA'}
     },
     
     '/about': {
         view: 'About/Contact',
-        locals: {layout: 'layout', title: 'A Propos - FIE'}
+        locals: {layout: 'layout', title: 'A Propos - Forum by INSA'}
     },
     
     '/file/uploadCV': {
@@ -542,7 +548,7 @@ module.exports.routes = {
     
     '/Company/ResetPassPage': {
         view: 'Connection_Password/ResetPassPage',
-        locals: {layout: 'layout', title: 'Reinitialisation - FIE'}
+        locals: {layout: 'layout', title: 'Reinitialisation - Forum by INSA'}
     },
     
     /*

@@ -1,0 +1,309 @@
+<section class="content-header">
+    <h1>Renouvellement d'une entreprise</h1>
+    <ol class="breadcrumb">
+        <li><a href="<%= sails.getUrlFor('AdminController.home') %>"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<%= sails.getUrlFor('Admin/CompanyController.listing') %>">Entreprises inscrites</a></li>
+        <li><a href="#">Renouvellement d'une entreprise</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-primary">
+                <form role="form" class="form-horizontal" method="POST"
+                    action="<%= sails.getUrlFor('Admin/CompanyController.renew') %>">
+
+                    <div class="col-sm-6">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Profil Entreprise</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="type" class="col-sm-4 control-label">Type d'entreprise<sup
+                                        class="text-danger">*</sup></label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="status">
+                                        <% allStatus.forEach(function(status) { %>
+                                        <option value="<%= company.status.name %>"
+                                            <%= company.status && status.name == company.status.name ? 'selected' : '' %>>
+                                            <%= status.name %></option>
+                                        <% }); %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="siret" class="col-sm-4 control-label">Numéro de siret<sup
+                                        class="text-danger">*</sup></label>
+                                <div class="col-sm-8">
+                                    <input type="text" minlength="14" maxlength="14" name="siret" class="form-control"
+                                        placeholder="Siret" required
+                                        pattern="[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{3}[ \.\-]?[0-9]{5}"
+                                        value=<%= company.siret %>>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="companyName" class="col-sm-4 control-label">Nom d'entreprise<sup
+                                        class="text-danger">*</sup></label>
+                                <div class="col-sm-8">
+                                    <input type="text" maxlength="50" name="companyName" class="form-control"
+                                        placeholder="Nom de l'entreprise" required value="<%= company.companyName %>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="companyGroup" class="col-sm-4 control-label">Groupe de l'entreprise</label>
+                                <div class="col-sm-8">
+                                    <input type="text" maxlength="50" name="companyGroup" class="form-control"
+                                        placeholder="Nom du groupe" value="<%= company.companyGroup %>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="col-sm-4 control-label">Description de
+                                    l'entreprise</label>
+                                <div class="col-sm-8">
+                                    <textarea rows="3" maxlength="1000" name="description" class="form-control"
+                                        placeholder="Tapez ici la description de l'entreprise qui apparaitra dans la plaquette du forum et sur le catalogue en ligne."><%= company.description %></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="websiteUrl" class="col-sm-4 control-label">Site internet officiel</label>
+                                <div class="col-sm-8">
+                                    <input type="url" maxlength="200" name="websiteUrl" class="form-control"
+                                        placeholder="Ex: http://monentreprise.fr" value="<%= company.websiteUrl %>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="careerUrl" class="col-sm-4 control-label">Site de recrutement</label>
+                                <div class="col-sm-8">
+                                    <input type="url" maxlength="200" name="careerUrl" class="form-control"
+                                        placeholder="Ex: http://monentreprise.fr/recrutement"
+                                        value="<%= company.careerUrl %>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="road" class="col-sm-4 control-label">Adresse<sup
+                                        class="text-danger">*</sup></label>
+                                <div class="col-sm-8">
+                                    <input type="text" maxlength="50" name="road" class="form-control"
+                                        placeholder="Adresse" required value="<%= company.road %>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="complementaryInformation" class="col-sm-4 control-label">Complément</label>
+                                <div class="col-sm-8">
+                                    <input type="text" maxlength="50" name="complementaryInformation"
+                                        class="form-control" placeholder="Information complémentaire"
+                                        value="<%= company.complementaryInformation %>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="postCode" class="col-sm-4 control-label">Code Postal<sup
+                                        class="text-danger">*</sup></label>
+                                <div class="col-sm-8">
+                                    <input type="number" maxlength="5" name="postCode" class="form-control"
+                                        placeholder="Code Postal" required value="<%= company.postCode %>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="city" class="col-sm-4 control-label">Ville<sup
+                                        class="text-danger">*</sup></label>
+                                <div class="col-sm-8">
+                                    <input type="text" maxlength="50" name="city" class="form-control"
+                                        placeholder="Ville" required value="<%= company.city %>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="country" class="col-sm-4 control-label">Pays<sup
+                                        class="text-danger">*</sup></label>
+                                <div class="col-sm-8">
+                                    <input type="text" maxlength="50" name="country" class="form-control"
+                                        placeholder="Pays" required value="<%= company.country %>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Contact Forum</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="firstName" class="col-sm-4 control-label">Prénom<sup
+                                        class="text-danger">*</sup></label>
+                                <div class="col-sm-8">
+                                    <input type="text" maxlength="50" name="firstName" class="form-control"
+                                        placeholder="Prénom" required value="<%= company.firstName %>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName" class="col-sm-4 control-label">Nom<sup
+                                        class="text-danger">*</sup></label>
+                                <div class="col-sm-8">
+                                    <input type="text" maxlength="50" name="lastName" class="form-control"
+                                        placeholder="Nom" required value="<%= company.lastName %>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="position" class="col-sm-4 control-label">Fonction<sup
+                                        class="text-danger">*</sup></label>
+                                <div class="col-sm-8">
+                                    <input type="text" maxlength="50" name="position" class="form-control"
+                                        placeholder="Fonction" required value="<%= company.position %>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber" class="col-sm-4 control-label">Numéro de téléphone<sup
+                                        class="text-danger">*</sup></label>
+                                <div class="col-sm-8">
+                                    <input maxlength="13" type="text" name="phoneNumber"
+                                        placeholder="Numéro de téléphone"
+                                        pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"
+                                        required value="<%= company.phoneNumber %>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mailAddress" class="col-sm-4 control-label">Adresse e-mail<sup
+                                        class="text-danger">*</sup></label>
+                                <div class="col-sm-8">
+                                    <input type="email" maxlength="150" name="mailAddress" class="form-control"
+                                        placeholder="Email" required value="<%= company.mailAddress %>">
+                                </div>
+                            </div>
+                            <br><br>
+                        </div>
+
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Intérêts</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <div class="col-sm-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" name="IR" <% if (company.IR == 'on') { %>
+                                                value="on" checked <% } else { %> value="off" <% } %>>
+                                            Informatique et Réseaux</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" name="AE" <% if (company.AE == 'on') { %>
+                                                value="on" checked <% } else { %> value="off" <% } %>>
+                                            Automatique, Électronique</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" name="GP" <% if (company.GP == 'on') { %>
+                                                value="on" checked <% } else { %> value="off" <% } %>>
+                                            Génie Physique</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" name="GB" <% if (company.GB == 'on') { %>
+                                                value="on" checked <% } else { %> value="off" <% } %>>
+                                            Génie Biologique</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" name="GPE" <% if (company.GPE == 'on') { %>
+                                                value="on" checked <% } else { %> value="off" <% } %>>
+                                            Génie des Procédés et Environnement</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" name="GC" <% if (company.GC == 'on') { %>
+                                                value="on" checked <% } else { %> value="off" <% } %>>
+                                            Génie Civil</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" name="GM" <% if (company.GM == 'on') { %>
+                                                value="on" checked <% } else { %> value="off" <% } %>>
+                                            Génie Mécanique</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" name="GMM" <% if (company.GMM == 'on') { %>
+                                                value="on" checked <% } else { %> value="off" <% } %>>
+                                            Mathématiques appliquées</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Commande (pour l'année <b><%= new Date().getFullYear() %></b>)</h3>
+                        </div>
+                        <div class="box-body">
+                            <!-- 
+                                    Year parameter is not displayed (actual year, not modifiable) 
+                                    but used to save the year of last (and actual) order 
+                                -->
+                            <div class="form-group" style="display: none;">
+                                <label for="order-year" class="col-sm-2 control-label">Année</label>
+                                <div class="col-sm-10">
+                                    <input type="number" name="orderYear" class="form-control" placeholder="Année"
+                                        required value=<%= new Date().getFullYear() %> id="order-year">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Formule<sup class="text-danger"></sup></label>
+                                <div class="col-sm-10">
+                                    <div class="checkbox-inline">
+                                        <input class="form-check-input" type="radio" name="orderOption" id="order-forum"
+                                            value="forum">
+                                        <label class="form-check-label" for="order-forum">Stand Forum</label>
+                                    </div>
+                                    <div class="checkbox-inline">
+                                        <input class="form-check-input" type="radio" name="orderOption"
+                                            id="order-forum-sjd" value="forumSJD">
+                                        <label class="form-check-label" for="order-forum-sjd">Stand Forum +
+                                            SJD</label>
+                                    </div>
+                                    <div class="checkbox-inline">
+                                        <input class="form-check-input" type="radio" name="orderOption" id="order-offer"
+                                            value="special">
+                                        <label class="form-check-label" for="order-offer">Offre spéciale (VINCI)</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="order-meals" class="col-sm-2 control-label">Nombre de repas<sup
+                                        class="text-danger">*</sup></label>
+                                <div class="col-sm-10">
+                                    <input type="number" name="orderMeals" class="form-control"
+                                        placeholder="Nombre de repas" required id="order-meals">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-info pull-right"
+                            style="margin: 1.75rem;">Sauvegarder</button>
+                        <button type="reset" class="btn btn-success pull-right"
+                            style="margin-top: 1.75rem;">Réinitialiser</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $("#pw").click(function () {
+        var randPassword = Array(8).fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").map(function (x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+        $("#inputPassword").val(randPassword);
+    });
+
+</script>
