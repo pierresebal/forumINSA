@@ -424,11 +424,12 @@ module.exports = {
                                 "\n\nCordialement,\nL'équipe Forum by INSA " + year, // plaintext body
 
                                 messageHTML: '<p>Bonjour Madame/Monsieur ' + company.lastName +  ',' +
-                                // new account or renewed one :
+
+                                // new account...
                                 (company.firstConnectionDone ?
                                 '<br /><br />Nous vous confirmons par l’envoi de cet e-mail que nous avons mis à jour le compte de votre entreprise sur le site <b>Forum <i>by</i> INSA</b>. Nous vous invitons à cliquer sur <a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/AuthCompany' + '">ce lien</a> afin de vous connecter à votre espace. Vous pouvez dès à présent y consulter vos factures ou encore la CVthèque.' +
                                 "<br /><br />Dans le cas où vous souhaiteriez renouveller votre mot de passe, n\'hésitez pas à vous rendre sur " + '<a href="https://' + sails.config.configFIE.FIEdomainName + '/Company/ResetPassPage' + '">cette page</a>.'
-                                :
+                                : // ..or renewed one
                                 "<br /><br />Nous vous confirmons par l’envoi de cet e-mail que nous avons créé un compte pour votre entreprise sur le site <b>Forum <i>by</i> INSA</b>. Nous vous invitons maintenant à cliquer sur le lien suivant afin de vous connecter à votre espace, muni des identifiants ci-dessous :" +
                                 '<br /><br /><b>Email</b> : ' + company.mailAddress +
                                 "<br /><b>Password : </b>" + company.tmpPassword +
@@ -447,12 +448,25 @@ module.exports = {
                             });
 
                             console.log('sjd', sjd);
+
                             if (sjd === true) {
+                                spe = [];
+                                if (company.AE == "on") spe.push("AE");
+                                if (company.IR == "on") spe.push("IR");
+                                if (company.GM == "on") spe.push("GM");
+                                if (company.GC == "on") spe.push("GC");
+                                if (company.GP == "on") spe.push("GP");
+                                if (company.GB == "on") spe.push("GB");
+                                if (company.GMM== "on") spe.push("GMM");
+                                if (company.GPE== "on") spe.push("GPE");
+
+                                console.log('sjd - specialities', spe);
                                 Sjd.create({
                                     year: year,
                                     companyName: company.companyName,
                                     companySiret: company.siret,
-                                    sessionNb: 1
+                                    sessionNb: 1,
+                                    specialities: spe,
                                 })
                                 .exec((err, record) => {
                                     if (err) {
