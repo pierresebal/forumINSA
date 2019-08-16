@@ -56,7 +56,6 @@ module.exports ={
 
         // body
         + '<div style="width:95%;margin:20px;">'
-          + '<br/>' 
           +mailparam.messageHTML+''
           + '<br/><br/>' 
         + '</div>' 
