@@ -88,16 +88,17 @@ $(document).ready(function() {
                     + (data ? ' checked' : '')
                     +'>';
                 }
-            },
-            
-            { 'data': "createdAt",
-                'render' : function(data, type, full, meta) {
-                    return new Date(data).toLocaleDateString();
-                }
-            },
+            },            
             { 'data': "updatedAt",
                 'render' : function(data, type, full, meta) {
-                    return new Date(data).toLocaleDateString();
+                    date = new Date(data);
+                    return date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
+                }
+            },
+            { 'data': "createdAt",
+                'render' : function(data, type, full, meta) {
+                    date = new Date(data);
+                    return date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
                 }
             },
         ],

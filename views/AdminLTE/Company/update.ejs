@@ -268,7 +268,12 @@
                             <%sells.forEach(function(sell) {%>
                             <tr>
                                 <td><%=sell.year%></td>
-                                <td><a href='#'><%=sell.billNumber%></a></td>
+                                <td>
+                                    <form id="downloadBill" method="post" action="/file/bills/download">
+                                        <input type="hidden" name="dl" value=<%= sell.year %> />
+                                        <input type="hidden" name="siret" value=<%= sell.companySiret %> />
+                                        <input type="submit" class="btn btn-primary" value="n°<%= sell.billNumber %>">
+                                    </form>
                                 <td><%= sell.forum == 'true' ? sell.forumPrice + ' €': '-' %></td>
                                 <td><%= sell.sjd == 'true' ? sell.sjdPrice + ' €': '-' %></td>
                                 <td><%= sell.offer == 'true' ? sell.offerPrice + ' €': '-' %></td>
