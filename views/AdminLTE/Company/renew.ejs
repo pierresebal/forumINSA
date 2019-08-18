@@ -253,6 +253,11 @@
                                     <input type="number" name="orderYear" class="form-control" placeholder="Année"
                                         required value=<%= new Date().getFullYear() %> id="order-year">
                                 </div>
+                                <label for="active" class="col-sm-2 control-label">Active</label>
+                                <div class="col-sm-10">
+                                    <input type="boolean" name="active" class="form-control" placeholder="active"
+                                        required value=true id="active">
+                                </div>
                             </div>
 
 
@@ -289,10 +294,33 @@
                     </div>
 
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-info pull-right"
+                        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#exampleModal"
                             style="margin: 1.75rem;">Sauvegarder</button>
-                        <button type="reset" class="btn btn-success pull-right"
+                        <button type="reset" class="btn btn-secondary pull-right"
                             style="margin-top: 1.75rem;">Réinitialiser</button>
+                    </div>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade bg-warning" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="exampleModalLabel">Valider la ré-inscription de l'entreprise ?</h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>Attention, à l'instant ou le formulaire est validé :</p>
+                                <div style="padding-left:5px">
+                                    <p>L'entreprise devient "<b>active</b>" (elle peut se connecter à son espace perso, son nom est visible dans la liste d'entreprises participantes au forum)</p>
+                                    <p>Une <b>facture est générée</b> (dans la base de données + un fichier pdf)</p>
+                                    <p><b>Un e-mail est automatiquement envoyé à l'entreprise, lui expliquant la démarche à suivre pour se connecter, la facture et le RIB de l'Amicale en pièces jointes</b></p>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Re-vérifier</button>
+                                <button type="submit" class="btn btn-warning">Valider et sauvegarder</button>
+                            </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>

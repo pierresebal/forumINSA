@@ -100,7 +100,6 @@ module.exports = {
 
     renew: function(req, res, next) {
 
-        sails.log.info('[Admin/CompanyController.renew] Siret : ' + req.param('siret'));
 
         if (!req.param('siret')) {
             sails.log.error('[Admin/CompanyController.renew] siret param not found');
@@ -156,11 +155,6 @@ module.exports = {
             // handle query
             let params = req.allParams();
             
-            sails.log.info('[Admin/CompanyController.renew] Siret : ' + req.param('siret'));
-            sails.log.info('[Admin/CompanyController.renew] Siret : ' + params.siret);
-
-            sails.log.info('[Admin/CompanyController.renew] Form params : ' + JSON.stringify(params));
-
             if (typeof req.param('AE') === 'undefined') params.AE = 'off';
             if (typeof req.param('GB') == 'undefined') params.GB = 'off';
             if (typeof req.param('GPE') == 'undefined') params.GPE = 'off';
@@ -169,19 +163,16 @@ module.exports = {
             if (typeof req.param('GMM') == 'undefined') params.GMM = 'off';
             if (typeof req.param('GM') == 'undefined') params.GM = 'off';
             if (typeof req.param('IR') == 'undefined') params.IR = 'off';
-            sails.log.info('[Admin/CompanyController.renew] Well');
-            sails.log.info('[Admin/CompanyController.renew] Corrected params : ' + JSON.stringify(params));
-            
-            sails.log.info('[Admin/CompanyController.renew] Siret : ' + req.param('siret'));
-            Company.update({siret: params.siret}, params).exec((err, renewed) => {
+
+            Company.update({siret: params.siret}, params).exec((err, company) => {
 
                 if(err) {
                     sails.log.error('[Admin/CompanyController.renew] err occured when renew company '+ req.param('siret') + ' : ', err);
                     sails.log.error('[Admin/CompanyController.renew](err occured when renew company '+ params.siret + ') : ', err);
                     return next(err);
                 }
-                else if (!renewed || renewed.length === 0)    {
-                    sails.log.warn('[Admin/CompanyController.renew] renewed: ', !renewed, renewed.length);
+                else if (!company || company.length === 0)    {
+                    sails.log.warn('[Admin/CompanyController.renew] renewed: ', !company, company.length);
                     sails.log.error('[Admin/CompanyController.renew] err occured when renew company '+ req.param('siret') + ': ', err);
                     sails.log.warn('[Admin/CompanyController.renew] company siret '+ req.param('siret') +' has not been renewed, query: ', params);
                     req.addFlash('warning', 'Company dont siret '+ req.param('siret') +' has not been renewed');
@@ -189,8 +180,10 @@ module.exports = {
                 } 
                 else {
 
-                    sails.log.info('[Admin/CompanyController.renew] company '+ renewed[0].companyName +' has been renewed');
-                    req.addFlash('success', 'Company '+ renewed[0].companyName +' has been renewted');
+                    this.addASell(company[0]);
+        
+                    sails.log.info('[Admin/CompanyController.renew] company '+ company[0].companyName +' has been renewed');
+                    req.addFlash('success', 'Company '+ company[0].companyName +' has been renewted');
                     return res.redirect(sails.getUrlFor('Admin/CompanyController.listing'));
                 }
             });
@@ -231,6 +224,7 @@ module.exports = {
                     });
                 } 
                 else {
+                    this.addASell(company);
                     req.addFlash('success', 'A new company has been created: ' + company.companyName);
                     return res.redirect(sails.getUrlFor('Admin/CompanyController.listing'));
                 }                
@@ -270,14 +264,14 @@ module.exports = {
 
             let company = companies[0];
             sails.log.info('[Admin/CompanyController.apiUpdate] updated Company '+ company.companyName);
-
+/*
             if (params.active !== undefined) {
                 if (params.active) {
                     // Create  the sell
                     this.addASell(company);
                 }
             }
-
+*/
             return res.json(200, {msg: 'Company ' + company.companyName + ' has updated info !'});
 
         });
@@ -325,6 +319,14 @@ module.exports = {
                 sjdPrice = found2.sjdPrice;
             }
 
+
+            sails.log.info('[Admin/CompanyController.addASell] Check'); 
+            Sells.destroy({companySiret: company.siret, year: year}).exec((err, sellsFounds) => {
+                if (err) {
+                    return err
+                }
+            })
+            sails.log.info('[Admin/CompanyController.addASell] Check'); 
             GeneralSettings.findOne({id: 1}).exec((err, found) => {
                 if (err) {
                     return err;
