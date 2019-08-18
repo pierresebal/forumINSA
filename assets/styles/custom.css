@@ -216,8 +216,8 @@ a, input, button {
 }
 /* Wrapper */
 .icon-button {
-	background-color: white;
-	border-radius: 3.6rem;
+	/*background-color: white;*/
+  border-radius: 3.6rem;
 	cursor: pointer;
 	display: inline-block;
 	font-size: 2.0rem;
@@ -279,7 +279,7 @@ a, input, button {
 	        transition: all 0.3s;
 	width: 3.6rem;
 	z-index: 10;
-}
+}/*
 .icon-button .icon-twitter {
 	color: #4099ff;
 }
@@ -288,10 +288,10 @@ a, input, button {
 }
 .icon-button .icon-linkedin {
 	color: #0073B2;
-}
-.icon-button:hover .icon-twitter,
-.icon-button:hover .icon-facebook,
-.icon-button:hover .icon-linkedin {
+}*/
+.icon-button .icon-twitter,
+.icon-button .icon-facebook,
+.icon-button .icon-linkedin {
 	color: white;
 }
 
@@ -320,6 +320,7 @@ a, input, button {
     padding: 20px;
     width: 80%; /* Could be more or less, depending on screen size */
     max-width: 400px;
+    border-radius: 4px;
 }
 
 /* Text color
