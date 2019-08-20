@@ -289,17 +289,17 @@ module.exports = {
             /* Traitement des informations de ventes */
             var forum, sjd, offer;
             if (company.orderOption == 'forum') {
-                forum = false;
+                forum = true;
                 sjd = false;
-                offer = true;
+                offer = false;
             } else if (company.orderOption == 'forumSJD') {
                 forum = false;
                 sjd = true;
                 offer = false;
             } else if (company.orderOption == 'special') {
-                forum = true;
+                forum = false;
                 sjd = false;
-                offer = false;
+                offer = true;
             }
 
             var moreMeal = company.orderMeals;
