@@ -272,6 +272,11 @@ module.exports.routes = {
         action: 'apiUpdate'
     },
     
+    'POST /admin/api/company/regenerateSell': {
+        controller: 'Admin/CompanyController',
+        action: 'regenerateSell'
+    },
+    
     '/admin/api/sells': {
         controller: 'AdminController',
         action: 'apiGetAllSells'
@@ -434,7 +439,12 @@ module.exports.routes = {
         controller: 'FileController',
         action: 'uploadLogo'
     },
-    
+    /*
+    '/file/adminUploadLogo': {
+        controller: 'FileController',
+        action: 'adminUploadLogo'
+    },
+*/
     '/file/download': {
         controller: 'FileController',
         action: 'download'

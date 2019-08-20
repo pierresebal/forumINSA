@@ -101,6 +101,11 @@ $(document).ready(function() {
                     return date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
                 }
             },
+            { 'data': 'id',
+                'render': function(data, type, full, meta)  {
+                    return '<button class="btn btn-warning resend" data-arg1="' + data + '"><i class="fa fa-share-square"></i> Envoyer</button>';
+                }
+            }
         ],
         drawCallback: function(settings, json)  {
             $('input[name="checkbox-switch"]').bootstrapSwitch({
@@ -133,5 +138,27 @@ $(document).ready(function() {
         }
 
     } );
+    
+    $(document).on('click', 'button.resend', function() {
+
+        let id = event.target.getAttribute('data-arg1');
+        console.log("test" + id);
+        $.ajax({
+            url: '<%= sails.getUrlFor("Admin/CompanyController.regenerateSell") %>',
+            type: 'POST',
+            data:   {
+                id: id
+            },
+            success: function(data, status, xhr)    {
+                toastr.success(data.msg);
+            },
+            error: function(jqXHR, status, err) {
+                if(jqXHR.responseJSON.msg)
+                    toastr.warning(jqXHR.responseJSON.msg);
+                else
+                    toastr.error(err);
+            }
+        });
+    });
 } );
 </script>
