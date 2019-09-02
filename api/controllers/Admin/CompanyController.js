@@ -291,6 +291,7 @@ module.exports = {
 
             if(!companies || companies.length === 0) {
                 sails.log.warn('[Admin/CompanyController.regenerateSell] no company has been found, querry: ', req.allParams());
+                sails.log.warn('[Admin/CompanyController.regenerateSell] no company has been found, companies: ', companies);
                 return res.json(500, {msg: 'No company found for generating and send bill'});
             }
 
@@ -309,51 +310,60 @@ module.exports = {
         var month = new Date().getMonth();
         month++;
 
-        YearSettings.findOne({year: year}).exec((err, found2) => {
+        YearSettings.findOne({year: year}).exec((err, yearSetting) => {
             if (err) {
                 return err;
             }
-            /* Traitement des informations de ventes */
-            var forum, sjd, offer;
-            if (company.orderOption == 'forum') {
-                forum = true;
-                sjd = false;
-                offer = false;
-            } else if (company.orderOption == 'forumSJD') {
-                forum = false;
-                sjd = true;
-                offer = false;
-            } else if (company.orderOption == 'special') {
-                forum = false;
-                sjd = false;
-                offer = true;
-            }
-
-            var moreMeal = company.orderMeals;
-            var mealPrice = found2.mealPrice;
-            var forumPrice, sjdPrice;
-            if(company.isBenefitPromotion()) {
-                forumPrice = found2.forumPricePME;
-                sjdPrice = found2.sjdPricePME;
-            } else if (company.isResearchOrganization()) {
-                forumPrice = found2.forumPriceResearch;
-                sjdPrice = found2.sjdPriceResearch;
-            } else if (offer) {
-                forumPrice = found2.offerPrice;
-                sjdPrice = found2.offerPrice;
-            } else {
-                forumPrice = found2.forumPrice;
-                sjdPrice = found2.sjdPrice;
-            }
-
-
-            sails.log.info('[Admin/CompanyController.addASell] Check'); 
+            
+            // Erase all previous bills of current year
+            // - Avoid duplicated bills 
+            // - Allow to re-generate a bill using the same way
             Sells.destroy({companySiret: company.siret, year: year}).exec((err, sellsFounds) => {
                 if (err) {
-                    return err
+                    return err;
                 }
             })
-            sails.log.info('[Admin/CompanyController.addASell] Check'); 
+
+            var forumPrice = yearSetting.forumPrice;
+            var sjdPrice = yearSetting.sjdPrice;
+
+            // reductions for PME && research,
+            // on standard forum offer, and forum+SJD offer
+            if(company.status === 'Start-up/PME') {
+                forumPrice = yearSetting.forumPricePME;
+                sjdPrice = yearSetting.sjdPricePME;
+            } else if (company.status === 'Organisme de recherche') {
+                forumPrice = yearSetting.forumPriceResearch;
+                sjdPrice = yearSetting.sjdPriceResearch;
+            } else if (company.status === 'Entreprise Fondation INSA Toulouse') {
+                forumPrice = yearSetting.forumPriceFoundation;
+                sjdPrice = yearSetting.sjdPriceFoundation;
+            }
+            
+            var product, productPrice;
+            switch(company.orderOption) {
+                case "forum" :
+                    product = 'Stand Forum';
+                    productPrice = forumPrice;
+                    break;
+                case "forumSJD" :
+                    product = 'Stand Forum + SJD';
+                    productPrice = sjdPrice;
+                    break;
+                case "special" :
+                    product = 'Stand Forum XL';
+                    productPrice = yearSetting.offerPrice;
+                    break;
+                case "double" :
+                    product = 'Stand Forum x2';
+                    productPrice = forumPrice+forumPrice;
+                    break;
+            }
+
+            var orderMeals = company.orderMeals;
+            var mealPrice = yearSetting.mealPrice;
+
+            
             GeneralSettings.findOne({id: 1}).exec((err, found) => {
                 if (err) {
                     return err;
@@ -368,14 +378,12 @@ module.exports = {
                     companySiret: company.siret,
                     companyName: company.companyName,
                     companyType: company.status,
-                    forum: forum,
-                    forumPrice: forumPrice,
-                    sjd: sjd,
-                    sjdPrice: sjdPrice,
-                    offer: offer,
-                    offerPrice: forumPrice,
-                    moreMeal: moreMeal,
+                    // order
+                    orderOption: product,
+                    optionPrice: productPrice,
+                    orderMeals: orderMeals,
                     mealPrice: mealPrice,
+
                     billNumber: fullBillNumber
                 }).exec((err, created) => {
                     if (err) {
@@ -401,18 +409,6 @@ module.exports = {
                         }
                         companyAddress = companyAddress + company.postCode + ' ' + company.city + '<br />' + company.country;
 
-                        var product, productPrice;
-                        if (forum === true) {
-                            product = 'Stand Forum';
-                            productPrice = forumPrice;
-                        } else if (sjd === true) {
-                            product = 'Stand Forum + SJD';
-                            productPrice = sjdPrice;
-                        } else {
-                            product = 'Stand Forum XXL';
-                            productPrice = forumPrice;
-                        }
-
                         // Création de la facture en format HTML
                         contenu = contenu.replace('@year', date.getFullYear());
                         contenu = contenu.replace('@billNumber', fullBillNumber.toString());
@@ -421,13 +417,15 @@ module.exports = {
                         contenu = contenu.replace('@companyType', company.status);
                         contenu = contenu.replace('@siret', company.siret);
                         contenu = contenu.replace('@companyAddress', companyAddress);
+
                         contenu = contenu.replace('@forum', product);
                         contenu = contenu.replace('@forumPrice', productPrice);
                         contenu = contenu.replace('@totalForumPrice', productPrice);
-                        contenu = contenu.replace('@moreMeal', moreMeal);
+                        
+                        contenu = contenu.replace('@moreMeal', orderMeals);
                         contenu = contenu.replace('@mealPrice', mealPrice);
-                        contenu = contenu.replace('@totalMealPrice', moreMeal * mealPrice);
-                        contenu = contenu.replace('@totalTTC', productPrice + moreMeal * mealPrice);
+                        contenu = contenu.replace('@totalMealPrice', orderMeals * mealPrice);
+                        contenu = contenu.replace('@totalTTC', productPrice + orderMeals * mealPrice);
 
                         var options = {format: 'A4', orientation: 'portrait', border: '1cm'}
 
@@ -481,9 +479,9 @@ module.exports = {
                                 });
                             }
 
-                            console.log('sjd', sjd);
+                            console.log('sjd : ', company.orderOption === 'forumSJD');
 
-                            if (sjd === true) {
+                            if (company.orderOption === 'forumSJD') {
                                 spe = [];
                                 if (company.AE == "on") spe.push("AE");
                                 if (company.IR == "on") spe.push("IR");

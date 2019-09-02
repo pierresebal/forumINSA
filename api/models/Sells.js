@@ -28,40 +28,22 @@ module.exports = {
         },
 
         /* Command */
-        forum: {
+        
+        orderOption: {
             type: 'string',
-            required: true,
-            defaultsTo: 'off'
+            required: true
         },
-        forumPrice: {
-            type: 'integer',
-            required: true,
-        },
-        sjd: {
-            type: 'string',
-            required: true,
-            defaultsTo: 'off'
-        },
-        sjdPrice: {
+        optionPrice: {
             type: 'integer',
             required: true
         },
-        offer: {
-            type: 'string',
-            required: true,
-            defaultsTo: 'off'
-        },
-        offerPrice: {
-            type: 'integer',
-            required: true
-        },
-        moreMeal: {
+        orderMeals: {
             type: 'integer',
             defaultsTo: 0,
             required: true
         },
         mealPrice: {
-            type: 'Integer',
+            type: 'integer',
             required: true
         },
         billNumber: {

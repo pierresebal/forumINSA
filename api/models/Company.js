@@ -204,19 +204,16 @@ module.exports = {
         orderYear: {
             type: 'number',
             required: true,
-            defaultsTo: ''
         },
 
         orderOption: {
             type: 'string',
-            required: true,
-            defaultsTo: ''
+            required: true
         },
 
         orderMeals: {
             type: 'number',
             required: true,
-            defaultsTo: ''
         },
 
 
