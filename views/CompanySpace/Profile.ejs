@@ -187,8 +187,16 @@
   </tr>
   <tr>
     <td><h3>Formule choisie</h3></td>
-    <td align="right"><% if (company.sjd == 'on') { %>
-        Forum + SJD<% } else { %> Forum <% } %></td>
+    <td align="right">
+        <% if(company.orderOption === "forum") { %>
+            Stand Forum
+        <% }else if(company.orderOption === "forumSJD") { %>
+            Stand Forum + SJD
+        <% }else if(company.orderOption === "special") { %>
+            Stand Forum XL
+        <% }else if(company.orderOption === "double") { %>
+            Stand Forum x2
+        <% } %>
   </tr>
   <tr>
     <td><h3>Nombre de repas</h3></td>
