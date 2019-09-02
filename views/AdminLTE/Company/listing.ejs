@@ -53,14 +53,7 @@ $(document).ready(function() {
                     return '<img class="img-responsive rounded" src="' + (data ? '/images/logos/' + data : '/images/default_logo.png') + '" alt="Company logo">';
                 }
             },*/
-            { 'data': "status",
-            //trying without those line, to check il we can delete them
-                /*'render': function(data) {
-                    if(typeof data === 'undefined')
-                        return '';
-                    return data;
-                }*/
-            },
+            { 'data': "status" },
             { 'data': "mailAddress" },
             { 'data': "siret",
                 'render': function(data, type, full, meta)  {
@@ -102,8 +95,12 @@ $(document).ready(function() {
                 }
             },
             { 'data': 'id',
-                'render': function(data, type, full, meta)  {
-                    return '<button class="btn btn-warning resend" data-arg1="' + data + '"><i class="fa fa-share-square"></i> Envoyer</button>';
+                'render': function(data, type, full, meta)  {let year = new Date().getFullYear();
+                    let enable = full.orderYear == year;
+                    
+                    return '<button class="btn btn-warning resend" data-arg1="' + data + '" '
+                    + (enable ? '' : 'disabled')
+                    + '><i class="fa fa-share-square"></i> Envoyer</button>';
                 }
             }
         ],
