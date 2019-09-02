@@ -157,6 +157,7 @@
     <div class="col-sm-6">
         <h3><i class="fa fa-google"></i>&nbsp;&nbsp;Logo</h3>
         <form id="uploadLogo" class="pure-form pure-form-stacked" enctype="multipart/form-data" action="/file/uploadLogo" method="post" >
+            <fieldset>
             <label for="logo">Uploader votre logo</label>
             <% if (typeof company.logoPath !== 'undefined' && company.logoPath !== ''){ %>
                 <img src="/images/logos/<%= company.logoPath %>" style="width: 50px; height: auto" /></td>
@@ -199,7 +200,7 @@
   </tr>
   <tr>
     <td><h3>Description</h3></td>
-    <td align="right"><%= company.description%></td>
+    <td align="right"><%- company.description%></td>
   </tr>
   <tr>
     <td><h3>Site internet</h3></td>
