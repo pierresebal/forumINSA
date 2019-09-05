@@ -62,7 +62,7 @@ module.exports = {
                         layout: 'layout',
                         errMessage: errMessage,
                         studentConnectionFailed: true,
-                        title: 'Connexion - FIE'
+                        title: 'Connexion - Forum by INSA'
                     });
                 }
             } else {
@@ -277,6 +277,7 @@ module.exports = {
         var viadeo = req.param('viadeo')
         var github = req.param('github')
 
+        // Add 'http://' if not yet present (or not 'https://')
         if (personalWebsite.charAt(4) !== ':' && personalWebsite.charAt(5) !== ':' && personalWebsite !== '') {
             personalWebsite = 'http://' + personalWebsite
         }
@@ -309,7 +310,7 @@ module.exports = {
                 return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Update failed'})
             }
 
-            return res.view('StudentSpace/FirstConnection_2', {layout: 'layout', title: 'Connexion - FIE'})
+            return res.view('StudentSpace/FirstConnection_2', {layout: 'layout', title: 'Connexion - Forum by INSA'})
         })
     },
 

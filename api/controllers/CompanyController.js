@@ -89,7 +89,7 @@ module.exports = {
                 layout: 'layout',
                 errMessage: errMessage,
                 nexturl : req.param('nexturl'),
-                title: 'Inscription - FIE'
+                title: 'Inscription - Forum by INSA'
             });
         }
 
@@ -122,7 +122,7 @@ module.exports = {
                     layout: 'layout',
                     errMessage: errMessage,
                     nexturl: req.param('nexturl'),
-                    title: 'Inscription - FIE'
+                    title: 'Inscription - FBI'
                 });
 
             // login ok: update session
@@ -384,7 +384,7 @@ module.exports = {
             }
 
             if (found) {
-                return res.view('CompanySpace/CvTheque', {layout: 'layout', title: 'CVThèque - FIE'})
+                return res.view('CompanySpace/CvTheque', {layout: 'layout', title: 'CVThèque - Forum by INSA'})
             } else {
                 return res.view('ErrorPage', {
                     layout: 'layout',
@@ -409,7 +409,7 @@ module.exports = {
                 return res.view('CompanySpace/DeadlinePassed', {
                     layout: 'layout',
                     deadline: found.inscriptionDeadline.toDateString(),
-                    title: 'Date dépassée - FIE'
+                    title: 'Date dépassée - Forum by INSA'
                 })
             }
 
@@ -419,7 +419,7 @@ module.exports = {
             if(!found.areInscriptionsOpened) {
                 return res.view('CompanySpace/NoInscriptions', {
                     layout: 'layout',
-                    title: 'Réservation fermée - FIE',
+                    title: 'Réservation fermée - Forum by INSA',
                     year: year
                 });
             }
@@ -441,7 +441,7 @@ module.exports = {
 
                         return res.view('CompanySpace/Command', {
                             layout: 'layout',
-                            title: 'Commande - FIE',
+                            title: 'Commande - Forum by INSA',
                             year: year,
                             forumPrice: record.forumPricePME,
                             sjdPrice: record.sjdPricePME,
@@ -463,7 +463,7 @@ module.exports = {
 
                         return res.view('CompanySpace/Command', {
                             layout: 'layout',
-                            title: 'Commande - FIE',
+                            title: 'Commande - Forum by INSA',
                             year: year,
                             forumPrice: record.forumPrice,
                             sjdPrice: record.sjdPrice,
@@ -529,7 +529,7 @@ module.exports = {
             if (err) {
                 return err
             }
-            return res.view('CompanySpace/Bills', {layout: 'layout', bills: founds, title: 'Facture - FIE'})
+            return res.view('CompanySpace/Bills', {layout: 'layout', bills: founds, title: 'Facture - Forum by INSA'})
         })
     },
 
@@ -578,7 +578,7 @@ module.exports = {
                     sails.log.warn('[CompanyController.changePassword] no update has been made.');
                     req.addFlash('password', 'Aucune mise à jour a été faite');
                 }   else    {
-                    sails.log.info('[CompanyController.changePassword] Company '+ update.companyName + ' changed password to: ' + newpassword);
+                    sails.log.info('[CompanyController.changePassword] Company '+ update[0].companyName + ' changed password to: ' + newpassword);
                     req.addFlash('password-success', 'Mot de passe changé');
                 }
 
