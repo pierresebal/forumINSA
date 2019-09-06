@@ -19,63 +19,143 @@
 
 <!-- Main content -->
 <section class="content">
-
+  <!-- Small boxes (Stat box) -->
   <div class="row">
-    <section class="col-lg-12 connectedStortable">
-      <!-- TO DO List -->
-      <div class="box box-primary">
-        <div class="box-header">
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-red">
+        <div class="inner">
+          <% i = 0; companies.forEach(function(company){ i++ }); %>
+          <h3><i class="fa fa-briefcase"></i>&nbsp;&nbsp;<%= i %></h3>
+          <p>entreprises inscrites cette année</p>
 
-          <i class="fa fa-tasks"></i>
-          <h3 class="box-title">Instructions</h3>
-
+          <% s = 0; r = 0; f = 0; c = 0; a = 0;
+          companies.forEach(function(company){
+              if (company.status === 'Start-up/PME') s++; 
+              else if (company.status === 'Organisme de recherche') r++; 
+              else if (company.status === 'Entreprise Fondation INSA Toulouse') f++;  
+              else if (company.status === 'Entreprise classique') c++;
+              a = c+f+r+s;
+            }); %>
+          <br />
+          <div style="position:relative;height:32px;margin:2px;">
+            <div style="width: <%= c*100/a %>%; background:white;height:4px;position:absolute; margin-top:28px;border-radius:2px"></div>
+            <p style="position:absolute; padding:4px"><%= c %> entreprises classiques</p>
+          </div>
+          <div style="position:relative;height:32px;margin:2px;">
+            <div style="width: <%= f*100/a %>%; background:white;height:4px;position:absolute; margin-top:28px;border-radius:2px"></div>
+            <p style="position:absolute; padding:4px"><%= f %> entreprises Fondation INSA Toulouse</p>
+          </div>
+          <div style="position:relative;height:32px;margin:2px;">
+            <div style="width: <%= r*100/a %>%; background:white;height:4px;position:absolute; margin-top:28px;border-radius:2px"></div>
+            <p style="position:absolute; padding:4px"><%= r %> organismes de recherche</p>
+          </div>
+          <div style="position:relative;height:32px;margin:2px;">
+            <div style="width: <%= s*100/a %>%; background:white;height:4px;position:absolute; margin-top:28px;border-radius:2px"></div>
+            <p style="position:absolute; padding:4px"><%= s %> PME et Start-up</p>
+          </div>
         </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          <ul class="todo-list">
-            <li>
-              <h4 class="text">
-                <i class="fa fa-pencil"></i>&nbsp;&nbsp;Inscrire ou réinscrire les entreprises
-                <br />
-                <small style="padding-left: 22px;"><i class="fa fa-external-link-alt"></i>Onglet Entreprises inscrites </small>
-                <span class="label label-danger"><i class="fa fa-user-circle"></i>&nbsp;&nbsp;Com' démarchage</span>
-
-              </h4>
-              <div style="margin-left: 28px">
-                <b>Inscription</b> : bouton&nbsp;&nbsp;<button class="btn"><i
-                    class="fa fa-plus"></i>&nbsp;&nbsp;Créer une nouvelle</button>
-                <br /><b>Ré-inscription</b> (déjà participante par le passé) : chercher l'entreprise dans la liste,
-                puis bouton <button class="btn"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Renouveller</button>
-              </div>
-              <br />
-              <i class="fa fa-warning"></i>
-              <h4 class="text">&nbsp;&nbsp;A l'instant ou le formulaire est validé</h4>
-              <div style="margin-left: 28px;">
-                - L'entreprise devient "<b>active</b>" (elle peut se connecter à son espace perso, son nom est
-                visible dans la liste d'entreprises participantes au forum)
-                <br />- Une <b>facture est générée</b> (dans la base de données + un fichier pdf)
-                <br />- Un <b>e-mail est automatiquement envoyé à l'entreprise</b>, lui expliquant la démarche à suivre
-                pour se connecter, la facture et le RIB de l'Amicale en pièces jointes
-              </div>
-            </li>
-            <li>
-              <h4 class="text">
-                <i class="fa fa-pencil"></i>
-                &nbsp;Gérer les SJD
-                <br />
-                <small style="padding-left: 22px;"><i class="fa fa-external-link-alt"></i>Onglet Inscriptions SJD </small>
-                <span class="label label-warning"><i class="fa fa-user-circle"></i>&nbsp;&nbsp;Com' SJD</span> 
-              </h4>
-              <div style="margin-left: 28px">
-                Coming soon
-              </div>
-            </li>
-          </ul>
-        </div>
+        <a href="#" class="small-box-footer">Liste entreprises <i class="fa fa-arrow-circle-right"></i></a>
       </div>
-      <!-- /.box -->
-    </section>
+
+      <!-- small box -->
+      <div class="small-box bg-red">
+        <div class="inner">
+          <% i = 0; 
+          year = new Date().getFullYear();
+          allCompanies.forEach(function(company){ i++ 
+          }); %>
+          <h3><i class="fa fa-briefcase"></i>&nbsp;&nbsp;<%= i %> </h3>
+          <p>entreprises connues (toutes années confondues)</p>
+        </div>
+        <a href="#" class="small-box-footer">Liste entreprises <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-green">
+        <div class="inner">
+          <% ae = 0; gb = 0; gc = 0; gm = 0; gmm = 0; gp = 0; gpe = 0; ir = 0; no = 0; one = false;
+          companies.forEach(function(company){
+            if (company.AE === 'on') { ae++; one = true; }
+            if (company.GB === 'on') { gb++; one = true; }
+            if (company.GC === 'on') { gc++; one = true; }
+            if (company.GM === 'on') { gm++; one = true; }
+            if (company.GMM=== 'on') { gmm++;one = true; }
+            if (company.IR === 'on') { ir++; one = true; }
+            if (company.GP === 'on') { gp++; one = true; }
+            if (company.GPE=== 'on') { gpe++;one = true; }
+            if (!one) no++;
+            one = false;
+          }); %>
+          -<%=ae%>- | -<%=gb%>- | -<%=gc%>- | -<%=gm%>- | -<%=gmm%>- | -<%=gp%>- | -<%=gpe%>- | -<%=ir%>- | -<%=no%>-
+          <br/>
+          AE | GB | GC | GM | GMM | GP | GPE | IR | NO
+        </div>
+        <div class="icon">
+          <i class="ion ion-stats-bars"></i>
+        </div>
+        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- NB MEALS -->
+      <div class="small-box bg-yellow">
+        <div class="inner">
+          <% meals = 0; sells.forEach(function(sell){ meals+=sell.orderMeals; }); %>
+          <h3><i class="fa fa-wine-glass"></i>&nbsp;&nbsp;<%= meals %></h3>
+          <p>Repas commandés cette année</p>
+        </div>
+        <a href="#" class="small-box-footer">Factures <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+
+      <!-- NB MONEY -->
+      <div class="small-box bg-green">
+          <div class="inner">
+            <% money = 0; sells.forEach(function(sell){ money+=sell.optionPrice + sell.orderMeals*sell.mealPrice; }); %>
+            <h3><i class="fa fa-money"></i>&nbsp;&nbsp;<%= money %><sup>€</sup></h3>
+            <p>Facturation aux entreprises cette année</p>
+          </div>
+          <a href="#" class="small-box-footer">Factures <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+      <!-- NB COMPANIES -->
+      <div class="small-box bg-red">
+        <div class="inner">
+          <% i = 0; allCompanies.forEach(function(company){ i++ }); %>
+          <h3><i class="fa fa-briefcase"></i>&nbsp;&nbsp;<%= i %></h3>
+          <p>Entreprises enregistrées (toutes années confondues)</p>
+        </div>
+        <a href="#" class="small-box-footer">Liste entreprises <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+
+    </div>
+    <!-- ./col -->
   </div>
+  <!-- /.row -->
+  <!-- Main row -->
+  <div class="row">
+    <!-- Left col -->
+    <section class="col-lg-7 connectedSortable">
+      
+
+
+    </section>
+    <!-- /.Left col -->
+    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+    <section class="col-lg-5 connectedSortable">
+
+      
+
+    </section>
+    <!-- right col -->
+  </div>
+  <!-- /.row (main row) -->
 
 </section>
 <!-- /.content -->

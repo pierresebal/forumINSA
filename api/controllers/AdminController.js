@@ -8,9 +8,32 @@
 module.exports = {
 
     home: function (req, res) {
-        return res.view('AdminLTE/home', {
-            layout: 'Layout/AdminLTE'
-        })
+        Company.find({}).exec((err, allCompanies)  =>  {
+            if(err) {
+                sails.log.error('[HomeController] error when find all companies:', err);
+                return res.json(500, err);
+            }
+            var year = new Date().getFullYear();
+            Company.find({orderYear: year}).exec((err, companies)  =>  {
+                if(err) {
+                    sails.log.error('[HomeController] error when find all companies:', err);
+                    return res.json(500, err);
+                }
+                Sells.find({year: year}).exec((err, sells)  =>  {
+                    if(err) {
+                        sails.log.error('[HomeController] error when find all companies:', err);
+                        return res.json(500, err);
+                    }
+                    sails.log.info('sells ::::', sells[0]);
+                    return res.view('AdminLTE/home', {
+                        layout: 'Layout/AdminLTE',
+                        allCompanies: allCompanies,
+                        companies: companies,
+                        sells: sells
+                    });
+                });
+            });
+        });
     },
 
     login: function (req, res) {
