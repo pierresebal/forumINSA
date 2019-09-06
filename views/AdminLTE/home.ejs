@@ -27,7 +27,7 @@
         <div class="inner">
           <% i = 0; companies.forEach(function(company){ i++ }); %>
           <h3><i class="fa fa-briefcase"></i>&nbsp;&nbsp;<%= i %></h3>
-          <p>entreprises inscrites cette année</p>
+          <p>Entreprises inscrites cette année</p>
 
           <% s = 0; r = 0; f = 0; c = 0; a = 0;
           companies.forEach(function(company){
@@ -66,7 +66,7 @@
           allCompanies.forEach(function(company){ i++ 
           }); %>
           <h3><i class="fa fa-briefcase"></i>&nbsp;&nbsp;<%= i %> </h3>
-          <p>entreprises connues (toutes années confondues)</p>
+          <p>Entreprises connues (toutes années confondues)</p>
         </div>
         <a href="#" class="small-box-footer">Liste entreprises <i class="fa fa-arrow-circle-right"></i></a>
       </div>
@@ -133,18 +133,26 @@
       <!-- NB STANDS -->
       <div class="small-box bg-yellow">
         <div class="inner">
-          <% stands = 0; spe = 0;
+          <% stands = 0; spe = 0; sjd = 0;
             sells.forEach(function(sell){ 
             switch(sell.orderOption) {
-              case "Stand Forum":       stands++;   break;
-              case "Stand Forum + SJD": stands++;   break;
-              case "Stand Forum XL":    spe++;      break;
-              case "Stand Forum x2":    stands+=2;  break;
+              case "Stand Forum":       stands++;        break;
+              case "Stand Forum + SJD": stands++; sjd++; break;
+              case "Stand Forum XL":    spe++;           break;
+              case "Stand Forum x2":    stands+=2;       break;
             }}); %>
           <h3><i class="fa fa-map-pin"></i>&nbsp;&nbsp;<%= stands %></h3>
-          <p>Stands cette année<br /><br />+ <%= s %> stands Start-up<br />+ <%= spe %> stand spécial </p>
+          <p>Stands réservés cette année<br /><br />+ <%= s %> stands Start-up<br />+ <%= spe %> stand spécial </p>
         </div>
         <a href="#" class="small-box-footer">Factures <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+      <!-- NB STANDS -->
+      <div class="small-box bg-yellow">
+        <div class="inner">
+          <h3><i class="fa fa-comments"></i>&nbsp;&nbsp;<%= sjd %></h3>
+          <p>Entreprises inscrites aux SJD </p>
+        </div>
+        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col -->
