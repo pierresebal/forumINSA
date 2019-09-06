@@ -89,7 +89,8 @@
             if (!one) no++;
             one = false;
           }); %>
-          <h4>Spécialités intéressant les entreprises</h4>
+          <h3><i class="fa fa-graduation-cap"></i>&nbsp;&nbsp; Spé' </h3>
+          <p>Les spécialités qui intéressent les entreprises</p>
           <br/>
           <div style="margin:2px;">
               <div style="display: inline-block;width: 40px;">AE</div>
@@ -117,7 +118,7 @@
               <div style="display: inline-block;width: 40px;">IR</div>
               <div style="display: inline-block;width: <%= ir*10 %>px; background:white;height:20px;color:green;border-radius:2px;padding:2px;"><%= ir %></div>
           </div><div style="margin:2px;">
-              <div style="display: inline-block;width: 40px;"><b>Zéro</b></div>
+              <div style="display: inline-block;width: 40px;"><b>Zéro !</b></div>
               <div style="display: inline-block;width: <%= no*10 %>px; background:white;height:20px;color:green;border-radius:2px;padding:2px;"><%= no %></div>
           </div>
         </div>
@@ -129,6 +130,22 @@
     </div>
     <!-- ./col -->
     <div class="col-lg-3 col-xs-6">
+      <!-- NB STANDS -->
+      <div class="small-box bg-yellow">
+        <div class="inner">
+          <% stands = 0; spe = 0;
+            sells.forEach(function(sell){ 
+            switch(sell.orderOption) {
+              case "Stand Forum":       stands++;   break;
+              case "Stand Forum + SJD": stands++;   break;
+              case "Stand Forum XL":    spe++;      break;
+              case "Stand Forum x2":    stands+=2;  break;
+            }}); %>
+          <h3><i class="fa fa-map-pin"></i>&nbsp;&nbsp;<%= stands %></h3>
+          <p>Stands cette année<br /><br />+ <%= s %> stands Start-up<br />+ <%= spe %> stand spécial </p>
+        </div>
+        <a href="#" class="small-box-footer">Factures <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
     </div>
     <!-- ./col -->
     <div class="col-lg-3 col-xs-6">
@@ -136,7 +153,7 @@
       <div class="small-box bg-yellow">
         <div class="inner">
           <% meals = 0; sells.forEach(function(sell){ meals+=sell.orderMeals; }); %>
-          <h3><i class="fa fa-wine-glass"></i>&nbsp;&nbsp;<%= meals %></h3>
+          <h3><i class="fa fa-glass"></i>&nbsp;&nbsp;<%= meals %></h3>
           <p>Repas commandés cette année</p>
         </div>
         <a href="#" class="small-box-footer">Factures <i class="fa fa-arrow-circle-right"></i></a>
