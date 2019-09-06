@@ -89,9 +89,37 @@
             if (!one) no++;
             one = false;
           }); %>
-          -<%=ae%>- | -<%=gb%>- | -<%=gc%>- | -<%=gm%>- | -<%=gmm%>- | -<%=gp%>- | -<%=gpe%>- | -<%=ir%>- | -<%=no%>-
+          <h4>Spécialités intéressant les entreprises</h4>
           <br/>
-          AE | GB | GC | GM | GMM | GP | GPE | IR | NO
+          <div style="margin:2px;">
+              <div style="display: inline-block;width: 40px;">AE</div>
+              <div style="display: inline-block;width: <%= ae*10 %>px; background:white;height:20px;color:green;border-radius:2px;padding:2px;"><%= ae %></div>
+          </div>
+          <div style="margin:2px;">
+              <div style="display: inline-block;width: 40px;">GB</div>
+              <div style="display: inline-block;width: <%= gb*10 %>px; background:white;height:20px;color:green;border-radius:2px;padding:2px;"><%= gb %></div>
+          </div><div style="margin:2px;">
+              <div style="display: inline-block;width: 40px;">GC</div>
+              <div style="display: inline-block;width: <%= gc*10 %>px; background:white;height:20px;color:green;border-radius:2px;padding:2px;"><%= gc %></div>
+          </div><div style="margin:2px;">
+              <div style="display: inline-block;width: 40px;">GM</div>
+              <div style="display: inline-block;width: <%= gm*10 %>px; background:white;height:20px;color:green;border-radius:2px;padding:2px;"><%= gm %></div>
+          </div><div style="margin:2px;">
+              <div style="display: inline-block;width: 40px;">GMM</div>
+              <div style="display: inline-block;width: <%= gmm*10 %>px; background:white;height:20px;color:green;border-radius:2px;padding:2px;"><%= gmm %></div>
+          </div><div style="margin:2px;">
+              <div style="display: inline-block;width: 40px;">GP</div>
+              <div style="display: inline-block;width: <%= gp*10 %>px; background:white;height:20px;color:green;border-radius:2px;padding:2px;"><%= gp %></div>
+          </div><div style="margin:2px;">
+              <div style="display: inline-block;width: 40px;">GPE</div>
+              <div style="display: inline-block;width: <%= gpe*10 %>px; background:white;height:20px;color:green;border-radius:2px;padding:2px;"><%= gpe %></div>
+          </div><div style="margin:2px;">
+              <div style="display: inline-block;width: 40px;">IR</div>
+              <div style="display: inline-block;width: <%= ir*10 %>px; background:white;height:20px;color:green;border-radius:2px;padding:2px;"><%= ir %></div>
+          </div><div style="margin:2px;">
+              <div style="display: inline-block;width: 40px;"><b>Zéro</b></div>
+              <div style="display: inline-block;width: <%= no*10 %>px; background:white;height:20px;color:green;border-radius:2px;padding:2px;"><%= no %></div>
+          </div>
         </div>
         <div class="icon">
           <i class="ion ion-stats-bars"></i>
@@ -123,16 +151,6 @@
           </div>
           <a href="#" class="small-box-footer">Factures <i class="fa fa-arrow-circle-right"></i></a>
         </div>
-
-      <!-- NB COMPANIES -->
-      <div class="small-box bg-red">
-        <div class="inner">
-          <% i = 0; allCompanies.forEach(function(company){ i++ }); %>
-          <h3><i class="fa fa-briefcase"></i>&nbsp;&nbsp;<%= i %></h3>
-          <p>Entreprises enregistrées (toutes années confondues)</p>
-        </div>
-        <a href="#" class="small-box-footer">Liste entreprises <i class="fa fa-arrow-circle-right"></i></a>
-      </div>
 
     </div>
     <!-- ./col -->
