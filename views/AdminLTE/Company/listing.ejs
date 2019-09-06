@@ -54,7 +54,17 @@ $(document).ready(function() {
                 }
             },*/
             { 'data': "status" },
-            { 'data': "mailAddress" },
+            { 'data': "AE",
+                'render': function(data, type, full, meta) {
+                    return '<span class="badge progress-bar-'+(full.GB == "on" ?'info':'secondary')+'">GB</span> '
+                         + '<span class="badge progress-bar-'+(full.GPE== "on" ?'info':'secondary')+'">GPE</span> '
+                         + '<span class="badge progress-bar-'+(full.GC == "on" ?'info':'secondary')+'">GC</span> '
+                         + '<span class="badge progress-bar-'+(full.GM == "on" ?'info':'secondary')+'">GM</span> '
+                         + '<span class="badge progress-bar-'+(full.AE == "on" ?'info':'secondary')+'">AE</span> '
+                         + '<span class="badge progress-bar-'+(full.GP == "on" ?'info':'secondary')+'">GP</span> '
+                         + '<span class="badge progress-bar-'+(full.IR == "on" ?'info':'secondary')+'">IR</span> '
+                         + '<span class="badge progress-bar-'+(full.GMM== "on" ?'info':'secondary')+'">GMM</span> '
+                } },
             { 'data': "siret",
                 'render': function(data, type, full, meta)  {
                     return '<a class="btn btn-info" href="/Admin/company/' +data+'"><i class="fa fa-info-circle"></i> Voir plus</a>';
