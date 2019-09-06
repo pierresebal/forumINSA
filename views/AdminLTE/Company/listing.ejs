@@ -99,6 +99,17 @@ $(document).ready(function() {
                     let enable = full.orderYear == year;
                     
                     return '<button class="btn btn-warning resend" data-arg1="' + data + '" '
+                    + 'data-arg2="false" '
+                    + (enable ? '' : 'disabled')
+                    + '><i class="fa fa-share-square"></i> Générer</button>';
+                }
+            },
+            { 'data': 'id',
+                'render': function(data, type, full, meta)  {let year = new Date().getFullYear();
+                    let enable = full.orderYear == year;
+                    
+                    return '<button class="btn btn-warning resend" data-arg1="' + data + '" '
+                    + 'data-arg2="true" '
                     + (enable ? '' : 'disabled')
                     + '><i class="fa fa-share-square"></i> Envoyer</button>';
                 }
@@ -139,12 +150,14 @@ $(document).ready(function() {
     $(document).on('click', 'button.resend', function() {
 
         let id = event.target.getAttribute('data-arg1');
+        let send = event.target.getAttribute('data-arg2');
         console.log("test" + id);
         $.ajax({
             url: '<%= sails.getUrlFor("Admin/CompanyController.regenerateSell") %>',
             type: 'POST',
             data:   {
-                id: id
+                id: id,
+                send: send,
             },
             success: function(data, status, xhr)    {
                 toastr.success(data.msg);

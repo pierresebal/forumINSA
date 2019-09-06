@@ -281,6 +281,9 @@ module.exports = {
 
     regenerateSell: function (req, res) {
         let id = req.param('id');
+        let send = req.param('send');
+        // from string to bool
+        send = (send === "true");
 
         Company.find({id: id}).exec((err, companies) => {
 
@@ -297,9 +300,8 @@ module.exports = {
             let company = companies[0];
             sails.log.info('[Admin/CompanyController.regenerateSell] regenerateSell Company '+ company.companyName);
             
-            this.addASell(company, sendBillEmail = true);
-
-            return res.json(200, {msg: 'Bill generated and send to ' + company.companyName});
+            this.addASell(company, send);
+            return res.json(200, {msg: 'Bill generated ' + (send? 'and send to ' + company.companyName : '')});
 
         });
     },
@@ -438,8 +440,8 @@ module.exports = {
                                     sails.log.error(err);
                                 }
 
+                                sails.log.info('send :', sendBillEmail === true);
                                 if (sendBillEmail === true) {
-                                    sails.log.info('send');
                                     // Envoi du mail de facture
                                     SendMail.sendEmail({
                                         destAddress: company.mailAddress,
