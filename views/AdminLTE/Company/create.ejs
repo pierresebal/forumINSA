@@ -179,7 +179,7 @@
                                     </div>
                                     <input id="inputPassword" type="password" minlength="6" maxlength="50"
                                         name="tmpPassword" class="form-control pull-right" placeholder="Password"
-                                        required>
+                                        required autocomplete="new-password">
                                 </div>
                                 <div class="col-sm-4"></div>
                                 <div class="input-group col-sm-7">
@@ -237,7 +237,25 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> <!-- future specialitites form ...
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Intérêts</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <% allSpecialities.forEach(function(spe) { %>
+                                    <div class="col-sm-6">
+                                        <div class="checkbox">
+                                            <label><input type="checkbox"
+                                                name="<%= spe.abbreviation %>">
+                                                <%= spe.name %>
+                                            </label>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        </div>
+                    </div>-->
 
                     <div class="col-sm-12">
                         <div class="box-header with-border">
