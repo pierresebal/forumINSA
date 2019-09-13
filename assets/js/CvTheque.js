@@ -2,13 +2,14 @@ var CriteriaBox =  React.createClass({
 
   getInitialState: function() {
     //return {specialities: []};
-    return {AE:false, GB:false, GPE:false, GMM:false, GM:false, GC:false, GP:false, IR:false, AS:false, A1:false, A2:false, A3:false, A4:false, A5:false, All:false, frCV:false, enCV:false}
+    return {AE:false, GB:false, GPE:false, GMM:false, GM:false, GC:false, GP:false, IR:false, IS:false, AS:false, A1:false, A2:false, A3:false, A4:false, A5:false, All:false, frCV:false, enCV:false}
   },
 
   handleCheckAE : function(e) {this.setState({AE:e.target.checked});},
   handleCheckGB : function(e) {this.setState({GB:e.target.checked});},
   handleCheckGPE : function(e) {this.setState({GPE:e.target.checked});},
   handleCheckGMM : function(e) {this.setState({GMM:e.target.checked});},
+  handleCheckIS : function(e) {this.setState({IS:e.target.checked});},
   handleCheckGC : function(e) {this.setState({GC:e.target.checked});},
   handleCheckGM : function(e) {this.setState({GM:e.target.checked});},
   handleCheckGP : function(e) {this.setState({GP:e.target.checked});},
@@ -35,6 +36,8 @@ var CriteriaBox =  React.createClass({
       specialitiesSearch.push('Génie Biologique');
     if (this.state.GPE)
       specialitiesSearch.push('Génie des Procédés et Environnement');
+    if (this.state.IS)
+      specialitiesSearch.push('Ingénierie des Systèmes');
     if (this.state.GMM)
       specialitiesSearch.push('Mathématiques appliquées');
     if (this.state.GM)
@@ -94,10 +97,11 @@ var CriteriaBox =  React.createClass({
               </tr>
               <tr>
                 <td><input id="IR" type="checkbox" name='Informatique et Réseaux' onClick={this.handleCheckIR}/> <label>Informatique et Réseaux</label></td>
-                <td><input id="AS" type="checkbox" name='Génie Civil' onClick={this.handleCheckGC}/> <label>Génie Civil</label></td>
+                <td><input id="GC" type="checkbox" name='Génie Civil' onClick={this.handleCheckGC}/> <label>Génie Civil</label></td>
               </tr>
               <tr>
-                <td><input id="AS" type="checkbox" name='Aucune spécialité' onClick={this.handleCheckAS}/> <label>Aucune spécialité</label></td>
+              <td><input id="IS" type="checkbox" name='Ingnénierie des Systèmes' onClick={this.handleCheckIS}/> <label>Ingénierie des Systèmes</label></td>
+              <td><input id="AS" type="checkbox" name='Aucune spécialité' onClick={this.handleCheckAS}/> <label>Aucune spécialité</label></td>
               </tr>
             </tbody>
           </table>

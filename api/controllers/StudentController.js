@@ -315,36 +315,45 @@ module.exports = {
     },
 
     companies: function (req, res) {
-        const specialities = ['tout', 'AE', 'GB', 'GP', 'GMM', 'GM', 'GPE', 'IR', 'GC']
-        var selectedSpeciality
-        const actualYear = new Date().getFullYear()
-
-        if (!req.param('speciality')) { // Si aucune spécialité choisie
-            selectedSpeciality = specialities[0]
-        } else {
-            selectedSpeciality = req.param('speciality')
-        }
-
-        Sells.find({year: actualYear}).exec((err, sells) => {
+        var allSpecialities = [];
+        Speciality.find().exec((err, specialities) => {
             if (err) {
-                console.log('error : ' + err)
-                return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Erreur: les ventes n'ont pas été récupérées."})
+                sails.log.error('[AdminController.displaySjdSessions] error when find all speciality: ', err);
+                return res.serverError(err);
+            }
+            specialities.forEach(function (spe) {
+                allSpecialities.push(spe.abbreviation);
+            });
+            var selectedSpeciality
+            const actualYear = new Date().getFullYear()
+
+            if (!req.param('speciality')) { // Si aucune spécialité choisie
+                selectedSpeciality = specialities[0]
+            } else {
+                selectedSpeciality = req.param('speciality')
             }
 
-            const companiesSiret = sells.map((sell) => sell.companySiret)
-            var sortSettings = {siret: companiesSiret}
-
-            if (selectedSpeciality !== 'tout') { // On rajoute le tri sur les spé que si on ne les veut pas toutes
-                sortSettings[req.param('speciality')] = "on"
-            }
-
-            Company.find(sortSettings).exec((err, companies) => {
+            Sells.find({ year: actualYear }).exec((err, sells) => {
                 if (err) {
                     console.log('error : ' + err)
-                    return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Les entreprises ne sont pas récupérées'})
+                    return res.view('ErrorPage', { layout: 'layout', ErrorTitle: "Erreur: les ventes n'ont pas été récupérées." })
                 }
-                const actualYear = new Date().getFullYear()
-                return res.view('StudentSpace/Companies', {layout: 'layout', companies: companies, specialities: specialities, selectedSpeciality: selectedSpeciality, year: actualYear})
+
+                const companiesSiret = sells.map((sell) => sell.companySiret)
+                var sortSettings = { siret: companiesSiret }
+
+                if (selectedSpeciality !== 'tout') { // On rajoute le tri sur les spé que si on ne les veut pas toutes
+                    sortSettings[req.param('speciality')] = "on"
+                }
+
+                Company.find(sortSettings).exec((err, companies) => {
+                    if (err) {
+                        console.log('error : ' + err)
+                        return res.view('ErrorPage', { layout: 'layout', ErrorTitle: 'Les entreprises ne sont pas récupérées' })
+                    }
+                    const actualYear = new Date().getFullYear()
+                    return res.view('StudentSpace/Companies', { layout: 'layout', companies: companies, specialities: allSpecialities, selectedSpeciality: selectedSpeciality, year: actualYear })
+                })
             })
         })
     },
@@ -379,7 +388,6 @@ module.exports = {
     },
 
     sjd: function (req, res) {
-        //const specialities = ['AE', 'IR', 'GMM', 'GC', 'GM', 'GB', 'GP', 'GPE']
 
         Sjd.find().exec((err, sjd) => {
             if (err) {
@@ -407,8 +415,6 @@ module.exports = {
     },
 
     workshop: function (req, res) {
-        //const specialities = ['AE', 'IR', 'GMM', 'GC', 'GM', 'GB', 'GP', 'GPE']
-
         Workshop.find().exec((err, workshop) => {
             if (err) {
                 console.log('err', err)

@@ -178,62 +178,14 @@
                         </div>
                         <div class="box-body">
                             <div class="form-group">
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="IR" <% if (company.IR == 'on') { %>
-                                                value="on" checked <% } else { %> value="off" <% } %>>
-                                            Informatique et Réseaux</label>
+                                <% allSpecialities.forEach(function(spe) { %>
+                                    <div class="col-sm-6 checkbox">
+                                        <label><input type="checkbox" name="<%=spe.abbreviation%>"
+                                            <% if (company[spe.abbreviation] == 'on') { %> value="on" checked <% } else { %> value="off" <% } %>>
+                                            <%= spe.abbreviation %> <small>- <%= spe.name %></small>
+                                        </label>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="AE" <% if (company.AE == 'on') { %>
-                                                value="on" checked <% } else { %> value="off" <% } %>>
-                                            Automatique, Électronique</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="GP" <% if (company.GP == 'on') { %>
-                                                value="on" checked <% } else { %> value="off" <% } %>>
-                                            Génie Physique</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="GB" <% if (company.GB == 'on') { %>
-                                                value="on" checked <% } else { %> value="off" <% } %>>
-                                            Génie Biologique</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="GPE" <% if (company.GPE == 'on') { %>
-                                                value="on" checked <% } else { %> value="off" <% } %>>
-                                            Génie des Procédés et Environnement</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="GC" <% if (company.GC == 'on') { %>
-                                                value="on" checked <% } else { %> value="off" <% } %>>
-                                            Génie Civil</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="GM" <% if (company.GM == 'on') { %>
-                                                value="on" checked <% } else { %> value="off" <% } %>>
-                                            Génie Mécanique</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="GMM" <% if (company.GMM == 'on') { %>
-                                                value="on" checked <% } else { %> value="off" <% } %>>
-                                            Mathématiques appliquées</label>
-                                    </div>
-                                </div>
+                                <% }); %>                             
                             </div>
                         </div>
                     </div>

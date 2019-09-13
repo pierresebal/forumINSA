@@ -76,7 +76,7 @@
       <!-- small box -->
       <div class="small-box bg-green">
         <div class="inner">
-          <% ae = 0; gb = 0; gc = 0; gm = 0; gmm = 0; gp = 0; gpe = 0; ir = 0; no = 0; one = false;
+          <% ae = 0; gb = 0; gc = 0; gm = 0; gmm = 0; gp = 0; gpe = 0; ir = 0; is = 0; no = 0; one = false;
           companies.forEach(function(company){
             if (company.AE === 'on') { ae++; one = true; }
             if (company.GB === 'on') { gb++; one = true; }
@@ -86,6 +86,7 @@
             if (company.IR === 'on') { ir++; one = true; }
             if (company.GP === 'on') { gp++; one = true; }
             if (company.GPE=== 'on') { gpe++;one = true; }
+            if (company.IS=== 'on') { is++;one = true; }
             if (!one) no++;
             one = false;
           }); %>
@@ -117,6 +118,9 @@
           </div><div style="margin:2px;">
               <div style="display: inline-block;width: 40px;">IR</div>
               <div style="display: inline-block;width: <%= ir*10 %>px; background:white;height:20px;color:green;border-radius:2px;padding:2px;"><%= ir %></div>
+            </div><div style="margin:2px;">
+                <div style="display: inline-block;width: 40px;">IS</div>
+                <div style="display: inline-block;width: <%= is*10 %>px; background:white;height:20px;color:green;border-radius:2px;padding:2px;"><%= is %></div>
           </div><div style="margin:2px;">
               <div style="display: inline-block;width: 40px;"><b>Zéro !</b></div>
               <div style="display: inline-block;width: <%= no*10 %>px; background:white;height:20px;color:green;border-radius:2px;padding:2px;"><%= no %></div>

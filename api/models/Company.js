@@ -296,11 +296,16 @@ module.exports = {
             required: true,
             defaultsTo: 'off'
         },
-
-        specialities: {
-            collection: 'speciality',
+        IS: {
+            type: 'string',
+            required: true,
+            defaultsTo: 'off'
         },
-
+/*
+        specialities: {
+            type: 'json'
+        },
+*/
         /**
          * Check password
          * @param password
@@ -346,13 +351,12 @@ module.exports = {
     // instantiate a blank object
     instantiate: function(params) {
         return Object.assign({
-            firstName: '', lastName: '', position:'', mailAddress: '', phoneNumber: '', password: '', siret: '', companyName: '', companyGroup: '', description: '', websiteUrl: '', careerUrl: '', road: '', complementaryInformation: '', city: '', postCode: '', country: '', orderYear: '', orderOption: '', orderMeals: '', AE: '', GB: '', GP: '', GPE: '', IR: '', GM: '', GMM: '', GC: ''
+            firstName: '', lastName: '', position:'', mailAddress: '', phoneNumber: '', password: '', siret: '', companyName: '', companyGroup: '', description: '', websiteUrl: '', careerUrl: '', road: '', complementaryInformation: '', city: '', postCode: '', country: '', orderYear: '', orderOption: '', orderMeals: '', AE: '', GB: '', GC: '', GM: '', GMM: '', GP: '', GPE: '', IR: '', IS: ''
         }, params);
     },
 
     // lifecycle callback
     beforeValidate: function(data, next) {
-
         // check phone number
         if(data.phoneNumber)
             data.phoneNumber = parseInt(data.phoneNumber);
@@ -371,7 +375,18 @@ module.exports = {
 
         if (data.careerUrl && data.careerUrl.charAt(4) !== ':' && data.careerUrl.charAt(5) !== ':' && data.careerUrl !== '')
             data.careerUrl = 'http://' + data.careerUrl;
-
+/*
+        Speciality.find({}).exec((err, specialities)   =>  {
+            if (!err) {
+                for (var spe in specialities) {
+                    sails.log.info(spe.abbreviation);
+                    if (data[spe.abbreviation] == "on") {
+                        data.add(spe);
+                        sails.log.info("_new !!");
+                    }
+                }
+            }
+        });   */
         next();
     },
 

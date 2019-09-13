@@ -24,7 +24,6 @@ module.exports = {
                         sails.log.error('[HomeController] error when find all companies:', err);
                         return res.json(500, err);
                     }
-                    sails.log.info('sells ::::', sells[0]);
                     return res.view('AdminLTE/home', {
                         layout: 'Layout/AdminLTE',
                         allCompanies: allCompanies,
@@ -318,22 +317,32 @@ module.exports = {
     },
 
     displaySjdSessions: function (req, res) {
-        var specialities = ['AE', 'IR', 'GMM', 'GC', 'GM', 'GB', 'GP', 'GPE']
-        SjdSession.find().exec((err, sessions) => {
-            if (err) {
-                console.log('err', err)
-                return res.view('ErrorPage', {
-                    layout: 'layout',
-                    ErrorTitle: "Une erreur s'est produite",
-                    ErrorDesc: 'Veuillez réessayer'
-                })
+        
+        var allSpecialities = [];
+        Speciality.find().exec((err, specialities) => {
+            if(err) {
+                sails.log.error('[AdminController.displaySjdSessions] error when find all speciality: ', err);
+                return res.serverError(err);
             }
+            specialities.forEach(function(spe) {
+                allSpecialities.push(spe.abbreviation);
+            });
+            SjdSession.find().exec((err, sessions) => {
+                if (err) {
+                    console.log('err', err)
+                    return res.view('ErrorPage', {
+                        layout: 'layout',
+                        ErrorTitle: "Une erreur s'est produite",
+                        ErrorDesc: 'Veuillez réessayer'
+                    })
+                }
 
-            return res.view('Admin/SjdSessions', {
-                layout: 'layout',
-                sessions: sessions,
-                specialities: specialities,
-                maxCompanies: 10
+                return res.view('Admin/SjdSessions', {
+                    layout: 'layout',
+                    sessions: sessions,
+                    specialities: allSpecialities,
+                    maxCompanies: 10
+                })
             })
         })
     },

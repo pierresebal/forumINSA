@@ -28,6 +28,7 @@ module.exports = {
         {name: 'GB', companies: [], students: []},
         {name: 'GP', companies: [], students: []},
         {name: 'GPE', companies: [], students: []},
+        {name: 'IS', companies: [], students: []},
       ]
     }
   }

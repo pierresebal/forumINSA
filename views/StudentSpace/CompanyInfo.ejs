@@ -6,6 +6,7 @@ var GPE = company.GPE == "on" ? "checked" : ""
 var GC = company.GC == "on" ? "checked" : ""
 var GM = company.GM == "on" ? "checked" : ""
 var GMM = company.GMM == "on" ? "checked" : ""
+var IS = company.IS == "on" ? "checked" : ""
 var description = company.description
 description = description.replace(/(?:\r\n|\r|\n)/g, '<br />');
 
@@ -87,6 +88,9 @@ else if (sell.offer == "true")
         <tr>
           <td><input type="checkbox" disabled="disabled" name="GM" id="GM" <%=GM%>/><label for="GM">&nbsp;Génie Mécanique</label></td>
           <td><input type="checkbox" disabled="disabled" name="GMM" id="GMM" <%=GMM%>/><label for="GMM">&nbsp;Mathématiques appliquées</label></td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" disabled="disabled" name="IS" id="IS" <%=IS%>/><label for="IS">&nbsp;Ingénierie des Systèmes</label></td>
         </tr>
       </table>
     </form>

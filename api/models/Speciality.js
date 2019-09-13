@@ -7,23 +7,33 @@
 
 module.exports = {
 
-  attributes: {
+    attributes: {
 
-      abbreviation: {
-          type: 'string',
-          required: true,
-          primaryKey: true
-      },
+        abbreviation: {
+            type: 'string',
+            required: true,
+            primaryKey: true
+        },
 
-      name: {
-          type: 'string',
-          required: true,
-      },
+        name: {
+            type: 'string',
+            required: true,
+        },
 
-      insaUrl: {
-          type: 'string'
-      }
-  },
+        insaUrl: {
+            type: 'string'
+        },
+        /*
+        students: {
+            collection: 'Student',
+            via: 'specialities',
+        },
+
+        companies: {
+            collection: 'Company',
+            via: 'specialities',
+        },*/
+    },
 
     // instantiate a blank object
     instantiate: (params) => {

@@ -11,7 +11,7 @@ module.exports = {
     Sells.find({ // Entreprises inscrites au SJD
       year: actualYear,
       or: [
-        {sjd: "on"}
+        { sjd: "on" }
       ]
     }).exec((err, sells) => {
       if (err) {
@@ -30,9 +30,9 @@ module.exports = {
       Sjd.create(entries).exec((err, record) => {
         if (err) {
           console.log('err :', err)
-          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Erreur lors de la création'})
+          return res.view('ErrorPage', { layout: 'layout', ErrorTitle: 'Erreur lors de la création' })
         }
-        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'initialization done'})
+        return res.view('ErrorPage', { layout: 'layout', ErrorTitle: 'initialization done' })
       })
     })
   },
@@ -40,14 +40,14 @@ module.exports = {
   addSpecialities: function (req, res) {
     const actualYear = new Date().getFullYear()
 
-    Sjd.findOne({companySiret: req.session.siret, year: actualYear}).exec((err, found) => {
+    Sjd.findOne({ companySiret: req.session.siret, year: actualYear }).exec((err, found) => {
       if (err) {
         console.log('err :', err)
-        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
+        return res.view('ErrorPage', { layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer' })
       }
 
       if (!found) {
-        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Votre entreprise n\'a pas été trouvée. Veuillez réessayer ou contacter le webmaster'})
+        return res.view('ErrorPage', { layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Votre entreprise n\'a pas été trouvée. Veuillez réessayer ou contacter le webmaster' })
       }
 
       var specialities = []
@@ -56,10 +56,10 @@ module.exports = {
         specialities.push(req.param(i))
       }
 
-      Sjd.update({companySiret: req.session.siret, year: actualYear}, {specialities: specialities}).exec((err, record) => {
+      Sjd.update({ companySiret: req.session.siret, year: actualYear }, { specialities: specialities }).exec((err, record) => {
         if (err) {
           console.log('err :', err)
-          return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
+          return res.view('ErrorPage', { layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer' })
         }
 
         return res.redirect('/Company/ManageSjd')
@@ -69,21 +69,29 @@ module.exports = {
 
   showSjdCompanyInscription: function (req, res) {
     const actualYear = new Date().getFullYear()
-    const possibleSpecialities = ['AE', 'GB', 'GP', 'GMM', 'GM', 'GPE', 'IR', 'GC']
-
-    Sjd.findOne({companySiret: req.session.siret, year: actualYear}).exec((err, found) => {
+    var allSpecialities = [];
+    Speciality.find().exec((err, specialities) => {
       if (err) {
-        console.log('err :', err)
-        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
+        sails.log.error('[AdminController.displaySjdSessions] error when find all speciality: ', err);
+        return res.serverError(err);
       }
+      specialities.forEach(function (spe) {
+        allSpecialities.push(spe.abbreviation);
+      });
+      Sjd.findOne({ companySiret: req.session.siret, year: actualYear }).exec((err, found) => {
+        if (err) {
+          console.log('err :', err)
+          return res.view('ErrorPage', { layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer' })
+        }
 
-      console.log('found : ' + JSON.stringify(found, null, 2))
+        console.log('found : ' + JSON.stringify(found, null, 2))
 
-      if (found) {
-        return res.view('CompanySpace/ManageSjd', {layout: 'layout', specialities: found.specialities, sessionNb: found.sessionNb, possibleSpecialities: possibleSpecialities})
-      } else {
-        return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Commande non passée', ErrorDesc: 'Pour pouvoir gérer vos paramètres du SJD, vous devez dabord passer commande (Pack premium ou SJD).'})
-      }
+        if (found) {
+          return res.view('CompanySpace/ManageSjd', { layout: 'layout', specialities: found.specialities, sessionNb: found.sessionNb, possibleSpecialities: allSpecialities })
+        } else {
+          return res.view('ErrorPage', { layout: 'layout', ErrorTitle: 'Commande non passée', ErrorDesc: 'Pour pouvoir gérer vos paramètres du SJD, vous devez dabord passer commande (Pack premium ou SJD).' })
+        }
+      })
     })
   }
 }

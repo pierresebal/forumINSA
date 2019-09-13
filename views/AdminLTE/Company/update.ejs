@@ -13,7 +13,7 @@
 
             <!-- Profile Image -->
             <div class="box box-primary">
-                <div class="box-body box-profile">
+                <div class="box-body box-profile">                    
                     <img class="profile-user-img img-responsive img-circle" src="<%= company.logoPath ? '/images/logos/' + company.logoPath : '/images/default_logo.png' %>" alt="Company Logo">
 
                     <h3 class="profile-username text-center"><%= company.companyName %></h3>
@@ -34,16 +34,16 @@
                         </div>
 
 
-                    <ul class="list-group list-group-unbordered">
-                        <li class="list-group-item">
-                            <b>Numéro siret</b> <a class="pull-right"><%= company.siret %></a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Groupe</b> <a class="pull-right"><%= company.companyGroup %></a>
-                        </li>
-                    </ul>
+                        <ul class="list-group list-group-unbordered">
+                            <li class="list-group-item">
+                                <b>Numéro siret</b> <a class="pull-right"><%= company.siret %></a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Groupe</b> <a class="pull-right"><%= company.companyGroup %></a>
+                            </li>
+                        </ul>
 
-                    <button type="submit" class="btn btn-info btn-block"><b>Sauvegarder </b></button>
+                        <button type="submit" class="btn btn-info btn-block"><b>Sauvegarder </b></button>
                     </form>
                 </div>
                 <!-- /.box-body -->
@@ -149,55 +149,29 @@
                         <form class="form-horizontal" method="post" action="/admin/company/<%= company.siret %>">
 
                             <div class="form-group">
-                                <label for="lastName" class="col-sm-3 control-label">Specialitiés</label>
-                                <div class="col-sm-9">
-                                    <div class="col-md-2 checkbox">
-                                        <label><input type="checkbox"  name="AE" value="<%= company.AE %>" 
-                                        <% if (company.AE == 'on') { %> value="on" checked <% } else { %> value="off" <% } %>> AE</label>
-                                    </div>
-                                    <div class="col-md-2 checkbox">
-                                        <label><input type="checkbox"  name="GB" value="<%= company.GB %>" 
-                                        <% if (company.GB == 'on') { %> value="on" checked <% } else { %> value="off" <% } %>> GB</label>
-                                    </div>
-                                    <div class="col-md-2 checkbox">
-                                        <label><input type="checkbox"  name="GPE" value="<%= company.GPE %>" 
-                                        <% if (company.GPE == 'on') { %> value="on" checked <% } else { %> value="off" <% } %>> GPE</label>
-                                    </div>
-                                    <div class="col-md-2 checkbox"> 
-                                        <label><input type="checkbox"  name="GMM" value="<%= company.GMM %>" 
-                                        <% if (company.GMM == 'on') { %> value="on" checked <% } else { %> value="off" <% } %>> GMM</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3"></div>
-                                <div class="col-sm-9">
-                                    <div class="col-md-2 checkbox">
-                                        <label><input type="checkbox"  name="IR" value="<%= company.IR %>" 
-                                        <% if (company.IR == 'on') { %> value="on" checked <% } else { %> value="off" <% } %>> IR</label> 
-                                    </div> 
-                                    <div class="col-md-2 checkbox">
-                                        <label><input type="checkbox"  name="GP" value="<%= company.GP %>" 
-                                        <% if (company.GP == 'on') { %> value="on" checked <% } else { %> value="off" <% } %>> GP</label>
-                                    </div>
-                                    <div class="col-md-2 checkbox">
-                                        <label><input type="checkbox"  name="GM" value="<%= company.GM %>" 
-                                        <% if (company.GM == 'on') { %> value="on" checked <% } else { %> value="off" <% } %>> GM</label>
-                                    </div>
-                                    <div class="col-md-2 checkbox">
-                                        <label><input type="checkbox"  name="GC" value="<%= company.GC %>" 
-                                        <% if (company.GC == 'on') { %> value="on" checked <% } else { %> value="off" <% } %>> GC</label>
-                                    </div>
+                                <label for="lastName" class="col-sm-2 control-label">Specialitiés</label>
+                            
+                                <div class="col-sm-10">
+                                    <% allSpecialities.forEach(function(spe) { %>
+                                        <div class="col-sm-6 checkbox">
+                                            <label><input type="checkbox" name="<%=spe.abbreviation%>"
+                                                <% if (company[spe.abbreviation] == 'on') { %> value="on" checked <% } else { %> value="off" <% } %>>
+                                                <%= spe.abbreviation %> <small>- <%= spe.name %></small>
+                                            </label>
+                                        </div>
+                                    <% }); %>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="lastName" class="col-sm-3 control-label">Description</label>
-                                <div class="col-sm-9">
+                                <label for="lastName" class="col-sm-2 control-label">Description</label>
+                                <div class="col-sm-10">
                                     <textarea name="description" rows="10" class="form-control"><%= company.description %></textarea>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-9">
+                                <div class="col-sm-offset-2 col-sm-10">
                                     <button type="submit" class="btn btn-success">Submit</button>
                                 </div>
                             </div>

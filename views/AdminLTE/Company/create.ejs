@@ -194,68 +194,16 @@
                         </div>
                         <div class="box-body">
                             <div class="form-group">
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="IR">Informatique et Réseaux</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="AE">Automatique, Électronique</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="GP">Génie Physique</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="GB">Génie Biologique</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="GPE">Génie des Procédés et
-                                            Environnement</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="GC">Génie Civil</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="GM">Génie Mécanique</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="GMM">Mathématiques appliquées</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- future specialitites form ...
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Intérêts</h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="form-group">
                                 <% allSpecialities.forEach(function(spe) { %>
-                                    <div class="col-sm-6">
-                                        <div class="checkbox">
-                                            <label><input type="checkbox"
-                                                name="<%= spe.abbreviation %>">
-                                                <%= spe.name %>
-                                            </label>
-                                        </div>
+                                    <div class="col-sm-6 checkbox">
+                                        <label><input type="checkbox" name="<%=spe.abbreviation%>" >
+                                            <%= spe.abbreviation %> <small>- <%= spe.name %></small>
+                                        </label>
                                     </div>
                                 <% }); %>
                             </div>
                         </div>
-                    </div>-->
+                    </div>
 
                     <div class="col-sm-12">
                         <div class="box-header with-border">
