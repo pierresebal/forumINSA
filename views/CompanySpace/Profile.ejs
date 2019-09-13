@@ -1,129 +1,105 @@
-
 <style>
+        td h3 {
+            font-size: 1em;
+            font-weight: bold;
+            margin: 5px;
+        }
+    
+        td {
+            padding: 10px;
+            width: 5%;
+        }
+    
+        label {
+            font-weight: normal;
+        }
+    
+        fieldset {
+            border-radius: 8px;
+            border: solid thin #dadce0;
+            padding: 0px 16px;
+            height: auto;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+    
+        fieldset.tab-content {
+            border-radius: 0px 0px 8px 8px;
+            border-top: 0px;
+            margin: 0px;
+            padding: 32px 0px 0px 0px;
+        }
+    
+        .left-border-none {
+            padding-left: 4px;
+        }
+    
+        fieldset label {
+            font-size: 80%;
+        }
+    </style>
+    
+    <div class="content">
+        <h1>Profil Entreprise</h1>
+        <p>Vous pouvez ici consulter votre profil.<br />Pensez à mettre un <b>logo</b>. Il sera utilisé dans nos supports de
+            communication.</p>
+        <p>N'oubliez pas de changer de mot de passe si ce n'est pas encore fait !</p>
+    
+        <p>&nbsp;</p>
 
-    td h3 {
-        font-size: 1em;
-        font-weight: bold;
-        margin: 5px;
-    }
-
-    td {
-        padding: 10px;
-        width: 5%;
-    }
-
-    label {
-        font-weight: normal;
-    }
-</style>
-
-<div class="content">
-<h1>Profil Entreprise</h1>
-<p>Vous pouvez ici consulter votre profil.<br />Pensez à mettre un <b>logo</b>. Il sera utilisé dans nos supports de communication.</p>
-<p>N'oubliez pas de changer de mot de passe si ce n'est pas encore fait !</p>
-
-<h2><i class="fa fa-user"></i>&nbsp;&nbsp;Contacts</h2>
-<div class="col-sm-12">
-
-    <div class="col-sm-6">
-        <form class="pure-form pure-form-stacked" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
-          <fieldset>
-              <legend>Forum</legend>
-
-              <label for="firstName">Prénom : <%=company.firstName%></label>
-              <input class="pure-input-1" type="text" name="firstName" value="<%=company.firstName%>">
-              <% flash.get('firstName').forEach(function (message) { %>
-              <div class="form-error">
-                  <%= message %>
-              </div>
-              <% }) %>
-
-              <label for="lastName">Nom : <%=company.lastName%></label>
-              <input class="pure-input-1" type="text" name="lastName" value="<%=company.lastName%>">
-              <% flash.get('lastName').forEach(function (message) { %>
-              <div class="form-error">
-                  <%= message %>
-              </div>
-              <% }) %>
-
-              <label for="position">Fonction : <%=company.position%></label>
-              <input class="pure-input-1" type="text" name="position" value="<%=company.position%>">
-              <% flash.get('position').forEach(function (message) { %>
-              <div class="form-error">
-                  <%= message %>
-              </div>
-              <% }) %>
-
-              <label for="phoneNumber"><i class="fa fa-phone"></i>&nbsp;&nbsp;Téléphone : <%=company.phoneNumber%></label>
-              <input class="pure-input-1" type="text" name="phoneNumber" value="<%=company.phoneNumber%>">
-              <% flash.get('phoneNumber').forEach(function (message) { %>
-              <div class="form-error">
-                  <%= message %>
-              </div>
-              <% }) %>
-
-              <label for="mailAddress"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Email : <%= company.mailAddress %></label>
-              <input class="pure-input-1" type="text" name="mailAddress" value="<%= company.mailAddress %>">
-              <% flash.get('mailAddress').forEach(function (message) { %>
-              <div class="form-error">
-                  <%= message %>
-              </div>
-              <% }) %>
-
-              <button style="width: 100%;" type="submit" class="form-button">Enregistrer</button>
-          </fieldset>
-        </form>
-    </div>
-    <div class="col-sm-6">
-        <form class="pure-form pure-form-stacked" method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
-          <fieldset>
-              <legend>Facturation</legend>
-
-              <label for="bFirstName">Prénom<sup class="text-danger">*</sup> : <%= company.bFirstName %></label>
-              <input class="pure-input-1" type="text" name="bFirstName" value="<%= company.bFirstName %>">
-              <% flash.get('bFirstName').forEach(function (message) { %>
-              <div class="form-error">
-                  <%= message %>
-              </div>
-              <% }) %>
-
-              <label for="bLastName">Nom<sup class="text-danger">*</sup> : <%= company.bLastName %></label>
-              <input class="pure-input-1" type="text" name="bLastName" value="<%= company.bLastName %>">
-              <% flash.get('bLastName').forEach(function (message) { %>
-              <div class="form-error">
-                  <%= message %>
-              </div>
-              <% }) %>
-
-              <label for="bPosition">Fonction<sup class="text-danger">*</sup> : <%= company.bPosition%></label>
-              <input class="pure-input-1" type="text" name="bPosition" value="<%= company.bPosition %>">
-              <% flash.get('bPosition').forEach(function (message) { %>
-              <div class="form-error">
-                  <%= message %>
-              </div>
-              <% }) %>
-
-              <label for="bPhoneNumber"><i class="fa fa-phone"></i>&nbsp;&nbsp;Téléphone<sup class="text-danger">*</sup> : <%= company.bPhoneNumber %></label>
-              <input class="pure-input-1" type="text" name="bPhoneNumber" value="<%= company.bPhoneNumber %>">
-              <% flash.get('bPhoneNumber').forEach(function (message) { %>
-              <div class="form-error">
-                  <%= message %>
-              </div>
-              <% }) %>
-
-              <label for="bMailAddress"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Email<sup class="text-danger">*</sup> : <%= typeof company.bMailAddress == 'undefined' ? '' : company.bMailAddress %></label>
-              <input class="pure-input-1" type="text" name="bMailAddress" value="<%= typeof company.bMailAddress == 'undefined' ? '' : company.bMailAddress %>">
-              <% flash.get('bMailAddress').forEach(function (message) { %>
-              <div class="form-error">
-                  <%= message %>
-              </div>
-              <% }) %>
-              <button style="width: 100%;" type="submit" class="form-button">Enregistrer</button>
-          </fieldset>
-        </form>
-    </div>
-    <div class="pure-u-md-1-8"></div>
-</div>
+        <div style="position: relative;">
+            <div style="position: absolute;"></div>
+            <div class="col-sm-5" style="height: 480px; display: block;">
+                <h2 style="position: absolute; bottom: 60px; color: #dadce0; font-size: 80px; ">Contact</h2>
+            </div>
+            <fieldset>
+                <div id="contact">
+                    <form method="post" action="<%= sails.getUrlFor('CompanyController.update') %>">
+                        <br />
+                        <div class="form-group">
+                            <label for="firstName">Prénom</label>
+                            <input type="text" name="firstName" class="form-control" placeholder="Prénom"
+                                value="<%= company.firstName %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Nom</label>
+                            <input type="text" name="lastName" class="form-control" placeholder="Nom de famille"
+                                value="<%= company.lastName %>">
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="lastName">Fonction</label>
+                            <div class=input-group>
+                                <span class="input-group-addon transparent"><i class="fa fa-briefcase"></i></span>
+                                <input type="text" name="position" class="form-control left-border-none"
+                                    placeholder="Position dans l'entreprise" value="<%= company.position %>">
+                            </div>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="lastName">Téléphone</label>
+                            <div class=input-group>
+                                <span class="input-group-addon transparent"><i class="fa fa-phone"></i></span>
+                                <input type="text" name="phoneNumber" class="form-control left-border-none"
+                                    placeholder="+339999999" value="<%= company.phoneNumber %>">
+                            </div>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="lastName">E-mail</label>
+                            <div class=input-group>
+                                <span class="input-group-addon transparent"><i class="fa fa-envelope"></i></span>
+                                <input type="email" name="mailAddress" class="form-control left-border-none"
+                                    placeholder="contact@entreprise.com" value="<%= company.mailAddress %>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn form-button col-sm-12">Enregistrer</button>
+                        </div>
+    
+                    </form>
+                </div>
+            </fieldset>
+        </div>
 
 <div class="col-sm-12">
     <div class="col-sm-6">
@@ -241,5 +217,6 @@
 <% if (company.GC == 'on') { %><i class="fa fa-check"></i>&nbsp;<b>GC</b> : Génie Civil<br> <% } %>
 <% if (company.GM == 'on') { %><i class="fa fa fa-check"></i>&nbsp;<b>GM</b> : Génie Mécanique<br> <% } %>
 <% if (company.GMM == 'on') { %><i class="fa fa-check"></i>&nbsp;<b>GMM</b> : Mathématiques appliquées<br> <% } %>
+<% if (company.IS == 'on') { %><i class="fa fa-check"></i>&nbsp;<b>IS</b> : Ingénierie des Systèmes<br> <% } %>
 
 </div>
