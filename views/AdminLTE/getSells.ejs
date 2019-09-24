@@ -36,7 +36,7 @@ $(document).ready(function() {
         },
         columns: [
             { 'data': "companyName" },
-            { 'data': "year" },
+            { 'data': "year" },/*
             { 'data': "forum",
                 'render' : function(data, type, full, meta) {
                     if (data == 'false')
@@ -59,6 +59,27 @@ $(document).ready(function() {
                 }
             },
             { 'data': "moreMeal",
+                'render' : function(data, type, full, meta) {
+                    if (!data)
+                        return '-';
+                    return data + " x " + full.mealPrice + " €";
+                }
+            },*/
+            { 'data': "orderOption",
+                'render' : function(data, type, full, meta) {
+                    if (!data)
+                        return '-';
+                    return data;
+                }
+            },
+            { 'data': "optionPrice",
+                'render' : function(data, type, full, meta) {
+                    if (!data)
+                        return '-';
+                    return data + " €";
+                }
+            },
+            { 'data': "orderMeals",
                 'render' : function(data, type, full, meta) {
                     if (!data)
                         return '-';
