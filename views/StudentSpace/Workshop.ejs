@@ -49,7 +49,7 @@
               <label><input type="checkbox" <% if (aWorkshop.freePlaces == 0) { %>disabled <% } %> name="<%= aWorkshop.abbreviation %>">
                 <%= aWorkshop.name %><b><%= " (" + aWorkshop.startHour + "-" + aWorkshop.endHour + ")" %></b>
                 <% if (aWorkshop.freePlaces == 0) { %><span style="color: red;"> COMPLET</span><% } %>
-                <% else if (aWorkshop.abbreviation == "iat_sjd_training" || aWorkshop.abbreviation == "iat_sjd_training_2") { %><span style="color: purple;"> TERMINÉ</span><% } %>
+                <!--< % else if (aWorkshop.abbreviation == "iat_sjd_training" || aWorkshop.abbreviation == "iat_sjd_training_2") { % ><span style="color: purple;"> TERMINÉ</span>< % } % >-->
               </label>
           </div>
         <% }); %>
