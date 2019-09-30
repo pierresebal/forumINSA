@@ -15,6 +15,11 @@ module.exports = {
             primaryKey: true
         },
 
+        theme: {
+            type: 'string',
+            required: true
+        },    
+
         name: {
             type: 'string',
             required: true
@@ -35,6 +40,16 @@ module.exports = {
             required: true
         },
 
+        location: {
+            type: 'string',
+            required: true
+        },
+
+        description: {
+            type: 'string',
+            required: true
+        },
+
         places: {
             type: 'integer',
             required: true
@@ -48,7 +63,7 @@ module.exports = {
     // instantiate a blank object
     instantiate: (params) => {
         return Object.assign({
-            abbreviation: '', name: '', organizer: '', startHour: '', endHour: '', places: '', freePlaces: ''
+            abbreviation: '', theme: '', name: '', organizer: '', startHour: '', endHour: '', location: '', description: '', places: '', freePlaces: ''
         }, params);
     },
 

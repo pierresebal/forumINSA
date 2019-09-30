@@ -17,33 +17,52 @@
                 <form role="form" class="form-horizontal" method="POST" action="<%= sails.getUrlFor('Admin/WorkshopController.create') %>">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="abbreviation" class="col-sm-2 control-label">Abbréviation</label>
+                            <label for="theme" class="col-sm-2 control-label">Thème<small><br/>Pour classer les ateliers</small></label>
                             <div class="col-sm-10">
-                                <input type="text" name="abbreviation" class="form-control" placeholder="ex: CV" <% if(workshop.abbreviation) { %> value="<%= workshop.abbreviation %>" <% } %>>
+                                <input type="text" name="theme" class="form-control" placeholder="ex: Les clefs pour convaincre face aux recruteurs" <% if(workshop.theme) { %> value="<%= workshop.theme %>" <% } %>>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">Nom entier</label>
+                            <label for="abbreviation" class="col-sm-2 control-label">Abbréviation<small><br/><i class="fa fa-exclamation-triangle"></i>ID unique</small></label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" class="form-control" placeholder="ex: Comment faire un bon CV ?" <% if(workshop.name) { %> value="<%= workshop.name %>" <% } %> >
+                                <input type="text" name="abbreviation" class="form-control" placeholder="ex: CV_1" <% if(workshop.abbreviation) { %> value="<%= workshop.abbreviation %>" <% } %>>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">Nom complet</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" class="form-control" placeholder="ex: Rédiger un CV percutant" <% if(workshop.name) { %> value="<%= workshop.name %>" <% } %> >
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="organizer" class="col-sm-2 control-label">Organisateur</label>
                             <div class="col-sm-10">
-                                <input type="text" name="organizer" class="form-control" placeholder="IAT" <% if(workshop.organizer) { %> value="<%= workshop.organizer%>" <% } %> >
+                                <input type="text" name="organizer" class="form-control" placeholder="ex: IAT" <% if(workshop.organizer) { %> value="<%= workshop.organizer%>" <% } %> >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label">Description</label>
+                            <div class="col-sm-10">
+                                <textarea rows="4" maxlength="1000" name="description" class="form-control"
+                                    placeholder="Description de l'atelier"><% if(workshop.description) { %>value="<%= workshop.description%>"<% } %></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="startHour" class="col-sm-2 control-label">Heure de début</label>
                             <div class="col-sm-10">
-                                <input type="time" name="startHour" class="form-control" <% if(workshop.startHour) { %> value="<%= workshop.startHour%>" <% } %> >
+                                <input type="time" name="startHour" class="form-control" placeholder="9:00 AM" <% if(workshop.startHour) { %> value="<%= workshop.startHour%>" <% } else { %> value="09:00" <% } %> >
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="endHour" class="col-sm-2 control-label">Heure de fin</label>
                             <div class="col-sm-10">
-                                <input type="time" name="endHour" class="form-control" <% if(workshop.endHour) { %> value="<%= workshop.endHour%>" <% } %> >
+                                <input type="time" name="endHour" class="form-control" <% if(workshop.endHour) { %> value="<%= workshop.endHour%>" <% } else { %> value="17:00" <% } %> >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="location" class="col-sm-2 control-label">Lieu</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="location" class="form-control" placeholder="ex: Salle 109" <% if(workshop.location) { %> value="<%= workshop.location%>" <% } %> >
                             </div>
                         </div>
                         <div class="form-group">
