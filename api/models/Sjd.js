@@ -22,6 +22,6 @@ module.exports = {
     specialities: {
       type: 'array',
       defaultsTo: [],
-    }
+    },
   }
 };

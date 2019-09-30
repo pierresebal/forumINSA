@@ -570,7 +570,7 @@ module.exports = {
                                 console.log('sjd : ', company.orderOption === 'forumSJD');
 
                                 if (company.orderOption === 'forumSJD') {
-                                    spe = [];
+                                    SJDspecialities = [];
 
                                     Speciality.find().exec((err, specialities) => {
                                         if(err) {
@@ -578,17 +578,17 @@ module.exports = {
                                             return res.serverError(err);
                                         }
                                        specialities.forEach(function(spe) {
-                                            if (typeof req.param(spe.abbreviation) === 'on')
-                                                spe.push(spe.abbreviation);
+                                            if (company[spe.abbreviation] === 'on')
+                                            SJDspecialities.push(spe.abbreviation);
                                         });
                                     
-                                        console.log('sjd - specialities', spe);
+                                        console.log('sjd - specialities', SJDspecialities);
                                         Sjd.create({
                                             year: year,
                                             companyName: company.companyName,
                                             companySiret: company.siret,
                                             sessionNb: 1,
-                                            specialities: spe,
+                                            specialities: SJDspecialities,
                                         })
                                         .exec((err, record) => {
                                             if (err) {
