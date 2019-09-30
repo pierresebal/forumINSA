@@ -1,45 +1,60 @@
 <h1>Liste des entreprises <%=year%></h1>
 
-<form method="POST" action="/Student/Companies" >
-  <label>Afficher les entreprises intéressées par</label>
-  <select name="speciality">
+<form method="POST" action="/Student/Companies">
+  <label>Afficher les entreprises intéressées par la spécialité </label>
+  <select name="speciality" onchange="this.form.submit()">
+    <option value="-" selected>-</option>
+
     <% specialities.forEach(function(aSpeciality) { %>
-    <option value="<%= aSpeciality %>" <%= selectedSpeciality == aSpeciality ? 'selected' : ''%>><%= aSpeciality%></option>
+    <option value="<%= aSpeciality.abbreviation %>"
+      <%= selectedSpeciality == aSpeciality.abbreviation ? 'selected' : ''%>><%= aSpeciality.abbreviation%>
+    </option>
     <% }); %>
   </select>
-  <input type="submit" class="form-button" value="Envoyer"/>
+  <!-- <input type="submit" class="form-button" value="Afficher"/> -->
 </form>
 
 <% if (typeof companies != 'undefined') {
   if (companies.length == 0) { %>
-    <p>Aucune entreprise trouvée.</p>
-    <% } else { %>
-    <table style="border-spacing: 10px; border-collapse: separate">
-      <tr>
-        <th></th> <th>Nom</th> <th>site internet</th> <th>Plus d'info</th>
-      </tr>
-    <% companies.forEach(function(company) { %>
-    <tr>
+<p>Aucune entreprise trouvée.</p>
+<% } else { %>
+<table class="table table-hover">
+  <tr>
+    <th style="border-top: none"></th>
+    <th style="border-top: none">Nom</th>
+    <th style="border-top: none">Site internet</th>
+    <th style="border-top: none">Spécialités</th>
+    <th style="border-top: none">Détails</th>
+  </tr>
+  <% companies.forEach(function(company) { %>
+  <tr style="height: 70px">
+    <td>
       <% if (typeof company.logoPath != 'undefined' && company.logoPath != ''){ %>
-      <td><img src="/images/logos/<%=company.logoPath%>" style="width: 70px; height: auto" /></td>
+      <img src="/images/logos/<%=company.logoPath%>" style="width: 70px; height: auto" />
       <% } else { %>
-      <td>-</td>
+      <img src="/images/default_logo.png" style="width: 70px; height: auto" />
       <% } %>
-
-      <td>
-        <%=company.companyName %>
-      </td>
-
-      <td>
-        <a href="<%=company.websiteUrl%>" target="_blank">
-          <%=company.websiteUrl%>
-        </a>
-      </td>
-
-      <td>
-        <a href="/Student/CompanyInfo?siret=<%=company.siret%>">Voir plus</a>
-      </td>
-    </tr>
-  <% })
-  }}; %>
+    </td>
+    <td>
+      <%=company.companyName %>
+    </td>
+    <td>
+      <a href="<%=company.websiteUrl%>" target="_blank" class="external-link">
+        <i class="fa fa-external-link"></i>&nbsp;&nbsp;<%=company.websiteUrl%>
+      </a>
+    </td>
+    <td>
+      <% specialities.forEach(function(speciality) { 
+          if (company[speciality.abbreviation] == 'on') { %>
+      <span class="badge progress-bar-selected"><%=speciality.abbreviation%></span>
+      <% } else { %>
+      <span class="badge progress-bar-disabled"><%=speciality.abbreviation%></span>
+      <% }}) %>
+    </td>
+    <td>
+      <a href="/Student/CompanyInfo?siret=<%=company.siret%>"><button class="btn red-button">Voir plus</button></a>
+    </td>
+  </tr>
+  <% }) %>
 </table>
+<% }}; %>
