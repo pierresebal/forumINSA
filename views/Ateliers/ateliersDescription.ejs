@@ -24,6 +24,7 @@
         </p>
         <table class="table table-hover">
         <% theme = [];
+        oneLineLinkedin = false;
         workshops.forEach(function(workshop) {
             if (!theme.includes(workshop.theme)) {%>
                 <tr>
@@ -32,7 +33,7 @@
                 <%theme.push(workshop.theme);
                 workshops.forEach(function(workshopThemed) {
                     if (workshopThemed.theme == workshop.theme) {
-                        if (workshopThemed.name == "Social Jobbing : Faire de votre profil LinkedIn une arme pour être recruté") { %>
+                        if (workshopThemed.name == "Social Jobbing : Faire de votre profil LinkedIn une arme pour être recruté" && ! oneLineLinkedin) { oneLineLinkedin = true; %>
                     <tr>    
                         <th>10:00-13:00 14:00-17:00</th>
                         <td>Atelier by <%=workshopThemed.organizer%></td>
