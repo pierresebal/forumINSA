@@ -31,14 +31,22 @@
                 </tr>
                 <%theme.push(workshop.theme);
                 workshops.forEach(function(workshopThemed) {
-                    if (workshopThemed.theme == workshop.theme) {%>
+                    if (workshopThemed.theme == workshop.theme) {
+                        if (workshopThemed.name == "Social Jobbing : Faire de votre profil LinkedIn une arme pour être recruté") { %>
+                    <tr>    
+                        <th>10:00-13:00 14:00-17:00</th>
+                        <td>Atelier by <%=workshopThemed.organizer%></td>
+                        <td><b><%=workshopThemed.name%> (ateliers par tranche de 20min)</b></td>
+                        <td>(<%=workshopThemed.location%>)</td>
+                    </tr>
+                        <% } else { %>
                     <tr>
                         <th><%=workshopThemed.startHour%> - <%=workshopThemed.endHour%></th>
                         <td>Atelier by <%=workshopThemed.organizer%></td>
                         <td><b><%=workshopThemed.name%></b></td>
                         <td>(<%=workshopThemed.location%>)</td>
                     </tr>
-                <%}})%>
+                <%}}})%>
             <%}
         });%>
     </table>
