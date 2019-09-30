@@ -9,7 +9,7 @@ module.exports = {
     login: function (req, res) {
         var data = {login: req.param('login'), password: req.param('password')}
         var request = require('request');
-
+        //https://srv-falcon.etud.insa-toulouse.fr/~forum/FBI/connection.php
         request.post({url: 'https://etud.insa-toulouse.fr/~ntaillar/fie/connection.php', form: data}, (err, httpResponse, body) => { // Demande de connection au ldap via le script php qui renvoie '0' si la connexion echoue
 
             if (!err && httpResponse.statusCode === 200) {
@@ -315,20 +315,16 @@ module.exports = {
     },
 
     companies: function (req, res) {
-        var allSpecialities = [];
         Speciality.find().exec((err, specialities) => {
             if (err) {
-                sails.log.error('[AdminController.displaySjdSessions] error when find all speciality: ', err);
+                sails.log.error('[StudentController.companies] error when find all speciality: ', err);
                 return res.serverError(err);
             }
-            specialities.forEach(function (spe) {
-                allSpecialities.push(spe.abbreviation);
-            });
-            var selectedSpeciality
+            var selectedSpeciality;
             const actualYear = new Date().getFullYear()
 
             if (!req.param('speciality')) { // Si aucune spécialité choisie
-                selectedSpeciality = specialities[0]
+                selectedSpeciality = '-';
             } else {
                 selectedSpeciality = req.param('speciality')
             }
@@ -342,7 +338,7 @@ module.exports = {
                 const companiesSiret = sells.map((sell) => sell.companySiret)
                 var sortSettings = { siret: companiesSiret }
 
-                if (selectedSpeciality !== 'tout') { // On rajoute le tri sur les spé que si on ne les veut pas toutes
+                if (selectedSpeciality !== '-') { // On rajoute le tri sur les spé que si on ne les veut pas toutes
                     sortSettings[req.param('speciality')] = "on"
                 }
 
@@ -352,7 +348,13 @@ module.exports = {
                         return res.view('ErrorPage', { layout: 'layout', ErrorTitle: 'Les entreprises ne sont pas récupérées' })
                     }
                     const actualYear = new Date().getFullYear()
-                    return res.view('StudentSpace/Companies', { layout: 'layout', companies: companies, specialities: allSpecialities, selectedSpeciality: selectedSpeciality, year: actualYear })
+                    return res.view('StudentSpace/Companies', { 
+                        layout: 'layout', 
+                        companies: companies,
+                        specialities: specialities, 
+                        selectedSpeciality: selectedSpeciality, 
+                        year: actualYear 
+                    })
                 })
             })
         })
@@ -382,7 +384,11 @@ module.exports = {
                     sellsExist = false
                 }
 
-                return res.view('StudentSpace/CompanyInfo', {layout: 'layout', company: company, sell: sell, sellsExist: sellsExist})
+                return res.view('StudentSpace/CompanyInfo', {
+                    layout: 'layout', 
+                    company: company, 
+                    sell: sell, 
+                    sellsExist: sellsExist})
             })
         })
     },
@@ -407,7 +413,28 @@ module.exports = {
                             console.log('err', err)
                             return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
                         }
-                        return res.view('StudentSpace/Sjd', {layout: 'layout', student: student, sjd: sjd, wishes: wishes})
+                        Speciality.find().exec((err, specialities) => {
+                            if (err) {
+                                sails.log.error('[StudentController.sjd] error when find all speciality: ', err);
+                                return res.serverError(err);
+                            }
+                            const companiesSiret = sjd.map((cie) => cie.companySiret)
+                            var sortSettings = { siret: companiesSiret }
+                            Company.find(sortSettings).exec((err, companies) => {
+                                if (err) {
+                                    console.log('error : ' + err)
+                                    return res.view('ErrorPage', { layout: 'layout', ErrorTitle: 'Les entreprises ne sont pas récupérées' })
+                                }
+                                return res.view('StudentSpace/Sjd', {
+                                    layout: 'layout',
+                                    student: student, 
+                                    sjd: sjd, 
+                                    wishes: wishes,
+                                    specialities: specialities,
+                                    companies: companies,
+                                })
+                            })
+                        })
                     })
                 }
             })

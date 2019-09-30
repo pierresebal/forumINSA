@@ -1,83 +1,117 @@
 <div class="content">
 
-<h1>Inscription SJD</h1>
+  <h1>Inscription SJD</h1>
 
-<p>
-  Cette année, vous pourrez passer <b>1 à 2 entretiens</b> de Speed Job Dating en fonction
-  des disponibilités que le forum pourra mettre à votre disposition (voire 3 dans le meilleur des cas).
-</p>
-<p>
-  Le principe a un peu changé : vous devez réaliser <b>3 voeux</b> par ordre de priorité, en choisissant une 
-  entreprise différente pour chaque voeu. Les affectations seront ensuite réalisées sur la base du "premier inscrit 
-  premier servi". Ces entretiens auront lieu entre <b>12h et 14h</b>.
-  <br>Il ne vous reste plus qu'à faire votre choix !
-</p>
-<p>
-  <b>NB:</b> Une fois vos choix réalisés, vous ne pourrez plus les modifier.
-</p>
+  <p>
+    Cette année, vous pourrez passer <b>1 à 2 entretiens</b> de Speed Job Dating en fonction
+    des disponibilités que le Forum pourra mettre à votre disposition (voire 3, dans le meilleur des cas).
+  </p>
+  <p>
+    Vous devez réaliser <b>3 voeux</b> par ordre de priorité, en choisissant une
+    entreprise différente pour chaque voeu. Les affectations seront ensuite réalisées sur la base du "premier inscrit
+    premier servi". Ces entretiens auront lieu entre <b>12h et 14h</b>.
+    <br>Il ne vous reste plus qu'à faire votre choix !
+  </p>
+  <p>
+    <b>NB:</b> Une fois vos choix réalisés, vous ne pourrez plus les modifier.
+  </p>
 
-<h2>Vos voeux</h2>
+  <h2>Les entreprises inscrites</h2>
 
-<% if (student.sjdRegistered) { %>
+  <table class="table table-hover">
+    <tr>
+      <th style="border-top: none"></th>
+      <th style="border-top: none">Nom</th>
+      <th style="border-top: none">Site internet</th>
+      <th style="border-top: none">Spécialités</th>
+      <th style="border-top: none">Détails</th>
+    </tr>
+    <% companies.forEach(function(company) { %>
+    <tr style="height: 70px">
+      <td>
+        <% if (typeof company.logoPath != 'undefined' && company.logoPath != ''){ %>
+        <img src="/images/logos/<%=company.logoPath%>" style="width: 70px; height: auto" />
+        <% } else { %>
+        <img src="/images/default_logo.png" style="width: 70px; height: auto" />
+        <% } %>
+      </td>
+      <td>
+        <%=company.companyName %>
+      </td>
+      <td>
+        <a href="<%=company.websiteUrl%>" target="_blank" class="external-link">
+          <i class="fa fa-external-link"></i>&nbsp;&nbsp;<%=company.websiteUrl%>
+        </a>
+      </td>
+      <td>
+        <% specialities.forEach(function(speciality) { 
+            if (company[speciality.abbreviation] == 'on') { %>
+        <span class="badge progress-bar-selected"><%=speciality.abbreviation%></span>
+        <% } else { %>
+        <span class="badge progress-bar-disabled"><%=speciality.abbreviation%></span>
+        <% }}) %>
+      </td>
+      <td>
+        <a href="/Student/CompanyInfo?siret=<%=company.siret%>"><button class="btn red-button">Voir plus</button></a>
+      </td>
+    </tr>
+    <% }) %>
+  </table>
+
+  <h2>Vos vœux</h2>
+
+  <% if (student.sjdRegistered) { %>
   <% if (typeof wishes!== 'undefined') { %>
-    <p>Vous êtes déjà inscrit. Voici vos voeux en attente de confirmation par notre équipe :</p>
-    <ul>
-        <li><b>Voeu 1 :</b> <%= wishes.wish1 %></li>
-        <li><b>Voeu 2 :</b> <%= wishes.wish2 %></li>
-        <li><b>Voeu 3 :</b> <%= wishes.wish3 %></li>
-    </ul>
+  <p>Vous êtes déjà inscrit. Voici vos voeux en attente de confirmation par notre équipe :</p>
+  <ul>
+    <li><b>Vœu 1 :</b> <%= wishes.wish1 %></li>
+    <li><b>Vœu 2 :</b> <%= wishes.wish2 %></li>
+    <li><b>Vœu 3 :</b> <%= wishes.wish3 %></li>
+  </ul>
   <% } %>
-<% } else { %>
+  <% } else { %>
   <table class="pure-table pure-table-striped" id="student_profile" style="width: 100%; margin: auto;">
     <tr>
-      <form role="form" class="form-horizontal" method="POST" action="<%= sails.getUrlFor('SjdWishController.create') %>">
-        <input type="hidden" name="login" value="<%= student.login %>"/>
-        <input type="hidden" name="firstName" value="<%= student.firstName %>"/>
-        <input type="hidden" name="lastName" value="<%= student.lastName %>"/>
-        <input type="hidden" name="mail" value="<%= student.mailAddress %>"/>
-        <input type="hidden" name="year" value="<%= student.year %>"/>
-        <input type="hidden" name="speciality" value="<%= student.speciality %>"/>
+      <form role="form" class="form-horizontal" method="POST"
+        action="<%= sails.getUrlFor('SjdWishController.create') %>">
+        <input type="hidden" name="login" value="<%= student.login %>" />
+        <input type="hidden" name="firstName" value="<%= student.firstName %>" />
+        <input type="hidden" name="lastName" value="<%= student.lastName %>" />
+        <input type="hidden" name="mail" value="<%= student.mailAddress %>" />
+        <input type="hidden" name="year" value="<%= student.year %>" />
+        <input type="hidden" name="speciality" value="<%= student.speciality %>" />
         <div class="form-group">
-          <select name="wish1">
-            <option value="-">Aucune entreprise sélectionnée</option>
+          <label for="wish1" >Vœu 1</label>
+          <select name="wish1" class="form-control" >
+            <option value="-" style="color:#bbb">Aucune entreprise sélectionnée</option>
             <% sjd.forEach(function(company) { %>
-              <% if (company.companyName != "MALET") { %>
-                <option disabled style="color: red;" value=""><%= company.companyName%> COMPLET</option>
-              <% } else { %>
-                <option value="<%= company.companyName %>"><%= company.companyName%></option>
-              <% } %>
+            <option value="<%= company.companyName %>"><%= company.companyName%></option>
             <% }); %>
           </select>
         </div>
         <div class="form-group">
-          <select name="wish2">
-            <option value="-">Aucune entreprise sélectionnée</option>
+          <label for="wish2">Vœu 2</label>
+          <select name="wish2" class="form-control" >
+            <option value="-" style="color:#bbb">Aucune entreprise sélectionnée</option>
             <% sjd.forEach(function(company) { %>
-              <% if (company.companyName != "MALET") { %>
-                <option disabled style="color: red;" value=""><%= company.companyName%> COMPLET</option>
-              <% } else { %>
-                <option value="<%= company.companyName %>"><%= company.companyName%></option>
-              <% } %>
+            <option value="<%= company.companyName %>"><%= company.companyName%></option>
             <% }); %>
           </select>
         </div>
         <div class="form-group">
-          <select name="wish3">
-            <option value="-">Aucune entreprise sélectionnée</option>
+          <label for="wish3">Vœu 3</label>
+          <select name="wish3" class="form-control" >
+            <option value="-" style="color:#bbb">Aucune entreprise sélectionnée</option>
             <% sjd.forEach(function(company) { %>
-              <% if (company.companyName != "MALET") { %>
-                <option disabled style="color: red;" value=""><%= company.companyName%> COMPLET</option>
-              <% } else { %>
-                <option value="<%= company.companyName %>"><%= company.companyName%></option>
-              <% } %>
+            <option value="<%= company.companyName %>"><%= company.companyName%></option>
             <% }); %>
           </select>
         </div>
-        <button type="submit" class="form-button" ><i class="fa fa-check" aria-hidden="true"></i>  Enregistrer</button>
+        <button type="submit" class="form-button"><i class="fa fa-check" aria-hidden="true"></i> Enregistrer</button>
       </form>
     </tr>
   </table>
 
-<% } %>
+  <% } %>
 
 </div>
