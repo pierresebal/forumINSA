@@ -18,10 +18,16 @@
   if (companies.length == 0) { %>
 <p>Aucune entreprise trouvée.</p>
 <% } else { %>
-<table class="table table-hover">
+<table class="table table-hover"  
+data-toggle="table"
+data-search="true"
+data-filter-control="true" 
+data-show-export="true"
+data-click-to-select="true"
+data-toolbar="#toolbar">
   <tr>
     <th style="border-top: none"></th>
-    <th style="border-top: none">Nom</th>
+    <th style="border-top: none" data-sortable="true">Nom</th>
     <th style="border-top: none">Site internet</th>
     <th style="border-top: none">Spécialités</th>
     <th style="border-top: none">Détails</th>

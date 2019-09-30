@@ -342,7 +342,7 @@ module.exports = {
                     sortSettings[req.param('speciality')] = "on"
                 }
 
-                Company.find(sortSettings).exec((err, companies) => {
+                Company.find(sortSettings).sort('companyName ASC').exec((err, companies) => {
                     if (err) {
                         console.log('error : ' + err)
                         return res.view('ErrorPage', { layout: 'layout', ErrorTitle: 'Les entreprises ne sont pas récupérées' })
@@ -420,7 +420,7 @@ module.exports = {
                             }
                             const companiesSiret = sjd.map((cie) => cie.companySiret)
                             var sortSettings = { siret: companiesSiret }
-                            Company.find(sortSettings).exec((err, companies) => {
+                            Company.find(sortSettings).sort('companyName ASC').exec((err, companies) => {
                                 if (err) {
                                     console.log('error : ' + err)
                                     return res.view('ErrorPage', { layout: 'layout', ErrorTitle: 'Les entreprises ne sont pas récupérées' })

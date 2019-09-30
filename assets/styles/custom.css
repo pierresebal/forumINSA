@@ -377,6 +377,8 @@ a, input, button {
   box-shadow: inset 0px 1px 0 rgba(0,0,0,.075);
 }
 
+/* Lists
+==================*/
 .table > tbody > tr > td, 
 .table > tbody > tr > th, 
 .table > tfoot > tr > td, 
@@ -406,3 +408,30 @@ a.external-link {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+
+/* Conférences, ateliers
+==================*/
+
+.section {
+  border-radius: 4px;
+  padding: 16px 32px;
+  width: 100%;
+  height: auto;
+  z-index: -1;
+  /*background: linear-gradient(to bottom, #fdfdfd, #fbfbfb);   */
+  background-color: #fdfdfd;
+  /*box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);*/
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 2px 6px rgba(0,0,0,.075);
+          
+  -webkit-transition: all 0.4s cubic-bezier(.25,.8,.25,1);
+     -moz-transition: all 0.4s cubic-bezier(.25,.8,.25,1);
+       -o-transition: all 0.4s cubic-bezier(.25,.8,.25,1);
+          transition: all 0.4s cubic-bezier(.25,.8,.25,1);
+}
+
+.section:hover {
+  box-shadow: inset 0 14px 0 rgba(255,255,255,.15),0 8px 10px rgba(0,0,0,.14);
+  /*box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);*/
+}
+
