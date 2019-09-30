@@ -419,11 +419,16 @@ module.exports.routes = {
         view: 'Conferences/confDescription',
         locals: {layout: 'layout', title: 'Conférences - Forum by INSA'}
     },
-    
+    /*
     '/ateliers': {
         view: 'Ateliers/ateliersDescription',
         locals: {layout: 'layout', title: 'Ateliers - Forum by INSA'}
+    },*/
+    '/ateliers': {
+        controller: 'HomeController',
+        action: 'ateliers'
     },
+    
     
     '/about': {
         view: 'About/Contact',

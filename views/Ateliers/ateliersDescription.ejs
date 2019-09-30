@@ -1,42 +1,72 @@
+
 <div class="content">
     <h1>Ateliers</h1>
     <p>
-        <b>Nouveauté 2018 qui revient cette année : les ateliers ! </b> Ouverts à tous les étudiants et au personnel de l’INSA, les ateliers offrent une aide pour mieux réussir et s’épanouir dans le milieu de l’entreprise. 
+        <b>Nouveauté de 2018, les ateliers font leur grand retour pour cette nouvelle édition 2019&nbsp;!</b> Ouverts à tous, étudiants comme personnel de l’INSA, les ateliers offrent une aide pour mieux réussir et s’épanouir dans le milieu de l’entreprise. 
     </p> 
     <br/>
         <img class="bw" src="/images/atelier.jpg" style="width: 100%"/>
     <br/>
     <br/>
     <p>
-        Ils sont proposés en partenariat avec ​l’<b>IAT</b> (INSA Alumni Toulouse), le ​<b>PPI</b> (Parcours Professionnel Individualisé) et la ​<b>JIS</b> (Junior INSA Services), une association bénévole qui a été fondée en 1967 et qui permet de faire un lien entre tous les étudiants INSA, 
-        toutes promotions confondues et de les aider et les conseiller sur le plan professionnel. 
-        <br>Chaque atelier sera encadré pour apprendre par exemple à réaliser un CV, une lettre de motivation, convaincre en entretien ou encore gérer son stress.
+        Ils sont proposés en partenariat avec l’<b>IAT</b> (INSA Alumni Toulouse), le <b>PPI</b> (Parcours Professionnel Individualisé) et la <b>JIS</b> (Junior INSA Services), une association bénévole qui a été fondée en 1967 et qui permet de faire un lien entre tous les étudiants INSA, toutes promotions confondues, de les aider et les conseiller sur le plan professionnel. <br />
+        Chaque atelier sera encadré afin de vous donner les clés pour réussir dans le monde professionnel que ce soit pour une demande de stage, pour un premier emploi ou encore la création d’une entreprise.
     </p>
+    <br/>
     
-    <h3>Organisation</h3>
-    <p>
-        Ces ateliers se dérouleront dans les salles IDEFI du STPI qui conviennent parfaitement à ce type de formation car elles sont modulables. 
-    </p>
-    <p>
-        Les thèmes des ateliers ​de l’édition 2018 du Forum ​<i>by</i>​ INSA étaient les suivants :
-    </p>
-    <ul>
-        <li><b>9h-10h</b> - Atelier by IAT - “Les entretiens de recrutement” (salle STPI 106) </li>
-        <li><b>10h-11h20</b> - Atelier by JIS - "Les clés de la prise de parole en public" (salle STPI 107)</li>
-        <li><b>10h-11h</b> - Atelier by IAT - “La lettre de motivation” (salle STPI 106) </li>
-        <li><b>11h-12h</b> - Atelier by IAT - “Le CV” (salle STPI 106)</li>
-        <li><b>14h-15h</b> - Atelier by JIS - "S’inspirer de ses valeurs pour entreprendre" (salle STPI 107)</li>
-        <li><b>15h30-17h</b> - Atelier by JIS - “Entrepreneuriat : les étapes pour bien se lancer” (salle STPI 107)</li>
-        <li><b>10h-13h, 14h-17h</b> (par créneaux de 20 minutes) - Ateliers by PPI - “Social Jobbing : Faire de votre profil LinkedIn une arme pour être recruté” (salle STPI 105)</li>    
-    </ul>
-    <p>
-        Et en complément :
-    </p>
-    <ul>
-        <li><b>Jeudi 11 octobre de 14h à 17h30</b> - Atelier by IAT - “Relecture de CV” (salle STPI 10)</li>
-        <li><b>Jeudi 18 octobre de 12h à 14h</b> - Atelier by IAT - “Préparation au SJD” (salle STPI 106)</li>
-        <li><b>Jeudi 18 octobre de 14h à 17h30</b> - Atelier by IAT - “Relecture de CV” (salle STPI 10)</li>
-        <li><b>Vendredi 19 octobre de 12h à 14h</b> - Atelier by IAT - “Préparation au SJD” (salle STPI 106)</li>
-    </ul>
-
+    <div class="section">
+        <h3>Organisation</h3>
+        <p>
+            Ces ateliers se dérouleront dans les salles IDEFI du STPI qui conviennent parfaitement à ce type de formation car elles sont modulables. 
+        </p>
+        <p>      
+            Cette année les ateliers de l’édition 2019 du Forum by INSA se décomposent en trois grands thèmes :
+        </p>
+        <table class="table table-hover">
+        <% theme = [];
+        workshops.forEach(function(workshop) {
+            if (!theme.includes(workshop.theme)) {%>
+                <tr>
+                    <td colspan="6"><br /><h4><%=workshop.theme%></h4></td>
+                </tr>
+                <%theme.push(workshop.theme);
+                workshops.forEach(function(workshopThemed) {
+                    if (workshopThemed.theme == workshop.theme) {%>
+                    <tr>
+                        <th><%=workshopThemed.startHour%> - <%=workshopThemed.endHour%></th>
+                        <td>Atelier by <%=workshopThemed.organizer%></td>
+                        <td colspan="3"><b>“<%=workshopThemed.name%>”&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+                        <td>(salle <%=workshopThemed.location%>)</td>
+                    </tr>
+                <%}})%>
+            <%}
+        });%>
+    </table>
+        
+    </div>
+    <!--
+    <br />
+    <div style="color:#999">
+        <p>
+            Les thèmes des ateliers ​de l’édition 2018 du Forum ​<i>by</i>​ INSA :
+        </p>
+            <li><b>9h-10h</b> - Atelier by IAT - “Les entretiens de recrutement” (salle STPI 106) </li>
+            <li><b>10h-11h20</b> - Atelier by JIS - "Les clés de la prise de parole en public" (salle STPI 107)</li>
+            <li><b>10h-11h</b> - Atelier by IAT - “La lettre de motivation” (salle STPI 106) </li>
+            <li><b>11h-12h</b> - Atelier by IAT - “Le CV” (salle STPI 106)</li>
+            <li><b>14h-15h</b> - Atelier by JIS - "S’inspirer de ses valeurs pour entreprendre" (salle STPI 107)</li>
+            <li><b>15h30-17h</b> - Atelier by JIS - “Entrepreneuriat : les étapes pour bien se lancer” (salle STPI 107)</li>
+            <li><b>10h-13h, 14h-17h</b> (par créneaux de 20 minutes) - Ateliers by PPI - “Social Jobbing : Faire de votre profil LinkedIn une arme pour être recruté” (salle STPI 105)</li>    
+        </ul>
+        <p>
+            Et en complément :
+        </p>
+        <ul>
+            <li><b>Jeudi 11 octobre de 14h à 17h30</b> - Atelier by IAT - “Relecture de CV” (salle STPI 10)</li>
+            <li><b>Jeudi 18 octobre de 12h à 14h</b> - Atelier by IAT - “Préparation au SJD” (salle STPI 106)</li>
+            <li><b>Jeudi 18 octobre de 14h à 17h30</b> - Atelier by IAT - “Relecture de CV” (salle STPI 10)</li>
+            <li><b>Vendredi 19 octobre de 12h à 14h</b> - Atelier by IAT - “Préparation au SJD” (salle STPI 106)</li>
+        </ul>
+    </div>
+    -->
 </div>

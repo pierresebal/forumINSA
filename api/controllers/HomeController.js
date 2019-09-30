@@ -23,6 +23,28 @@ module.exports = {
             });
         })
 
-    }
+    },
+
+    ateliers: function (req, res, next) {
+
+        Workshop.find().sort('theme ASC').exec((err, workshops) => {
+
+            if(err) {
+                sails.log.error('[HomeController.ateliers] error when finding workshops ', err);
+                return next(err);
+            }
+
+            return res.view('Ateliers/ateliersDescription',{ 
+                layout: 'layout', 
+                workshops: workshops,
+                title: 'Ateliers - Forum by INSA'
+            });
+        })
+
+    },
+
+    
+    view: 'Ateliers/ateliersDescription',
+    locals: {layout: 'layout', title: 'Ateliers - Forum by INSA'}
 };
 
