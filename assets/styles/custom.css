@@ -376,3 +376,33 @@ a, input, button {
   border-left:none !important;
   box-shadow: inset 0px 1px 0 rgba(0,0,0,.075);
 }
+
+.table > tbody > tr > td, 
+.table > tbody > tr > th, 
+.table > tfoot > tr > td, 
+.table > tfoot > tr > th, 
+.table > thead > tr > td, 
+.table > thead > tr > th {
+  vertical-align: middle;
+}
+td a { 
+  display: block; 
+}
+
+.progress-bar-selected {
+  background: #333;
+}
+.progress-bar-disabled {
+  background: #dadce0;
+}
+a.external-link {
+  width: 256px;
+  border: solid 1px #dadce0; 
+  padding: 10px 20px 10px 15px; 
+  vertical-align: middle; 
+  border-radius: 30px; 
+  color: #7d828a; 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
