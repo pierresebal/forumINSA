@@ -63,12 +63,15 @@
                         <p>Connecté en tant que:<br/><b>
                       <% if (req.session.sessionType == "company") {%><i class="fa fa-briefcase"></i>&nbsp;&nbsp;
                           <%=req.session.companyName%>
+                        </b><br/>&nbsp;<i class="fa fa-sign-out"></i>&nbsp;&nbsp;&nbsp;<a href="/Company/CompanyLogout">Déconnexion</a>
                     <%  } else if (req.session.sessionType == "student") { %><i class="fa fa-graduation-cap"></i>&nbsp;&nbsp;
                           <%=req.session.firstName%> <%=req.session.lastName%>
+                        </b><br/>&nbsp;<i class="fa fa-sign-out"></i>&nbsp;&nbsp;&nbsp;<a href="/Student/StudentLogout">Déconnexion</a>
+
                     <%  } else { %>
                           Type inconnu
                     <%  } %>
-                        </b></p>
+                        </p>
                     <% } else { %>
                             <p>CONNEXION </p>
                             <button id="connectStudent" type="button" class="btn red-button student"><i class="fa fa-graduation-cap"></i>&nbsp;&nbsp;Étudiant</button>

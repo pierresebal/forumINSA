@@ -21,8 +21,13 @@ header {
   width: 100%;
 }
 
-header p {
+header p, header a{
     font-family: "PSR", 'Open Sans', sans-serif;
+    color: white;
+}
+
+header a:hover {
+  color: #dadce0;
 }
 
 header img {
@@ -435,3 +440,23 @@ a.external-link {
   /*box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);*/
 }
 
+
+
+/* Student space button, Company space button
+==================*/
+
+#personal-space {
+  margin: 4px;
+  padding: 0px;
+  border-radius: 4px;
+  padding: 10px 15px; 
+  border-radius: 4px; 
+  background: #333; 
+  color: #fff; 
+}
+
+
+#personal-space:hover {
+  background: #111; 
+  color: #dadce0; 
+}
