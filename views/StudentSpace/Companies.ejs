@@ -36,7 +36,7 @@ data-toolbar="#toolbar">
   <tr style="height: 70px">
     <td>
       <% if (typeof company.logoPath != 'undefined' && company.logoPath != ''){ %>
-      <img src="/images/logos/<%=company.logoPath%>" style="width: 70px; height: auto" />
+      <img src="/images/logos/<%=company.logoPath%>" style="max-width: 70px; height: auto; max-height: 70px;" />
       <% } else { %>
       <img src="/images/default_logo.png" style="max-width: 70px; height: auto; max-height: 70px;" />
       <% } %>
