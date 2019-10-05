@@ -151,5 +151,11 @@ module.exports = {
 
             res.download(filePath, sell.billNumber.toString() + '.pdf')
         })
+    },
+
+    downloadBooklet: function (req, res) {
+        var year = new Date().getFullYear();
+        var filePath = path.resolve('files/com/'+ year, 'livret-entreprises.pdf');
+        res.download(filePath, 'Livret entreprises ' + year + '.pdf')
     }
 }
