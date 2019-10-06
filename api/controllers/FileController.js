@@ -156,7 +156,7 @@ module.exports = {
     downloadSJDOffers: function (req, res) {
         var siret = req.param('siret');
         var year = new Date().getFullYear();
-        var filePath = path.resolve('files/sjdOffers/'+ year, siret + '.pdf');
+        var filePath = path.resolve('files/sjd-offers/'+ year, siret + '.pdf');
         console.log('filePath : ' + filePath);
         sails.log.info('FilePath: ', filePath);
         Sjd.findOne({companySiret: siret}).exec(function (err, sjdCompany) {
