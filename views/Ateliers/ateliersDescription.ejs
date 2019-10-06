@@ -22,7 +22,7 @@
         <p>      
             Cette année les ateliers de l’édition 2019 du Forum by INSA se décomposent en trois grands thèmes :
         </p>
-        <table class="table table-hover">
+        <table class="table table-hover" style="font-size: 90%">
         <% theme = [];
         oneLineLinkedin = false;
         workshops.forEach(function(workshop) {
@@ -39,7 +39,7 @@
                                 <tr>    
                                     <th>10:00-13:00<br />14:00-17:00</th>
                                     <td>Atelier by <%=workshopThemed.organizer%></td>
-                                    <td><b><%=workshopThemed.name%></b> <small>(ateliers par tranche de 20min)</small></td>
+                                    <td><b><%=workshopThemed.name%></b><br /><small>(ateliers par tranche de 20min)</small></td>
                                     <td>(<%=workshopThemed.location%>)</td>
                                 </tr>
                             <% }
