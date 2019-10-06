@@ -14,45 +14,6 @@ module.exports = {
         });
     },
 
-    create: function(req, res, next) {
-        if(!req.body)   {
-            return res.view('AdminLTE/Workshop/create', {
-                layout: 'Layout/AdminLTE',
-                workshop: {}
-            });
-        } else {
-            Workshop.create(req.body).exec((err, workshop) => {
-                if(err) {
-
-                    sails.log.error('[Admin/WorkshopController.create] error when create a workshop: ', err);
-
-                    // get error message from validator. (cf locale/*.json)
-                    for(var attribute of Object.keys(err.invalidAttributes))  {
-                        for(var error of err.Errors[attribute])    {
-                            req.addFlash(attribute, error.message);
-                        }
-                    }
-
-                    return res.view('AdminLTE/Workshop/create', {
-                        layout: 'Layout/AdminLTE',
-                        workshop: req.body
-                    });
-                }
-
-                if(!workshop || workshop.length === 0) {
-                    req.addFlash('warning', 'No workshop has been created');
-                    return res.view('AdminLTE/Workshop/create', {
-                        layout: 'Layout/AdminLTE',
-                        workshop: req.body
-                    });
-                }
-
-                req.addFlash('success', 'A new workshop created: ' + workshop.abbreviation);
-                return res.redirect(sails.getUrlFor('Admin/WorkshopController.listing'));
-            })
-        }
-    },
-
     update: function (req, res, next) {
         if(!req.body)   {
             Workshop.findOne({abbreviation: req.param('abbreviation')}).exec((err, workshop) => {
@@ -92,6 +53,45 @@ module.exports = {
         }
     },
 
+    create: function(req, res, next) {
+        if(!req.body)   {
+            return res.view('AdminLTE/Workshop/create', {
+                layout: 'Layout/AdminLTE',
+                workshop: {}
+            });
+        } else {
+            Workshop.create(req.body).exec((err, workshop) => {
+                if(err) {
+
+                    sails.log.error('[Admin/WorkshopController.create] error when create a workshop: ', err);
+
+                    // get error message from validator. (cf locale/*.json)
+                    for(var attribute of Object.keys(err.invalidAttributes))  {
+                        for(var error of err.Errors[attribute])    {
+                            req.addFlash(attribute, error.message);
+                        }
+                    }
+
+                    return res.view('AdminLTE/Workshop/create', {
+                        layout: 'Layout/AdminLTE',
+                        workshop: req.body
+                    });
+                }
+
+                if(!workshop || workshop.length === 0) {
+                    req.addFlash('warning', 'No workshop has been created');
+                    return res.view('AdminLTE/Workshop/create', {
+                        layout: 'Layout/AdminLTE',
+                        workshop: req.body
+                    });
+                }
+
+                req.addFlash('success', 'A new workshop created: ' + workshop.abbreviation);
+                return res.redirect(sails.getUrlFor('Admin/WorkshopController.listing'));
+            })
+        }
+    },
+
     apiGetAll: function(req, res) {
         Workshop.find().exec((err, workshops) => {
             if(err) {
@@ -103,6 +103,7 @@ module.exports = {
     },
 
     apiDelete: function(req, res) {
+        sails.log.info('try to delete');
         Workshop.destroy(req.allParams()).exec((err, workshop) => {
             if(err) {
                 sails.log.error('[Admin/WorkshopController.apiDelete] error when delete workshop ', err);

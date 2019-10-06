@@ -199,6 +199,11 @@ module.exports.routes = {
         action: 'create'
     },
 
+    '/admin/workshop/create': {
+        controller: 'Admin/WorkshopController',
+        action: 'create'
+    },
+        
     '/admin/workshops': {
         controller: 'Admin/WorkshopController',
         action: 'listing'
@@ -209,11 +214,6 @@ module.exports.routes = {
         action: 'update'
     },
     
-    '/admin/workshop/create': {
-        controller: 'Admin/WorkshopController',
-        action: 'create'
-    },
-        
     '/admin/offers': {
         controller: 'Admin/OfferController',
         action: 'listing'
