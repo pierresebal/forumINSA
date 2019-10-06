@@ -50,7 +50,10 @@ data-toolbar="#toolbar">
       </a>
     </td>
     <td>
-      <% specialities.forEach(function(speciality) { 
+        <% var count = 0;
+        specialities.forEach(function(speciality) { 
+          count++;
+          if (count === 6) {%><br /> <%}
           if (company[speciality.abbreviation] == 'on') { %>
       <span class="badge progress-bar-selected"><%=speciality.abbreviation%></span>
       <% } else { %>

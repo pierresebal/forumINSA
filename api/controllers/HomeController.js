@@ -27,7 +27,7 @@ module.exports = {
 
     ateliers: function (req, res, next) {
 
-        Workshop.find().sort('theme ASC').exec((err, workshops) => {
+        Workshop.find().sort('theme ASC').sort('startHour ASC').exec((err, workshops) => {
 
             if(err) {
                 sails.log.error('[HomeController.ateliers] error when finding workshops ', err);
