@@ -130,9 +130,20 @@ a, input, button {
 }
 
 .red-button:hover {
-    color: #a5a5a5;
+  background: #111; 
+  color: #dadce0; 
 }
 
+.grey-button {
+  border: solid 1px #dadce0;
+  background-color: transparent;
+  color: #666666;
+}
+
+.grey-button:hover {
+  background-color: #eeeeee;
+  color: #333333;
+}
 .custom-body {
   text-align: center;
   margin: auto;

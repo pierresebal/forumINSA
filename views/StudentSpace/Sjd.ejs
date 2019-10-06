@@ -23,7 +23,7 @@
     <tr>
       <th style="border-top: none"></th>
       <th style="border-top: none">Nom</th>
-      <th style="border-top: none">Site internet</th>
+      <th style="border-top: none">Offres de stage à pourvoir</th>
       <th style="border-top: none">Spécialités</th>
       <th style="border-top: none">Détails</th>
     </tr>
@@ -40,20 +40,26 @@
         <%=company.companyName %>
       </td>
       <td>
-        <a href="<%=company.websiteUrl%>" target="_blank" class="external-link">
-          <i class="fa fa-external-link"></i>&nbsp;&nbsp;<%=company.websiteUrl%>
-        </a>
+        <% if(company.sjdOffers) { %>
+        <form id="downloadSJDOffer" method="post" action="/file/sjdOffers/download">
+            <input type="hidden" name="siret" value="<%= company.siret%>" />
+            <input type="submit" class="btn red-button" value="Télécharger les offres" />
+        </form>
+        <% } %>
       </td>
       <td>
-        <% specialities.forEach(function(speciality) { 
-            if (company[speciality.abbreviation] == 'on') { %>
+        <% var count = 0;
+        specialities.forEach(function(speciality) { 
+          count++;
+          if (count === 6) {%><br /> <%}
+          if (company[speciality.abbreviation] == 'on') { %>
         <span class="badge progress-bar-selected"><%=speciality.abbreviation%></span>
         <% } else { %>
         <span class="badge progress-bar-disabled"><%=speciality.abbreviation%></span>
         <% }}) %>
       </td>
       <td>
-        <a href="/Student/CompanyInfo?siret=<%=company.siret%>"><button class="btn red-button">Voir plus</button></a>
+        <a href="/Student/CompanyInfo?siret=<%=company.siret%>"><button class="btn grey-button">Voir plus</button></a>
       </td>
     </tr>
     <% }) %>

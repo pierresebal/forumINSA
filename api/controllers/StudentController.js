@@ -395,7 +395,7 @@ module.exports = {
 
     sjd: function (req, res) {
 
-        Sjd.find().exec((err, sjd) => {
+        Sjd.find().sort('companyName ASC').exec((err, sjd) => {
             if (err) {
                 console.log('err', err)
                 return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
@@ -425,6 +425,7 @@ module.exports = {
                                     console.log('error : ' + err)
                                     return res.view('ErrorPage', { layout: 'layout', ErrorTitle: 'Les entreprises ne sont pas récupérées' })
                                 }
+                                
                                 return res.view('StudentSpace/Sjd', {
                                     layout: 'layout',
                                     student: student, 
@@ -442,7 +443,7 @@ module.exports = {
     },
 
     workshop: function (req, res) {
-        Workshop.find().exec((err, workshop) => {
+        Workshop.find().sort('theme ASC').sort('startHour ASC').exec((err, workshop) => {
             if (err) {
                 console.log('err', err)
                 return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})

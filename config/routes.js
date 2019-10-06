@@ -460,6 +460,11 @@ module.exports.routes = {
         action: 'downloadBill'
     },
     
+    '/file/sjdOffers/download': {
+        controller: 'FileController',
+        action: 'downloadSJDOffers'
+    },
+
     '/livret': {
         controller: 'FileController',
         action: 'downloadBooklet'

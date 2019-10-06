@@ -153,6 +153,24 @@ module.exports = {
         })
     },
 
+    downloadSJDOffers: function (req, res) {
+        var siret = req.param('siret');
+        var year = new Date().getFullYear();
+        var filePath = path.resolve('files/sjdOffers/'+ year, siret + '.pdf');
+        console.log('filePath : ' + filePath);
+        sails.log.info('FilePath: ', filePath);
+        Sjd.findOne({companySiret: siret}).exec(function (err, sjdCompany) {
+            if (err) {
+                return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Erreur lors du téléchargement', ErrorDesc: 'Réessayez ou contactez un admin.'})
+            }
+
+            if (!sjdCompany) {
+                return res.view('ErrorPage', {layout: 'layout', ErrorTitle: 'Offres de stages non trouvées', ErrorDesc: 'Réessayez ou contactez un admin.'})
+            }
+            res.download(filePath, 'Offres ' + sjdCompany.companyName + ' 2019.pdf')
+        })
+    },
+    
     downloadBooklet: function (req, res) {
         var year = new Date().getFullYear();
         var filePath = path.resolve('files/com/'+ year, 'livret-entreprises.pdf');
