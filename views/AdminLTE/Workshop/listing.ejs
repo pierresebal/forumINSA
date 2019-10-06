@@ -49,13 +49,12 @@ $(document).ready(function() {
             { 'data': "freePlaces" },
             { 'data': null,
                 'render': function(data, type, full, meta)  {
-                    return '<button class="btn btn-danger delete"><i class="fa fa-trash"></i> Supprimer</button>';
+                    return '<a href="/admin/workshop/'+ full.abbreviation +'" class="btn red-button"><i class="fa fa-refresh"></i> Modifier</a>&nbsp;<button class="btn btn-danger delete"><i class="fa fa-trash"></i> Supprimer</button>';
                 }
             }
         ]
 
     } );
-
     $(document).on('click', 'button.delete', function() {
 
         let row = datatable.row( $(this).parents('tr') );

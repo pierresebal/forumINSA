@@ -53,6 +53,45 @@ module.exports = {
         }
     },
 
+    update: function (req, res, next) {
+        if(!req.body)   {
+            Workshop.findOne({abbreviation: req.param('abbreviation')}).exec((err, workshop) => {
+                if(err) {
+                    sails.log.error('[Admin/WorkshopController.update] error when find workshop: ', err);
+                    return next(err);
+                }
+
+                if(!workshop) {
+                    sails.log.error('[Admin/WorkshopController.update] no workshop found ');
+                    return res.notFound();
+                }
+
+                return res.view('AdminLTE/Workshop/update', {
+                    layout: 'Layout/AdminLTE',
+                    workshop: workshop
+                });
+            });
+        } else {
+            let params = req.allParams();
+            sails.log.info(params);
+            Workshop.update({ abbreviation: params.abbreviation }, req.body).exec((err, updated) => {
+                if(err) {
+                    sails.log.error('[Admin/WorkshopController.update] error when update workshop: ', err);
+                    return next(err);
+                }
+
+                if(!updated || updated.length === 0) {
+                    sails.log.error('[Admin/WorkshopController.update] no update for workshop ');
+                    req.addFlash('warning', 'Workshop '+ updated[0].abbreviation + ' is not updated');
+                    return res.serverError();
+                }
+
+                req.addFlash('success', 'Workshop '+ updated[0].abbreviation +  'has been updated');
+                return res.redirect(sails.getUrlFor('Admin/WorkshopController.listing'));
+            });
+        }
+    },
+
     apiGetAll: function(req, res) {
         Workshop.find().exec((err, workshops) => {
             if(err) {

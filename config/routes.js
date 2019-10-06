@@ -204,16 +204,16 @@ module.exports.routes = {
         action: 'listing'
     },
 
-    /*'/admin/workshop/:abbreviation': {
+    '/admin/workshop/:abbreviation': {
         controller: 'Admin/WorkshopController',
         action: 'update'
-    },*/
+    },
     
     '/admin/workshop/create': {
         controller: 'Admin/WorkshopController',
         action: 'create'
     },
-    
+        
     '/admin/offers': {
         controller: 'Admin/OfferController',
         action: 'listing'
