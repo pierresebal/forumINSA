@@ -45,6 +45,7 @@ module.exports = {
                 'Génie Mécanique',
                 'Génie Physique',
                 'Informatique et Réseaux',
+                'Ingénierie des Systèmes',
                 'Aucune spécialité'
             ],
             defaultsTo: "Aucune spécialité" // TODO set to required: true
