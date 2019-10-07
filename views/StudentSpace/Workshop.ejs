@@ -13,80 +13,82 @@
     d'améliorer vos compétences dans le domaine de la recherche de stage et de travail.
   </p>
   <p>
-  Ces ateliers sont à capacité limitée, et vous avez la possiblité d'en sélectionner plusieurs.
-  L'inscription est définitive, donc veillez à faire les bons choix pour ne pas pénaliser ceux qui auraient
-  voulu s'inscrire à votre place !
+    Ces ateliers sont à capacité limitée, et vous avez la possiblité d'en sélectionner plusieurs.
+    L'inscription est définitive, donc veillez à faire les bons choix pour ne pas pénaliser ceux qui auraient
+    voulu s'inscrire à votre place !
   </p>
 
-  <h2>Vos choix d'ateliers</h2>
+  <br />
+  <div class="section">
+    <h2>Vos choix d'ateliers</h2>
 
-  <% if (student.workshopRegistered) { %>
-  <% if (typeof wishes!== 'undefined') { %>
-  <p>Vous êtes déjà inscrit. Voici les ateliers auxquels vous vous êtes inscrits :</p>
-  <ul>
-    <% wishes.workshops.forEach(function(wish) {
+    <% if (student.workshopRegistered) { %>
+    <% if (typeof wishes!== 'undefined') { %>
+    <p>Vous êtes déjà inscrit. Voici les ateliers auxquels vous vous êtes inscrits :</p>
+    <ul>
+      <% wishes.workshops.forEach(function(wish) {
           workshop.forEach(function(w) {
             if (w.abbreviation == wish) { %>
-    <li><%= w.name %><b><%= " (" + w.startHour + "-" + w.endHour + ")" %></b></li>
-    <% }
+      <li><%= w.name %><b><%= " (" + w.startHour + "-" + w.endHour + ")" %></b></li>
+      <% }
           })
         }) %>
-  </ul>
-  <% } %>
-  <% } else { %>
+    </ul>
+    <% } %>
+    <% } else { %>
 
-  <form role="form" class="form-horizontal" method="POST"
-    action="<%= sails.getUrlFor('WorkshopWishController.create') %>">
-    <input type="hidden" name="login" value="<%= student.login %>" />
-    <input type="hidden" name="firstName" value="<%= student.firstName %>" />
-    <input type="hidden" name="lastName" value="<%= student.lastName %>" />
-    <input type="hidden" name="mail" value="<%= student.mailAddress %>" />
-    <input type="hidden" name="year" value="<%= student.year %>" />
-    <input type="hidden" name="speciality" value="<%= student.speciality %>" />
-    <table class="table table-hover" id="student_profile" style="width: 100%; margin: auto;">
+    <form role="form" class="form-horizontal" method="POST"
+      action="<%= sails.getUrlFor('WorkshopWishController.create') %>">
+      <input type="hidden" name="login" value="<%= student.login %>" />
+      <input type="hidden" name="firstName" value="<%= student.firstName %>" />
+      <input type="hidden" name="lastName" value="<%= student.lastName %>" />
+      <input type="hidden" name="mail" value="<%= student.mailAddress %>" />
+      <input type="hidden" name="year" value="<%= student.year %>" />
+      <input type="hidden" name="speciality" value="<%= student.speciality %>" />
+      <table class="table table-hover" id="student_profile" style="width: 100%; margin: auto;">
 
         <% theme = [];
           workshop.forEach(function(aWorkshop) {
             if (!theme.includes(aWorkshop.theme)) { %>
-    <tr>
-      <td colspan="4"><br />
-        <h4><%=aWorkshop.theme%></h4>
-      </td>
-    </tr>
-    <% theme.push(aWorkshop.theme);
+        <tr>
+          <td colspan="4"><br />
+            <h4><%=aWorkshop.theme%></h4>
+          </td>
+        </tr>
+        <% theme.push(aWorkshop.theme);
       workshop.forEach(function(workshopThemed) {
           if (workshopThemed.theme == aWorkshop.theme) { %>
-    <tr>
-      <td>
-        <div class="checkbox">
-          <label><input type="checkbox" <% if (workshopThemed.freePlaces == 0) { %>disabled <% } %>
-              name="<%= workshopThemed.abbreviation %>">
-            <%= workshopThemed.name %><b><%= " (" + workshopThemed.startHour + "-" + workshopThemed.endHour + ")" %></b>
-            <% if (workshopThemed.freePlaces == 0) { %><span style="color: red;"> COMPLET</span><% } %>
+        <tr>
+          <td>
+            <div class="checkbox">
+              <label><input type="checkbox" <% if (workshopThemed.freePlaces == 0) { %>disabled <% } %>
+                  name="<%= workshopThemed.abbreviation %>">
+                <%= workshopThemed.name %><b><%= " (" + workshopThemed.startHour + "-" + workshopThemed.endHour + ")" %></b>
+                <% if (workshopThemed.freePlaces == 0) { %><span style="color: red;"> COMPLET</span><% } %>
 
-          </label>
-        </div>
-      </td>
-      <td align="right">
-        <div>
-          <label>
-            <span style="color: #333; font: bold">
-              <%= workshopThemed.freePlaces %> place(s) restantes /<%= workshopThemed.places %>
-            </span>
-          </label>
-        </div>
-      </td>
-    </tr>
-    <%}})%>
-    <%}
+              </label>
+            </div>
+          </td>
+          <td align="right">
+            <div>
+              <label>
+                <span style="color: #333; font: bold">
+                  <%= workshopThemed.freePlaces %> place(s) restantes /<%= workshopThemed.places %>
+                </span>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <%}})%>
+        <%}
     });%>
-  </table>
-  
-    <div align="center">
+      </table>
+
+      <div align="center">
         <button type="submit" class="form-button"><i class="fa fa-check" aria-hidden="true"></i> Enregistrer</button>
-    </div>
-      </form>
+      </div>
+    </form>
 
-  <% } %>
-
+    <% } %>
+  </div>
 </div>
