@@ -17,6 +17,7 @@
     L'inscription est définitive, donc veillez à faire les bons choix pour ne pas pénaliser ceux qui auraient
     voulu s'inscrire à votre place !
   </p>
+  <p><b>Les inscriptions seront bientôt ouvertes, une fois les salles et horaires validés avec tous les intervenants !</b></p>
 
   <br />
   <div class="section">
@@ -61,7 +62,7 @@
         <tr>
           <td>
             <div class="checkbox">
-              <label><input type="checkbox" <% if (workshopThemed.freePlaces == 0) { %>disabled <% } %>
+              <label><input type="checkbox" disabled <% if (workshopThemed.freePlaces == 0) { %>disabled <% } %>
                   name="<%= workshopThemed.abbreviation %>">
                 <%= workshopThemed.name %><b><%= " (" + workshopThemed.startHour + "-" + workshopThemed.endHour + ")" %></b>
                 <% if (workshopThemed.freePlaces == 0) { %><span style="color: red;"> COMPLET</span><% } %>
