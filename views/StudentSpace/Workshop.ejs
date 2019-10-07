@@ -13,13 +13,9 @@
     d'améliorer vos compétences dans le domaine de la recherche de stage et de travail.
   </p>
   <p>
-
-    Les inscriptions seront bientôt ouvertes, une fois les lieux et horaires confirmés !
-    <!--
   Ces ateliers sont à capacité limitée, et vous avez la possiblité d'en sélectionner plusieurs.
   L'inscription est définitive, donc veillez à faire les bons choix pour ne pas pénaliser ceux qui auraient
   voulu s'inscrire à votre place !
-  -->
   </p>
 
   <h2>Vos choix d'ateliers</h2>
@@ -63,10 +59,10 @@
     <tr>
       <td>
         <div class="checkbox">
-          <label><input type="checkbox" <% if (aWorkshop.freePlaces == 0) { %>disabled <% } %>
-              name="<%= aWorkshop.abbreviation %>">
-            <%= aWorkshop.name %><b><%= " (" + aWorkshop.startHour + "-" + aWorkshop.endHour + ")" %></b>
-            <% if (aWorkshop.freePlaces == 0) { %><span style="color: red;"> COMPLET</span><% } %>
+          <label><input type="checkbox" <% if (workshopThemed.freePlaces == 0) { %>disabled <% } %>
+              name="<%= workshopThemed.abbreviation %>">
+            <%= workshopThemed.name %><b><%= " (" + workshopThemed.startHour + "-" + workshopThemed.endHour + ")" %></b>
+            <% if (workshopThemed.freePlaces == 0) { %><span style="color: red;"> COMPLET</span><% } %>
 
           </label>
         </div>
@@ -75,7 +71,7 @@
         <div>
           <label>
             <span style="color: #333; font: bold">
-              <%= aWorkshop.freePlaces %> place(s) restantes /<%= aWorkshop.places %>
+              <%= workshopThemed.freePlaces %> place(s) restantes /<%= workshopThemed.places %>
             </span>
           </label>
         </div>
