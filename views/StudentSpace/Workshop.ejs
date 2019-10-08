@@ -42,7 +42,7 @@
         <td>
           <div class="checkbox">
             <label><input type="checkbox" checked disabled name="<%= w.abbreviation %>">
-              <%= w.name %><b><%= " (" + w.startHour + "-" + w.endHour + ")" %></b>
+              <%= w.name %><br /><%= " (" + w.startHour + "-" + w.endHour + ")" %></b>
             </label>
           </div>
         </td>
@@ -66,7 +66,7 @@
               <br />
             </div>
             <div class="modal-section">
-              <p><%= w.description%></p>
+              <p><%- w.description%></p>
             </div>
             <br />
             <div style="text-align: center">Atelier <i>by</i> <%=w.organizer%></div>
@@ -105,7 +105,7 @@
             <div class="checkbox">
               <label><input type="checkbox" <% if (workshopThemed.freePlaces == 0) { %>disabled <% } %>
                   name="<%= workshopThemed.abbreviation %>">
-                <%= workshopThemed.name %><b><%= " (" + workshopThemed.startHour + "-" + workshopThemed.endHour + ")" %></b>
+                <%= workshopThemed.name %><br /><b><%= " (" + workshopThemed.startHour + "-" + workshopThemed.endHour + ")" %></b>
                 <% if (workshopThemed.freePlaces == 0) { %><span style="color: red;"> COMPLET</span><% } %>
               </label>
             </div>
@@ -136,7 +136,7 @@
                   </small>
                 </div>
                 <div class="modal-section">
-                  <p><%= workshopThemed.description%></p>
+                  <p><%- workshopThemed.description%></p>
                 </div>
                 <div style="text-align: center">Atelier <i>by</i> <%=workshopThemed.organizer%></div>
                 <br />
