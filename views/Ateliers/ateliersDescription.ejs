@@ -1,3 +1,10 @@
+<style>
+    .modal-backdrop {
+        /* bug fix - no overlay */
+        display: none;
+    }
+</style>
+      
 
 <div class="content">
     <h1>Ateliers</h1>
@@ -39,7 +46,7 @@
                                 <tr>    
                                     <th>9:00-12:00<br />13:30-16:30</th>
                                     <td>Atelier by <%=workshopThemed.organizer%></td>
-                                    <td><b><%=workshopThemed.name%></b><br /><small>(ateliers par tranche de 20min)</small></td>
+                                    <td><b>Social Jobbing : Faire de votre profil LinkedIn<br />une arme pour être recruté</b><br /><small>(ateliers par tranche de 20min)</small></td>
                                     <td>(<%=workshopThemed.location%>)</td>
                                 </tr>
                             <% }
@@ -49,6 +56,30 @@
                             <td>Atelier by <%=workshopThemed.organizer%></td>
                             <td><b><%=workshopThemed.name%></b></td>
                             <td>(<%=workshopThemed.location%>)</td>
+                            <td>
+                                <span class="btn red-button" id="details-<%=workshopThemed.abbreviation%>"
+                                    onclick="$('#show-dialog-<%=workshopThemed.abbreviation%>').modal();">Détails</span>
+                                <div class="modal" id="show-dialog-<%=workshopThemed.abbreviation%>">
+                                    <!-- Modal content -->
+                                    <div class="modal-details">
+                                    <div class="modal-section">
+                                        <h3><%= workshopThemed.name%></h3>
+                                        <small style=color:#999">
+                                        <i class="fa fa-map-marker"></i>&nbsp;En <%= workshopThemed.location%>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <%= workshopThemed.places%> places disponibles
+                                        <br />
+                                        <i class="fa fa-clock-o"></i>&nbsp;De <%= workshopThemed.startHour%> à <%= workshopThemed.endHour%>
+                                        </small>
+                                    </div>
+                                    <div class="modal-section">
+                                        <p><%- workshopThemed.description%></p>
+                                    </div>
+                                    <div style="text-align: center">Atelier <i>by</i> <%=workshopThemed.organizer%></div>
+                                    <br />
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                 <%}}})%>
             <%}
