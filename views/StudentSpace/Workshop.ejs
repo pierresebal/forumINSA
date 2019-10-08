@@ -2,9 +2,16 @@
   tr.border td {
     border: 1px solid lightgray;
   }
+
+  .modal-backdrop {
+    /* bug fix - no overlay */
+    display: none;
+  }
 </style>
 
 <div class="content">
+
+
 
   <h1>Inscription Ateliers</h1>
 
@@ -17,7 +24,6 @@
     L'inscription est définitive, donc veillez à faire les bons choix pour ne pas pénaliser ceux qui auraient
     voulu s'inscrire à votre place !
   </p>
-  <p><b>Les inscriptions seront bientôt ouvertes, une fois les salles et horaires validés avec tous les intervenants !</b></p>
 
   <br />
   <div class="section">
@@ -26,17 +32,51 @@
     <% if (student.workshopRegistered) { %>
     <% if (typeof wishes!== 'undefined') { %>
     <p>Vous êtes déjà inscrit. Voici les ateliers auxquels vous vous êtes inscrits :</p>
-    <ul>
+
+    <table class="table table-hover" id="student_profile" style="width: 100%; margin: auto;">
+
       <% wishes.workshops.forEach(function(wish) {
           workshop.forEach(function(w) {
             if (w.abbreviation == wish) { %>
-      <li><%= w.name %><b><%= " (" + w.startHour + "-" + w.endHour + ")" %></b></li>
-      <% }
-          })
-        }) %>
-    </ul>
-    <% } %>
-    <% } else { %>
+      <tr>
+        <td>
+          <div class="checkbox">
+            <label><input type="checkbox" checked disabled name="<%= w.abbreviation %>">
+              <%= w.name %><b><%= " (" + w.startHour + "-" + w.endHour + ")" %></b>
+            </label>
+          </div>
+        </td>
+        <td>
+          <span class="btn red-button" id="details-<%=w.abbreviation%>"
+            onclick="$('#show-dialog-<%=w.abbreviation%>').modal();">Détails</span>
+        </td>
+        <div class="modal" id="show-dialog-<%=w.abbreviation%>">
+          <!-- Modal content -->
+          <div class="modal-details">
+            <div class="modal-section">
+              <h3><%= w.name%></h3>
+              <small style=color:#999">
+                <i class="fa fa-map-marker"></i>&nbsp;En <%= w.location%>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <%= w.places%> places disponibles
+                <br />
+                <i class="fa fa-clock-o"></i>&nbsp;De <%= w.startHour%> à <%= w.endHour%>
+                <br />
+              </small>
+              <br />
+            </div>
+            <div class="modal-section">
+              <p><%= w.description%></p>
+            </div>
+            <br />
+            <div style="text-align: center">Atelier <i>by</i> <%=w.organizer%></div>
+            <br />
+          </div>
+        </div>
+      </tr>
+      <% }})}) %>
+    </table>
+    <% } } else { %>
 
     <form role="form" class="form-horizontal" method="POST"
       action="<%= sails.getUrlFor('WorkshopWishController.create') %>">
@@ -49,6 +89,7 @@
       <table class="table table-hover" id="student_profile" style="width: 100%; margin: auto;">
 
         <% theme = [];
+          details = "JIS_lancer";
           workshop.forEach(function(aWorkshop) {
             if (!theme.includes(aWorkshop.theme)) { %>
         <tr>
@@ -62,11 +103,10 @@
         <tr>
           <td>
             <div class="checkbox">
-              <label><input type="checkbox" disabled <% if (workshopThemed.freePlaces == 0) { %>disabled <% } %>
+              <label><input type="checkbox" <% if (workshopThemed.freePlaces == 0) { %>disabled <% } %>
                   name="<%= workshopThemed.abbreviation %>">
                 <%= workshopThemed.name %><b><%= " (" + workshopThemed.startHour + "-" + workshopThemed.endHour + ")" %></b>
                 <% if (workshopThemed.freePlaces == 0) { %><span style="color: red;"> COMPLET</span><% } %>
-
               </label>
             </div>
           </td>
@@ -77,6 +117,30 @@
                   <%= workshopThemed.freePlaces %> place(s) restantes /<%= workshopThemed.places %>
                 </span>
               </label>
+            </div>
+          </td>
+          <td>
+            <span class="btn red-button" id="details-<%=workshopThemed.abbreviation%>"
+              onclick="$('#show-dialog-<%=workshopThemed.abbreviation%>').modal();">Détails</span>
+            <div class="modal" id="show-dialog-<%=workshopThemed.abbreviation%>">
+              <!-- Modal content -->
+              <div class="modal-details">
+                <div class="modal-section">
+                  <h3><%= workshopThemed.name%></h3>
+                  <small style=color:#999">
+                    <i class="fa fa-map-marker"></i>&nbsp;En <%= workshopThemed.location%>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <%= workshopThemed.places%> places disponibles
+                    <br />
+                    <i class="fa fa-clock-o"></i>&nbsp;De <%= workshopThemed.startHour%> à <%= workshopThemed.endHour%>
+                  </small>
+                </div>
+                <div class="modal-section">
+                  <p><%= workshopThemed.description%></p>
+                </div>
+                <div style="text-align: center">Atelier <i>by</i> <%=workshopThemed.organizer%></div>
+                <br />
+              </div>
             </div>
           </td>
         </tr>
@@ -93,3 +157,11 @@
     <% } %>
   </div>
 </div>
+
+
+<script>/*
+$(document).ready(function(){
+    $("#details-"+workshop.abbreviation).on("click", function(){ $("#show-dialog-"+workshop.abbreviation).modal();
+  });
+});*/
+</script>
