@@ -443,7 +443,7 @@ module.exports = {
     },
 
     workshop: function (req, res) {
-        Workshop.find().sort('theme ASC').sort('startHour ASC').exec((err, workshop) => {
+        Workshop.find().sort('theme ASC').sort('name ASC').sort('startHour ASC').exec((err, workshops) => {
             if (err) {
                 console.log('err', err)
                 return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
@@ -461,7 +461,12 @@ module.exports = {
                             console.log('err', err)
                             return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
                         }
-                        return res.view('StudentSpace/Workshop', {layout: 'layout', student: student, workshop: workshop, wishes: wishes})
+                        return res.view('StudentSpace/Workshop', {
+                            layout: 'layout', 
+                            student: student, 
+                            workshops: workshops, 
+                            wishes: wishes
+                        })
                     })
                 }
             })
