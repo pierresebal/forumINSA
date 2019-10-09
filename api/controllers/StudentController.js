@@ -443,7 +443,7 @@ module.exports = {
     },
 
     workshop: function (req, res) {
-        Workshop.find().sort('theme ASC').sort('name ASC').sort('startHour ASC').exec((err, workshops) => {
+        Workshop.find().sort('theme ASC').sort('startHour ASC').exec((err, workshops) => {
             if (err) {
                 console.log('err', err)
                 return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Une erreur s'est produite", ErrorDesc: 'Veuillez réessayer'})
