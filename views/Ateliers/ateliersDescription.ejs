@@ -35,7 +35,7 @@
         workshops.forEach(function(workshop) {
             if (!theme.includes(workshop.theme)) {%>
                 <tr>
-                    <td colspan="4"><br /><h4><%=workshop.theme%></h4></td>
+                    <td style="border-top: none;" colspan="5"><br /><h4><%=workshop.theme%></h4></td>
                 </tr>
                 <%theme.push(workshop.theme);
                 workshops.forEach(function(workshopThemed) {
@@ -48,6 +48,31 @@
                                     <td>Atelier by <%=workshopThemed.organizer%></td>
                                     <td><b>Social Jobbing : Faire de votre profil LinkedIn<br />une arme pour être recruté</b><br /><small>(ateliers par tranche de 20min)</small></td>
                                     <td>(<%=workshopThemed.location%>)</td>
+                                    <td>
+                                        <span class="btn red-button" id="details-<%=workshopThemed.abbreviation%>"
+                                            onclick="$('#show-dialog-<%=workshopThemed.abbreviation%>').modal();">Détails</span>
+                                        <div class="modal" id="show-dialog-<%=workshopThemed.abbreviation%>">
+                                            <!-- Modal content -->
+                                            <div class="modal-details">
+                                            <div class="modal-section">
+                                                <h3><%= workshopThemed.name%></h3>
+                                                <small style=color:#999">
+                                                <i class="fa fa-map-marker"></i>&nbsp;En <%= workshopThemed.location%>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <%= workshopThemed.places%> places disponibles
+                                                <br />
+                                                <i class="fa fa-clock-o"></i>&nbsp;Entre 9:00 et 12:00, et 
+                                                13:30 et 16:30, toutes les 20 minutes (voir page d'inscriptions)
+                                                </small>
+                                            </div>
+                                            <div class="modal-section">
+                                                <p><%- workshopThemed.description%></p>
+                                            </div>
+                                            <div style="text-align: center">Atelier <i>by</i> <%=workshopThemed.organizer%></div>
+                                            <br />
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                             <% }
                         } else { %>
@@ -76,7 +101,7 @@
                                         <p><%- workshopThemed.description%></p>
                                     </div>
                                     <div style="text-align: center">Atelier <i>by</i> <%=workshopThemed.organizer%></div>
-                                    <br />
+                                    
                                     </div>
                                 </div>
                             </td>
