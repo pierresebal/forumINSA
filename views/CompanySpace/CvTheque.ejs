@@ -85,8 +85,8 @@ data-toolbar="#toolbar">
         <td align="middle">
             <% if (student.frCVPath) { %>
             <form id="download" method="post" action="/file/download">
-                <input type="hidden" name="dl" value="<%= student.login%>" />
-                <input type="hidden" name="dl" value="<%= student.frCVPath%>" />
+                <input type="hidden" name="cvLogin" value="<%= student.login%>" />
+                <input type="hidden" name="frCVPath" value="<%= student.frCVPath%>" />
                 <input type="submit" class="form-button" value="CV fr" />
             </form>
             <% } %>
@@ -94,8 +94,8 @@ data-toolbar="#toolbar">
         <td align="middle">
             <% if (student.enCVPath) { %>
             <form id="download" method="post" action="/file/download">
-                <input type="hidden" name="dl" value="<%= student.login%>" />
-                <input type="hidden" name="dl" value="<%= student.enCVPath%>" />
+                <input type="hidden" name="cvLogin" value="<%= student.login%>" />
+                <input type="hidden" name="enCVPath" value="<%= student.enCVPath%>" />
                 <input type="submit" class="form-button" value="CV en" />
             </form>
             <% } %>
