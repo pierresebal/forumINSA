@@ -432,7 +432,8 @@ td a {
   background: #dadce0;
 }
 a.external-link {
-  width: 256px;
+  font-size: 90%;
+  width: 200px;
   border: solid 1px #dadce0; 
   padding: 10px 20px 10px 15px; 
   vertical-align: middle; 

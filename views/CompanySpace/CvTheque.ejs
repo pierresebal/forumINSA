@@ -1,3 +1,131 @@
-<div class="content">
-<script type="text/babel" src="/js/CvTheque.js"></script>
+<h1>CVThèque INSA Toulouse</h1>
+La CVThèque se remplit au fur et à mesure que les étudiants téléchargent leur CV. Les résultats présentés ci-dessous concernent les étudiants ayant mis à jour tout ou partie de leur profil cette année.
+<br /><br />
+<table class="table table-hover"  
+data-sortable="true"
+data-toggle="table"
+data-search="true"
+data-filter-control="true" 
+data-show-export="true"
+data-click-to-select="true"
+data-toolbar="#toolbar">
+    <thead>
+        <tr>
+            <th style="border-top: none" data-sortable="true">
+                <form id="year" method="post" action="/Company/CvTheque">
+                    <input type="hidden" name="sortby" 
+                           value="<% if (sortby != 'year ASC') {%>year ASC<%}else{%>year DESC<%}%>" />
+                    <input type="submit" class="btn" value="Année"/>
+                </form>
+            </th>
+            <th style="border-top: none" data-sortable="true">                
+                <form id="year" method="post" action="/Company/CvTheque">
+                    <input type="hidden" name="sortby" 
+                           value="<% if (sortby != 'firstName ASC') {%>firstName ASC<%}else{%>firstName DESC<%}%>" />
+                    <input type="submit" class="btn" value="Prénom"/>
+                </form>
+            </th>
+            <th style="border-top: none" data-sortable="true">                
+                <form id="year" method="post" action="/Company/CvTheque">
+                    <input type="hidden" name="sortby" 
+                           value="<% if (sortby != 'lastName ASC') {%>lastName ASC<%}else{%>lastName DESC<%}%>" />
+                    <input type="submit" class="btn" style="width: 200px; text-align: left" value="Nom"/>
+                </form>
+            </th>
+            <th style="border-top: none" data-sortable="true">                
+                <form id="year" method="post" action="/Company/CvTheque">
+                    <input type="hidden" name="sortby" 
+                           value="<% if (sortby != 'speciality ASC') {%>speciality ASC<%}else{%>speciality DESC<%}%>" />
+                    <input type="submit" class="btn" value="Spécialité"/>
+                </form>
+            </th>
+            <th style="border-top: none" data-sortable="true">                
+                <form id="year" method="post" action="/Company/CvTheque">
+                    <input type="hidden" name="sortby" 
+                           value="<% if (sortby != 'frCVPath DESC') {%>frCVPath DESC<%}else{%>frCVPath ASC<%}%>" />
+                    <input type="submit" class="btn" value="CV (fr)"/>
+                </form>
+            </th>
+            <th style="border-top: none" data-sortable="true">                
+                <form id="year" method="post" action="/Company/CvTheque">
+                    <input type="hidden" name="sortby" 
+                           value="<% if (sortby != 'enCVPath DESC') {%>enCVPath DESC<%}else{%>enCVPath ASC<%}%>" />
+                    <input type="submit" class="btn" value="CV (en)"/>
+                </form>
+            </th>
+            <th style="border-top: none" data-sortable="true">                
+                <form id="year" method="post" action="/Company/CvTheque">
+                    <input type="hidden" name="sortby"  
+                           value="<% if (sortby != 'personalWebsite DESC') {%>personalWebsite DESC<%}else{%>personalWebsite ASC<%}%>" />
+                    <input type="submit" class="btn" style="width: 200px; text-align: left" value="Site personnel"/>
+                </form>
+            </th>
+            <th style="border-top: none" data-sortable="true">                
+                <form id="year" method="post" action="/Company/CvTheque">
+                    <input type="hidden" name="sortby" 
+                           value="<% if (sortby != 'linkedin DESC') {%>linkedin DESC<%}else{%>linkedin ASC<%}%>" />
+                <input type="submit" class="btn" value="LinkedIn"/>
+                </form>
+            </th>
+            <th style="border-top: none" data-sortable="true">                
+                <form id="year" method="post" action="/Company/CvTheque">
+                    <input type="hidden" name="sortby" 
+                           value="<% if (sortby != 'github DESC') {%>github DESC<%}else{%>github ASC<%}%>" />
+                    <input type="submit" class="btn" value="GitHub"/>
+                </form>
+            </th>
+        </tr>
+    </thead>
+    <% students.forEach(function(student) { %>
+    <tr style="height: 70px">
+        <td align="middle"><%=student.year%></td>
+        <td><b><%=student.firstName%></b></td>
+        <td><b><%=student.lastName%></b></td>
+        <td><small><%=student.speciality%></small></td>
+        <td align="middle">
+            <% if (student.frCVPath) { %>
+            <form id="download" method="post" action="/file/download">
+                <input type="hidden" name="dl" value="<%= student.login%>" />
+                <input type="hidden" name="dl" value="<%= student.frCVPath%>" />
+                <input type="submit" class="form-button" value="CV fr" />
+            </form>
+            <% } %>
+        </td>
+        <td align="middle">
+            <% if (student.enCVPath) { %>
+            <form id="download" method="post" action="/file/download">
+                <input type="hidden" name="dl" value="<%= student.login%>" />
+                <input type="hidden" name="dl" value="<%= student.enCVPath%>" />
+                <input type="submit" class="form-button" value="CV en" />
+            </form>
+            <% } %>
+        </td> 
+        <td>
+            <% if (student.personalWebsite) { %>
+            <a href="<%=student.personalWebsite%>" target="_blank" class="external-link">
+                <i class="fa fa-external-link"></i>&nbsp;&nbsp;<%=student.personalWebsite%>
+            </a>
+            <% } %>
+        </td>
+        <td align="middle">
+            <% if (student.linkedin) { %>
+            <a href="<%=student.linkedin%>" target="_blank"><i class="fa fa-linkedin"></i>
+            </a>
+            <% } %>
+        </td>
+        <td align="middle">
+            <% if (student.github) { %>
+            <a href="<%=student.github%>" target="_blank"><i class="fa fa-github"></i>
+            </a>
+            <% } %>
+        </td>
+
+    </tr>
+    <% }) %>
+</table>
+
+<script>
+
+</script>
+
 </div>

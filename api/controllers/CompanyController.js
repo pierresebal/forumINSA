@@ -122,7 +122,7 @@ module.exports = {
                     layout: 'layout',
                     errMessage: errMessage,
                     nexturl: req.param('nexturl'),
-                    title: 'Inscription - FBI'
+                    title: 'Connexion - Forum by INSA'
                 });
 
             // login ok: update session
@@ -374,7 +374,8 @@ module.exports = {
     },
 
     CvTheque: function (req, res) {
-        Sells.findOne({companySiret: req.session.siret}).exec((err, found) => { // Il faut filtrer pour que la commande soit de l'année en cours.
+        Sells.findOne({companySiret: req.session.siret}).exec((err, found) => { 
+            // Il faut filtrer pour que la commande soit de l'année en cours.
             if (err) {
                 return res.view('ErrorPage', {
                     layout: 'layout',
@@ -384,7 +385,55 @@ module.exports = {
             }
 
             if (found) {
-                return res.view('CompanySpace/CvTheque', {layout: 'layout', title: 'CVThèque - Forum by INSA'})
+                const actualYear = new Date().getFullYear()
+
+                Speciality.find().exec((err, specialities) => {
+                    if (err) {
+                        sails.log.error('[CompanyController.CVtheque] error when findinding all specialiies: ', err);
+                        return res.serverError(err);
+                    }
+                    var sortBy = 'lastName ASC';
+                    if (req.param('sortby'))
+                        sortBy = req.param('sortby');
+                    
+                    /*
+                    var selectedSpeciality;
+                    if (!req.param('speciality')) { // Si aucune spécialité choisie
+                        selectedSpeciality = '-';
+                    } else {
+                        selectedSpeciality = req.param('speciality')
+                    }
+                    var sortSpe = '';
+                    if (selectedSpeciality !== '-') { // On rajoute le tri sur les spé que si on ne les veut pas toutes
+                        sortSpe[req.param('speciality')] = "on"
+                    }
+                    */
+                    Student.find()
+                        // only students that have updated there profile 
+                        .where({ "updatedAt" : { ">": actualYear+"-01-01T00:00:00.000+00:00" } })
+                        .sort(sortBy)
+                        .exec((err, students) => {
+            
+                        if (err) {
+                            sails.log.error('[CompanyController.CVtheque] error when finding all students: ', err);
+                            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Erreur : la liste des étudiants n'a pas été récupérée."})
+                        }
+            
+                        if (!students) {
+                            sails.log.warn('[CompanyController.CVtheque] error when finding all students: ', err);
+                            return res.view('ErrorPage', {layout: 'layout', ErrorTitle: "Problème : la liste des étudiants récupérée est vide."})
+                        }
+                    
+                            return res.view('CompanySpace/CvTheque', {
+                            layout: 'layout', 
+                            title: 'CVThèque - Forum by INSA',
+                            students: students,
+                            specialities: specialities,
+                            sortby: sortBy,
+                            //selectedSpeciality: selectedSpeciality,
+                        })
+                    })
+                })
             } else {
                 return res.view('ErrorPage', {
                     layout: 'layout',
