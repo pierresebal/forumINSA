@@ -7,7 +7,7 @@
   "dependencies": {
     "babel-core": "^6.26.3",
     "bcryptjs": "^2.4.3",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "bootstrap-datepicker": "^1.7.1",
     "bootstrap-daterangepicker": "^2.1.25",
     "bootstrap-switch": "^3.3.4",
