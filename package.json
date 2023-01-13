@@ -21,7 +21,7 @@
     "font-awesome": "^4.7.0",
     "front-matter": "1.0.0",
     "history": "1.11.1",
-    "html-pdf": "^2.0.1",
+    "html-pdf": "^3.0.1",
     "include-all": "^0.1.6",
     "ionicons": "^3.0.0",
     "jade": "1.11.0",
