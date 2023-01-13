@@ -45,7 +45,7 @@
     "sails-mongo": "^0.12.3",
     "sha1": "1.1.1",
     "source-map-support": "0.3.2",
-    "superagent": "1.4.0",
+    "superagent": "7.0.2",
     "sweetalert2": "^6.6.5",
     "toastr": "^2.1.2",
     "wkhtmltopdf": "^0.3.0"
