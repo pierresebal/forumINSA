@@ -14,7 +14,7 @@
     "classnames": "2.1.5",
     "ejs": "^2.4.1",
     "eventemitter3": "1.1.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "fastclick": "^1.0.6",
     "fbjs": "0.3.1",
     "flux": "2.1.1",
