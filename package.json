@@ -82,7 +82,7 @@
     "grunt-sync": "^0.8.1",
     "jest-cli": "^0.5.8",
     "jscs": "^2.2.1",
-    "kerberos": "0.0.19",
+    "kerberos": "1.0.0",
     "lodash.merge": "^4.3.3",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
